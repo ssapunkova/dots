@@ -39,11 +39,15 @@ export class WorkoutsService {
   }
 
   public addRecord(recordData){
-    console.log(recordData);
-    let url = '/addWorkoutRecord';
-    if(recordData.RecordId != null) url = '/editWorkoutRecord';
     return this.http.post(
-      this.connectToServerService.serverUrl + url,
+      this.connectToServerService.serverUrl + '/addWorkoutRecord',
+      {data: recordData}
+    );
+  }
+
+  public editRecord(recordData){
+    return this.http.post(
+      this.connectToServerService.serverUrl + '/editWorkoutRecord',
       {data: recordData}
     );
   }

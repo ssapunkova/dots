@@ -153,7 +153,6 @@ export class WorkoutsPage implements OnInit {
         }, {
           text: 'Ok',
           handler: (data) => {
-            console.log(data);
 
             let sheetTitles = this.workoutSheets.map((sheet) => sheet.Title);
 
@@ -260,14 +259,13 @@ export class WorkoutsPage implements OnInit {
     await modal.present();
     let modalData = await modal.onWillDismiss();
     modalData = modalData.data;
-    console.log(modalData);
 
     if(modalData != null){
 
       this.workoutSheets[this.currentSheetIndex].WorkoutRecords.push(modalData);
       this.workoutsService.addRecord(modalData).subscribe((data: [any])=>
         {
-          console.log(data);
+          // Expect { message: "success" }
         },
         error => {
           this.showErrorAlert("Oups")
@@ -277,7 +275,6 @@ export class WorkoutsPage implements OnInit {
   }
 
   async editRecord(record, rowIndex){
-    console.log(record);
     let recordToEdit = record;
 
     const modal = await this.modalController.create({
@@ -294,7 +291,6 @@ export class WorkoutsPage implements OnInit {
     await modal.present();
     let modalData = await modal.onWillDismiss();
     modalData = modalData.data;
-    console.log(modalData);
 
     if(modalData != null){
       this.workoutSheets[this.currentSheetIndex].WorkoutRecords[rowIndex] = modalData;
@@ -304,9 +300,9 @@ export class WorkoutsPage implements OnInit {
       setTimeout(function(){
         delete that.workoutSheets[that.currentSheetIndex].WorkoutRecords[rowIndex].color;
       }, 500);
-      this.workoutsService.addRecord(modalData).subscribe((data: [any])=>
+      this.workoutsService.editRecord(modalData).subscribe((data: [any])=>
         {
-          console.log(data);
+          // Expect { message: "success" }
         },
         error => {
           this.showErrorAlert("Oups")
@@ -334,7 +330,7 @@ export class WorkoutsPage implements OnInit {
             this.workoutSheets[this.currentSheetIndex].WorkoutRecords.splice(rowIndex, 1);
             this.workoutsService.deleteRecord(record._id).subscribe((data: [any])=>
               {
-                console.log(data);
+                // Expect { message: "success" }
               },
               error => {
                 this.showErrorAlert("Oups")

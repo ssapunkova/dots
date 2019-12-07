@@ -140,6 +140,8 @@ app.post("/editWorkoutRecord", function(req, res){
       }
     }, function(err, doc){
       if(err) throw err;
+
+      else res.send({ message: "success" });
     })
   });
 })
