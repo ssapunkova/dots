@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Workouts</ion-title>
+
+    <ion-buttons slot="secondary">
+      <ion-button fill="solid" color="primary" (click)="addSheet()" disabled="{{ isButtonDisabled.addSheet }}">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item *ngIf="workoutSheets.length < 1" color="secondary" class="ion-text-center">
+    <ion-label>No workout sheets yet</ion-label>
+  </ion-item>
+
+  <div *ngIf="workoutSheets.length > 0">
+
+    <ion-toolbar>
+
+      <ion-title> {{ workoutSheets[currentSheetIndex].Title }}</ion-title>
+      <ion-buttons slot="secondary">
+        <ion-button fill="solid" color="primary" (click)="configureSheet()">
+          <ion-icon name="settings"></ion-icon>
+        </ion-button>
+        <ion-button fill="solid" color="primary" (click)="addRecord()"
+          disabled="{{ isButtonDisabled.addRecord }}">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+        <ion-button fill="solid" color="primary" (click)="deleteSheet()">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+    </ion-toolbar>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col
+          title='Date'
+          (click)="dataTableService.sortByDate(workoutSheets[currentSheetIndex].WorkoutRecords)">
+          Date
+
+          <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
+          <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
+        </ion-col>
+
+        <ion-col
+          *ngFor="let col of workoutSheets[currentSheetIndex].Structure; let i = index"
+          [title]="col.Title"
+          (click)="dataTableService.sortCol(col, i, workoutSheets[currentSheetIndex].WorkoutRecords)">
+          <ion-label>{{ col.Title }}</ion-label>
+          <ion-icon name="arrow-dropup" *ngIf="col.sorted == 'asc'; else arrowDown"></ion-icon>
+          <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
+        </ion-col>
+      </ion-row>
+
+      <ion-item *ngIf="workoutSheets[currentSheetIndex].WorkoutRecords.length < 1" color="secondary" class="ion-text-center">
+        <ion-label>No workout records yet</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="workoutSheets[currentSheetIndex].Structure.length < 1" color="secondary" class="ion-text-center">
+        <ion-label>No fields yet. Configure</ion-label>
+      </ion-item>
+
+      <ion-row
+        *ngFor="let record of workoutSheets[currentSheetIndex].WorkoutRecords; let i = index">
+        <ion-item-sliding>
+         <ion-item-options side="start">
+           <ion-item-option color="danger" (click)="deleteRecord(record, i)">Delete</ion-item-option>
+           <ion-item-option color="success" (click)="editRecord(record, i)">Edit</ion-item-option>
+         </ion-item-options>
+
+         <ion-item [color]="record.color">
+          <ion-col title='Date'>{{ record.Date }}</ion-col>
+          <ion-col *ngFor="let col of workoutSheets[currentSheetIndex].Structure; let j = index" [title]="col.Title">
+            <ion-label *ngIf="col.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
+            <ng-template #showTick>
+              <ion-icon name="checkbox" *ngIf="record.Values[j] == true">d</ion-icon>
+              <ion-icon name="close" *ngIf="record.Values[j] == false">d</ion-icon>
+            </ng-template>
+          </ion-col>
+        </ion-item>
+        </ion-item-sliding>
+      </ion-row>
+
+    </ion-grid>
+
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-tab-bar>
+    <ion-tab-button *ngFor="let sheet of workoutSheets; let i = index" (click)="openSheet(i)">
+      <ion-icon name="grid"></ion-icon>
+      <ion-badge color="secondary">{{ i + 1 }}</ion-badge>
+      <ion-label>{{ sheet.Title }}</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>
