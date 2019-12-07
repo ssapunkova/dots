@@ -115,12 +115,25 @@ app.post("/addWorkoutRecord", function(req, res){
 
   mongoose.connect(baseUrl, connectParams, function (err) {
     if(err) throw err;
-    record = new WorkoutRecord(record);
 
-    record.save(function(err, doc){
+    WorkoutRecord.update({ Date: record.Date }, {
+      $set: {
+        SheetId: record.SheetId,
+        Values: record.Values,
+        Columns: record.Columns
+      }
+    }, { upsert: true }, function(err, docs){
       if(err) throw err;
-      else res.send(doc);
+      console.log(docs)
+      res.send({ modifiedDocs: docs.nModified });
     })
+
+    // record = new WorkoutRecord(record);
+    //
+    // record.save(function(err, doc){
+    //   if(err) throw err;
+    //   else res.send(doc);
+    // })
   });
 })
 
@@ -132,16 +145,27 @@ app.post("/editWorkoutRecord", function(req, res){
   mongoose.connect(baseUrl, connectParams, function (err) {
     if(err) throw err;
 
-    WorkoutRecord.update({ _id: ObjectId(record.RecordId) }, {
-      $set: {
-        Date: record.Date,
-        Values: record.Values,
-        Columns: record.Columns
-      }
-    }, function(err, doc){
+    // Remove existing record with the same date
+
+    WorkoutRecord.remove({
+      Date: record.Date,
+      _id: { $ne: ObjectId(record.RecordId) }
+    }, function(err, removedDocs){
       if(err) throw err;
 
-      else res.send({ message: "success" });
+      WorkoutRecord.update({ _id: ObjectId(record.RecordId) }, {
+        $set: {
+          Date: record.Date,
+          Values: record.Values,
+          Columns: record.Columns
+        }
+      }, function(err, doc){
+        if(err) throw err;
+        console.log(0);
+
+        res.send({ deletedDocs: removedDocs.deletedCount });
+      })
+
     })
   });
 })

@@ -265,7 +265,10 @@ export class WorkoutsPage implements OnInit {
       this.workoutSheets[this.currentSheetIndex].WorkoutRecords.push(modalData);
       this.workoutsService.addRecord(modalData).subscribe((data: [any])=>
         {
-          // Expect { message: "success" }
+          console.log(data);
+          if(data.modifiedDocs == 1){
+            this.getSheets();
+          }
         },
         error => {
           this.showErrorAlert("Oups")
@@ -302,7 +305,9 @@ export class WorkoutsPage implements OnInit {
       }, 500);
       this.workoutsService.editRecord(modalData).subscribe((data: [any])=>
         {
-          // Expect { message: "success" }
+          if(data.deletedDocs == 1){
+            this.getSheets();
+          }
         },
         error => {
           this.showErrorAlert("Oups")
