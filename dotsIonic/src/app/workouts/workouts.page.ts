@@ -71,23 +71,23 @@ export class WorkoutsPage implements OnInit {
           let currentMonth = currentSheet.WorkoutRecords[0].Date.split("-")[1];
           let currentYear = currentSheet.WorkoutRecords[0].Date.split("-")[0];
           let currentMonthIndex = 0;
-          currentSheet.WorkoutRecordsByMonths[0] = {};
+          currentSheet.WorkoutRecordsByMonths[0] = { Records: [] };
           for(var i = 0; i < currentSheet.WorkoutRecords.length; i++){
             let currentRecordMonth = currentSheet.WorkoutRecords[i].Date.split("-")[1];
             let currentRecordYear = currentSheet.WorkoutRecords[i].Date.split("-")[0];
-            if(currentRecordMonth != currentMonth) {
+            console.log(currentMonth, currentRecordMonth)
+            if(currentRecordMonth != currentMonth || currentRecordYear != currentYear) {
               currentMonth = currentRecordMonth;
               if(currentRecordYear != currentYear){
                 currentYear = currentRecordYear;
               }
-              currentSheet.WorkoutRecordsByMonths[currentMonthIndex] = {};
               currentMonthIndex++;
+              console.log(currentMonthIndex);
+              currentSheet.WorkoutRecordsByMonths[currentMonthIndex] = { Records: [] };
             }
-            else{
-              currentSheet.WorkoutRecordsByMonths[currentMonthIndex].Month = currentMonth;
-              currentSheet.WorkoutRecordsByMonths[currentMonthIndex].Year = currentYear;
-              currentSheet.WorkoutRecordsByMonths[currentMonthIndex].Records = currentSheet.WorkoutRecords[i];
-            }
+            currentSheet.WorkoutRecordsByMonths[currentMonthIndex].Month = currentMonth;
+            currentSheet.WorkoutRecordsByMonths[currentMonthIndex].Year = currentYear;
+            currentSheet.WorkoutRecordsByMonths[currentMonthIndex].Records.push(currentSheet.WorkoutRecords[i]);
           }
         }
 
