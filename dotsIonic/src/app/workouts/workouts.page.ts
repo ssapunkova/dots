@@ -263,7 +263,7 @@ export class WorkoutsPage implements OnInit {
     if(modalData != null){
 
       this.workoutSheets[this.currentSheetIndex].WorkoutRecords.push(modalData);
-      this.workoutsService.addRecord(modalData).subscribe((data: [any])=>
+      this.workoutsService.addRecord(modalData).subscribe((data: any)=>
         {
           console.log(data);
           if(data.modifiedDocs == 1){
@@ -303,7 +303,7 @@ export class WorkoutsPage implements OnInit {
       setTimeout(function(){
         delete that.workoutSheets[that.currentSheetIndex].WorkoutRecords[rowIndex].color;
       }, 500);
-      this.workoutsService.editRecord(modalData).subscribe((data: [any])=>
+      this.workoutsService.editRecord(modalData).subscribe((data: any)=>
         {
           if(data.deletedDocs == 1){
             this.getSheets();
