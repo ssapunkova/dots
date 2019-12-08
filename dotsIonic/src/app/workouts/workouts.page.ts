@@ -109,7 +109,7 @@ export class WorkoutsPage implements OnInit {
   async openSheet(sheetIndex){
     this.currentSheetIndex = sheetIndex;
 
-    this.dataTableService.sortByDate(this.workoutSheets[this.currentSheetIndex].WorkoutRecords);
+    this.dataTableService.sortByDate(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsByMonths);
 
     if(this.workoutSheets[this.currentSheetIndex].Structure.length > 0){
       this.isButtonDisabled.addRecord = false;

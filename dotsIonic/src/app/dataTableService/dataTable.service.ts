@@ -22,10 +22,10 @@ export class DataTableService{
     let that = this;
     let result;
 
-    // substract b's date from a's date to compare them
+    // sort months
     records.sort(function(a, b){
-      let aValue = new Date(b.Date).getTime();
-      let bValue = new Date(a.Date).getTime();
+      let aValue = new Date(a.Year + "-" + a.Month + "-01").getTime();
+      let bValue = new Date(b.Year + "-" + b.Month + "-01").getTime();
 
       if(that.sortedByDate == "desc"){
         result = aValue - bValue;
@@ -34,7 +34,20 @@ export class DataTableService{
         result = bValue - aValue;
       }
       return result;
-    });
+    })
+    // substract b's date from a's date to compare them
+    // records.sort(function(a, b){
+    //   let aValue = new Date(a.Date).getTime();
+    //   let bValue = new Date(b.Date).getTime();
+    //
+    //   if(that.sortedByDate == "desc"){
+    //     result = bValue - aValue;
+    //   }
+    //   else{
+    //     result = aValue - bValue;
+    //   }
+    //   return result;
+    // });
 
     // Set new sortedByDate value
     if(this.sortedByDate == "asc") this.sortedByDate = "desc";
