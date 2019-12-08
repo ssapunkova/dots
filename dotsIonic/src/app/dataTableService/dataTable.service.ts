@@ -35,19 +35,24 @@ export class DataTableService{
       }
       return result;
     })
-    // substract b's date from a's date to compare them
-    // records.sort(function(a, b){
-    //   let aValue = new Date(a.Date).getTime();
-    //   let bValue = new Date(b.Date).getTime();
-    //
-    //   if(that.sortedByDate == "desc"){
-    //     result = bValue - aValue;
-    //   }
-    //   else{
-    //     result = aValue - bValue;
-    //   }
-    //   return result;
-    // });
+
+    // Now sort inside months
+    for(var i = 0; i < records.length; i++){
+      console.log(records[i])
+      // substract b's date from a's date to compare them
+      records[i].Records.sort(function(a, b){
+        let aValue = new Date(a.Date).getTime();
+        let bValue = new Date(b.Date).getTime();
+
+        if(that.sortedByDate == "desc"){
+          result = aValue - bValue;
+        }
+        else{
+          result = bValue - aValue;
+        }
+        return result;
+      });
+    }
 
     // Set new sortedByDate value
     if(this.sortedByDate == "asc") this.sortedByDate = "desc";
