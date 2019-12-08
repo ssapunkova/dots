@@ -70,7 +70,10 @@
       </ion-item>
 
       <ion-card *ngFor="let month of workoutSheets[currentSheetIndex].WorkoutRecordsByMonths; let m = index">
-        <ion-label>{{ month.Month }}.{{ month.Year }}</ion-label>
+
+        <ion-card-header color="primary">
+          <ion-label>{{ month.Month }}.{{ month.Year }}</ion-label>
+        </ion-card-header>
 
         <ion-row
           *ngFor="let record of workoutSheets[currentSheetIndex].WorkoutRecordsByMonths[m].Records; let i = index">
@@ -81,7 +84,7 @@
            </ion-item-options>
 
            <ion-item [color]="record.color">
-            <ion-col title='Date'>{{ record.Date }}</ion-col>
+            <ion-col title='Date'>{{ record.Date | date : 'dd.MM' }}</ion-col>
             <ion-col *ngFor="let col of workoutSheets[currentSheetIndex].Structure; let j = index" [title]="col.Title">
               <ion-label *ngIf="col.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
               <ng-template #showTick>
