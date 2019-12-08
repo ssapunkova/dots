@@ -44,7 +44,7 @@
       <ion-row>
         <ion-col
           title='Date'
-          (click)="dataTableService.sortByDate(workoutSheets[currentSheetIndex].WorkoutRecords)">
+          (click)="dataTableService.sortByDate(workoutSheets[currentSheetIndex].WorkoutRecordsByMonths)">
           Date
 
           <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
