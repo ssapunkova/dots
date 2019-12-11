@@ -16,6 +16,7 @@ import { LoadingService } from './loadingService/loading.service';
 import { ToastService } from './toastService/toast.service';
 import { DataTableService } from './dataTableService/dataTable.service';
 import { TimeConverterService } from './timeConverterService/timeConverter.service';
+import { ChartService } from './chartService/chart.service';
 
 import { SheetConfigurationPage } from './workouts/sheetConfiguration/sheetConfiguration.page';
 import { NewWorkoutRecordPage } from './workouts/newWorkoutRecord/newWorkoutRecord.page';
@@ -44,6 +45,7 @@ import { NewWorkoutRecordPage } from './workouts/newWorkoutRecord/newWorkoutReco
     ToastService,
     DataTableService,
     TimeConverterService,
+    ChartService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [

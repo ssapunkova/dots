@@ -40,7 +40,13 @@
 
     </ion-toolbar>
 
-    <ion-grid>
+    <ion-item *ngIf="showMode == 'chart'">
+
+      <div *ngIf="chartData" [data]="chartData"></div>
+
+    </ion-item>
+
+    <ion-grid *ngIf="showMode == 'table'">
       <ion-row>
         <ion-col
           title='Date'
@@ -53,11 +59,11 @@
 
         <ion-col
           *ngFor="let col of workoutSheets[currentSheetIndex].Structure; let i = index"
-          [title]="col.Title"
-          (click)="dataTableService.sortCol(col, i, workoutSheets[currentSheetIndex].WorkoutRecords)">
+          [title]="col.Title">
+          <!-- (click)="dataTableService.sortCol(col, i, workoutSheets[currentSheetIndex].WorkoutRecords)"> -->
           <ion-label>{{ col.Title }}</ion-label>
-          <ion-icon name="arrow-dropup" *ngIf="col.sorted == 'asc'; else arrowDown"></ion-icon>
-          <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
+          <!-- <ion-icon name="arrow-dropup" *ngIf="col.sorted == 'asc'; else arrowDown"></ion-icon> -->
+          <!-- <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template> -->
         </ion-col>
       </ion-row>
 

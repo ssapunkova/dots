@@ -8,6 +8,7 @@ import { ConnectToServerService } from '../connectToServerService/connect.servic
 import { LoadingService } from '../loadingService/loading.service';
 import { ToastService } from '../toastService/toast.service';
 import { DataTableService } from '../dataTableService/dataTable.service';
+import { ChartService } from '../chartService/chart.service';
 
 import { WorkoutsService } from './workouts.service';
 
@@ -28,6 +29,8 @@ export class WorkoutsPage implements OnInit {
   public currentSheetIndex = 0;
   public fieldsToFill;
 
+  public showMode = 'chart';
+
   public makeColsEditable = false;
 
   public isButtonDisabled = {
@@ -45,7 +48,8 @@ export class WorkoutsPage implements OnInit {
     public workoutsService: WorkoutsService,
     public alertController: AlertController,
     public modalController: ModalController,
-    public dataTableService: DataTableService
+    public dataTableService: DataTableService,
+    public chartService: ChartService
   ) { };
 
   ngOnInit() {

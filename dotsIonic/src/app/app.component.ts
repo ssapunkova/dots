@@ -7,6 +7,7 @@ import { LoadingService } from './loadingService/loading.service';
 import { ToastService } from './toastService/toast.service';
 import { DataTableService } from './dataTableService/dataTable.service';
 import { TimeConverterService } from './timeConverterService/timeConverter.service';
+import { ChartService } from './chartService/chart.service';
 
 @Component({
   selector: 'app-root',
@@ -42,6 +43,7 @@ export class AppComponent {
     private toastService: ToastService,
     private dataTableService: DataTableService,
     private timeConverterService: TimeConverterService,
+    private chartService: ChartService,
     private statusBar: StatusBar
   ) {
     this.initializeApp();
