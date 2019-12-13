@@ -64,7 +64,7 @@ export class ChartService{
 
   constructor(
     public ngxChartsModule: NgxChartsModule
-  ){}
+  ){ }
 
 
 

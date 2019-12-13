@@ -42,7 +42,25 @@
 
     <ion-item *ngIf="showMode == 'chart'">
 
-      <ngx-charts-bar-vertical></ngx-charts-bar-vertical>
+      <ngx-charts-bar-horizontal-2d
+        [view]="chartService.view"
+        [scheme]="chartService.colorScheme"
+        [schemeType]="chartService.schemeType"
+        [results]="chartService.chartData"
+        [gradient]="chartService.gradient"
+        [xAxis]="chartService.showXAxis"
+        [yAxis]="chartService.showYAxis"
+        [legend]="chartService.showLegend"
+        [legendPosition]="chartService.legendPosition"
+        [showXAxisLabel]="chartService.showXAxisLabel"
+        [showYAxisLabel]="chartService.showYAxisLabel"
+        [xAxisLabel]="chartService.xAxisLabel"
+        [yAxisLabel]="chartService.yAxisLabel"
+        (select)="chartService.onSelect($event)"
+        (activate)="chartService.onActivate($event)"
+        (deactivate)="chartService.onDeactivate($event)"
+      >
+    </ngx-charts-bar-horizontal-2d>
 
     </ion-item>
 
