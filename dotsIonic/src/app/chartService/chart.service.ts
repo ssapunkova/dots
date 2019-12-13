@@ -10,47 +10,75 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 @Injectable()
 export class ChartService{
 
-  chartData = [{
-    "name": "Germany",
-    "series": [
-      {
-        "name": "2010",
-        "value": 7300000
-      },
-      {
-        "name": "2011",
-        "value": 8940000
-      }
-    ]
-  },
+  chartData: [];
 
-  {
-    "name": "USA",
-    "series": [
-      {
-        "name": "2010",
-        "value": 7870000
-      },
-      {
-        "name": "2011",
-        "value": 8270000
-      }
-    ]
-  },
+  // chartData = [{
+  //   "name": "Germany",
+  //   "series": [
+  //     {
+  //       "name": "2010",
+  //       "value": 7300000
+  //     },
+  //     {
+  //       "name": "2011",
+  //       "value": 8940000
+  //     }
+  //   ]
+  // },
+  //
+  // {
+  //   "name": "USA",
+  //   "series": [
+  //     {
+  //       "name": "2010",
+  //       "value": 7870000
+  //     },
+  //     {
+  //       "name": "2011",
+  //       "value": 8270000
+  //     }
+  //   ]
+  // },
+  // {
+  //   "name": "France",
+  //   "series": [
+  //     {
+  //       "name": "2010",
+  //       "value": 5000002
+  //     },
+  //     {
+  //       "name": "2011",
+  //       "value": 5800000
+  //     }
+  //   ]
+  // }];
 
-  {
-    "name": "France",
-    "series": [
-      {
-        "name": "2010",
-        "value": 5000002
-      },
-      {
-        "name": "2011",
-        "value": 5800000
+  async formatChartData(data){
+    console.log(data);
+
+    let formatted = [];
+
+    for(var i = 0; i < data.length; i++){
+
+      let currentSeries = [];
+
+      for(var j = 0; j < data[i].Values.length; j++){
+        currentSeries.push({
+          "name": j,
+          "value": data[i].Values[j]
+        })
       }
-    ]
-  }];
+
+      formatted.push({
+        "name": data[i].Date,
+        "series": currentSeries
+      });
+    }
+
+    this.chartData = formatted;
+
+    console.log(this.chartData)
+  }
 
   showXAxis: boolean = true;
   showYAxis: boolean = true;
@@ -58,32 +86,31 @@ export class ChartService{
   showLegend: boolean = true;
   legendPosition: string = 'below';
   showXAxisLabel: boolean = true;
-  yAxisLabel: string = 'Country';
+  yAxisLabel: string = 'Workouts';
   showYAxisLabel: boolean = true;
-  xAxisLabel = 'Population';
+  xAxisLabel = 'Date';
 
   constructor(
     public ngxChartsModule: NgxChartsModule
   ){ }
 
 
-
   colorScheme = {
-    domain: ['#5AA454', '#C7B42C', '#AAAAAA']
+    domain: ['#faf65a', '#abcd67', '#AAAAAA']
   };
   schemeType: string = 'linear';
 
-
   onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(this.chartData)));
+    console.log();
   }
 
   onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(this.chartData)));
+    console.log();
   }
 
   onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(this.chartData)));
+    console.log();
   }
+
 
 }
