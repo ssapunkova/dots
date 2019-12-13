@@ -10,9 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { NvD3Module } from 'ng2-nvd3';
-import 'd3';
-import 'nvd3';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // Services
 import { ConnectToServerService } from './connectToServerService/connect.service';
@@ -41,7 +39,7 @@ import { NewWorkoutRecordPage } from './workouts/newWorkoutRecord/newWorkoutReco
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NvD3Module
+    NgxChartsModule
   ],
   providers: [
     StatusBar,
