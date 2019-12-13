@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 // Sevrices
 import { ConnectToServerService } from '../connectToServerService/connect.service';
 import { LoadingService } from '../loadingService/loading.service';
@@ -49,7 +52,8 @@ export class WorkoutsPage implements OnInit {
     public alertController: AlertController,
     public modalController: ModalController,
     public dataTableService: DataTableService,
-    public chartService: ChartService
+    public chartService: ChartService,
+    public ngxChartsModule: NgxChartsModule
   ) { };
 
   ngOnInit() {
