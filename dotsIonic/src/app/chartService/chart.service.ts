@@ -15,7 +15,7 @@ export class ChartService{
   chartData = [];
 
   constructor(
-    public d3: d3
+    // public d3: d3
   ){}
 
   async generateData() {

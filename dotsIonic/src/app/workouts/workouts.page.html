@@ -42,7 +42,7 @@
 
     <ion-item *ngIf="showMode == 'chart'">
 
-      <div *ngIf="chartData" [data]="chartData"></div>
+      <nvd3 options="options" data="chartData"></nvd3>
 
     </ion-item>
 
