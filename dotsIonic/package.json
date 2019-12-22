@@ -42,6 +42,7 @@
     "ionic": "^5.4.4",
     "jquery": "^3.4.1",
     "ng2-nvd3": "^2.0.0",
+    "ngx-charts": "^3.0.2",
     "node": "^12.12.0",
     "npm": "^6.13.4",
     "nvd3": "^1.8.6",
@@ -53,7 +54,7 @@
   },
   "devDependencies": {
     "@angular-devkit/architect": "~0.801.2",
-    "@angular-devkit/build-angular": "~0.801.2",
+    "@angular-devkit/build-angular": "^0.803.21",
     "@angular-devkit/core": "~8.1.2",
     "@angular-devkit/schematics": "~8.1.2",
     "@angular/cli": "8.1.3",
