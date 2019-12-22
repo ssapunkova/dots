@@ -43,10 +43,10 @@
 
     </ion-toolbar>
 
-    <div id="chart" *ngIf="showMode == 'chart'"  [style.height.px] = "chartService.chartHeight">
+    <div id="chart" *ngIf="showMode == 'chart'"  style="height: 100%; overflow-x: scroll; " >
 
-        <ngx-charts-line-chart
-          [view]="chartService.view"
+        <ngx-charts-area-chart
+          [view]="[chartService.chartWidth, 300]"
           [results]="chartService.chartData"
           [scheme]="chartService.colorScheme"
           schemeType="ordinal"
@@ -55,13 +55,15 @@
           xAxis="false"
           yAxis="true"
           legend="true"
+          legendPosition="below"
+          legendTitle=""
           showXAxisLabel="false"
           showYAxisLabel="false"
           (select)="chartService.onSelect($event)"
           (activate)="chartService.onActivate($event)"
           (deactivate)="chartService.onDeactivate($event)"
         >
-      </ngx-charts-line-chart>
+      </ngx-charts-area-chart>
 
     </div>
 

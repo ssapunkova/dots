@@ -79,13 +79,14 @@ export class ChartService{
             "series": []
           })
           registeredCols.push(currentCollumn);
+          currentColIndex = registeredCols.length - 1;
         }
-        else{
-          formatted[currentColIndex].series.push({
-            "name": record.Date,
-            "value": parseFloat(record.Values[i])
-          })
-        }
+
+        formatted[currentColIndex].series.push({
+          "name": record.Date,
+          "value": parseFloat(record.Values[i])
+        })
+
       }
 
     }
@@ -96,7 +97,7 @@ export class ChartService{
     console.log(this.chartData);
     console.log(formatted);
 
-    this.chartHeight = this.chartData.length * 100;
+    this.chartWidth = this.chartData[0].series.length * 150;
 
     for(var i = 0; i < 10; i++){
       let hue = Math.floor(Math.random() * (130 - 90) ) + 90;
