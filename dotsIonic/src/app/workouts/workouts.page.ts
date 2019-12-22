@@ -107,9 +107,13 @@ export class WorkoutsPage implements OnInit {
       if(this.workoutSheets.length > 0){
         this.openSheet(0);
         if(this.workoutSheets.length == 3) this.isButtonDisabled.addSheet = true;
+
+        if(this.workoutSheets[this.currentSheetIndex].WorkoutRecords.length > 0){
+          this.chartService.formatChartData(this.workoutSheets[this.currentSheetIndex].WorkoutRecords);
+        }
       }
 
-      this.chartService.formatChartData(this.workoutSheets[this.currentSheetIndex].WorkoutRecords);
+
 
       this.loadingService.isPageLoading = false;
 

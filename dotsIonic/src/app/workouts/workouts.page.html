@@ -93,7 +93,8 @@
         <ion-label>No fields yet. Configure</ion-label>
       </ion-item>
 
-      <ion-card *ngFor="let month of workoutSheets[currentSheetIndex].WorkoutRecordsByMonths; let m = index">
+      <ion-card
+        *ngFor="let month of workoutSheets[currentSheetIndex].WorkoutRecordsByMonths; let m = index">
 
         <ion-card-header color="primary">
           <ion-label>{{ month.Month }}.{{ month.Year }}</ion-label>
@@ -129,9 +130,10 @@
 
 <ion-footer>
 
-  <ion-item>
-    <ion-label>Table view</ion-label>
-    <ion-toggle (click)="showMode == 'chart' ? showMode = 'table' : showMode = 'chart'"></ion-toggle>
+  <ion-item *ngIf="workoutSheets.length > 0">
+    <ion-label>Chart view</ion-label>
+    <ion-toggle checked
+      (click)="showMode == 'chart' ? showMode = 'table' : showMode = 'chart'"></ion-toggle>
   </ion-item>
 
   <ion-tab-bar>
