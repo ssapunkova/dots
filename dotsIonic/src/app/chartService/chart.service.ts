@@ -10,7 +10,14 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 @Injectable()
 export class ChartService{
 
-  chartData: [];
+  public chartData: [];
+
+  public chartHeight;
+
+
+  public colorScheme = {
+      domain: []
+    };
 
   // chartData = [{
   //   "name": "Germany",
@@ -53,7 +60,8 @@ export class ChartService{
   //   ]
   // }];
 
-  async formatChartData(data){
+  async formatChartData(data, columns){
+
     console.log(data);
 
     let formatted = [];
@@ -64,8 +72,9 @@ export class ChartService{
 
       for(var j = 0; j < data[i].Values.length; j++){
         currentSeries.push({
-          "name": j,
-          "value": parseFloat(data[i].Values[j])
+          "name": columns[j].Title,
+          "value": parseFloat(data[i].Values[j]),
+          "color": "#ff25" + Math.abs(parseFloat(data[i].Values[j]) - columns[j].Title)
         })
       }
 
@@ -79,27 +88,20 @@ export class ChartService{
 
     console.log(this.chartData);
     console.log(formatted);
-  }
 
-  showXAxis: boolean = true;
-  showYAxis: boolean = true;
-  gradient: boolean = false;
-  showLegend: boolean = true;
-  legendPosition: string = 'below';
-  showXAxisLabel: boolean = true;
-  yAxisLabel: string = 'Workouts';
-  showYAxisLabel: boolean = true;
-  xAxisLabel = 'Date';
+    this.chartHeight = this.chartData.length * 100;
+
+    for(var i = 0; i < 10; i++){
+      let hue = Math.floor(Math.random() * (130 - 90) ) + 90;
+      let light = Math.floor(Math.random() * (70 - 25) ) + 25;
+      this.colorScheme.domain.push("hsl(" + hue + ", 80%, " + light + "%)");
+    }
+
+  }
 
   constructor(
     public ngxChartsModule: NgxChartsModule
   ){ }
-
-
-  colorScheme = {
-    domain: ['#faf65a', '#abcd67', '#AAAAAA']
-  };
-  schemeType: string = 'linear';
 
   onSelect(data): void {
     console.log();
@@ -114,4 +116,4 @@ export class ChartService{
   }
 
 
-}
+  }

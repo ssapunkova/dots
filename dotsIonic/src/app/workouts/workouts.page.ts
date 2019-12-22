@@ -28,6 +28,8 @@ import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
 @Injectable()
 export class WorkoutsPage implements OnInit {
 
+  public chartH = 1000;
+
   public workoutSheets = [];
   public currentSheetIndex = 0;
   public fieldsToFill;
@@ -109,7 +111,7 @@ export class WorkoutsPage implements OnInit {
         if(this.workoutSheets.length == 3) this.isButtonDisabled.addSheet = true;
 
         if(this.workoutSheets[this.currentSheetIndex].WorkoutRecords.length > 0){
-          this.chartService.formatChartData(this.workoutSheets[this.currentSheetIndex].WorkoutRecords);
+          this.chartService.formatChartData(this.workoutSheets[this.currentSheetIndex].WorkoutRecords, this.workoutSheets[this.currentSheetIndex].Structure);
         }
       }
 
