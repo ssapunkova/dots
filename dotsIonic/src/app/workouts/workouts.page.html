@@ -128,6 +128,12 @@
 </ion-content>
 
 <ion-footer>
+
+  <ion-item>
+    <ion-label>Table view</ion-label>
+    <ion-toggle (click)="showMode == 'chart' ? showMode = 'table' : showMode = 'chart'"></ion-toggle>
+  </ion-item>
+
   <ion-tab-bar>
     <ion-tab-button *ngFor="let sheet of workoutSheets; let i = index" (click)="openSheet(i)">
       <ion-icon name="grid"></ion-icon>
