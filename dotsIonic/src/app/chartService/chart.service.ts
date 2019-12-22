@@ -65,24 +65,31 @@ export class ChartService{
     console.log(data);
 
     let formatted = [];
+    let registeredCols = [];
 
-    for(var i = 0; i < data.length; i++){
+    for(var j = 0; j < data.length; j++){
+      let record = data[j];
 
-      let currentSeries = [];
-
-      for(var j = 0; j < data[i].Values.length; j++){
-        currentSeries.push({
-          "name": columns[j].Title,
-          "value": parseFloat(data[i].Values[j]),
-          "color": "#ff25" + Math.abs(parseFloat(data[i].Values[j]) - columns[j].Title)
-        })
+      for(var i = 0; i < record.Values.length; i++){
+        let currentCollumn = columns[i].Title;
+        let currentColIndex = registeredCols.indexOf(currentCollumn);
+        if(currentColIndex < 0){
+          formatted.push({
+            "name": currentCollumn,
+            "series": []
+          })
+          registeredCols.push(currentCollumn);
+        }
+        else{
+          formatted[currentColIndex].series.push({
+            "name": record.Date,
+            "value": parseFloat(record.Values[i])
+          })
+        }
       }
 
-      formatted.push({
-        "name": data[i].Date,
-        "series": currentSeries
-      });
     }
+
 
     this.chartData = formatted;
 

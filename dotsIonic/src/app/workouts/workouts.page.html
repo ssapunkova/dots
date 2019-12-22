@@ -45,7 +45,7 @@
 
     <div id="chart" *ngIf="showMode == 'chart'"  [style.height.px] = "chartService.chartHeight">
 
-        <ngx-charts-bar-horizontal-2d
+        <ngx-charts-line-chart
           [view]="chartService.view"
           [results]="chartService.chartData"
           [scheme]="chartService.colorScheme"
@@ -55,14 +55,13 @@
           xAxis="false"
           yAxis="true"
           legend="true"
-          legendPositond="below"
           showXAxisLabel="false"
           showYAxisLabel="false"
           (select)="chartService.onSelect($event)"
           (activate)="chartService.onActivate($event)"
           (deactivate)="chartService.onDeactivate($event)"
         >
-      </ngx-charts-bar-horizontal-2d>
+      </ngx-charts-line-chart>
 
     </div>
 
