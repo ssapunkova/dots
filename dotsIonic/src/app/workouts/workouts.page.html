@@ -45,7 +45,7 @@
 
     <div id="chart" *ngIf="showMode == 'chart'"  style="height: 100%; overflow-x: scroll; " >
 
-        <ngx-charts-area-chart
+        <ngx-charts-line-chart
           [view]="[chartService.chartWidth, 300]"
           [results]="chartService.chartData"
           [scheme]="chartService.colorScheme"
@@ -63,7 +63,7 @@
           (activate)="chartService.onActivate($event)"
           (deactivate)="chartService.onDeactivate($event)"
         >
-      </ngx-charts-area-chart>
+      </ngx-charts-line-chart>
 
     </div>
 
