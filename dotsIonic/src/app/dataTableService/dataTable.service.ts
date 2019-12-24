@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { TimeConverterService } from '../timeConverterService/timeConverter.service';
+import { TimeAndDateService } from '../timeAndDateService/timeAndDate.service';
 
 // DataTable Service
 // Implements sorting the data, displayed in ion-grid
@@ -11,7 +11,7 @@ export class DataTableService{
   public sortedByDate = "asc";
 
   constructor(
-    public timeConverterService: TimeConverterService
+    public timeAndDateService: TimeAndDateService
   ) { }
 
   // Sort records by date
@@ -60,8 +60,8 @@ export class DataTableService{
       // If value is time (hh:mm:ss format)
       // Calculate duration in seconds using timeConverter service
       if(col.Type == "Time"){
-        aValue = that.timeConverterService.getSeconds(aValue);
-        bValue = that.timeConverterService.getSeconds(bValue);
+        aValue = that.timeAndDateService.getSeconds(aValue);
+        bValue = that.timeAndDateService.getSeconds(bValue);
       }
 
       // Sort asc/desc

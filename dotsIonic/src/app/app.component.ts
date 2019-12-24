@@ -6,7 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { LoadingService } from './loadingService/loading.service';
 import { ToastService } from './toastService/toast.service';
 import { DataTableService } from './dataTableService/dataTable.service';
-import { TimeConverterService } from './timeConverterService/timeConverter.service';
+import { TimeAndDateService } from './timeAndDateService/timeAndDate.service';
 import { ChartService } from './chartService/chart.service';
 
 @Component({
@@ -42,7 +42,7 @@ export class AppComponent {
     private loadingService: LoadingService,
     private toastService: ToastService,
     private dataTableService: DataTableService,
-    private timeConverterService: TimeConverterService,
+    private timeAndDateService: TimeAndDateService,
     private chartService: ChartService,
     private statusBar: StatusBar
   ) {

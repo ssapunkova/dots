@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
-// TimeConverter Service
+// TimeAndDate Service
 // Implements converting time formats
 
 @Injectable()
-export class TimeConverterService{
+export class TimeAndDateService{
 
   constructor(
   ) { }

@@ -104,7 +104,7 @@ export class WorkoutsPage implements OnInit {
     else{
       this.showPeriods = $event.target.value;
     }
-    console.log(this.showPeriods)
+    console.log(this.showPeriods);
 
     this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod = this.workoutSheets[this.currentSheetIndex].WorkoutRecords.filter((record) => this.showPeriods.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
 
@@ -117,9 +117,6 @@ export class WorkoutsPage implements OnInit {
     if(this.workoutSheets[this.currentSheetIndex].WorkoutRecords.length > 0){
       let lastRecordDate = this.workoutSheets[this.currentSheetIndex].WorkoutRecords[0].Date.split("-");
       this.setPeriod(lastRecordDate[1] + "." + lastRecordDate[0]);
-
-      this.dataTableService.sortByDate(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod);
-
     }
     else{
       this.setPeriod("");
