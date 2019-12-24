@@ -153,7 +153,6 @@ export class WorkoutsPage implements OnInit {
     this.currentSheetIndex = sheetIndex;
 
     let lastRecordDate = this.workoutSheets[this.currentSheetIndex].WorkoutRecords[0].Date.split("-");
-    // this.showPeriods = lastRecordDate[1] + "." + lastRecordDate[0];
     this.setPeriod(lastRecordDate[1] + "." + lastRecordDate[0]);
 
     this.dataTableService.sortByDate(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod);
