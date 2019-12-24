@@ -34,7 +34,7 @@ export class WorkoutsPage implements OnInit {
   public currentSheetIndex = 0;
   public fieldsToFill;
 
-  public showMode = 'table';
+  public showMode = 'chart';
   public showPeriods = [];
 
   public makeColsEditable = false;

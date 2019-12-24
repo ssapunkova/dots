@@ -32,15 +32,28 @@
         <ion-button fill="solid" color="primary" (click)="configureSheet()">
           <ion-icon name="settings"></ion-icon>
         </ion-button>
-        <ion-button fill="solid" color="primary" (click)="addRecord()"
-          disabled="{{ isButtonDisabled.addRecord }}">
-          <ion-icon name="add"></ion-icon>
-        </ion-button>
         <ion-button fill="solid" color="primary" (click)="deleteSheet()">
           <ion-icon name="trash"></ion-icon>
         </ion-button>
       </ion-buttons>
 
+    </ion-toolbar>
+
+    <ion-toolbar>
+      <ion-item>
+        <ion-label>Show records for: </ion-label>
+        <ion-select
+          placeholder="Select period"
+          multiple
+          [(ngModel)]="showPeriods"
+          (ionChange)="setPeriod($event)">
+          <ion-select-option
+            *ngFor="let month of workoutSheets[this.currentSheetIndex].WorkoutMonths"
+            [value]="month">
+              {{ month }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
     </ion-toolbar>
 
     <div id="chart" *ngIf="showMode == 'chart'"  style="height: 100%; overflow-x: scroll; " >
@@ -59,34 +72,12 @@
           legendTitle=""
           showXAxisLabel="false"
           showYAxisLabel="false"
-          (select)="chartService.onSelect($event)"
-          (activate)="chartService.onActivate($event)"
-          (deactivate)="chartService.onDeactivate($event)"
         >
       </ngx-charts-line-chart>
 
     </div>
 
     <ion-grid *ngIf="showMode == 'table'">
-
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label>Show records for: </ion-label>
-            <ion-select
-              placeholder="Select period"
-              multiple
-              [(ngModel)]="showPeriods"
-              (ionChange)="setPeriod($event)">
-              <ion-select-option
-                *ngFor="let month of workoutSheets[this.currentSheetIndex].WorkoutMonths"
-                [value]="month">
-                  {{ month }}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
 
       <ion-row>
         <ion-col
@@ -140,6 +131,22 @@
     </ion-grid>
 
   </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button fill="solid" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="addSheet()"
+        disabled="{{ isButtonDisabled.addSheet }}" data-desc="Workout sheet">
+        <ion-icon name="grid"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="addRecord()"
+        disabled="{{ isButtonDisabled.addRecord }}"  data-desc="Record">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 
 </ion-content>
 
