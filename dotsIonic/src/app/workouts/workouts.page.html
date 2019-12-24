@@ -68,10 +68,30 @@
     </div>
 
     <ion-grid *ngIf="showMode == 'table'">
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Show records for: </ion-label>
+            <ion-select
+              placeholder="Select period"
+              multiple
+              [(ngModel)]="showPeriods"
+              (ionChange)="setPeriod($event)">
+              <ion-select-option
+                *ngFor="let month of workoutSheets[this.currentSheetIndex].WorkoutMonths"
+                [value]="month">
+                  {{ month }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
       <ion-row>
         <ion-col
           title='Date'
-          (click)="dataTableService.sortByDate(workoutSheets[currentSheetIndex].WorkoutRecords)">
+          (click)="dataTableService.sortByDate(workoutSheets[currentSheetIndex].WorkoutRecordsForSelectedPeriod)">
           Date
 
           <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
@@ -81,7 +101,7 @@
         <ion-col
           *ngFor="let col of workoutSheets[currentSheetIndex].Structure; let i = index"
           [title]="col.Title"
-          (click)="dataTableService.sortCol(col, i, workoutSheets[currentSheetIndex].WorkoutRecords)">
+          (click)="dataTableService.sortCol(col, i, workoutSheets[currentSheetIndex].WorkoutRecordsForSelectedPeriod)">
           <ion-label>{{ col.Title }}</ion-label>
           <ion-icon name="arrow-dropup" *ngIf="col.sorted == 'asc'; else arrowDown"></ion-icon>
           <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
@@ -95,35 +115,27 @@
       <ion-item *ngIf="workoutSheets[currentSheetIndex].Structure.length < 1" color="secondary" class="ion-text-center">
         <ion-label>No fields yet. Configure</ion-label>
       </ion-item>
-<!--
-      <ion-card
-        *ngFor="let month of workoutSheets[currentSheetIndex].WorkoutRecordsByMonths; let m = index"> -->
-<!--
-        <ion-card-header color="primary">
-          <ion-label>{{ month.Month }}.{{ month.Year }}</ion-label>
-        </ion-card-header> -->
 
-        <ion-row
-          *ngFor="let record of workoutSheets[currentSheetIndex].WorkoutRecords; let i = index">
-            <ion-item-sliding>
-           <ion-item-options side="start">
-             <ion-item-option color="danger" (click)="deleteRecord(record, i)">Delete</ion-item-option>
-             <ion-item-option color="success" (click)="editRecord(record, i)">Edit</ion-item-option>
-           </ion-item-options>
+      <ion-row
+        *ngFor="let record of workoutSheets[currentSheetIndex].WorkoutRecordsForSelectedPeriod; let i = index">
+          <ion-item-sliding>
+         <ion-item-options side="start">
+           <ion-item-option color="danger" (click)="deleteRecord(record, i)">Delete</ion-item-option>
+           <ion-item-option color="success" (click)="editRecord(record, i)">Edit</ion-item-option>
+         </ion-item-options>
 
-           <ion-item [color]="record.color">
-            <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }}</ion-col>
-            <ion-col *ngFor="let col of workoutSheets[currentSheetIndex].Structure; let j = index" [title]="col.Title">
-              <ion-label *ngIf="col.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
-              <ng-template #showTick>
-                <ion-icon name="checkbox" *ngIf="record.Values[j] == true">d</ion-icon>
-                <ion-icon name="close" *ngIf="record.Values[j] == false">d</ion-icon>
-              </ng-template>
-            </ion-col>
-          </ion-item>
-          </ion-item-sliding>
-        </ion-row>
-      <!-- </ion-card> -->
+         <ion-item [color]="record.color">
+          <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }}</ion-col>
+          <ion-col *ngFor="let col of workoutSheets[currentSheetIndex].Structure; let j = index" [title]="col.Title">
+            <ion-label *ngIf="col.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
+            <ng-template #showTick>
+              <ion-icon name="checkbox" *ngIf="record.Values[j] == true">d</ion-icon>
+              <ion-icon name="close" *ngIf="record.Values[j] == false">d</ion-icon>
+            </ng-template>
+          </ion-col>
+        </ion-item>
+        </ion-item-sliding>
+      </ion-row>
 
     </ion-grid>
 

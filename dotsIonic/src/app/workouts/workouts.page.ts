@@ -35,6 +35,7 @@ export class WorkoutsPage implements OnInit {
   public fieldsToFill;
 
   public showMode = 'table';
+  public showPeriods = [];
 
   public makeColsEditable = false;
 
@@ -67,46 +68,61 @@ export class WorkoutsPage implements OnInit {
     this.workoutsService.getWorkoutSheetsData().subscribe((data: [any])=> {
       this.workoutSheets = data;
 
+      console.log(data);
 
-            console.log(data);
-
-      for(var j = 0; j < this.workoutSheets.length; j++){
-
-        this.workoutSheets[j].WorkoutRecordsByMonths = [];
-
-        let currentSheet = this.workoutSheets[j];
-
-        if(currentSheet.WorkoutRecords.length > 0){
-
-          let currentMonth = currentSheet.WorkoutRecords[0].Date.split("-")[1];
-          let currentYear = currentSheet.WorkoutRecords[0].Date.split("-")[0];
-          let currentMonthIndex = 0;
-          currentSheet.WorkoutRecordsByMonths[0] = { Records: [] };
-          for(var i = 0; i < currentSheet.WorkoutRecords.length; i++){
-            let currentRecordMonth = currentSheet.WorkoutRecords[i].Date.split("-")[1];
-            let currentRecordYear = currentSheet.WorkoutRecords[i].Date.split("-")[0];
-            console.log(currentMonth, currentRecordMonth)
-            if(currentRecordMonth != currentMonth || currentRecordYear != currentYear) {
-              currentMonth = currentRecordMonth;
-              if(currentRecordYear != currentYear){
-                currentYear = currentRecordYear;
-              }
-              currentMonthIndex++;
-              console.log(currentMonthIndex);
-              currentSheet.WorkoutRecordsByMonths[currentMonthIndex] = { Records: [] };
-            }
-            currentSheet.WorkoutRecordsByMonths[currentMonthIndex].Month = currentMonth;
-            currentSheet.WorkoutRecordsByMonths[currentMonthIndex].Year = currentYear;
-            currentSheet.WorkoutRecordsByMonths[currentMonthIndex].Records.push(currentSheet.WorkoutRecords[i]);
-          }
-        }
-
-      }
+      // for(var j = 0; j < this.workoutSheets.length; j++){
+      //
+      //   this.workoutSheets[j].WorkoutRecordsByMonths = [];
+      //
+      //   let currentSheet = this.workoutSheets[j];
+      //
+      //   if(currentSheet.WorkoutRecords.length > 0){
+      //
+      //     let currentMonth = currentSheet.WorkoutRecords[0].Date.split("-")[1];
+      //     let currentYear = currentSheet.WorkoutRecords[0].Date.split("-")[0];
+      //     let currentMonthIndex = 0;
+      //     currentSheet.WorkoutRecordsByMonths[0] = { Records: [] };
+      //     for(var i = 0; i < currentSheet.WorkoutRecords.length; i++){
+      //       let currentRecordMonth = currentSheet.WorkoutRecords[i].Date.split("-")[1];
+      //       let currentRecordYear = currentSheet.WorkoutRecords[i].Date.split("-")[0];
+      //       console.log(currentMonth, currentRecordMonth)
+      //       if(currentRecordMonth != currentMonth || currentRecordYear != currentYear) {
+      //         currentMonth = currentRecordMonth;
+      //         if(currentRecordYear != currentYear){
+      //           currentYear = currentRecordYear;
+      //         }
+      //         currentMonthIndex++;
+      //         console.log(currentMonthIndex);
+      //         currentSheet.WorkoutRecordsByMonths[currentMonthIndex] = { Records: [] };
+      //       }
+      //       currentSheet.WorkoutRecordsByMonths[currentMonthIndex].Month = currentMonth;
+      //       currentSheet.WorkoutRecordsByMonths[currentMonthIndex].Year = currentYear;
+      //       currentSheet.WorkoutRecordsByMonths[currentMonthIndex].Records.push(currentSheet.WorkoutRecords[i]);
+      //     }
+      //   }
+      //
+      // }
 
       console.log(this.workoutSheets);
 
 
       if(this.workoutSheets.length > 0){
+
+        for(var i = 0; i < this.workoutSheets.length; i++){
+
+          let months = [];
+
+          this.workoutSheets[i].WorkoutRecords.forEach((record) => {
+            let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
+            if(months.indexOf(splitDate) < 0){
+              months.push(splitDate);
+            }
+          })
+
+          this.workoutSheets[i].WorkoutMonths = months;
+
+        }
+
         this.openSheet(0);
         if(this.workoutSheets.length == 3) this.isButtonDisabled.addSheet = true;
 
@@ -116,16 +132,31 @@ export class WorkoutsPage implements OnInit {
       }
 
 
-
       this.loadingService.isPageLoading = false;
 
     });
   };
 
+  async setPeriod($event){
+    if(typeof $event == "string"){
+      this.showPeriods = $event;
+    }
+    else{
+      this.showPeriods = $event.target.value;
+    }
+    console.log(this.showPeriods)
+
+    this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod = this.workoutSheets[this.currentSheetIndex].WorkoutRecords.filter((record) => this.showPeriods.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
+  }
+
   async openSheet(sheetIndex){
     this.currentSheetIndex = sheetIndex;
 
-    this.dataTableService.sortByDate(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsByMonths);
+    let lastRecordDate = this.workoutSheets[this.currentSheetIndex].WorkoutRecords[0].Date.split("-");
+    // this.showPeriods = lastRecordDate[1] + "." + lastRecordDate[0];
+    this.setPeriod(lastRecordDate[1] + "." + lastRecordDate[0]);
+
+    this.dataTableService.sortByDate(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod);
 
     if(this.workoutSheets[this.currentSheetIndex].Structure.length > 0){
       this.isButtonDisabled.addRecord = false;

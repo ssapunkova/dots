@@ -15,14 +15,13 @@ export class DataTableService{
   ) { }
 
   // Sort records by date
-  // records - workoutSheets[currentSheetIndex].WorkoutRecords
+  // records - workoutSheets[currentSheetIndex].WorkoutRecordsForSelectedPeriod
 
   async sortByDate(records){
 
     let that = this;
     let result;
 
-    // sort months
     records.sort(function(a, b){
       let aValue = new Date(a.Date).getTime();
       let bValue = new Date(b.Date).getTime();
@@ -36,20 +35,6 @@ export class DataTableService{
       return result;
     })
 
-      // // substract b's date from a's date to compare them
-      // records.sort(function(a, b){
-      //   let aValue = new Date(a.Date).getTime();
-      //   let bValue = new Date(b.Date).getTime();
-      //
-      //   if(that.sortedByDate == "desc"){
-      //     result = aValue - bValue;
-      //   }
-      //   else{
-      //     result = bValue - aValue;
-      //   }
-      //   return result;
-      // });
-
     // Set new sortedByDate value
     if(this.sortedByDate == "asc") this.sortedByDate = "desc";
     else this.sortedByDate = "asc";
@@ -59,10 +44,10 @@ export class DataTableService{
   // Sort records by values asc or desc
   // col - for accessing "sorted" value ( has field been sorted asc or desc )
   // colIndex - access the correct value in Values array of the records
-  // records - workoutSheets[currentSheetIndex].WorkoutRecords
+  // records - workoutSheets[currentSheetIndex].WorkoutRecordsForSelectedPeriod
 
   async sortCol(col, colIndex, records){
-    console.log(col, colIndex);
+
     let that = this;
     let result;
 
