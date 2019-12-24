@@ -143,6 +143,8 @@ export class WorkoutsPage implements OnInit {
     console.log(this.showPeriods)
 
     this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod = this.workoutSheets[this.currentSheetIndex].WorkoutRecords.filter((record) => this.showPeriods.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
+
+    this.chartService.formatChartData(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod, this.workoutSheets[this.currentSheetIndex].Structure);
   }
 
   async openSheet(sheetIndex){
@@ -153,7 +155,7 @@ export class WorkoutsPage implements OnInit {
       this.setPeriod(lastRecordDate[1] + "." + lastRecordDate[0]);
 
       this.dataTableService.sortByDate(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod);
-      this.chartService.formatChartData(this.workoutSheets[this.currentSheetIndex].WorkoutRecords, this.workoutSheets[this.currentSheetIndex].Structure);
+
     }
     else{
       this.setPeriod("");
