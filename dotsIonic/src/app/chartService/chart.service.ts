@@ -23,7 +23,7 @@ export class ChartService{
 
   async formatChartData(data, columns){
 
-    console.log(data);
+    // console.log(data);
 
     let formatted = [];
     let registeredCols = [];
@@ -55,9 +55,7 @@ export class ChartService{
 
     this.chartData = formatted;
 
-    console.log(this.chartData);
-    console.log(formatted);
-
+    // console.log(this.chartData);
     this.chartWidth = this.chartData[0].series.length * 150;
 
 
