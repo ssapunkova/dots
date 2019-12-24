@@ -125,10 +125,6 @@ export class WorkoutsPage implements OnInit {
 
         this.openSheet(0);
         if(this.workoutSheets.length == 3) this.isButtonDisabled.addSheet = true;
-
-        if(this.workoutSheets[this.currentSheetIndex].WorkoutRecords.length > 0){
-          this.chartService.formatChartData(this.workoutSheets[this.currentSheetIndex].WorkoutRecords, this.workoutSheets[this.currentSheetIndex].Structure);
-        }
       }
 
 
@@ -152,10 +148,17 @@ export class WorkoutsPage implements OnInit {
   async openSheet(sheetIndex){
     this.currentSheetIndex = sheetIndex;
 
-    let lastRecordDate = this.workoutSheets[this.currentSheetIndex].WorkoutRecords[0].Date.split("-");
-    this.setPeriod(lastRecordDate[1] + "." + lastRecordDate[0]);
+    if(this.workoutSheets[this.currentSheetIndex].WorkoutRecords.length > 0){
+      let lastRecordDate = this.workoutSheets[this.currentSheetIndex].WorkoutRecords[0].Date.split("-");
+      this.setPeriod(lastRecordDate[1] + "." + lastRecordDate[0]);
 
-    this.dataTableService.sortByDate(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod);
+      this.dataTableService.sortByDate(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod);
+      this.chartService.formatChartData(this.workoutSheets[this.currentSheetIndex].WorkoutRecords, this.workoutSheets[this.currentSheetIndex].Structure);
+    }
+    else{
+      this.setPeriod("");
+      this.chartService.chartData = null;
+    }
 
     if(this.workoutSheets[this.currentSheetIndex].Structure.length > 0){
       this.isButtonDisabled.addRecord = false;

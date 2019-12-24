@@ -98,3 +98,7 @@ ion-fab-button::after{
   padding-left: 7px;
   padding-right: 7px;
 }
+
+ion-tab-button{
+  --color-selected: var(--ion-color-primary-shade);
+}
