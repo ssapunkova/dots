@@ -23,6 +23,11 @@ export class TimeAndDateService{
     return seconds;
   }
 
+  async formatDate(date){
+    let splitDate = date.split("-");
+    return splitDate[2] + "." + splitDate[1];
+  }
+
   async sortByDate(array, direction){
 
     let that = this;

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { TimeAndDateService } from '../timeAndDateService/timeAndDate.service';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
@@ -18,7 +20,8 @@ export class ChartService{
   };
 
   constructor(
-    public ngxChartsModule: NgxChartsModule
+    public ngxChartsModule: NgxChartsModule,
+    public timeAndDateService: TimeAndDateService
   ){ }
 
   async formatChartData(data, columns){
@@ -32,6 +35,7 @@ export class ChartService{
       let record = data[j];
 
       for(var i = 0; i < record.Values.length; i++){
+        let date = await this.timeAndDateService.formatDate(record.Date);
         let currentCollumn = columns[i].Title;
         let currentColIndex = registeredCols.indexOf(currentCollumn);
         if(currentColIndex < 0){
@@ -44,7 +48,7 @@ export class ChartService{
         }
 
         formatted[currentColIndex].series.push({
-          "name": record.Date,
+          "name": date,
           "value": parseFloat(record.Values[i])
         })
 
