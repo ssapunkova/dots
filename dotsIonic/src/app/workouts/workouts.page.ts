@@ -29,7 +29,7 @@ import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
 @Injectable()
 export class WorkoutsPage implements OnInit {
 
-  const MAX_SHEETS_NUMBER = 3;
+  public MAX_SHEETS_NUMBER = 3;
 
   public workoutSheets = [];
   public currentSheetIndex = 0;
@@ -112,7 +112,7 @@ export class WorkoutsPage implements OnInit {
     if($event == "" || $event.target.value.length < 1){
       // case 1, set showPeriod to the latest
       let lastRecordDate = this.workoutSheets[this.currentSheetIndex].WorkoutRecords[0].Date.split("-");
-      this.showPeriods = lastRecordDate[1] + "." + lastRecordDate[0];
+      this.showPeriods = [lastRecordDate[1] + "." + lastRecordDate[0]];
     }
     else{
       // case 2, use selected periods from ion-select

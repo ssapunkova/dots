@@ -12,7 +12,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 @Injectable()
 export class ChartService{
 
-  const RECORD_WIDTH = 100;
+  public RECORD_WIDTH = 100;
 
   public chartData;
   public chartWidth;

@@ -6,7 +6,7 @@ import { ConnectToServerService } from '../connectToServerService/connect.servic
 @Injectable({
   providedIn: 'root'
 })
-export class WorkoutsService {
+export class WorkoutSheetService {
 
   constructor(
       public http: HttpClient,

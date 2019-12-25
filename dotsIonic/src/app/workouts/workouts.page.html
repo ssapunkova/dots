@@ -5,14 +5,6 @@
     </ion-buttons>
     <ion-title>Workouts</ion-title>
 
-    <ion-buttons slot="secondary">
-      <ion-icon name="grid"></ion-icon>
-      <ion-toggle checked
-        (click)="showMode == 'chart' ? showMode = 'table' : showMode = 'chart'"></ion-toggle>
-        <ion-icon name="podium"></ion-icon>
-
-    </ion-buttons>
-
   </ion-toolbar>
 </ion-header>
 
@@ -24,143 +16,36 @@
       <ion-label>No workout sheets yet</ion-label>
     </ion-item>
 
-    <ion-item *ngIf="workoutSheets[currentSheetIndex].WorkoutRecords.length < 1" color="secondary" class="ion-text-center">
-      <ion-label>No workout records yet</ion-label>
-    </ion-item>
+    <ion-grid *ngIf="workoutSheets.length > 0">
 
-    <ion-item *ngIf="workoutSheets[currentSheetIndex].Structure.length < 1" color="secondary" class="ion-text-center">
-      <ion-label>No fields yet. Configure</ion-label>
-    </ion-item>
+      <ion-row>
 
-    <div *ngIf="workoutSheets[currentSheetIndex].Structure.length > 0">
+        <ion-col *ngFor="let sheet of workoutSheets" size="12" size-sm>
 
-      <ion-toolbar>
-        <ion-item slot="primary">
-          <ion-label>Show records for: </ion-label>
-          <ion-select
-            placeholder="Select period"
-            multiple
-            [(ngModel)]="showPeriods"
-            (ionChange)="setPeriod($event)">
-            <ion-select-option
-              *ngFor="let month of workoutSheets[this.currentSheetIndex].WorkoutMonths"
-              [value]="month">
-                {{ month }}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
+          <ion-card [routerDirection]="'root'" routerLink="/workoutSheet/{{sheet._id}}">
 
-        <ion-buttons slot="secondary">
-          <ion-button fill="solid" color="primary" (click)="configureSheet()">
-            <ion-icon name="settings"></ion-icon>
-          </ion-button>
-          <ion-button fill="solid" color="primary" (click)="deleteSheet()">
-            <ion-icon name="trash"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
+            <ion-card-header>
+              <ion-card-title>{{ sheet.Title }}</ion-card-title>
+              <ion-card-subtitle>{{ sheet.WorkoutRecords.length }} records</ion-card-subtitle>
+            </ion-card-header>
 
-      <div  style="height: 100%; overflow-x: scroll; ">
+            <ion-card-content>
+              <h1>58%</h1>
+            </ion-card-content>
 
-          <ngx-charts-line-chart *ngIf="showMode == 'chart'"
-            [view]="[chartService.chartWidth, 300]"
-            [results]="chartService.chartData"
-            [scheme]="chartService.colorScheme"
-            schemeType="ordinal"
-            [gradient]="false"
-            showDataLabel="true"
-            xAxis="false"
-            yAxis="true"
-            legend="true"
-            legendPosition="below"
-            legendTitle=""
-            showXAxisLabel="false"
-            showYAxisLabel="false"
-          >
-        </ngx-charts-line-chart>
+          </ion-card>
 
-        <ion-grid *ngIf="showMode == 'table'" [style.width.px]="chartService.chartWidth">
+        </ion-col>
 
-          <ion-row>
-            <ion-col
-              title='Date'
-              (click)="dataTableService.sortByDate(workoutSheets[currentSheetIndex].WorkoutRecordsForSelectedPeriod)">
-              Date
+      </ion-row>
 
-              <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
-              <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
-            </ion-col>
-
-            <ion-col
-              *ngFor="let col of workoutSheets[currentSheetIndex].Structure; let i = index"
-              [title]="col.Title"
-              (click)="dataTableService.sortCol(col, i, workoutSheets[currentSheetIndex].WorkoutRecordsForSelectedPeriod)">
-              <ion-label>{{ col.Title }}</ion-label>
-              <ion-icon name="arrow-dropup" *ngIf="col.sorted == 'asc'; else arrowDown"></ion-icon>
-              <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
-            </ion-col>
-          </ion-row>
-
-          <ion-row
-            *ngFor="let record of workoutSheets[currentSheetIndex].WorkoutRecordsForSelectedPeriod; let i = index">
-              <ion-item-sliding>
-             <ion-item-options side="start">
-               <ion-item-option color="danger" (click)="deleteRecord(record, i)">Delete</ion-item-option>
-               <ion-item-option color="success" (click)="editRecord(record, i)">Edit</ion-item-option>
-             </ion-item-options>
-
-             <ion-item [color]="record.color">
-              <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }}</ion-col>
-              <ion-col *ngFor="let col of workoutSheets[currentSheetIndex].Structure; let j = index" [title]="col.Title">
-                <ion-label *ngIf="col.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
-                <ng-template #showTick>
-                  <ion-icon name="checkbox" *ngIf="record.Values[j] == true">d</ion-icon>
-                  <ion-icon name="close" *ngIf="record.Values[j] == false">d</ion-icon>
-                </ng-template>
-              </ion-col>
-            </ion-item>
-            </ion-item-sliding>
-          </ion-row>
-
-        </ion-grid>
-
-      </div>
-
-    </div>
+    </ion-grid>
 
   </div>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-
-    <ion-fab-button fill="solid" color="primary">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button (click)="addSheet()"
-        disabled="{{ isButtonDisabled.addSheet }}" data-desc="Workout sheet">
-        <ion-icon name="grid"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button (click)="addRecord()"
-        disabled="{{ isButtonDisabled.addRecord }}"  data-desc="Record">
-        <ion-icon name="checkmark"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
 
 </ion-content>
 
 <ion-footer>
-
-  <ion-tab-bar>
-    <ion-tab-button
-      *ngFor="let sheet of workoutSheets; let i = index"
-      (click)="openSheet(i)"
-      [selected]="i == currentSheetIndex">
-      <ion-icon name="grid"></ion-icon>
-      <ion-label>{{ sheet.Title }}</ion-label>
-    </ion-tab-button>
-
-  </ion-tab-bar>
 
 
 </ion-footer>

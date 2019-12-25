@@ -13,8 +13,7 @@ import { ToastService } from '../toastService/toast.service';
 import { DataTableService } from '../dataTableService/dataTable.service';
 import { TimeAndDateService } from '../timeAndDateService/timeAndDate.service';
 import { ChartService } from '../chartService/chart.service';
-
-import { WorkoutsService } from './workouts.service';
+import { WorkoutSheetService } from './workoutSheet.service';
 
 import { SheetConfigurationPage } from './sheetConfiguration/sheetConfiguration.page';
 import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
@@ -22,14 +21,14 @@ import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
 
 @Component({
   selector: 'app-workouts',
-  templateUrl: './workouts.page.html',
-  styleUrls: ['./workouts.page.scss']
+  templateUrl: './workoutSheet.page.html',
+  styleUrls: ['./workoutSheet.page.scss']
 })
 
 @Injectable()
-export class WorkoutsPage implements OnInit {
+export class WorkoutSheetPage implements OnInit {
 
-  const MAX_SHEETS_NUMBER = 3;
+  public MAX_SHEETS_NUMBER = 3;
 
   public workoutSheets = [];
   public currentSheetIndex = 0;
@@ -49,10 +48,10 @@ export class WorkoutsPage implements OnInit {
     public connectToServerService: ConnectToServerService,
     public loadingService: LoadingService,
     public toastService: ToastService,
-    public workoutsService: WorkoutsService,
     public timeAndDateService: TimeAndDateService,
     public alertController: AlertController,
     public modalController: ModalController,
+    public workoutSheetService: WorkoutSheetService,
     public dataTableService: DataTableService,
     public chartService: ChartService,
     public ngxChartsModule: NgxChartsModule
@@ -65,7 +64,7 @@ export class WorkoutsPage implements OnInit {
 
   async getSheets(){
 
-    this.workoutsService.getWorkoutSheetsData().subscribe((data: [any])=> {
+    this.workoutSheetService.getWorkoutSheetsData().subscribe((data: [any])=> {
 
       // Get data about all sheets
       this.workoutSheets = data;
@@ -112,7 +111,7 @@ export class WorkoutsPage implements OnInit {
     if($event == "" || $event.target.value.length < 1){
       // case 1, set showPeriod to the latest
       let lastRecordDate = this.workoutSheets[this.currentSheetIndex].WorkoutRecords[0].Date.split("-");
-      this.showPeriods = lastRecordDate[1] + "." + lastRecordDate[0];
+      this.showPeriods = [lastRecordDate[1] + "." + lastRecordDate[0]];
     }
     else{
       // case 2, use selected periods from ion-select
@@ -188,7 +187,7 @@ export class WorkoutsPage implements OnInit {
       this.loadingService.presentSmallLoading("Saving changes");
 
       // Update sheet data and reloat sheets
-      this.workoutsService.updateSheetConfiguration(modalData).subscribe((data: [any])=>
+      this.workoutSheetService.updateSheetConfiguration(modalData).subscribe((data: [any])=>
         {
           this.getSheets();
           this.loadingService.dismissSmallLoading();
@@ -237,7 +236,7 @@ export class WorkoutsPage implements OnInit {
               else{
                 // If sheet title is fine, add sheet to database
                 this.loadingService.presentSmallLoading("Creating sheet");
-                this.workoutsService.createSheet(data).subscribe((data: [any])=>
+                this.workoutSheetService.createSheet(data).subscribe((data: [any])=>
                   {
                     console.log(data)
                     this.workoutSheets.push(data);
@@ -293,7 +292,7 @@ export class WorkoutsPage implements OnInit {
               let deletedIndex = this.currentSheetIndex;
 
               // Send request to delete sheet from database
-              this.workoutsService.deleteSheet(this.workoutSheets[deletedIndex]._id).subscribe((data: [any])=>
+              this.workoutSheetService.deleteSheet(this.workoutSheets[deletedIndex]._id).subscribe((data: [any])=>
                 {
                   // Delete sheet from workoutSheets
                   this.workoutSheets.splice(deletedIndex, 1);
@@ -338,7 +337,7 @@ export class WorkoutsPage implements OnInit {
     if(modalData != null){
 
       // Add record to database
-      this.workoutsService.addRecord(modalData).subscribe((data: any)=>
+      this.workoutSheetService.addRecord(modalData).subscribe((data: any)=>
         {
           console.log(data);
 
@@ -396,7 +395,7 @@ export class WorkoutsPage implements OnInit {
       this.colorSplashRow(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod[rowIndex]);
 
       // Sent a request for editing the record
-      this.workoutsService.editRecord(modalData).subscribe((data: any)=>
+      this.workoutSheetService.editRecord(modalData).subscribe((data: any)=>
         {
           // deletedDocs > 0 means the edited record overrode an older one with the same date
           if(data.deletedDocs > 0){
@@ -429,7 +428,7 @@ export class WorkoutsPage implements OnInit {
 
             // Remove from WorkoutRecords
             this.workoutSheets[this.currentSheetIndex].WorkoutRecords.splice(rowIndex, 1);
-            this.workoutsService.deleteRecord(record._id).subscribe((data: [any])=>
+            this.workoutSheetService.deleteRecord(record._id).subscribe((data: [any])=>
               {
                 this.openSheet(this.currentSheetIndex);
               },

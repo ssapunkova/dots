@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { WorkoutsPage } from './workouts/workouts.page'
+import { WorkoutSheetPage } from './workoutSheet/workoutSheet.page'
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: 'workouts',
     loadChildren: () => import('./workouts/workouts.module').then(m => m.WorkoutsPageModule)
+  },
+  {
+    path: 'workoutSheet',
+    loadChildren: () => import('./workoutSheet/workoutSheet.module').then(m => m.WorkoutSheetPageModule)
   }
 ];
 
