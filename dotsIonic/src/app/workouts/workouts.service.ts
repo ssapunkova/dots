@@ -53,7 +53,6 @@ export class WorkoutsService {
   }
 
   public deleteRecord(recordId){
-    console.log(recordId);
     return this.http.post(
       this.connectToServerService.serverUrl + '/deleteWorkoutRecord',
       {recordId: recordId}

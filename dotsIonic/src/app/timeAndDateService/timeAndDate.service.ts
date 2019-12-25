@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 // TimeAndDate Service
-// Implements converting time formats
+// Implements converting time and date formats, sorting by date
 
 @Injectable()
 export class TimeAndDateService{
@@ -11,7 +11,6 @@ export class TimeAndDateService{
 
   // Converts time format hh:mm:ss to seconds
   // Example: 02:10 -> 130
-
   getSeconds(string){
     let seconds = 0;
     let split = string.split(":");
@@ -23,11 +22,14 @@ export class TimeAndDateService{
     return seconds;
   }
 
+  // Formats date dd.mm
   async formatDate(date){
     let splitDate = date.split("-");
     return splitDate[2] + "." + splitDate[1];
   }
 
+  // Sorts array of json objects by date
+  // direction can be asc and desc
   async sortByDate(array, direction){
 
     let that = this;

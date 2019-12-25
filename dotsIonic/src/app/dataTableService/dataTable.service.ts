@@ -16,7 +16,6 @@ export class DataTableService{
 
   // Sort records by date
   // records - workoutSheets[currentSheetIndex].WorkoutRecordsForSelectedPeriod
-
   async sortByDate(records){
 
     let that = this;
@@ -34,7 +33,6 @@ export class DataTableService{
     }
 
   }
-
 
   // Sort records by values asc or desc
   // col - for accessing "sorted" value ( has field been sorted asc or desc )
