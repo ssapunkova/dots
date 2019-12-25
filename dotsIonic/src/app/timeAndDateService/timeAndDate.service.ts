@@ -23,4 +23,24 @@ export class TimeAndDateService{
     return seconds;
   }
 
+  async sortByDate(array, direction){
+
+    let that = this;
+    let result;
+
+    array.sort(function(a, b){
+      let aValue = new Date(a.Date).getTime();
+      let bValue = new Date(b.Date).getTime();
+
+      if(direction == "desc"){
+        result = aValue - bValue;
+      }
+      else{
+        result = bValue - aValue;
+      }
+      return result;
+    })
+
+  }
+
 }

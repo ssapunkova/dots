@@ -22,22 +22,17 @@ export class DataTableService{
     let that = this;
     let result;
 
-    records.sort(function(a, b){
-      let aValue = new Date(a.Date).getTime();
-      let bValue = new Date(b.Date).getTime();
-
-      if(that.sortedByDate == "desc"){
-        result = aValue - bValue;
-      }
-      else{
-        result = bValue - aValue;
-      }
-      return result;
-    })
-
+    // Sort records using TimeAndDateService
     // Set new sortedByDate value
-    if(this.sortedByDate == "asc") this.sortedByDate = "desc";
-    else this.sortedByDate = "asc";
+    if(that.sortedByDate == "asc"){
+      this.timeAndDateService.sortByDate(records, "desc");
+      this.sortedByDate = "desc";
+    }
+    else{
+      this.timeAndDateService.sortByDate(records, "asc");
+      this.sortedByDate = "asc";
+    }
+
   }
 
 
