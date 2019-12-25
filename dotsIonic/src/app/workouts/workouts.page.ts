@@ -110,6 +110,7 @@ export class WorkoutsPage implements OnInit {
     else{
       this.showPeriods = $event.target.value;
     }
+    console.log("setting period");
     console.log(this.showPeriods);
 
 
@@ -124,10 +125,12 @@ export class WorkoutsPage implements OnInit {
   async openSheet(sheetIndex){
     this.currentSheetIndex = sheetIndex;
 
-    this.setPeriod("");
+    // Sort data in case it has changed since last sorting
+    this.timeAndDateService.sortByDate(this.workoutSheets[this.currentSheetIndex].WorkoutRecords, "asc");
 
     if(this.workoutSheets[this.currentSheetIndex].Structure.length > 0){
       this.isButtonDisabled.addRecord = false;
+      this.setPeriod("");
     }
     else{
       this.isButtonDisabled.addRecord = true;
@@ -314,13 +317,13 @@ export class WorkoutsPage implements OnInit {
 
     if(modalData != null){
 
-      this.workoutSheets[this.currentSheetIndex].WorkoutRecords.push(modalData);
+
+
       this.workoutsService.addRecord(modalData).subscribe((data: any)=>
         {
           console.log(data);
-          if(data.modifiedDocs == 1){
-            this.getSheets();
-          }
+          this.workoutSheets[this.currentSheetIndex].WorkoutRecords.push(data);
+          this.openSheet(this.currentSheetIndex);
         },
         error => {
           this.showErrorAlert("Oups")
@@ -348,12 +351,12 @@ export class WorkoutsPage implements OnInit {
     modalData = modalData.data;
 
     if(modalData != null){
-      this.workoutSheets[this.currentSheetIndex].WorkoutRecords[rowIndex] = modalData;
-      this.workoutSheets[this.currentSheetIndex].WorkoutRecords[rowIndex].color = "primary";
+      this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod[rowIndex] = modalData;
+      this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod[rowIndex].color = "primary";
 
       let that = this;
       setTimeout(function(){
-        delete that.workoutSheets[that.currentSheetIndex].WorkoutRecords[rowIndex].color;
+        delete that.workoutSheets[that.currentSheetIndex].WorkoutRecordsForSelectedPeriod[rowIndex].color;
       }, 500);
       this.workoutsService.editRecord(modalData).subscribe((data: any)=>
         {
@@ -387,7 +390,7 @@ export class WorkoutsPage implements OnInit {
             this.workoutSheets[this.currentSheetIndex].WorkoutRecords.splice(rowIndex, 1);
             this.workoutsService.deleteRecord(record._id).subscribe((data: [any])=>
               {
-                // Expect { message: "success" }
+                this.openSheet(this.currentSheetIndex);
               },
               error => {
                 this.showErrorAlert("Oups")

@@ -125,7 +125,10 @@ app.post("/addWorkoutRecord", function(req, res){
     }, { upsert: true }, function(err, docs){
       if(err) throw err;
       console.log(docs)
-      res.send({ modifiedDocs: docs.nModified });
+      if(docs.upserted[0]._id != undefined){
+        record._id = docs.upserted[0]._id;
+      }
+      res.send(record);
     })
 
     // record = new WorkoutRecord(record);
