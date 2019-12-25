@@ -29,16 +29,11 @@ import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
 @Injectable()
 export class WorkoutsPage implements OnInit {
 
-  public chartH = 1000;
-
   public workoutSheets = [];
   public currentSheetIndex = 0;
-  public fieldsToFill;
 
   public showMode = 'chart';
   public showPeriods = [];
-
-  public makeColsEditable = false;
 
   public isButtonDisabled = {
     addSheet: false,
@@ -97,6 +92,8 @@ export class WorkoutsPage implements OnInit {
 
 
       this.loadingService.isPageLoading = false;
+
+      this.loadingService.dismissSmallLoading();
 
     });
   };
@@ -336,7 +333,7 @@ export class WorkoutsPage implements OnInit {
           console.log(data);
 
           if(data.docs.nModified > 0){
-            this.showAlert("Edititng existing record with date " + modalData.Date + "");
+            this.loadingService.presentSmallLoading("Saving changes...");
             this.getSheets();
           }
           else{
@@ -388,7 +385,7 @@ export class WorkoutsPage implements OnInit {
       this.workoutsService.editRecord(modalData).subscribe((data: any)=>
         {
           if(data.deletedDocs == 1){
-            this.showAlert("Edititng existing record with date " + modalData.Date + "");
+            this.loadingService.presentSmallLoading("Saving changes...");
             this.getSheets();
           }
         },
