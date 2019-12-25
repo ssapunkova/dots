@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Workouts</ion-title>
+    <ion-title>Workout sheet</ion-title>
 
     <ion-buttons slot="secondary">
       <ion-icon name="grid"></ion-icon>
@@ -148,19 +148,3 @@
   </ion-fab>
 
 </ion-content>
-
-<ion-footer>
-
-  <ion-tab-bar>
-    <ion-tab-button
-      *ngFor="let sheet of workoutSheets; let i = index"
-      (click)="openSheet(i)"
-      [selected]="i == currentSheetIndex">
-      <ion-icon name="grid"></ion-icon>
-      <ion-label>{{ sheet.Title }}</ion-label>
-    </ion-tab-button>
-
-  </ion-tab-bar>
-
-
-</ion-footer>
