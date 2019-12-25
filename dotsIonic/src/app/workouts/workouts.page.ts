@@ -99,10 +99,10 @@ export class WorkoutsPage implements OnInit {
 
   async setPeriod($event){
     if(typeof $event == "string"){
-      this.showPeriods = $event;
+      this.showPeriods = [$event];
     }
     else{
-      this.showPeriods = $event.target.value;
+      this.showPeriods = [$event.target.value];
     }
     console.log(this.showPeriods);
 
