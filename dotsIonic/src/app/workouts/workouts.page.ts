@@ -137,6 +137,20 @@ export class WorkoutsPage implements OnInit {
     }
   }
 
+  async showAlert(message){
+    this.loadingService.dismissSmallLoading();
+    let alert = await this.alertController.create({
+      header: message,
+      buttons: [
+        {
+          text: 'Ok'
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   async showErrorAlert(message){
 
     this.loadingService.dismissSmallLoading();
@@ -317,19 +331,35 @@ export class WorkoutsPage implements OnInit {
 
     if(modalData != null){
 
-
-
       this.workoutsService.addRecord(modalData).subscribe((data: any)=>
         {
           console.log(data);
-          this.workoutSheets[this.currentSheetIndex].WorkoutRecords.push(data);
-          this.openSheet(this.currentSheetIndex);
+
+          if(data.docs.nModified > 0){
+            this.showAlert("Edititng existing record with date " + modalData.Date + "");
+            this.getSheets();
+          }
+          else{
+            this.workoutSheets[this.currentSheetIndex].WorkoutRecords.push(data.record);
+            this.openSheet(this.currentSheetIndex);
+            this.colorSplashRow(this.workoutSheets[this.currentSheetIndex].WorkoutRecords[0]);
+          }
+
+
         },
         error => {
           this.showErrorAlert("Oups")
         }
       );
     };
+  }
+
+  async colorSplashRow(row){
+    row.color = "primary";
+    let that = this;
+    setTimeout(function(){
+      delete row.color;
+    }, 500);
   }
 
   async editRecord(record, rowIndex){
@@ -352,15 +382,13 @@ export class WorkoutsPage implements OnInit {
 
     if(modalData != null){
       this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod[rowIndex] = modalData;
-      this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod[rowIndex].color = "primary";
 
-      let that = this;
-      setTimeout(function(){
-        delete that.workoutSheets[that.currentSheetIndex].WorkoutRecordsForSelectedPeriod[rowIndex].color;
-      }, 500);
+      this.colorSplashRow(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod[rowIndex]);
+
       this.workoutsService.editRecord(modalData).subscribe((data: any)=>
         {
           if(data.deletedDocs == 1){
+            this.showAlert("Edititng existing record with date " + modalData.Date + "");
             this.getSheets();
           }
         },
