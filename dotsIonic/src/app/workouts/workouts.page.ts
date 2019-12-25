@@ -92,7 +92,7 @@ export class WorkoutsPage implements OnInit {
         }
 
         // Disable adding a new sheet if there are MAX_SHEETS_NUMBER already
-        if(this.workoutSheets.length == MAX_SHEETS_NUMBER) this.isButtonDisabled.addSheet = true;
+        if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.isButtonDisabled.addSheet = true;
 
         // Open the first sheet
         this.openSheet(0);
@@ -244,7 +244,7 @@ export class WorkoutsPage implements OnInit {
                     this.loadingService.dismissSmallLoading();
 
                     // If reached MAX_SHEETS_NUMBER, disable adding new sheets
-                    if(this.workoutSheets.length == MAX_SHEETS_NUMBER) this.isButtonDisabled.addSheet = true;
+                    if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.isButtonDisabled.addSheet = true;
                   },
                   error => {
                     this.showErrorAlert("Oups")
