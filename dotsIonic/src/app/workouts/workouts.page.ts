@@ -11,6 +11,7 @@ import { ConnectToServerService } from '../connectToServerService/connect.servic
 import { LoadingService } from '../loadingService/loading.service';
 import { ToastService } from '../toastService/toast.service';
 import { DataTableService } from '../dataTableService/dataTable.service';
+import { TimeAndDateService } from '../timeAndDateService/timeAndDate.service';
 import { ChartService } from '../chartService/chart.service';
 
 import { WorkoutsService } from './workouts.service';
@@ -52,6 +53,7 @@ export class WorkoutsPage implements OnInit {
     public loadingService: LoadingService,
     public toastService: ToastService,
     public workoutsService: WorkoutsService,
+    public timeAndDateService: TimeAndDateService,
     public alertController: AlertController,
     public modalController: ModalController,
     public dataTableService: DataTableService,
@@ -76,6 +78,8 @@ export class WorkoutsPage implements OnInit {
 
           let months = [];
 
+          this.timeAndDateService.sortByDate(this.workoutSheets[i].WorkoutRecords, "asc");
+
           this.workoutSheets[i].WorkoutRecords.forEach((record) => {
             let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
             if(months.indexOf(splitDate) < 0){
@@ -98,30 +102,29 @@ export class WorkoutsPage implements OnInit {
   };
 
   async setPeriod($event){
-    if(typeof $event == "string"){
-      this.showPeriods = [$event];
+
+    if($event == "" || $event.target.value.length < 1){
+      let lastRecordDate = this.workoutSheets[this.currentSheetIndex].WorkoutRecords[0].Date.split("-");
+      this.showPeriods = lastRecordDate[1] + "." + lastRecordDate[0];
     }
     else{
-      this.showPeriods = [$event.target.value];
+      this.showPeriods = $event.target.value;
     }
     console.log(this.showPeriods);
 
+
     this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod = this.workoutSheets[this.currentSheetIndex].WorkoutRecords.filter((record) => this.showPeriods.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
 
+    console.log(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod)
+
     this.chartService.formatChartData(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod, this.workoutSheets[this.currentSheetIndex].Structure);
+
   }
 
   async openSheet(sheetIndex){
     this.currentSheetIndex = sheetIndex;
 
-    if(this.workoutSheets[this.currentSheetIndex].WorkoutRecords.length > 0){
-      let lastRecordDate = this.workoutSheets[this.currentSheetIndex].WorkoutRecords[0].Date.split("-");
-      this.setPeriod(lastRecordDate[1] + "." + lastRecordDate[0]);
-    }
-    else{
-      this.setPeriod("");
-      this.chartService.chartData = null;
-    }
+    this.setPeriod("");
 
     if(this.workoutSheets[this.currentSheetIndex].Structure.length > 0){
       this.isButtonDisabled.addRecord = false;
