@@ -28,7 +28,12 @@ import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
 @Injectable()
 export class WorkoutSheetPage implements OnInit {
 
-  public sheetData = [];
+  public sheetData = {
+    _id: null,
+    Title: "",
+    Structure: [],
+    WorkoutRecords: []
+  };
   public currentSheetIndex = 0;
 
   public showMode = 'chart';
@@ -69,12 +74,11 @@ export class WorkoutSheetPage implements OnInit {
     this.workoutSheetService.getWorkoutSheetData(this.sheetData._id).subscribe((data: [any])=> {
 
       // Get data about all sheets
-      this.sheetData = data;
+      this.sheetData = data[0];
       console.log(this.sheetData);
 
 
       // Sort records and get workout periods
-
 
       let months = [];
       this.timeAndDateService.sortByDate(this.sheetData.WorkoutRecords, "asc");

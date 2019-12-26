@@ -22,7 +22,7 @@ import { TimeAndDateService } from './timeAndDateService/timeAndDate.service';
 import { ChartService } from './chartService/chart.service';
 
 import { SheetConfigurationPage } from './workouts/sheetConfiguration/sheetConfiguration.page';
-import { NewWorkoutRecordPage } from './workouts/newWorkoutRecord/newWorkoutRecord.page';
+import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkoutRecord.page';
 
 @NgModule({
   declarations: [
