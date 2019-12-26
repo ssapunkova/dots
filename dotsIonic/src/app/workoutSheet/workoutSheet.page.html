@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>Workout sheet</ion-title>
 
-    <ion-buttons slot="secondary">
+    <ion-buttons slot="end">
       <ion-icon name="grid"></ion-icon>
       <ion-toggle checked
         (click)="showMode == 'chart' ? showMode = 'table' : showMode = 'chart'"></ion-toggle>
@@ -44,26 +44,30 @@
       </ion-item>
     </ion-toolbar>
 
-    <div style="height: 100%; overflow-x: scroll; ">
+    <div style="height: 100%; overflow-x: auto; widht: 100%">
 
-      <ngx-charts-line-chart *ngIf="showMode == 'chart'"
-          [view]="[chartService.chartWidth, 300]"
-          [results]="chartService.chartData"
-          [scheme]="chartService.colorScheme"
-          schemeType="ordinal"
-          [gradient]="false"
-          showDataLabel="true"
-          xAxis="false"
-          yAxis="true"
-          legend="true"
-          legendPosition="below"
-          legendTitle=""
-          showXAxisLabel="false"
-          showYAxisLabel="false"
-        >
-      </ngx-charts-line-chart>
+      <div *ngIf="showMode == 'chart'" style="width: 100%; height: 300px;" [style.minWidth.px]="chartService.chartWidth">
 
-      <ion-grid *ngIf="showMode == 'table'" [style.width.px]="chartService.chartWidth">
+        <ngx-charts-line-chart 
+            [view]="view"
+            [results]="chartService.chartData"
+            [scheme]="chartService.colorScheme"
+            schemeType="ordinal"
+            [gradient]="false"
+            showDataLabel="true"
+            xAxis="false"
+            yAxis="true"
+            legend="true"
+            legendPosition="below"
+            legendTitle=""
+            showXAxisLabel="false"
+            showYAxisLabel="false"
+          >
+        </ngx-charts-line-chart>
+
+      </div>
+
+      <ion-grid *ngIf="showMode == 'table'" [style.minWidth.px]="chartService.chartWidth">
 
         <ion-row>
           <ion-col

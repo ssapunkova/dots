@@ -230,7 +230,7 @@ export class WorkoutSheetPage implements OnInit {
 
     if(modalData != null){
       // Set new data for the edited record and color splash the row
-      this.sheetData.WorkoutRecordsForSelectedPeriod[rowIndex] = modalData;
+      this.sheetData.WorkoutRecords[rowIndex] = modalData;
       this.colorSplashRow(this.sheetData.WorkoutRecordsForSelectedPeriod[rowIndex]);
 
       // Sent a request for editing the record
@@ -240,6 +240,9 @@ export class WorkoutSheetPage implements OnInit {
           if(data.deletedDocs > 0){
             this.loadingService.presentSmallLoading("Saving changes...");
             this.getSheets();
+          }
+          else{
+            this.openSheet();
           }
         },
         error => {
