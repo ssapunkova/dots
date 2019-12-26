@@ -31,12 +31,6 @@ export class WorkoutSheetService {
     );
   }
 
-  public updateSheetConfiguration(sheetData){
-    return this.http.post(
-      this.connectToServerService.serverUrl + '/updateSheetConfiguration',
-      {data: sheetData}
-    );
-  }
 
   public addRecord(recordData){
     return this.http.post(
