@@ -23,7 +23,7 @@ const routes: Routes = [
     loadChildren: () => import('./workouts/workouts.module').then(m => m.WorkoutsPageModule)
   },
   {
-    path: 'workoutSheet',
+    path: 'workoutSheet/:sheetId',
     loadChildren: () => import('./workoutSheet/workoutSheet.module').then(m => m.WorkoutSheetPageModule)
   }
 ];

@@ -17,15 +17,23 @@ var WorkoutSheet = require('../schemas/workoutSheetSchema');
 var WorkoutRecord = require('../schemas/workoutRecordSchema');
 
 
-app.get("/getAllWorkoutRecords", function(req, res){
+app.get("/getSheetData/:sheetId", function(req, res){
+  var sheetId = req.params.sheetId;
+  console.log(sheetId)
+  var query = {};
+  if(sheetId != "all") {
+    query = { _id: ObjectId(sheetId) };
+  }
+
+  console.log(sheetId, query)
   mongoose.connect(baseUrl, connectParams, function (err) {
     if(err) throw err;
 
-    WorkoutSheet.find({})
+    WorkoutSheet.find(query)
       .populate("WorkoutRecords")
       .exec(function(err, sheets){
         if(err) throw err;
-
+        console.log(sheets)
         res.send(sheets);
       })
 

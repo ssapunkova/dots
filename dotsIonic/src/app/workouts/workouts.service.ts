@@ -14,7 +14,7 @@ export class WorkoutsService {
   ) { }
 
   public getWorkoutSheetsData(){
-    return this.http.get(this.connectToServerService.serverUrl + '/getAllWorkoutRecords')
+    return this.http.get(this.connectToServerService.serverUrl + '/getSheetData/all')
   }
 
   public createSheet(sheetData){

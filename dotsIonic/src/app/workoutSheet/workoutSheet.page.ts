@@ -2,6 +2,7 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { ActivatedRoute } from "@angular/router";
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -28,7 +29,7 @@ import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
 @Injectable()
 export class WorkoutSheetPage implements OnInit {
 
-  public MAX_SHEETS_NUMBER = 3;
+  public sheetId;
 
   public workoutSheets = [];
   public currentSheetIndex = 0;
@@ -47,6 +48,7 @@ export class WorkoutSheetPage implements OnInit {
     public http: HttpClient,
     public connectToServerService: ConnectToServerService,
     public loadingService: LoadingService,
+    public route: ActivatedRoute,
     public toastService: ToastService,
     public timeAndDateService: TimeAndDateService,
     public alertController: AlertController,
@@ -58,13 +60,16 @@ export class WorkoutSheetPage implements OnInit {
   ) { };
 
   ngOnInit() {
+    // Get sheetId
+    this.sheetId = this.route.snapshot.paramMap.get("sheetId");
+    console.log(this.sheetId);
     // Load sheets data from database
     this.getSheets();
   }
 
   async getSheets(){
 
-    this.workoutSheetService.getWorkoutSheetsData().subscribe((data: [any])=> {
+    this.workoutSheetService.getWorkoutSheetData(this.sheetId).subscribe((data: [any])=> {
 
       // Get data about all sheets
       this.workoutSheets = data;
@@ -90,8 +95,6 @@ export class WorkoutSheetPage implements OnInit {
 
         }
 
-        // Disable adding a new sheet if there are MAX_SHEETS_NUMBER already
-        if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.isButtonDisabled.addSheet = true;
 
         // Open the first sheet
         this.openSheet(0);
@@ -241,9 +244,6 @@ export class WorkoutSheetPage implements OnInit {
                     console.log(data)
                     this.workoutSheets.push(data);
                     this.loadingService.dismissSmallLoading();
-
-                    // If reached MAX_SHEETS_NUMBER, disable adding new sheets
-                    if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.isButtonDisabled.addSheet = true;
                   },
                   error => {
                     this.showErrorAlert("Oups")

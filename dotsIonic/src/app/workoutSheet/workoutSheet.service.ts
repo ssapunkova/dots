@@ -13,8 +13,8 @@ export class WorkoutSheetService {
       public connectToServerService: ConnectToServerService,
   ) { }
 
-  public getWorkoutSheetsData(){
-    return this.http.get(this.connectToServerService.serverUrl + '/getAllWorkoutRecords')
+  public getWorkoutSheetData(sheetId){
+    return this.http.get(this.connectToServerService.serverUrl + '/getSheetData/' + sheetId)
   }
 
   public createSheet(sheetData){
