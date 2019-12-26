@@ -34,13 +34,11 @@ export class WorkoutSheetPage implements OnInit {
     Structure: [],
     WorkoutRecords: []
   };
-  public currentSheetIndex = 0;
 
   public showMode = 'chart';
   public showPeriods = [];
 
   public isButtonDisabled = {
-    addSheet: false,
     addRecord: true
   }
 
@@ -79,7 +77,6 @@ export class WorkoutSheetPage implements OnInit {
 
 
       // Sort records and get workout periods
-
       let months = [];
       this.timeAndDateService.sortByDate(this.sheetData.WorkoutRecords, "asc");
 
@@ -192,7 +189,7 @@ export class WorkoutSheetPage implements OnInit {
             // If there are no upserts, just a new record, add it to WorkoutRecords
             this.sheetData.WorkoutRecords.push(data.record);
             // Reopen sheet and make a color splash on the new record
-            this.openSheet(this.currentSheetIndex);
+            this.openSheet();
             this.colorSplashRow(this.sheetData.WorkoutRecords[0]);
           }
 
@@ -272,7 +269,7 @@ export class WorkoutSheetPage implements OnInit {
             this.sheetData.WorkoutRecords.splice(rowIndex, 1);
             this.workoutSheetService.deleteRecord(record._id).subscribe((data: [any])=>
               {
-                this.openSheet(this.currentSheetIndex);
+                this.openSheet();
               },
               error => {
                 this.showErrorAlert("Oups")

@@ -9,8 +9,7 @@
       <ion-icon name="grid"></ion-icon>
       <ion-toggle checked
         (click)="showMode == 'chart' ? showMode = 'table' : showMode = 'chart'"></ion-toggle>
-        <ion-icon name="podium"></ion-icon>
-
+      <ion-icon name="podium"></ion-icon>
     </ion-buttons>
 
   </ion-toolbar>
@@ -29,7 +28,7 @@
   <div *ngIf="sheetData.Structure.length > 0">
 
     <ion-toolbar>
-      <ion-item slot="primary">
+      <ion-item>
         <ion-label>Show records for: </ion-label>
         <ion-select
           placeholder="Select period"
@@ -43,20 +42,11 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-
-      <ion-buttons slot="secondary">
-        <ion-button fill="solid" color="primary" (click)="configureSheet()">
-          <ion-icon name="settings"></ion-icon>
-        </ion-button>
-        <ion-button fill="solid" color="primary" (click)="deleteSheet()">
-          <ion-icon name="trash"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar> -->
+    </ion-toolbar>
 
     <div style="height: 100%; overflow-x: scroll; ">
 
-        <ngx-charts-line-chart *ngIf="showMode == 'chart'"
+      <ngx-charts-line-chart *ngIf="showMode == 'chart'"
           [view]="[chartService.chartWidth, 300]"
           [results]="chartService.chartData"
           [scheme]="chartService.colorScheme"
@@ -123,20 +113,10 @@
   </div>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-
-    <ion-fab-button fill="solid" color="primary">
+    <ion-fab-button (click)="addRecord()"
+      disabled="{{ isButtonDisabled.addRecord }}">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button (click)="addSheet()"
-        disabled="{{ isButtonDisabled.addSheet }}" data-desc="Workout sheet">
-        <ion-icon name="grid"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button (click)="addRecord()"
-        disabled="{{ isButtonDisabled.addRecord }}"  data-desc="Record">
-        <ion-icon name="checkmark"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
   </ion-fab>
 
 </ion-content>
