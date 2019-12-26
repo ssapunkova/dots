@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController, PopoverController } from '@ionic/angular';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -17,6 +17,7 @@ import { ChartService } from '../chartService/chart.service';
 import { WorkoutsService } from './workouts.service';
 
 import { SheetConfigurationPage } from './sheetConfiguration/sheetConfiguration.page';
+import { SheetPopoverComponent } from './SheetPopover/sheetPopover.component';
 
 
 @Component({
@@ -52,6 +53,7 @@ export class WorkoutsPage implements OnInit {
     public timeAndDateService: TimeAndDateService,
     public alertController: AlertController,
     public modalController: ModalController,
+    public popoverController: PopoverController,
     public dataTableService: DataTableService,
     public chartService: ChartService,
     public ngxChartsModule: NgxChartsModule
@@ -103,6 +105,16 @@ export class WorkoutsPage implements OnInit {
 
     });
   };
+
+  async showSheetPopover(ev){
+    console.log('aa');
+    const popover = await this.popoverController.create({
+      component: SheetPopoverComponent,
+      event: ev,
+      translucent: true
+    });
+    return await popover.present();
+  }
 
   // Set viewing period of chart/table
   // can be triggered programmatically ( case 1 ) or by ion-select ( case 2 )
