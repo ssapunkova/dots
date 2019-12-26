@@ -82,7 +82,7 @@
             *ngFor="let col of sheetData.Structure; let i = index"
             [title]="col.Title"
             (click)="dataTableService.sortCol(col, i, sheetData.WorkoutRecordsForSelectedPeriod)">
-            <ion-label>{{ col.Title }}</ion-label>
+            <ion-label>{{ (col.Title.length > 10) ? (col.Title | slice:0:10)+'...':(col.Title)}}</ion-label>
             <ion-icon name="arrow-dropup" *ngIf="col.sorted == 'asc'; else arrowDown"></ion-icon>
             <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
           </ion-col>
