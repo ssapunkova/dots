@@ -55,8 +55,19 @@ ion-item{
 
 ngx-charts-legend{
   position: fixed;
-  left: 0px;
+  left: 10px;
+  margin-top: 10px;
   width: 100%;
+  background: white !important;
+  box-shadow: 0 0 1px grey;
+
+  ul{
+    background: none !important;
+  }
+
+  .legend-label{
+      color: #666 !important;
+  }
 }
 
 .y .axis{

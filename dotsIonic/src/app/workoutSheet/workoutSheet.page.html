@@ -44,11 +44,11 @@
       </ion-item>
     </ion-toolbar>
 
-    <div style="height: 100%; overflow-x: auto; widht: 100%">
+    <div style="height: 100%; overflow-x: auto; width: 100%">
 
-      <div *ngIf="showMode == 'chart'" style="width: 100%; height: 300px;" [style.minWidth.px]="chartService.chartWidth">
+      <div *ngIf="showMode == 'chart'" style="width: 100%; min-height: 400px; height: 100%" [style.minWidth.px]="chartService.chartWidth">
 
-        <ngx-charts-line-chart 
+        <ngx-charts-line-chart
             [view]="view"
             [results]="chartService.chartData"
             [scheme]="chartService.colorScheme"
@@ -58,7 +58,6 @@
             xAxis="false"
             yAxis="true"
             legend="true"
-            legendPosition="below"
             legendTitle=""
             showXAxisLabel="false"
             showYAxisLabel="false"
