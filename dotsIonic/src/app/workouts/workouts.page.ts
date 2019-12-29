@@ -9,13 +9,12 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 // Sevrices
 import { ConnectToServerService } from '../connectToServerService/connect.service';
 import { LoadingService } from '../loadingService/loading.service';
-import { ToastService } from '../toastService/toast.service';
+import { ErrorToastAndAlertService } from '../errorToastAndAlertService/errorToastAndAlert.service';
 import { DataTableService } from '../dataTableService/dataTable.service';
 import { TimeAndDateService } from '../timeAndDateService/timeAndDate.service';
 import { ChartService } from '../chartService/chart.service';
 
 import { WorkoutsService } from './workouts.service';
-import { ChartService } from '../chartService/chart.service';
 
 import { SheetConfigurationPage } from './sheetConfiguration/sheetConfiguration.page';
 
@@ -50,7 +49,7 @@ export class WorkoutsPage implements OnInit {
     public http: HttpClient,
     public connectToServerService: ConnectToServerService,
     public loadingService: LoadingService,
-    public toastService: ToastService,
+    public errorToastAndAlertService: ErrorToastAndAlertService,
     public workoutsService: WorkoutsService,
     public timeAndDateService: TimeAndDateService,
     public ngxChartsModule: NgxChartsModule,
@@ -92,10 +91,17 @@ export class WorkoutsPage implements OnInit {
           })
           this.workoutSheets[i].WorkoutMonths = months;
 
-          this.chartData.push({
-            "name": this.workoutSheets[i].Title,
-            "value": 580830452410
-          })
+          this.chartData[i] = [];
+          this.chartData[i].push(
+            {
+              "name": "Exercises",
+              "value": this.workoutSheets[i].Structure.length
+            },
+            {
+              "name": "Workout records",
+              "value": this.workoutSheets[i].WorkoutRecords.length
+            }
+          );
 
         }
 
@@ -177,7 +183,7 @@ export class WorkoutsPage implements OnInit {
           this.loadingService.dismissSmallLoading();
         },
         error => {
-          this.showErrorAlert("Oups")
+          this.errorToastAndAlertService.showErrorAlert("Oups")
         }
       );
     }
@@ -206,7 +212,7 @@ export class WorkoutsPage implements OnInit {
           handler: (data) => {
 
             if(data.Title == ""){
-              this.toastService.showErrorToast("Please enter a name for your new sheet");
+              this.errorToastAndAlertService.showErrorToast("Please enter a name for your new sheet");
               return false;
             }
             else {
@@ -214,7 +220,7 @@ export class WorkoutsPage implements OnInit {
               let sheetTitles = this.workoutSheets.map((sheet) => sheet.Title);
               // Show error if a sheet with tis title already exists
               if(sheetTitles.indexOf(data.Title) != -1) {
-                this.toastService.showErrorToast("A sheet with that name already exists");
+                this.errorToastAndAlertService.showErrorToast("A sheet with that name already exists");
                 return false;
               }
               else{
@@ -230,7 +236,7 @@ export class WorkoutsPage implements OnInit {
                     if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.isButtonDisabled.addSheet = true;
                   },
                   error => {
-                    this.showErrorAlert("Oups")
+                    this.errorToastAndAlertService.showErrorAlert("Oups")
                   }
                 );
               }
@@ -267,7 +273,7 @@ export class WorkoutsPage implements OnInit {
 
             // If the input doesn't match the title
             if(data.Title != sheet.Title){
-              this.toastService.showErrorToast("Confirm the name of the sheet you want to delete");
+              this.errorToastAndAlertService.showErrorToast("Confirm the name of the sheet you want to delete");
               return false;
             }
             else{
@@ -283,7 +289,7 @@ export class WorkoutsPage implements OnInit {
 
                 },
                 error => {
-                  this.showErrorAlert("Oups")
+                  this.errorToastAndAlertService.showErrorAlert("Oups")
                 }
               );
             }

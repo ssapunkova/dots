@@ -10,7 +10,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 // Sevrices
 import { ConnectToServerService } from '../connectToServerService/connect.service';
 import { LoadingService } from '../loadingService/loading.service';
-import { ToastService } from '../toastService/toast.service';
+import { ErrorToastAndAlertService } from '../errorToastAndAlertService/errorToastAndAlert.service';
 import { DataTableService } from '../dataTableService/dataTable.service';
 import { TimeAndDateService } from '../timeAndDateService/timeAndDate.service';
 import { ChartService } from '../chartService/chart.service';
@@ -51,7 +51,7 @@ export class WorkoutSheetPage implements OnInit {
     public connectToServerService: ConnectToServerService,
     public loadingService: LoadingService,
     public route: ActivatedRoute,
-    public toastService: ToastService,
+    public errorToastAndAlertService: ErrorToastAndAlertService,
     public timeAndDateService: TimeAndDateService,
     public alertController: AlertController,
     public modalController: ModalController,
@@ -139,23 +139,6 @@ export class WorkoutSheetPage implements OnInit {
     }
   }
 
-  // Show error alert with footer for contacting the admin
-  async showErrorAlert(message){
-
-    this.loadingService.dismissSmallLoading();
-    let alert = await this.alertController.create({
-      header: message,
-      message: "Something went wrong. Contact admin: <a href='mailto:elenakikiova@mail.ru'>elenakikiova@mail.ru</a>",
-      buttons: [
-        {
-          text: 'Ok'
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
 
   async addRecord(){
 
@@ -198,7 +181,7 @@ export class WorkoutSheetPage implements OnInit {
 
         },
         error => {
-          this.showErrorAlert("Oups")
+          this.errorToastAndAlertService.showErrorAlert("Oups")
         }
       );
     };
@@ -248,7 +231,7 @@ export class WorkoutSheetPage implements OnInit {
           }
         },
         error => {
-          this.showErrorAlert("Oups")
+          this.errorToastAndAlertService.showErrorAlert("Oups")
         }
       );
     };
@@ -277,7 +260,7 @@ export class WorkoutSheetPage implements OnInit {
                 this.openSheet();
               },
               error => {
-                this.showErrorAlert("Oups")
+                this.errorToastAndAlertService.showErrorAlert("Oups")
               }
             );
 

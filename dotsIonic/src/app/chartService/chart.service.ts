@@ -14,7 +14,7 @@ export class ChartService{
 
   public RECORD_WIDTH = 100;
 
-  public chartData;
+  public chartData = [];
   public chartWidth;
 
   public cardColor = "#eeeeee";

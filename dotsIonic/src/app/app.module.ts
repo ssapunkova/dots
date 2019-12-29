@@ -16,7 +16,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 // Services
 import { ConnectToServerService } from './connectToServerService/connect.service';
 import { LoadingService } from './loadingService/loading.service';
-import { ToastService } from './toastService/toast.service';
+import { ErrorToastAndAlertService } from './errorToastAndAlertService/errorToastAndAlert.service';
 import { DataTableService } from './dataTableService/dataTable.service';
 import { TimeAndDateService } from './timeAndDateService/timeAndDate.service';
 import { ChartService } from './chartService/chart.service';
@@ -47,7 +47,7 @@ import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkout
     StatusBar,
     ConnectToServerService,
     LoadingService,
-    ToastService,
+    ErrorToastAndAlertService,
     DataTableService,
     TimeAndDateService,
     ChartService,

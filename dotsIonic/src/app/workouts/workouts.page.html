@@ -45,11 +45,11 @@
                 </ion-item>
               </ion-list>
 
-              <div style="height: 150px">
+              <div style="width: 100%; height: 150px">
 
-                <ngx-charts-number-card
-                  [view]="view"
-                  [results]="chartService.chartData"
+                <ngx-charts-number-card *ngIf="chartService.chartData.length > 0"
+                  [view]=""
+                  [results]="chartService.chartData[i]"
                   [cardColor]="chartService.cardColor"
                   [scheme]="chartService.colorScheme">
                 </ngx-charts-number-card>

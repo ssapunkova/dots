@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { ModalController, NavParams, ActionSheetController } from '@ionic/angular';
 
-import { ToastService } from '../../toastService/toast.service';
+import { ErrorToastAndAlertService } from '../../errorToastAndAlertService/errorToastAndAlert.service';
 
 @Component({
   selector: 'modal-page',
@@ -22,7 +22,7 @@ export class SheetConfigurationPage implements OnInit {
     private modalController: ModalController,
     private navParams: NavParams,
     private actionSheetController: ActionSheetController,
-    private toastService: ToastService
+    private errorToastAndAlert: ErrorToastAndAlertService
   ) { }
 
   ngOnInit() {
@@ -116,7 +116,7 @@ export class SheetConfigurationPage implements OnInit {
     console.log(this.sheet);
 
     if(repeatedNames == true){
-      this.toastService.showErrorToast("Exercise titles shouldn't repeat");
+      this.errorToastAndAlert.showErrorToast("Exercise titles shouldn't repeat");
       return false;
     }
     await this.modalController.dismiss(this.sheet);

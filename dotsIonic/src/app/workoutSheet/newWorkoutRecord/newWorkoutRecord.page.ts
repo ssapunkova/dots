@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { ModalController, NavParams, ActionSheetController } from '@ionic/angular';
 
-import { ToastService } from '../../toastService/toast.service';
+import { ErrorToastAndAlertService } from '../../errorToastAndAlertService/errorToastAndAlert.service';
 
 @Component({
   selector: 'modal-page',
@@ -29,7 +29,7 @@ export class NewWorkoutRecordPage implements OnInit {
     private modalController: ModalController,
     private navParams: NavParams,
     private actionSheetController: ActionSheetController,
-    private toastService: ToastService
+    private errorToastAndAlertService: ErrorToastAndAlertService
   ) { }
 
   ngOnInit() {
@@ -65,19 +65,19 @@ export class NewWorkoutRecordPage implements OnInit {
     console.log(this.record);
 
     if(this.record.Date == ""){
-      this.toastService.showErrorToast("Please fill in date");
+      this.errorToastAndAlertService.showErrorToast("Please fill in date");
       return false;
     }
     else{
       if(this.record.Values.length < 1){
-        this.toastService.showErrorToast("Please fill your workout results");
+        this.errorToastAndAlertService.showErrorToast("Please fill your workout results");
         return false;
       }
       else{
         for(var i = 0; i < this.record.Values.length; i++){
           if(this.record.Values[i] == null){
             console.log(this.record.Values[i]);
-            this.toastService.showErrorToast("Please fill all the fields");
+            this.errorToastAndAlertService.showErrorToast("Please fill all the fields");
             return false;
           }
         }
