@@ -44,7 +44,6 @@ export class WorkoutSheetPage implements OnInit {
     addRecord: true
   }
 
-  public smallLoading;                    // Control showing and hiding loading alert
 
   constructor(
     public http: HttpClient,

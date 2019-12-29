@@ -43,8 +43,6 @@ export class WorkoutsPage implements OnInit {
 
   public chartData = [];
 
-  public smallLoading;
-
   constructor(
     public http: HttpClient,
     public connectToServerService: ConnectToServerService,
