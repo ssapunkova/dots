@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { AlertController, ModalController, ToastController, ActionSheetController } from '@ionic/angular';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // Sevrices
 import { ConnectToServerService } from '../connectToServerService/connect.service';
@@ -15,6 +14,7 @@ import { TimeAndDateService } from '../timeAndDateService/timeAndDate.service';
 import { ChartService } from '../chartService/chart.service';
 
 import { WorkoutsService } from './workouts.service';
+import { ChartService } from '../chartService/chart.service';
 
 import { SheetConfigurationPage } from './sheetConfiguration/sheetConfiguration.page';
 
@@ -54,8 +54,7 @@ export class WorkoutsPage implements OnInit {
     public modalController: ModalController,
     public actionSheetController: ActionSheetController,
     public dataTableService: DataTableService,
-    public chartService: ChartService,
-    public ngxChartsModule: NgxChartsModule
+    public chartService: ChartService
   ) { };
 
   ngOnInit() {
@@ -94,8 +93,6 @@ export class WorkoutsPage implements OnInit {
         // Disable adding a new sheet if there are MAX_SHEETS_NUMBER already
         if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.isButtonDisabled.addSheet = true;
 
-        // Open the first sheet
-        this.openSheet(0);
       }
 
       // Dismiss all loading
@@ -104,6 +101,7 @@ export class WorkoutsPage implements OnInit {
 
     });
   };
+
 
   async showSheetActions(sheet, index){
     console.log(sheet, index);
@@ -130,62 +128,6 @@ export class WorkoutsPage implements OnInit {
     await actionSheet.present();
   }
 
-  // Set viewing period of chart/table
-  // can be triggered programmatically ( case 1 ) or by ion-select ( case 2 )
-  async setPeriod($event){
-
-    if($event == "" || $event.target.value.length < 1){
-      // case 1, set showPeriod to the latest
-      let lastRecordDate = this.workoutSheets[this.currentSheetIndex].WorkoutRecords[0].Date.split("-");
-      this.showPeriods = [lastRecordDate[1] + "." + lastRecordDate[0]];
-    }
-    else{
-      // case 2, use selected periods from ion-select
-      this.showPeriods = $event.target.value;
-    }
-
-    // Filter which records to show and sort them by date
-    this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod = this.workoutSheets[this.currentSheetIndex].WorkoutRecords.filter((record) => this.showPeriods.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
-
-    // Format data for chart
-    this.chartService.formatChartData(this.workoutSheets[this.currentSheetIndex].WorkoutRecordsForSelectedPeriod, this.workoutSheets[this.currentSheetIndex].Structure);
-
-  }
-
-  async openSheet(sheetIndex){
-    // Set current sheet index
-    this.currentSheetIndex = sheetIndex;
-
-    // Sort data in case it has changed since last sorting
-    this.timeAndDateService.sortByDate(this.workoutSheets[this.currentSheetIndex].WorkoutRecords, "asc");
-
-    // If the sheet is configured, enable adding records and set period to the latest
-    if(this.workoutSheets[this.currentSheetIndex].Structure.length > 0){
-      this.isButtonDisabled.addRecord = false;
-      this.setPeriod("");
-    }
-    else{
-      // Don't allow adding records unless sheet is configured
-      this.isButtonDisabled.addRecord = true;
-    }
-  }
-
-  // Show error alert with footer for contacting the admin
-  async showErrorAlert(message){
-
-    this.loadingService.dismissSmallLoading();
-    let alert = await this.alertController.create({
-      header: message,
-      message: "Something went wrong. Contact admin: <a href='mailto:elenakikiova@mail.ru'>elenakikiova@mail.ru</a>",
-      buttons: [
-        {
-          text: 'Ok'
-        }
-      ]
-    });
-
-    await alert.present();
-  }
 
   // Configure sheet's columns (exercises) and set goals for them
   async configureSheet(sheet, index){

@@ -32,7 +32,19 @@
             </ion-card-header>
 
             <ion-card-content [routerDirection]="'root'" routerLink="/workoutSheet/{{sheet._id}}">
-              <h1>58%</h1>
+
+              <ion-list>
+                <ion-item>
+                <ion-label>exercises</ion-label>
+                <ion-chip slot="start" color="danger">{{ sheet.Structure.length }}</ion-chip>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>workout records</ion-label>
+                <ion-chip slot="start" color="dark">{{ sheet.WorkoutRecords.length }} workout records</ion-chip>
+              </ion-item>
+              </ion-list>
+
             </ion-card-content>
 
           </ion-card>
