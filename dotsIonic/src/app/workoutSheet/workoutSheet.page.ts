@@ -29,20 +29,22 @@ import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
 export class WorkoutSheetPage implements OnInit {
 
   public sheetData = {
-    _id: null,
-    Title: "",
-    Structure: [],
-    WorkoutRecords: []
+    _id: null,                            // sheetId, comes with url
+    Title: "",                            // Sheet title
+    Structure: [],                        // Array of all columns and their goals
+    WorkoutRecords: [],                   // Array of json records, raw from database
+    WorkoutMonths: [],                    // Array of the available viewing periods (months)
+    WorkoutRecordsForSelectedPeriod: []   // Array of json records of all records in selected viewing period
   };
 
-  public showMode = 'chart';
-  public showPeriods = [];
+  public showMode = 'chart';              // Default show mode, can be switched to table
+  public showPeriods = [];                // The current viewing periods
 
   public isButtonDisabled = {
     addRecord: true
   }
 
-  public smallLoading;
+  public smallLoading;                    // Control showing and hiding loading alert
 
   constructor(
     public http: HttpClient,

@@ -17,7 +17,7 @@ import { ChartService } from '../chartService/chart.service';
 import { WorkoutsService } from './workouts.service';
 
 import { SheetConfigurationPage } from './sheetConfiguration/sheetConfiguration.page';
-import { SheetPopoverComponent } from './SheetPopover/sheetPopover.component';
+import { SheetPopoverComponent } from './sheetPopover/sheetPopover.component';
 
 
 @Component({
