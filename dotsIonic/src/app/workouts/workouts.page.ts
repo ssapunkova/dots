@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AlertController, ModalController, ToastController, ActionSheetController } from '@ionic/angular';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // Sevrices
 import { ConnectToServerService } from '../connectToServerService/connect.service';
@@ -41,6 +42,8 @@ export class WorkoutsPage implements OnInit {
     addRecord: true
   }
 
+  public chartData = [];
+
   public smallLoading;
 
   constructor(
@@ -50,6 +53,7 @@ export class WorkoutsPage implements OnInit {
     public toastService: ToastService,
     public workoutsService: WorkoutsService,
     public timeAndDateService: TimeAndDateService,
+    public ngxChartsModule: NgxChartsModule,
     public alertController: AlertController,
     public modalController: ModalController,
     public actionSheetController: ActionSheetController,
@@ -88,12 +92,20 @@ export class WorkoutsPage implements OnInit {
           })
           this.workoutSheets[i].WorkoutMonths = months;
 
+          this.chartData.push({
+            "name": this.workoutSheets[i].Title,
+            "value": 580830452410
+          })
+
         }
 
         // Disable adding a new sheet if there are MAX_SHEETS_NUMBER already
         if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.isButtonDisabled.addSheet = true;
 
       }
+
+      console.log(this.chartData)
+      this.drawCharts();
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;
@@ -102,6 +114,10 @@ export class WorkoutsPage implements OnInit {
     });
   };
 
+  async drawCharts(){
+    console.log(this.chartData)
+    this.chartService.formatNumberCardData(this.chartData);
+  }
 
   async showSheetActions(sheet, index){
     console.log(sheet, index);

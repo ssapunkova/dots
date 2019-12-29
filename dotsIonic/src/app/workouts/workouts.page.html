@@ -35,15 +35,26 @@
 
               <ion-list>
                 <ion-item>
-                <ion-label>exercises</ion-label>
-                <ion-chip slot="start" color="danger">{{ sheet.Structure.length }}</ion-chip>
-              </ion-item>
+                  <ion-label>exercises</ion-label>
+                  <ion-chip slot="start" color="danger">{{ sheet.Structure.length }}</ion-chip>
+                </ion-item>
 
-              <ion-item>
-                <ion-label>workout records</ion-label>
-                <ion-chip slot="start" color="dark">{{ sheet.WorkoutRecords.length }} workout records</ion-chip>
-              </ion-item>
+                <ion-item>
+                  <ion-label>workout records</ion-label>
+                  <ion-chip slot="start" color="dark">{{ sheet.WorkoutRecords.length }} workout records</ion-chip>
+                </ion-item>
               </ion-list>
+
+              <div style="height: 150px">
+
+                <ngx-charts-number-card
+                  [view]="view"
+                  [results]="chartService.chartData"
+                  [cardColor]="chartService.cardColor"
+                  [scheme]="chartService.colorScheme">
+                </ngx-charts-number-card>
+
+              </div>
 
             </ion-card-content>
 
