@@ -37,8 +37,7 @@ export class WorkoutsPage implements OnInit {
   public showPeriods = [];
 
   public isButtonDisabled = {
-    addSheet: false,
-    addRecord: true
+    addSheet: false
   }
 
   public chartData = [];
