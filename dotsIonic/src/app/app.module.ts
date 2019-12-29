@@ -21,20 +21,16 @@ import { DataTableService } from './dataTableService/dataTable.service';
 import { TimeAndDateService } from './timeAndDateService/timeAndDate.service';
 import { ChartService } from './chartService/chart.service';
 
-import { SheetPopoverComponent } from './workouts/sheetPopover/sheetPopover.component';
-
 import { SheetConfigurationPage } from './workouts/sheetConfiguration/sheetConfiguration.page';
 import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkoutRecord.page';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SheetPopoverComponent,
     SheetConfigurationPage,
     NewWorkoutRecordPage
   ],
   entryComponents: [
-    SheetPopoverComponent,
     SheetConfigurationPage,
     NewWorkoutRecordPage
   ],
@@ -58,7 +54,6 @@ import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkout
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [
-    SheetPopoverComponent,
     SheetConfigurationPage,
     NewWorkoutRecordPage
   ],

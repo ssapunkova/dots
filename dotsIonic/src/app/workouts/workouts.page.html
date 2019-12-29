@@ -20,14 +20,14 @@
 
       <ion-row>
 
-        <ion-col *ngFor="let sheet of workoutSheets" size="12" size-sm>
+        <ion-col *ngFor="let sheet of workoutSheets; let i = index" size="12" size-sm>
 
           <ion-card>
 
             <ion-card-header>
               <ion-item>
                 <ion-label [routerDirection]="'root'" routerLink="/workoutSheet/{{sheet._id}}">{{ sheet.Title }}</ion-label>
-                <ion-icon slot="end" name="more" (click)="showSheetPopover()"></ion-icon>
+                <ion-icon slot="end" name="more" (click)="showSheetActions(sheet, i)"></ion-icon>
               </ion-item>
             </ion-card-header>
 

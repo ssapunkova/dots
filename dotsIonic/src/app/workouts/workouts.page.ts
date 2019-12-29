@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { AlertController, ModalController, ToastController, PopoverController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController, ActionSheetController } from '@ionic/angular';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -17,7 +17,6 @@ import { ChartService } from '../chartService/chart.service';
 import { WorkoutsService } from './workouts.service';
 
 import { SheetConfigurationPage } from './sheetConfiguration/sheetConfiguration.page';
-import { SheetPopoverComponent } from './sheetPopover/sheetPopover.component';
 
 
 @Component({
@@ -53,7 +52,7 @@ export class WorkoutsPage implements OnInit {
     public timeAndDateService: TimeAndDateService,
     public alertController: AlertController,
     public modalController: ModalController,
-    public popoverController: PopoverController,
+    public actionSheetController: ActionSheetController,
     public dataTableService: DataTableService,
     public chartService: ChartService,
     public ngxChartsModule: NgxChartsModule
@@ -106,14 +105,29 @@ export class WorkoutsPage implements OnInit {
     });
   };
 
-  async showSheetPopover(ev){
-    console.log('aa');
-    const popover = await this.popoverController.create({
-      component: SheetPopoverComponent,
-      event: ev,
-      translucent: true
+  async showSheetActions(sheet, index){
+    console.log(sheet, index);
+    const actionSheet = await this.actionSheetController.create({
+      header: sheet.Title + ' Actions ',
+      buttons: [{
+        text: 'Delete',
+        icon: 'trash',
+        handler: () => {
+          this.deleteSheet(sheet, index)
+        }
+      }, {
+        text: 'Edit layout',
+        icon: 'grid',
+        handler: () => {
+          this.configureSheet(sheet, index)
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel'
+      }]
     });
-    return await popover.present();
+    await actionSheet.present();
   }
 
   // Set viewing period of chart/table
@@ -174,13 +188,13 @@ export class WorkoutsPage implements OnInit {
   }
 
   // Configure sheet's columns (exercises) and set goals for them
-  async configureSheet(){
+  async configureSheet(sheet, index){
 
     // Select configureable data about the sheet
     let updateData = {
-      _id: this.workoutSheets[this.currentSheetIndex]._id,
-      Title: this.workoutSheets[this.currentSheetIndex].Title,
-      Structure: this.workoutSheets[this.currentSheetIndex].Structure
+      _id: sheet._id,
+      Title: sheet.Title,
+      Structure: sheet.Structure
     };
 
     // Show a configuration modal
@@ -271,7 +285,7 @@ export class WorkoutsPage implements OnInit {
     await alert.present();
   }
 
-  async deleteSheet(){
+  async deleteSheet(sheet, index){
     // Show alert, where the user has to confirm the name of the sheet to be deleted
     const alert = await this.alertController.create({
       header: 'Delete sheet',
@@ -280,7 +294,7 @@ export class WorkoutsPage implements OnInit {
         {
           name: "Title",
           type: "text",
-          placeholder: "Confirm sheet name (" + this.workoutSheets[this.currentSheetIndex].Title + ")"
+          placeholder: "Confirm sheet name (" + sheet.Title + ")"
         }
       ],
       buttons: [
@@ -294,20 +308,17 @@ export class WorkoutsPage implements OnInit {
             console.log(data);
 
             // If the input doesn't match the title
-            if(data.Title != this.workoutSheets[this.currentSheetIndex].Title){
+            if(data.Title != sheet.Title){
               this.toastService.showErrorToast("Confirm the name of the sheet you want to delete");
               return false;
             }
             else{
-              // Open first sheet
-              this.openSheet(0);
-              let deletedIndex = this.currentSheetIndex;
 
               // Send request to delete sheet from database
-              this.workoutsService.deleteSheet(this.workoutSheets[deletedIndex]._id).subscribe((data: [any])=>
+              this.workoutsService.deleteSheet(sheet._id).subscribe((data: [any])=>
                 {
                   // Delete sheet from workoutSheets
-                  this.workoutSheets.splice(deletedIndex, 1);
+                  this.workoutSheets.splice(index, 1);
 
                   // Since sheets are definitely < MAX
                   this.isButtonDisabled.addSheet = false;
