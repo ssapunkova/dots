@@ -11,7 +11,7 @@ import { DataTableService } from '../dataTableService/dataTable.service';
 import { TimeAndDateService } from '../timeAndDateService/timeAndDate.service';
 import { ChartService } from '../chartService/chart.service';
 
-import { WorkoutsService } from './workouts.service';
+import { WorkoutService } from '../workoutService/workout.service';
 
 import { SheetConfigurationPage } from './sheetConfiguration/sheetConfiguration.page';
 
@@ -44,7 +44,7 @@ export class WorkoutsPage implements OnInit {
     public connectToServerService: ConnectToServerService,
     public loadingService: LoadingService,
     public errorToastAndAlertService: ErrorToastAndAlertService,
-    public workoutsService: WorkoutsService,
+    public workoutService: WorkoutService,
     public timeAndDateService: TimeAndDateService,
     public alertController: AlertController,
     public modalController: ModalController,
@@ -60,7 +60,7 @@ export class WorkoutsPage implements OnInit {
 
   async getSheets(){
 
-    this.workoutsService.getWorkoutSheetsData().subscribe((data: [any])=> {
+    this.workoutService.getWorkoutSheetsData().subscribe((data: [any])=> {
 
       // Get data about all sheets
       this.workoutSheets = data;
@@ -170,7 +170,7 @@ export class WorkoutsPage implements OnInit {
       this.loadingService.presentSmallLoading("Saving changes");
 
       // Update sheet data and reloat sheets
-      this.workoutsService.updateSheetConfiguration(modalData).subscribe((data: [any])=>
+      this.workoutService.updateSheetConfiguration(modalData).subscribe((data: [any])=>
         {
           this.getSheets();
           this.loadingService.dismissSmallLoading();
@@ -219,7 +219,7 @@ export class WorkoutsPage implements OnInit {
               else{
                 // If sheet title is fine, add sheet to database
                 this.loadingService.presentSmallLoading("Creating sheet");
-                this.workoutsService.createSheet(data).subscribe((data: [any])=>
+                this.workoutService.createSheet(data).subscribe((data: [any])=>
                   {
                     console.log(data)
                     this.workoutSheets.push(data);
@@ -272,7 +272,7 @@ export class WorkoutsPage implements OnInit {
             else{
 
               // Send request to delete sheet from database
-              this.workoutsService.deleteSheet(sheet._id).subscribe((data: [any])=>
+              this.workoutService.deleteSheet(sheet._id).subscribe((data: [any])=>
                 {
                   // Delete sheet from workoutSheets
                   this.workoutSheets.splice(index, 1);

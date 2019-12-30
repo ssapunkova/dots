@@ -11,7 +11,7 @@ import { ErrorToastAndAlertService } from '../errorToastAndAlertService/errorToa
 import { DataTableService } from '../dataTableService/dataTable.service';
 import { TimeAndDateService } from '../timeAndDateService/timeAndDate.service';
 import { ChartService } from '../chartService/chart.service';
-import { WorkoutSheetService } from './workoutSheet.service';
+import { WorkoutService } from '../workoutService/workout.service';
 
 import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
 
@@ -51,7 +51,7 @@ export class WorkoutSheetPage implements OnInit {
     public timeAndDateService: TimeAndDateService,
     public alertController: AlertController,
     public modalController: ModalController,
-    public workoutSheetService: WorkoutSheetService,
+    public workoutService: WorkoutService,
     public dataTableService: DataTableService,
     public chartService: ChartService
   ) { };
@@ -65,7 +65,7 @@ export class WorkoutSheetPage implements OnInit {
 
   async getSheetData(){
 
-    this.workoutSheetService.getWorkoutSheetData(this.sheetData._id).subscribe((data: [any])=> {
+    this.workoutService.getWorkoutSheetData(this.sheetData._id).subscribe((data: [any])=> {
 
       // Get data about all sheets
       this.sheetData = data[0];
@@ -155,7 +155,7 @@ export class WorkoutSheetPage implements OnInit {
     if(modalData != null){
 
       // Add record to database
-      this.workoutSheetService.addRecord(modalData).subscribe((data: any)=>
+      this.workoutService.addRecord(modalData).subscribe((data: any)=>
         {
           console.log(data);
 
@@ -213,7 +213,7 @@ export class WorkoutSheetPage implements OnInit {
       this.colorSplashRow(this.sheetData.WorkoutRecordsForSelectedPeriod[rowIndex]);
 
       // Sent a request for editing the record
-      this.workoutSheetService.editRecord(modalData).subscribe((data: any)=>
+      this.workoutService.editRecord(modalData).subscribe((data: any)=>
         {
           // deletedDocs > 0 means the edited record overrode an older one with the same date
           if(data.deletedDocs > 0){
@@ -249,7 +249,7 @@ export class WorkoutSheetPage implements OnInit {
 
             // Remove from WorkoutRecords
             this.sheetData.WorkoutRecords.splice(rowIndex, 1);
-            this.workoutSheetService.deleteRecord(record._id).subscribe((data: [any])=>
+            this.workoutService.deleteRecord(record._id).subscribe((data: [any])=>
               {
                 this.openSheet();
               },
