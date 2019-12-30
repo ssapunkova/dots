@@ -1,17 +1,14 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { AlertController, ModalController, ToastController, ActionSheetController } from '@ionic/angular';
+import { AlertController, ModalController, ActionSheetController } from '@ionic/angular';
 
-// Sevrices
-import { ConnectToServerService } from '../connectToServerService/connect.service';
-import { LoadingService } from '../loadingService/loading.service';
-import { ErrorToastAndAlertService } from '../errorToastAndAlertService/errorToastAndAlert.service';
-import { DataTableService } from '../dataTableService/dataTable.service';
-import { TimeAndDateService } from '../timeAndDateService/timeAndDate.service';
-import { ChartService } from '../chartService/chart.service';
-
-import { WorkoutService } from '../workoutService/workout.service';
+// Services
+import { LoadingService } from '../services/loading.service';
+import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
+import { DataTableService } from '../services/dataTable.service';
+import { TimeAndDateService } from '../services/timeAndDate.service';
+import { ChartService } from '../services/chart.service';
+import { WorkoutService } from '../services/workout.service';
 
 import { SheetConfigurationPage } from './sheetConfiguration/sheetConfiguration.page';
 
@@ -40,8 +37,6 @@ export class WorkoutsPage implements OnInit {
   public chartData = [];
 
   constructor(
-    public http: HttpClient,
-    public connectToServerService: ConnectToServerService,
     public loadingService: LoadingService,
     public errorToastAndAlertService: ErrorToastAndAlertService,
     public workoutService: WorkoutService,

@@ -1,19 +1,17 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
 
 import { interval } from 'rxjs';
 
-// Sevrices
-import { ConnectToServerService } from '../connectToServerService/connect.service';
-import { LoadingService } from '../loadingService/loading.service';
-import { ErrorToastAndAlertService } from '../errorToastAndAlertService/errorToastAndAlert.service';
-import { DataTableService } from '../dataTableService/dataTable.service';
-import { TimeAndDateService } from '../timeAndDateService/timeAndDate.service';
-import { ChartService } from '../chartService/chart.service';
-import { WorkoutService } from '../workoutService/workout.service';
+// Services
+import { LoadingService } from '../services/loading.service';
+import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
+import { DataTableService } from '../services/dataTable.service';
+import { TimeAndDateService } from '../services/timeAndDate.service';
+import { ChartService } from '../services/chart.service';
+import { WorkoutService } from '../services/workout.service';
 
 
 
@@ -34,8 +32,6 @@ export class WorkoutManagerPage implements OnInit {
   };
 
   constructor(
-    public http: HttpClient,
-    public connectToServerService: ConnectToServerService,
     public loadingService: LoadingService,
     public route: ActivatedRoute,
     public errorToastAndAlertService: ErrorToastAndAlertService,
@@ -74,12 +70,10 @@ export class WorkoutManagerPage implements OnInit {
     let that = this;
     let seconds = 5;
 
-    this.countTime = true;
-
     // Show alert about starting workout
     let alert = await this.alertController.create({
       header: 'Staring workout in ',
-      message: seconds,
+      message: "" + seconds,
       buttons: [
         {
           text: 'Cancel workout',
@@ -93,7 +87,7 @@ export class WorkoutManagerPage implements OnInit {
     let setInterval = interval(1000).subscribe(x => {
       if(this.isNotCancelled){
         seconds -= 1;
-        alert.message = seconds;
+        alert.message = "" + seconds;
         if(seconds == 0){
           setInterval.unsubscribe();
           // Present first exercise

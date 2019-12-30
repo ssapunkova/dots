@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { ModalController, NavParams, ActionSheetController } from '@ionic/angular';
 
-import { ErrorToastAndAlertService } from '../../errorToastAndAlertService/errorToastAndAlert.service';
+import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
 
 @Component({
   selector: 'modal-page',

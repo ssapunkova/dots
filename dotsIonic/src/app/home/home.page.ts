@@ -2,7 +2,7 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Services
-import { LoadingService } from '../loadingService/loading.service';
+import { LoadingService } from '../services/loading.service';
 
 
 @Component({

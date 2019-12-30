@@ -3,12 +3,13 @@ import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 // Services
-import { LoadingService } from './loadingService/loading.service';
-import { ErrorToastAndAlertService } from './errorToastAndAlertService/errorToastAndAlert.service';
-import { DataTableService } from './dataTableService/dataTable.service';
-import { TimeAndDateService } from './timeAndDateService/timeAndDate.service';
-import { ChartService } from './chartService/chart.service';
-import { WorkoutService } from './workoutService/workout.service';
+import { ConnectToServerService } from './services/connectToServer.service';
+import { LoadingService } from './services/loading.service';
+import { ErrorToastAndAlertService } from './services/errorToastAndAlert.service';
+import { DataTableService } from './services/dataTable.service';
+import { TimeAndDateService } from './services/timeAndDate.service';
+import { ChartService } from './services/chart.service';
+import { WorkoutService } from './services/workout.service';
 
 @Component({
   selector: 'app-root',

@@ -14,13 +14,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // Services
-import { ConnectToServerService } from './connectToServerService/connect.service';
-import { LoadingService } from './loadingService/loading.service';
-import { ErrorToastAndAlertService } from './errorToastAndAlertService/errorToastAndAlert.service';
-import { DataTableService } from './dataTableService/dataTable.service';
-import { TimeAndDateService } from './timeAndDateService/timeAndDate.service';
-import { ChartService } from './chartService/chart.service';
-import { WorkoutService } from './workoutService/workout.service';
+import { ConnectToServerService } from './services/connectToServer.service';
+import { LoadingService } from './services/loading.service';
+import { ErrorToastAndAlertService } from './services/errorToastAndAlert.service';
+import { DataTableService } from './services/dataTable.service';
+import { TimeAndDateService } from './services/timeAndDate.service';
+import { ChartService } from './services/chart.service';
+import { WorkoutService } from './services/workout.service';
 
 import { SheetConfigurationPage } from './workouts/sheetConfiguration/sheetConfiguration.page';
 import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkoutRecord.page';

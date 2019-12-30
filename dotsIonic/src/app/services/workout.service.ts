@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { ConnectToServerService } from '../connectToServerService/connect.service';
+import { ConnectToServerService } from './connectToServer.service';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +58,13 @@ export class WorkoutService {
     return this.http.post(
       this.connectToServerService.serverUrl + '/deleteWorkoutRecord',
       {recordId: recordId}
+    );
+  }
+
+  public updateSheetConfiguration(sheetData){
+    return this.http.post(
+      this.connectToServerService.serverUrl + '/updateSheetConfiguration',
+      {data: sheetData}
     );
   }
 

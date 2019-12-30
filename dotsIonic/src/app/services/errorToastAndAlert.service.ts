@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastController, AlertController } from '@ionic/angular';
-import { LoadingService } from '../loadingService/loading.service';
+import { LoadingService } from './loading.service';
 
 @Injectable()
 export class ErrorToastAndAlertService{

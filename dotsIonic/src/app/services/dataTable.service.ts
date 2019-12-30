@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { TimeAndDateService } from '../timeAndDateService/timeAndDate.service';
+import { TimeAndDateService } from './timeAndDate.service';
 
 // DataTable Service
 // Implements sorting the data, displayed in ion-grid
