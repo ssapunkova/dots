@@ -8,6 +8,7 @@ import { ErrorToastAndAlertService } from './errorToastAndAlertService/errorToas
 import { DataTableService } from './dataTableService/dataTable.service';
 import { TimeAndDateService } from './timeAndDateService/timeAndDate.service';
 import { ChartService } from './chartService/chart.service';
+import { WorkoutService } from './workoutService/workout.service';
 
 @Component({
   selector: 'app-root',
@@ -44,6 +45,7 @@ export class AppComponent {
     private dataTableService: DataTableService,
     private timeAndDateService: TimeAndDateService,
     private chartService: ChartService,
+    private workoutService: WorkoutService,
     private statusBar: StatusBar
   ) {
     this.initializeApp();

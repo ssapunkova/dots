@@ -20,6 +20,7 @@ import { ErrorToastAndAlertService } from './errorToastAndAlertService/errorToas
 import { DataTableService } from './dataTableService/dataTable.service';
 import { TimeAndDateService } from './timeAndDateService/timeAndDate.service';
 import { ChartService } from './chartService/chart.service';
+import { WorkoutService } from './workoutService/workout.service';
 
 import { SheetConfigurationPage } from './workouts/sheetConfiguration/sheetConfiguration.page';
 import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkoutRecord.page';
@@ -51,6 +52,7 @@ import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkout
     DataTableService,
     TimeAndDateService,
     ChartService,
+    WorkoutService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [

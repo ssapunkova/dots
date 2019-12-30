@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AlertController, ModalController, ToastController, ActionSheetController } from '@ionic/angular';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-
 // Sevrices
 import { ConnectToServerService } from '../connectToServerService/connect.service';
 import { LoadingService } from '../loadingService/loading.service';
@@ -49,7 +46,6 @@ export class WorkoutsPage implements OnInit {
     public errorToastAndAlertService: ErrorToastAndAlertService,
     public workoutsService: WorkoutsService,
     public timeAndDateService: TimeAndDateService,
-    public ngxChartsModule: NgxChartsModule,
     public alertController: AlertController,
     public modalController: ModalController,
     public actionSheetController: ActionSheetController,
@@ -116,7 +112,7 @@ export class WorkoutsPage implements OnInit {
 
     });
   };
-  // 
+  //
   // async drawCharts(){
   //   console.log(this.chartData)
   //   this.chartService.formatNumberCardData(this.chartData);

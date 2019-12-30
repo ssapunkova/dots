@@ -1,9 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/workouts"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Workout sheet</ion-title>
+    <ion-title>Workout manager</ion-title>
 
     <ion-buttons slot="end">
       <ion-icon name="grid"></ion-icon>
@@ -17,108 +14,8 @@
 
 <ion-content>
 
-  <ion-item *ngIf="sheetData.WorkoutRecords.length < 1" color="secondary" class="ion-text-center">
-    <ion-label>No workout records yet</ion-label>
-  </ion-item>
-
-  <ion-item *ngIf="sheetData.Structure.length < 1" color="secondary" class="ion-text-center">
-    <ion-label>No fields yet. Configure</ion-label>
-  </ion-item>
-
-  <div *ngIf="sheetData.Structure.length > 0">
-
-    <ion-toolbar>
-      <ion-item>
-        <ion-label>Show records for: </ion-label>
-        <ion-select
-          placeholder="Select period"
-          multiple
-          [(ngModel)]="showPeriods"
-          (ionChange)="setPeriod($event)">
-          <ion-select-option
-            *ngFor="let month of sheetData.WorkoutMonths"
-            [value]="month">
-              {{ month }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-toolbar>
-
-    <div style="height: 100%; overflow-x: auto; width: 100%">
-
-      <div *ngIf="showMode == 'chart'" style="width: 100%; min-height: 400px; height: 100%" [style.minWidth.px]="chartService.chartWidth">
-
-        <ngx-charts-line-chart
-            [view]="view"
-            [results]="chartService.chartData"
-            [scheme]="chartService.colorScheme"
-            schemeType="ordinal"
-            [gradient]="false"
-            showDataLabel="true"
-            xAxis="false"
-            yAxis="true"
-            legend="true"
-            legendTitle=""
-            showXAxisLabel="false"
-            showYAxisLabel="false"
-          >
-        </ngx-charts-line-chart>
-
-      </div>
-
-      <ion-grid *ngIf="showMode == 'table'" [style.minWidth.px]="chartService.chartWidth">
-
-        <ion-row>
-          <ion-col
-            title='Date'
-            (click)="dataTableService.sortByDate(sheetData.WorkoutRecordsForSelectedPeriod)">
-            Date
-            <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
-            <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
-          </ion-col>
-
-          <ion-col
-            *ngFor="let col of sheetData.Structure; let i = index"
-            [title]="col.Title"
-            (click)="dataTableService.sortCol(col, i, sheetData.WorkoutRecordsForSelectedPeriod)">
-            <ion-label>{{ (col.Title.length > 10) ? (col.Title | slice:0:10) + '...' : (col.Title) }}</ion-label>
-            <ion-icon name="arrow-dropup" *ngIf="col.sorted == 'asc'; else arrowDown"></ion-icon>
-            <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
-          </ion-col>
-        </ion-row>
-
-        <ion-row
-          *ngFor="let record of sheetData.WorkoutRecordsForSelectedPeriod; let i = index">
-            <ion-item-sliding>
-           <ion-item-options side="start">
-             <ion-item-option color="danger" (click)="deleteRecord(record, i)">Delete</ion-item-option>
-             <ion-item-option color="success" (click)="editRecord(record, i)">Edit</ion-item-option>
-           </ion-item-options>
-
-           <ion-item [color]="record.color">
-            <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }}</ion-col>
-            <ion-col *ngFor="let col of sheetData.Structure; let j = index" [title]="col.Title">
-              <ion-label *ngIf="col.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
-              <ng-template #showTick>
-                <ion-icon name="checkbox" *ngIf="record.Values[j] == true">d</ion-icon>
-                <ion-icon name="close" *ngIf="record.Values[j] == false">d</ion-icon>
-              </ng-template>
-            </ion-col>
-          </ion-item>
-          </ion-item-sliding>
-        </ion-row>
-
-      </ion-grid>
-
-    </div>
-
-  </div>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="addRecord()"
-      disabled="{{ isButtonDisabled.addRecord }}">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  <ion-grid *ngFor="let exercise in sheetData">
+    {{ exercise.Title }}
+  </ion-grid>
 
 </ion-content>

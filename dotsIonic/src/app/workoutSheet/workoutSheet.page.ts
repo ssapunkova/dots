@@ -4,9 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-
 // Sevrices
 import { ConnectToServerService } from '../connectToServerService/connect.service';
 import { LoadingService } from '../loadingService/loading.service';
@@ -56,19 +53,17 @@ export class WorkoutSheetPage implements OnInit {
     public modalController: ModalController,
     public workoutSheetService: WorkoutSheetService,
     public dataTableService: DataTableService,
-    public chartService: ChartService,
-    public ngxChartsModule: NgxChartsModule
+    public chartService: ChartService
   ) { };
 
   ngOnInit() {
     // Get sheetId
     this.sheetData._id = this.route.snapshot.paramMap.get("sheetId");
-    console.log(this.sheetData._id);
-    // Load sheets data from database
-    this.getSheets();
+    // Load sheet data from database
+    this.getSheetData();
   }
 
-  async getSheets(){
+  async getSheetData(){
 
     this.workoutSheetService.getWorkoutSheetData(this.sheetData._id).subscribe((data: [any])=> {
 
@@ -167,7 +162,7 @@ export class WorkoutSheetPage implements OnInit {
           // n.nModified > 0 means the new record upserted an older with the same date
           if(data.docs.nModified > 0){
             this.loadingService.presentSmallLoading("Saving changes...");
-            this.getSheets();
+            this.getSheetData();
           }
           else{
             // If there are no upserts, just a new record, add it to WorkoutRecords
@@ -223,7 +218,7 @@ export class WorkoutSheetPage implements OnInit {
           // deletedDocs > 0 means the edited record overrode an older one with the same date
           if(data.deletedDocs > 0){
             this.loadingService.presentSmallLoading("Saving changes...");
-            this.getSheets();
+            this.getSheetData();
           }
           else{
             this.openSheet();
