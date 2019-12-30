@@ -31,7 +31,7 @@
               </ion-item>
             </ion-card-header>
 
-            <ion-card-content [routerDirection]="'root'" routerLink="/workoutSheet/{{sheet._id}}">
+            <ion-card-content>
 
               <!-- <ion-list>
                 <ion-item>
@@ -55,6 +55,13 @@
                 </ngx-charts-number-card>
 
               </div> -->
+
+              <ion-button [routerDirection]="'root'" routerLink="/workoutSheet/{{sheet._id}}">
+                View records
+              </ion-button>
+              <ion-button [routerDirection]="'root'" routerLink="/workoutManager/{{sheet._id}}">
+                Start workout
+              </ion-button>
 
             </ion-card-content>
 
