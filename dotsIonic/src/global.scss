@@ -25,6 +25,15 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+body{
+  font-size: 17px;
+}
+
+input{
+  font-size: 1.1rem;
+  color: black;
+}
+
 #SplashScreen{
   opacity: 1;
   transition: opacity 0.2s;

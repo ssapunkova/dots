@@ -26,6 +26,9 @@ export class WorkoutManagerPage implements OnInit {
   public isNotCancelled = true;
   public currentExerciseIndex = null;
 
+  public inputValue = 0;
+
+  public results = [];
 
   public sheetExercises = {
     _id: null,                            // sheetId, comes with url
@@ -71,6 +74,8 @@ export class WorkoutManagerPage implements OnInit {
     let that = this;
     let seconds = 5;
 
+    this.isNotCancelled = true;
+
     // Show alert about starting workout
     let alert = await this.alertController.create({
       header: 'Staring workout in ',
@@ -108,6 +113,11 @@ export class WorkoutManagerPage implements OnInit {
   async presentExercise(index){
     this.currentExerciseIndex = index;
     this.sheetExercises.Structure[index].color = "primary";
+  }
+
+  async markAsCompleted(){
+    this.results.push(this.inputValue);
+    this.presentExercise(this.currentExerciseIndex + 1);
   }
 
   async terminateWorkout(){
