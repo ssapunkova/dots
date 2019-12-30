@@ -72,14 +72,14 @@ export class ChartService{
 
   }
 
-  async formatNumberCardData(chartData){
-
-    console.log(chartData)
-
-    this.chartData = chartData;
-
-    this.generateColorScheme();
-  }
+  // async formatNumberCardData(chartData){
+  //
+  //   console.log(chartData)
+  //
+  //   this.chartData = chartData;
+  //
+  //   this.generateColorScheme();
+  // }
 
   // Choose random green colors for chart's color scheme
   async generateColorScheme(){

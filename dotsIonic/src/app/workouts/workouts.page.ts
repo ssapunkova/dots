@@ -108,7 +108,7 @@ export class WorkoutsPage implements OnInit {
       }
 
       console.log(this.chartData)
-      this.drawCharts();
+      // this.drawCharts();
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;
@@ -116,11 +116,11 @@ export class WorkoutsPage implements OnInit {
 
     });
   };
-
-  async drawCharts(){
-    console.log(this.chartData)
-    this.chartService.formatNumberCardData(this.chartData);
-  }
+  // 
+  // async drawCharts(){
+  //   console.log(this.chartData)
+  //   this.chartService.formatNumberCardData(this.chartData);
+  // }
 
   async showSheetActions(sheet, index){
     console.log(sheet, index);
