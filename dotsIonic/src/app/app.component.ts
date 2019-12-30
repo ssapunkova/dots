@@ -8,6 +8,7 @@ import { LoadingService } from './services/loading.service';
 import { ErrorToastAndAlertService } from './services/errorToastAndAlert.service';
 import { DataTableService } from './services/dataTable.service';
 import { TimeAndDateService } from './services/timeAndDate.service';
+import { TimerService } from './services/timer.service';
 import { ChartService } from './services/chart.service';
 import { WorkoutService } from './services/workout.service';
 

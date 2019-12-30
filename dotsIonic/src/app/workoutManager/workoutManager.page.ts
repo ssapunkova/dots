@@ -9,8 +9,7 @@ import { interval } from 'rxjs';
 import { LoadingService } from '../services/loading.service';
 import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 import { DataTableService } from '../services/dataTable.service';
-import { TimeAndDateService } from '../services/timeAndDate.service';
-import { ChartService } from '../services/chart.service';
+import { TimerService } from '../services/timer.service';
 import { WorkoutService } from '../services/workout.service';
 
 
@@ -25,6 +24,8 @@ import { WorkoutService } from '../services/workout.service';
 export class WorkoutManagerPage implements OnInit {
 
   public isNotCancelled = true;
+  public currentExerciseIndex = null;
+
 
   public sheetExercises = {
     _id: null,                            // sheetId, comes with url
@@ -35,12 +36,11 @@ export class WorkoutManagerPage implements OnInit {
     public loadingService: LoadingService,
     public route: ActivatedRoute,
     public errorToastAndAlertService: ErrorToastAndAlertService,
-    public timeAndDateService: TimeAndDateService,
+    public timerService: TimerService,
     public alertController: AlertController,
     public modalController: ModalController,
     public workoutService: WorkoutService,
-    public dataTableService: DataTableService,
-    public chartService: ChartService
+    public dataTableService: DataTableService
   ) { };
 
   ngOnInit() {
@@ -48,6 +48,7 @@ export class WorkoutManagerPage implements OnInit {
     this.sheetExercises._id = this.route.snapshot.paramMap.get("sheetId");
     // Load sheet data from database
     this.getsheetExercises();
+
   }
 
   async getsheetExercises(){
@@ -74,6 +75,7 @@ export class WorkoutManagerPage implements OnInit {
     let alert = await this.alertController.create({
       header: 'Staring workout in ',
       message: "" + seconds,
+      backdropDismiss: false,
       buttons: [
         {
           text: 'Cancel workout',
@@ -90,8 +92,10 @@ export class WorkoutManagerPage implements OnInit {
         alert.message = "" + seconds;
         if(seconds == 0){
           setInterval.unsubscribe();
+          alert.dismiss();
+          this.timerService.setInterval();
           // Present first exercise
-          presentExercise(0);
+          this.presentExercise(0);
         }
       }
     });
@@ -100,8 +104,10 @@ export class WorkoutManagerPage implements OnInit {
 
   }
 
+
   async presentExercise(index){
-    // sheetExercises[index].color = "primary";
+    this.currentExerciseIndex = index;
+    this.sheetExercises.Structure[index].color = "primary";
   }
 
   async terminateWorkout(){

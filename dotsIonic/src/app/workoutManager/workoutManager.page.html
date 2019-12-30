@@ -7,8 +7,18 @@
 
 <ion-content>
 
+  <ion-card *ngIf="currentExerciseIndex != null">
+    <ion-card-header class="ion-text-center">
+      <ion-chip>
+        {{ timerService.currentDate - timerService.startDate | date:'HH:mm:ss':'UTC' }}
+      </ion-chip>
+      <h1>{{ sheetExercises.Structure[currentExerciseIndex].Title }}</h1>
+      <h1>GOAL: {{ sheetExercises.Structure[currentExerciseIndex].Goal }}</h1>
+    </ion-card-header>
+  </ion-card>
+
   <ion-list *ngFor="let exercise of sheetExercises.Structure; let i = index">
-    <ion-item>
+    <ion-item [color]="exercise.color == 'primary' ? 'primary':'null'">
       {{i + 1}}.{{ exercise.Title }}
       <ion-chip slot="end">Goal: {{ exercise.Goal }}</ion-chip>
     </ion-item>
