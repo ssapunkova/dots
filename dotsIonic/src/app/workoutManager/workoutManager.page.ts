@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
 
+import { interval } from 'rxjs';
+
 // Sevrices
 import { ConnectToServerService } from '../connectToServerService/connect.service';
 import { LoadingService } from '../loadingService/loading.service';
@@ -24,13 +26,11 @@ import { WorkoutService } from '../workoutService/workout.service';
 @Injectable()
 export class WorkoutManagerPage implements OnInit {
 
-  public sheetData = {
+  public isNotCancelled = true;
+
+  public sheetExercises = {
     _id: null,                            // sheetId, comes with url
     Title: "",                            // Sheet title
-    Structure: [],                        // Array of all columns and their goals
-    WorkoutRecords: [],                   // Array of json records, raw from database
-    WorkoutMonths: [],                    // Array of the available viewing periods (months)
-    WorkoutRecordsForSelectedPeriod: []   // Array of json records of all records in selected viewing period
   };
 
   constructor(
@@ -49,38 +49,79 @@ export class WorkoutManagerPage implements OnInit {
 
   ngOnInit() {
     // Get sheetId
-    this.sheetData._id = this.route.snapshot.paramMap.get("sheetId");
+    this.sheetExercises._id = this.route.snapshot.paramMap.get("sheetId");
     // Load sheet data from database
-    this.getSheetData();
+    this.getsheetExercises();
   }
 
-  async getSheetData(){
+  async getsheetExercises(){
 
-    this.workoutService.getWorkoutSheetData(this.sheetData._id).subscribe((data: [any])=> {
+    this.workoutService.getSheetExercises(this.sheetExercises._id).subscribe((data: [any])=> {
 
       // Get data about all sheets
-      this.sheetData = data[0];
-      console.log(this.sheetData);
-
-      // Sort records and get workout periods
-      let months = [];
-      this.timeAndDateService.sortByDate(this.sheetData.WorkoutRecords, "asc");
-
-      // Get array of the months of the records
-      // Used to allow the user to select a period ov viewed chart/table
-      this.sheetData.WorkoutRecords.forEach((record) => {
-        let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
-        if(months.indexOf(splitDate) < 0){
-          months.push(splitDate);
-        }
-      })
-      this.sheetData.WorkoutMonths = months;
+      this.sheetExercises = data[0];
+      console.log(this.sheetExercises);
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;
       this.loadingService.dismissSmallLoading();
 
     });
-  };
+  }
+
+
+  async startWorkout(){
+    let that = this;
+    let seconds = 5;
+
+    this.countTime = true;
+
+    // Show alert about starting workout
+    let alert = await this.alertController.create({
+      header: 'Staring workout in ',
+      message: seconds,
+      buttons: [
+        {
+          text: 'Cancel workout',
+          handler: () => {
+            that.terminateWorkout();
+          }
+        }
+      ]
+    });
+
+    let setInterval = interval(1000).subscribe(x => {
+      if(this.isNotCancelled){
+        seconds -= 1;
+        alert.message = seconds;
+        if(seconds == 0){
+          setInterval.unsubscribe();
+          // Present first exercise
+          presentExercise(0);
+        }
+      }
+    });
+
+    await alert.present();
+
+  }
+
+  async presentExercise(index){
+    // sheetExercises[index].color = "primary";
+  }
+
+  async terminateWorkout(){
+    this.isNotCancelled = false;
+    let teminationAlert = await this.alertController.create({
+      header: 'You have terminated the workout',
+      buttons: [
+        {
+          text: 'Ok'
+        }
+      ]
+    });
+
+    await teminationAlert.present();
+  }
 
 }

@@ -37,6 +37,22 @@ app.get("/getSheetData/:sheetId", function(req, res){
   });
 })
 
+app.get("/getSheetExercises/:sheetId", function(req, res){
+  var sheetId = req.params.sheetId;
+
+  mongoose.connect(baseUrl, connectParams, function (err) {
+    if(err) throw err;
+
+    WorkoutSheet.find({ _id: sheetId})
+      .select("Title, Structure")
+      .exec(function(err, data){
+        if(err) throw err;
+        res.send(data);
+      })
+
+  });
+})
+
 app.post("/createSheet", function(req, res){
   var data = req.body.data;
   data.Structure = [];

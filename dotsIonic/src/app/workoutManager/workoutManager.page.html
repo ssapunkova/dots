@@ -2,20 +2,20 @@
   <ion-toolbar>
     <ion-title>Workout manager</ion-title>
 
-    <ion-buttons slot="end">
-      <ion-icon name="grid"></ion-icon>
-      <ion-toggle checked
-        (click)="showMode == 'chart' ? showMode = 'table' : showMode = 'chart'"></ion-toggle>
-      <ion-icon name="podium"></ion-icon>
-    </ion-buttons>
-
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-grid *ngFor="let exercise in sheetData">
-    {{ exercise.Title }}
-  </ion-grid>
+  <ion-list *ngFor="let exercise of sheetExercises.Structure; let i = index">
+    <ion-item>
+      {{i + 1}}.{{ exercise.Title }}
+      <ion-chip slot="end">Goal: {{ exercise.Goal }}</ion-chip>
+    </ion-item>
+  </ion-list>
 
 </ion-content>
+
+<ion-footer style="padding: 0.5rem">
+  <ion-button expand="block" (click)="startWorkout()">Start</ion-button>
+</ion-footer>
