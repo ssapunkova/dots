@@ -34,7 +34,7 @@ export class TimerService{
     this.timer.unsubscribe();
   }
 
-  // Start/restart the timer
+  // Start / restart the timer
   async playTimer(){
     this.timer = interval(1000).subscribe(x => {
       this.timerFunc()
