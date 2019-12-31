@@ -62,8 +62,13 @@ ion-item{
   --border-color: #aaa !important;
 }
 
-ion-alert, .alert-head{
+ion-alert, .alert-head, .alert-button-group{
   text-align: center !important;
+}
+
+.segment-button-disabled{
+  opacity: 1;
+  color: var(--ion-color-secondary);
 }
 
 ngx-charts-legend{

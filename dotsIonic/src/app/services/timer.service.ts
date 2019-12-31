@@ -55,4 +55,8 @@ export class TimerService{
     });
   }
 
+  async stopCountdown(){
+    this.timer.unsubscribe();
+  }
+
 }

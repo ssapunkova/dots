@@ -25,7 +25,8 @@ export class WorkoutManagerPage implements OnInit {
 
   public controls = {                     // Control pausing, timer
     isNotCancelled: true,                 // Is workout not cancelled
-    isPaused: false                       // Is workout on pause
+    isPaused: false,                      // Is workout on pause
+    isABreak: false
   }
 
   public sheetExercises = {
@@ -111,7 +112,7 @@ export class WorkoutManagerPage implements OnInit {
     //     }
     //   }
 
-    this.timerService.setCountdown(5,
+    this.timerService.setCountdown(2,
       function(seconds){
         alert.message = "" + seconds;
       },
@@ -127,18 +128,29 @@ export class WorkoutManagerPage implements OnInit {
 
   }
 
+  async pauseWorkout(){
+    console.log("pause")
+    this.controls.isPaused = true;
+    this.timerService.pauseTimer();
+  }
+
+  async playWorkout(){
+    this.controls.isPaused = false;
+    this.timerService.playTimer();
+  }
 
   async presentExercise(index){
-    this.controls.isPaused = false;
+    this.controls.isABreak = false;
     this.current.ExerciseIndex = index;
-    this.sheetExercises.Structure[index].color = "primary";
   }
 
   async markAsCompleted(){
     let that = this;
-    this.results.push(this.inputValue);
+    this.results.push(this.current.InputValue);
     this.timerService.pauseTimer();
-    this.controls.isPaused = true;
+    this.controls.isABreak = true;
+
+    this.sheetExercises.Structure[this.current.ExerciseIndex].Results = this.current.InputValue;
 
     that.current.BreakSecondsLeft = 5;
     this.timerService.setCountdown(5,
@@ -146,20 +158,35 @@ export class WorkoutManagerPage implements OnInit {
         that.current.BreakSecondsLeft = "" + seconds;
       },
       function(){
-        that.controls.isPaused = false;
-        that.timerService.playTimer();
+        that.controls.isABreak = false;
+        if(that.controls.isPaused == false) that.timerService.playTimer();
         that.presentExercise(that.current.ExerciseIndex + 1);
       }
     )
   }
 
   async terminateWorkout(){
-    this.controls.isNotCancelled = false;
+    let that = this;
     let teminationAlert = await this.alertController.create({
-      header: 'You have terminated the workout',
+      header: 'Terminate workout?',
       buttons: [
         {
-          text: 'Ok'
+          text: 'Ok',
+          handler: () => {
+            if(that.current.ExerciseIndex != null){
+              that.current.ExerciseIndex = null;
+              that.timerService.pauseTimer();
+            }
+            else{
+              that.timerService.stopCountdown();
+            }
+          }
+        },
+        {
+          text: "Cancel",
+          handler: () => {
+            that.presentExercise(0);
+          }
         }
       ]
     });

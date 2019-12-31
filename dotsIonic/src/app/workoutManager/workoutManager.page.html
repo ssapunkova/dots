@@ -9,12 +9,43 @@
 
   <ion-card *ngIf="current.ExerciseIndex != null" class="ion-text-center">
     <ion-card-header>
-      <ion-chip>
-        {{ timerService.currentDate * 1000 - timerService.startDate * 1000 | date:'HH:mm:ss':'UTC' }}
-      </ion-chip>
+
+      <ion-segment>
+        <ion-segment-button (click)="terminateWorkout()">
+          <ion-icon name="square"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button disabled>
+          <ion-label style="font-size: 1.2rem">
+            {{ timerService.currentDate * 1000 - timerService.startDate * 1000 | date:'HH:mm:ss':'UTC' }}
+          </ion-label>
+        </ion-segment-button>
+        <ion-segment-button
+          *ngIf="!controls.isPaused; else playButton"
+          (click)="pauseWorkout()">
+          <ion-icon name="pause"></ion-icon>
+        </ion-segment-button>
+        <ng-template #playButton>
+          <ion-segment-button (click)="playWorkout()">
+            <ion-icon name="play"></ion-icon>
+          </ion-segment-button>
+        </ng-template>
+      </ion-segment>
     </ion-card-header>
 
-    <ion-card-content *ngIf="controls.isPaused == false; else pausedCard">
+    <ion-card-content *ngIf="controls.isABreak == true">
+      <h1>Take a break </h1>
+      <h1>Next exercise: {{ sheetExercises.Structure[current.ExerciseIndex + 1].Title }} in</h1>
+      <h1>{{ current.BreakSecondsLeft }}</h1>
+    </ion-card-content>
+
+
+
+    <ion-card-content *ngIf="controls.isABreak == false || isPaused == false">
+
+      <ion-item color="primary" *ngIf="controls.isPaused == true" class="ion-text-center">
+        Workout is paused
+      </ion-item>
+
       <h1>{{ sheetExercises.Structure[current.ExerciseIndex].Title }}</h1>
       <h1>GOAL: {{ sheetExercises.Structure[current.ExerciseIndex].Goal }} </h1>
 
@@ -43,27 +74,23 @@
       </ion-grid>
     </ion-card-content>
 
-    <ng-template #pausedCard>
-      <ion-card-content>
-        <h1>Take a break </h1>
-        <h1>Next exercise: {{ sheetExercises.Structure[current.ExerciseIndex + 1].Title }} in</h1>
-        <h1>{{ current.BreakSecondsLeft }}</h1>
-      </ion-card-content>
-    </ng-template>
+
 
   </ion-card>
 
-  <ion-list>
-    <ion-item-divider color="secondary">
-      Exercises
-    </ion-item-divider>
-    <ion-item
-      *ngFor="let exercise of sheetExercises.Structure"
-      [color]="exercise.color == 'primary' ? 'primary':'null'">
-      {{ exercise.Title }}
-      <ion-chip slot="end">Goal: {{ exercise.Goal }}</ion-chip>
-    </ion-item>
-  </ion-list>
+  <ion-item color="primary">  Exercises </ion-item>
+
+  <ion-grid>
+    <ion-row
+      *ngFor="let exercise of sheetExercises.Structure; let i = index">
+      <ion-col>
+        <ion-icon *ngIf="i == current.ExerciseIndex" name="play"></ion-icon>
+        {{ exercise.Title }}
+      </ion-col>
+      <ion-col *ngIf="results[i] != null">Result: {{ results[i] }}</ion-col>
+      <ion-col>Goal: {{ exercise.Goal }}</ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
 
