@@ -24,9 +24,9 @@ import { WorkoutService } from '../services/workout.service';
 export class WorkoutManagerPage implements OnInit {
 
   public controls = {                     // Control pausing, timer
-    isNotCancelled: true,                 // Is workout not cancelled
-    isPaused: false,                      // Is workout on pause
-    isABreak: false
+    IsNotCancelled: true,                 // Is workout not cancelled
+    IsPaused: false,                      // Is workout on pause
+    IsABreak: false
   }
 
   public sheetExercises = {
@@ -82,7 +82,7 @@ export class WorkoutManagerPage implements OnInit {
     let that = this;
     let seconds = 5;
 
-    this.controls.isNotCancelled = true;
+    this.controls.IsNotCancelled = true;
 
     // Show alert about starting workout
     let alert = await this.alertController.create({
@@ -99,18 +99,6 @@ export class WorkoutManagerPage implements OnInit {
       ]
     });
 
-    // let setInterval = interval(1000).subscribe(x => {
-    //   if(this.controls.isNotCancelled){
-    //     seconds -= 1;
-    //     alert.message = "" + seconds;
-    //     if(seconds == 0){
-    //       setInterval.unsubscribe();
-    //       alert.dismiss();
-    //       this.timerService.setInterval();
-    //       // Present first exercise
-    //       this.presentExercise(0);
-    //     }
-    //   }
 
     this.timerService.setCountdown(2,
       function(seconds){
@@ -130,17 +118,23 @@ export class WorkoutManagerPage implements OnInit {
 
   async pauseWorkout(){
     console.log("pause")
-    this.controls.isPaused = true;
-    this.timerService.pauseTimer();
+    this.controls.IsPaused = true;
+    console.log(this.controls.IsABreak)
+    if(this.controls.IsABreak == false){
+      this.timerService.pauseTimer();
+    }
   }
 
   async playWorkout(){
-    this.controls.isPaused = false;
-    this.timerService.playTimer();
+    this.controls.IsPaused = false;
+    console.log(this.controls.IsABreak);
+    if(this.controls.IsABreak == false){
+      this.timerService.playTimer();
+    }
   }
 
   async presentExercise(index){
-    this.controls.isABreak = false;
+    this.controls.IsABreak = false;
     this.current.ExerciseIndex = index;
   }
 
@@ -148,7 +142,7 @@ export class WorkoutManagerPage implements OnInit {
     let that = this;
     this.results.push(this.current.InputValue);
     this.timerService.pauseTimer();
-    this.controls.isABreak = true;
+    this.controls.IsABreak = true;
 
     this.sheetExercises.Structure[this.current.ExerciseIndex].Results = this.current.InputValue;
 
@@ -158,8 +152,8 @@ export class WorkoutManagerPage implements OnInit {
         that.current.BreakSecondsLeft = "" + seconds;
       },
       function(){
-        that.controls.isABreak = false;
-        if(that.controls.isPaused == false) that.timerService.playTimer();
+        that.controls.IsABreak = false;
+        if(that.controls.IsPaused == false) that.timerService.playTimer();
         that.presentExercise(that.current.ExerciseIndex + 1);
       }
     )
