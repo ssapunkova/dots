@@ -62,6 +62,10 @@ ion-item{
   --border-color: #aaa !important;
 }
 
+ion-alert, .alert-head{
+  text-align: center !important;
+}
+
 ngx-charts-legend{
   position: fixed;
   left: 10px;

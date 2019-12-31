@@ -7,41 +7,50 @@
 
 <ion-content>
 
-  <ion-card *ngIf="currentExerciseIndex != null" class="ion-text-center">
+  <ion-card *ngIf="current.ExerciseIndex != null" class="ion-text-center">
     <ion-card-header>
       <ion-chip>
-        {{ timerService.currentDate - timerService.startDate | date:'HH:mm:ss':'UTC' }}
+        {{ timerService.currentDate * 1000 - timerService.startDate * 1000 | date:'HH:mm:ss':'UTC' }}
       </ion-chip>
     </ion-card-header>
 
-    <ion-card-content>
-      <h1>{{ sheetExercises.Structure[currentExerciseIndex].Title }}</h1>
-      <h1>GOAL: {{ sheetExercises.Structure[currentExerciseIndex].Goal }} </h1>
+    <ion-card-content *ngIf="controls.isPaused == false; else pausedCard">
+      <h1>{{ sheetExercises.Structure[current.ExerciseIndex].Title }}</h1>
+      <h1>GOAL: {{ sheetExercises.Structure[current.ExerciseIndex].Goal }} </h1>
 
       <ion-grid>
         <ion-row>
           <ion-col size="12" size-sm> Your result: </ion-col>
           <ion-col size="12" size-sm>
             <ion-input
-              [type]="sheetExercises.Structure[currentExerciseIndex].Type"
+              [type]="sheetExercises.Structure[current.ExerciseIndex].Type"
               size="12" size-sm
-              [value]="sheetExercises.Structure[currentExerciseIndex].Goal"
-              [(ngModel)]="inputValue">
+              [value]="sheetExercises.Structure[current.ExerciseIndex].Goal"
+              [(ngModel)]="current.InputValue">
             </ion-input>
           </ion-col>
           <ion-col size="12" size-sm>
             <ion-chip [color]="
-              inputValue < sheetExercises.Structure[currentExerciseIndex].Goal * 2/5 ? 'danger' :
-              inputValue < sheetExercises.Structure[currentExerciseIndex].Goal * 1/2 ? 'warning' :
+              current.InputValue < sheetExercises.Structure[current.ExerciseIndex].Goal * 2/5 ? 'danger' :
+              current.InputValue < sheetExercises.Structure[current.ExerciseIndex].Goal * 1/2 ? 'warning' :
               'primary'
               ">
-              {{ inputValue * 100 / sheetExercises.Structure[currentExerciseIndex].Goal | number: '1.0-0' }} %
+              {{ current.InputValue * 100 / sheetExercises.Structure[current.ExerciseIndex].Goal | number: '1.0-0' }} %
               of your goal
             </ion-chip>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>
+
+    <ng-template #pausedCard>
+      <ion-card-content>
+        <h1>Take a break </h1>
+        <h1>Next exercise: {{ sheetExercises.Structure[current.ExerciseIndex + 1].Title }} in</h1>
+        <h1>{{ current.BreakSecondsLeft }}</h1>
+      </ion-card-content>
+    </ng-template>
+
   </ion-card>
 
   <ion-list>
@@ -61,9 +70,10 @@
 <ion-footer style="padding: 0.5rem">
   <ion-button expand="block"
     (click)="startWorkout()"
-    *ngIf="currentExerciseIndex == null">Start</ion-button>
+    *ngIf="current.ExerciseIndex == null; else markAsCompletedButton">Start</ion-button>
 
-  <ion-button expand="block"
-    (click)="markAsCompleted()"
-    *ngIf="currentExerciseIndex != null">Mark as completed</ion-button>
+  <ng-template #markAsCompletedButton>
+    <ion-button expand="block"
+      (click)="markAsCompleted()">Mark as completed</ion-button>
+  </ng-template>
 </ion-footer>
