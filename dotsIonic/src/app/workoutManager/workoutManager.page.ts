@@ -33,6 +33,7 @@ export class WorkoutManagerPage implements OnInit {
   public sheetExercises = {
     _id: null,                            // sheetId, comes with url
     Title: "",                            // Sheet title
+    Structure: []                         // Structure - array of json exercises
   };
 
   constructor(
