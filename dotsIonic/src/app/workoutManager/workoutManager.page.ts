@@ -41,6 +41,7 @@ export class WorkoutManagerPage implements OnInit {
     BreakSecondsLeft: 5
   }
 
+  public exerciseNumber = 0;
   public results = [];
 
   constructor(
@@ -69,6 +70,8 @@ export class WorkoutManagerPage implements OnInit {
       // Get data about all sheets
       this.sheetExercises = data[0];
       console.log(this.sheetExercises);
+
+      this.exerciseNumber = this.sheetExercises.Structure.length;
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;
@@ -107,7 +110,7 @@ export class WorkoutManagerPage implements OnInit {
       function(){
         alert.dismiss();
         that.timerService.setTimer();
-        that.presentExercise(0);
+        that.presentNextExercise();
       }
     )
     // });
@@ -133,9 +136,16 @@ export class WorkoutManagerPage implements OnInit {
     }
   }
 
-  async presentExercise(index){
+  async presentNextExercise(){
     this.controls.IsABreak = false;
-    this.current.ExerciseIndex = index;
+    if(this.current.ExerciseIndex == null){
+      this.current.ExerciseIndex = 0;
+    }
+    else{
+      if(this.current.ExerciseIndex < this.exerciseNumber - 1){
+        this.current.ExerciseIndex++;
+      }
+    }
   }
 
   async markAsCompleted(){
@@ -154,7 +164,7 @@ export class WorkoutManagerPage implements OnInit {
       function(){
         that.controls.IsABreak = false;
         if(that.controls.IsPaused == false) that.timerService.playTimer();
-        that.presentExercise(that.current.ExerciseIndex + 1);
+        that.presentNextExercise();
       }
     )
   }
@@ -179,13 +189,17 @@ export class WorkoutManagerPage implements OnInit {
         {
           text: "Cancel",
           handler: () => {
-            that.presentExercise(0);
+            that.presentNextExercise();
           }
         }
       ]
     });
 
     await teminationAlert.present();
+  }
+
+  async finish(){
+    console.log("FINISHED")
   }
 
 }

@@ -93,10 +93,15 @@
 <ion-footer style="padding: 0.5rem">
   <ion-button expand="block"
     (click)="startWorkout()"
-    *ngIf="current.ExerciseIndex == null; else markAsCompletedButton">Start</ion-button>
+    *ngIf="current.ExerciseIndex == null">Start</ion-button>
 
-  <ng-template #markAsCompletedButton>
-    <ion-button expand="block"
-      (click)="markAsCompleted()">Mark as completed</ion-button>
-  </ng-template>
+  <ion-button expand="block"
+    *ngIf="current.ExerciseIndex != null && current.ExerciseIndex < exerciseNumber - 1"
+    [disabled]="controls.IsABreak"
+    (click)="markAsCompleted()">Mark as completed</ion-button>
+
+  <ion-button expand="block"
+    *ngIf="current.ExerciseIndex == exerciseNumber - 1"
+    (click)="finish()">Finish</ion-button>
+    
 </ion-footer>
