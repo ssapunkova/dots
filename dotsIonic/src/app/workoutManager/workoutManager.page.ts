@@ -26,8 +26,10 @@ export class WorkoutManagerPage implements OnInit {
 
   public controls = {                     // Control pausing, timer
     IsNotCancelled: true,                 // Is workout not cancelled
+    IsExerciseRunning: false,             // Not paused, not during a break, not finished -> an exercise is in process
     IsPaused: false,                      // Is workout on pause
-    IsABreak: false
+    IsABreak: false,                      // Is it a break between exercises
+    IsFinished: false                     // Has the workout finished
   }
 
   public sheetExercises = {
@@ -123,6 +125,7 @@ export class WorkoutManagerPage implements OnInit {
 
   async pauseWorkout(){
     console.log("pause")
+    this.controls.IsExerciseRunning = false;
     this.controls.IsPaused = true;
     console.log(this.controls.IsABreak)
     if(this.controls.IsABreak == false){
@@ -135,11 +138,13 @@ export class WorkoutManagerPage implements OnInit {
     console.log(this.controls.IsABreak);
     if(this.controls.IsABreak == false){
       this.timerService.playTimer();
+      this.controls.IsExerciseRunning = true;
     }
   }
 
   async presentNextExercise(){
     this.controls.IsABreak = false;
+    this.controls.IsExerciseRunning = true;
     if(this.current.ExerciseIndex == null){
       this.current.ExerciseIndex = 0;
     }
@@ -148,27 +153,33 @@ export class WorkoutManagerPage implements OnInit {
         this.current.ExerciseIndex++;
       }
     }
+    this.current.InputValue = this.sheetExercises.Structure[this.current.ExerciseIndex].Goal;
   }
 
   async markAsCompleted(){
     let that = this;
+
     this.results.push(this.current.InputValue);
     this.timerService.pauseTimer();
-    this.controls.IsABreak = true;
 
-    this.sheetExercises.Structure[this.current.ExerciseIndex].Results = this.current.InputValue;
-
-    that.current.BreakSecondsLeft = 5;
-    this.timerService.setCountdown(5,
-      function(seconds){
-        that.current.BreakSecondsLeft = seconds;
-      },
-      function(){
-        that.controls.IsABreak = false;
-        if(that.controls.IsPaused == false) that.timerService.playTimer();
-        that.presentNextExercise();
-      }
-    )
+    if(this.controls.IsExerciseRunning){
+      this.controls.IsExerciseRunning = false;
+      this.controls.IsABreak = true;
+      this.current.BreakSecondsLeft = 5;
+      this.timerService.setCountdown(5,
+        function(seconds){
+          that.current.BreakSecondsLeft = seconds;
+        },
+        function(){
+          that.controls.IsABreak = false;
+          if(that.controls.IsPaused == false) {
+            that.controls.IsExerciseRunning = true;
+            that.timerService.playTimer();
+          }
+          that.presentNextExercise();
+        }
+      )
+    }
   }
 
   async terminateWorkout(){
@@ -201,7 +212,13 @@ export class WorkoutManagerPage implements OnInit {
   }
 
   async finish(){
-    console.log("FINISHED")
+    this.controls.IsExerciseRunning = false;
+    this.controls.IsFinished = true;
+
+    this.markAsCompleted();
+
+    this.timerService.pauseTimer();
+    console.log("FINISHED");
   }
 
 }

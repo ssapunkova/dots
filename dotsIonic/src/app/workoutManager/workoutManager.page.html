@@ -16,7 +16,7 @@
         </ion-segment-button>
         <ion-segment-button disabled>
           <ion-label style="font-size: 1.2rem">
-            {{ timerService.currentDate * 1000 - timerService.startDate * 1000 | date:'HH:mm:ss':'UTC' }}
+            {{ timerService.timePassed()  | date:'HH:mm:ss':'UTC'}}
           </ion-label>
         </ion-segment-button>
         <ion-segment-button
@@ -31,27 +31,7 @@
         </ng-template>
       </ion-segment>
 
-      <ion-item *ngIf="controls.IsABreak == true">
-        <ion-grid class="ion-text-center">
-          <ion-row>
-            <ion-col>
-              <h1>Take a break </h1>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              Next exercise: {{ sheetExercises.Structure[current.ExerciseIndex + 1].Title }} in
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <h1>{{ current.BreakSecondsLeft }}</h1>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-
-      <ion-item *ngIf="controls.IsABreak == false || IsPaused == false">
+      <ion-item *ngIf="controls.IsExerciseRunning || controls.IsPaused">
 
         <ion-grid class="ion-text-center">
           <ion-row>
@@ -91,6 +71,32 @@
             </ion-col>
           </ion-row>
         </ion-grid>
+      </ion-item>
+
+      <ion-item *ngIf="controls.IsABreak">
+        <ion-grid class="ion-text-center">
+          <ion-row>
+            <ion-col>
+              <h1>Take a break </h1>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Next exercise: {{ sheetExercises.Structure[current.ExerciseIndex + 1].Title }} in
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <h1>{{ current.BreakSecondsLeft }}</h1>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item *ngIf="this.controls.IsFinished">
+        FINISHED
+        Time {{ timerService.timePassed() | date: "HH:mm:ss": "UTC" }}
+        {{ results | json }}
       </ion-item>
 
     </ion-card-header>

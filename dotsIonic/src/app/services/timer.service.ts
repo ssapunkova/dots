@@ -25,7 +25,11 @@ export class TimerService{
   // Increments seconds
   async timerFunc(){
     this.currentDate++;
+  }
 
+  // Show time passed since its running
+  timePassed(){
+    return this.currentDate * 1000 - this.startDate * 1000;
   }
 
   // Pauses timer

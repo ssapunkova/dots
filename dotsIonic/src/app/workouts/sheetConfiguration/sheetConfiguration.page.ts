@@ -71,7 +71,7 @@ export class SheetConfigurationPage implements OnInit {
   async addColumn(colType){
     let col = { Title: "", Goal: "", Type: colType };
     if(colType == "Bool"){
-      col.Goal = true;
+      col.Goal = "true";
     }
     this.sheet.Structure.push(col);
   }
