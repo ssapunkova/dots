@@ -69,7 +69,11 @@ export class SheetConfigurationPage implements OnInit {
   }
 
   async addColumn(colType){
-    this.sheet.Structure.push({ Title: "", Goal: "", Type: colType });
+    let col = { Title: "", Goal: "", Type: colType };
+    if(colType == "Bool"){
+      col.Goal = true;
+    }
+    this.sheet.Structure.push(col);
   }
 
   async deleteExercise(index){

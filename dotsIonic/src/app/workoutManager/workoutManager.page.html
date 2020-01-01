@@ -62,12 +62,16 @@
           <ion-row>
             <ion-col size="12" size-sm> Your result: </ion-col>
             <ion-col size="12" size-sm>
-              <ion-input
+              <ion-input *ngIf="sheetExercises.Structure[current.ExerciseIndex].Type != 'Bool'; else checkbox"
                 [type]="sheetExercises.Structure[current.ExerciseIndex].Type"
                 size="12" size-sm
                 [value]="sheetExercises.Structure[current.ExerciseIndex].Goal"
                 [(ngModel)]="current.InputValue">
               </ion-input>
+
+              <ng-template #checkbox>
+                <ion-checkbox [(ngModel)]='current.InputValue' style='margin-right: 1rem'></ion-checkbox>
+              </ng-template>
             </ion-col>
             <ion-col size="12" size-sm>
               <ion-chip [color]="
@@ -76,12 +80,13 @@
                 'primary'
                 ">
                 <ion-label *ngIf="sheetExercises.Structure[current.ExerciseIndex].Type == 'Number'">
-                  {{ current.InputValue * 100 / sheetExercises.Structure[current.ExerciseIndex].Goal | number: '1.0-0' }} %
+                  {{ current.InputValue * 100 / sheetExercises.Structure[current.ExerciseIndex].Goal | number: '1.0-0' }}
+                  % of your goal ( {{ sheetExercises.Structure[current.ExerciseIndex].Goal }} )
                 </ion-label>
                 <ion-label *ngIf="sheetExercises.Structure[current.ExerciseIndex].Type == 'Time'">
-                  {{ timeAndDateService.calculateTimeRatio(current.InputValue, sheetExercises.Structure[current.ExerciseIndex].Goal) }} %
+                  {{ timeAndDateService.calculateTimeRatio(current.InputValue, sheetExercises.Structure[current.ExerciseIndex].Goal) }}
+                  % of your goal ( {{ sheetExercises.Structure[current.ExerciseIndex].Goal }} )
                 </ion-label>
-                of your goal ( {{ sheetExercises.Structure[current.ExerciseIndex].Goal }} )
               </ion-chip>
             </ion-col>
           </ion-row>

@@ -24,7 +24,6 @@ export class TimerService{
 
   // Increments seconds
   async timerFunc(){
-    console.log(this.currentDate);
     this.currentDate++;
 
   }
