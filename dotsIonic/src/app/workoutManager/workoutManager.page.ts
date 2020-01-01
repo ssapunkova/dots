@@ -159,7 +159,7 @@ export class WorkoutManagerPage implements OnInit {
     that.current.BreakSecondsLeft = 5;
     this.timerService.setCountdown(5,
       function(seconds){
-        that.current.BreakSecondsLeft = "" + seconds;
+        that.current.BreakSecondsLeft = seconds;
       },
       function(){
         that.controls.IsABreak = false;
