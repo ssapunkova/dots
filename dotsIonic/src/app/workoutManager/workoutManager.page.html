@@ -75,7 +75,12 @@
                 current.InputValue < sheetExercises.Structure[current.ExerciseIndex].Goal * 1/2 ? 'warning' :
                 'primary'
                 ">
-                {{ current.InputValue * 100 / sheetExercises.Structure[current.ExerciseIndex].Goal | number: '1.0-0' }} %
+                <ion-label *ngIf="sheetExercises.Structure[current.ExerciseIndex].Type == 'Number'">
+                  {{ current.InputValue * 100 / sheetExercises.Structure[current.ExerciseIndex].Goal | number: '1.0-0' }} %
+                </ion-label>
+                <ion-label *ngIf="sheetExercises.Structure[current.ExerciseIndex].Type == 'Time'">
+                  {{ timeAndDateService.calculateTimeRatio(current.InputValue, sheetExercises.Structure[current.ExerciseIndex].Goal) }} %
+                </ion-label>
                 of your goal ( {{ sheetExercises.Structure[current.ExerciseIndex].Goal }} )
               </ion-chip>
             </ion-col>

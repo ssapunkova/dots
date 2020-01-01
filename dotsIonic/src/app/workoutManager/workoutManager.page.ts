@@ -11,6 +11,7 @@ import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.servic
 import { DataTableService } from '../services/dataTable.service';
 import { TimerService } from '../services/timer.service';
 import { WorkoutService } from '../services/workout.service';
+import { TimeAndDateService } from '../services/timeAndDate.service';
 
 
 
@@ -52,7 +53,8 @@ export class WorkoutManagerPage implements OnInit {
     public alertController: AlertController,
     public modalController: ModalController,
     public workoutService: WorkoutService,
-    public dataTableService: DataTableService
+    public dataTableService: DataTableService,
+    public timeAndDateService: TimeAndDateService
   ) { };
 
   ngOnInit() {

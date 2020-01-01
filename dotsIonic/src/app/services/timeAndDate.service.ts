@@ -22,6 +22,13 @@ export class TimeAndDateService{
     return seconds;
   }
 
+   calculateTimeRatio(time1, time2){
+    time1 = this.getSeconds(time1);
+    time2 = this.getSeconds(time2);
+
+    return Math.round(time1 / time2 * 100);
+  }
+
   // Formats date dd.mm
   async formatDate(date){
     let splitDate = date.split("-");
