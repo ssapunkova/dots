@@ -10,7 +10,7 @@
   <ion-card >
     <ion-card-header *ngIf="current.ExerciseIndex != null" class="ion-text-center">
 
-      <ion-segment>
+      <ion-segment *ngIf="!controls.IsFinished">
         <ion-segment-button (click)="terminateWorkout()">
           <ion-icon name="square"></ion-icon>
         </ion-segment-button>
@@ -94,9 +94,8 @@
       </ion-item>
 
       <ion-item *ngIf="this.controls.IsFinished">
-        FINISHED
-        Time {{ timerService.timePassed() | date: "HH:mm:ss": "UTC" }}
-        {{ results | json }}
+        <ion-item><h1 class="ion-text-center"> Well done! </h1></ion-item>
+        <h3 class="ion-text-center">Workout duration: {{ timerService.timePassed() | date: "HH:mm:ss": "UTC" }}</h3>
       </ion-item>
 
     </ion-card-header>
@@ -122,10 +121,26 @@
             </ion-col>
             <ion-col
               *ngIf="results[i] != null"
-              style="max-width: 80px; text-align: center">{{ results[i] }}</ion-col>
+              style="max-width: 80px; text-align: center">
+              <ion-label *ngIf="exercise.Type != 'Bool'; else showBool">
+                {{ results[i] }}
+              </ion-label>
+              <ng-template #showBool>
+                <ion-icon name="checkbox" *ngIf="results[i] == 'true'"></ion-icon>
+                <ion-icon name="close" *ngIf="results[i] != 'true'"></ion-icon>
+              </ng-template>
+            </ion-col>
             <ion-col
               style="max-width: 80px"
-              class="ion-text-center">{{ exercise.Goal }}</ion-col>
+              class="ion-text-center">
+              <ion-label *ngIf="exercise.Type != 'Bool'; else showBool">
+                {{ exercise.Goal }}
+              </ion-label>
+              <ng-template #showBool>
+                <ion-icon name="checkbox" *ngIf="exercise.Goal == 'true'"></ion-icon>
+                <ion-icon name="close" *ngIf="exercise.Goal != 'true'"></ion-icon>
+              </ng-template>
+            </ion-col>
           </ion-row>
         </ion-grid>
     </ion-card-content>
