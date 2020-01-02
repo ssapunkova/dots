@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 // Services
 import { LoadingService } from '../services/loading.service';
+import { WorkoutService } from '../services/workout.service';
 
 
 @Component({
@@ -15,7 +16,8 @@ import { LoadingService } from '../services/loading.service';
 export class HomePage implements OnInit {
 
   constructor(
-    public loadingService: LoadingService
+    public loadingService: LoadingService,
+    public workoutService: WorkoutService
   ){}
 
   ngOnInit(){
@@ -23,6 +25,14 @@ export class HomePage implements OnInit {
   }
 
   async init(){
+
     this.loadingService.isPageLoading = false;
+  }
+
+  async test(){
+    console.log("a");
+    this.workoutService.getWorkoutSheetsData().subscribe((data: [any])=> {
+      console.log(data);
+    })
   }
 }

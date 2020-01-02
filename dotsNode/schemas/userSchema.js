@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 
 // Require bcrypt for hashing passwords
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 //Define a schema

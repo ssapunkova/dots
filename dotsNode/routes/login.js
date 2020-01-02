@@ -9,7 +9,7 @@ const baseUrl = dbConnectionSettings.baseUrl; // require base url of the databas
 const connectParams = dbConnectionSettings.connectParams; // require base url of the database
 
 // Require bcrypt for hashing passwords
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 var User = require('../schemas/userSchema');

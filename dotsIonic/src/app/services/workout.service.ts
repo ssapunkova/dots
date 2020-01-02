@@ -40,6 +40,7 @@ export class WorkoutService {
   }
 
   public addRecord(recordData){
+    console.log(recordData);
     return this.http.post(
       this.connectToServerService.serverUrl + '/addWorkoutRecord',
       {data: recordData}
