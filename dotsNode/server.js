@@ -56,7 +56,7 @@ app.use(function (req, res, next) {
 // Require routes
 require("./routes/login");
 require("./routes/register");
-require("./routes/home");
+require("./routes/workouts");
 
 app.get('/', function(req, res) {
     res.render("login")
