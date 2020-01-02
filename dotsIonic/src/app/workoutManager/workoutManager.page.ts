@@ -86,15 +86,15 @@ export class WorkoutManagerPage implements OnInit {
 
 
   async startWorkout(){
-    let that = this;
-    let seconds = 5;
 
+    // IsNotCancelled means the user hasn't clicked Terminate Workout button
     this.controls.IsNotCancelled = true;
-
+    let that = this;
+    let secondsLeft = 2;
     // Show alert about starting workout
     let alert = await this.alertController.create({
       header: 'Starting workout in ',
-      message: "" + seconds,
+      message: "" + secondsLeft,
       backdropDismiss: false,
       buttons: [
         {
@@ -106,65 +106,51 @@ export class WorkoutManagerPage implements OnInit {
       ]
     });
 
-
-    this.timerService.setCountdown(2,
-      function(seconds){
-        alert.message = "" + seconds;
+    // Set countdown for secondsLeft
+    this.timerService.setCountdown(secondsLeft,
+      function(secondsLeft){
+        alert.message = "" + secondsLeft;
       },
       function(){
         alert.dismiss();
+        // Set timer for workout and present the first exercise
         that.timerService.setTimer();
         that.presentNextExercise();
       }
     )
-    // });
 
     await alert.present();
 
   }
 
-  async pauseWorkout(){
-    console.log("pause")
-    this.controls.IsExerciseRunning = false;
-    this.controls.IsPaused = true;
-    console.log(this.controls.IsABreak)
-    if(this.controls.IsABreak == false){
-      this.timerService.pauseTimer();
-    }
-  }
-
-  async playWorkout(){
-    this.controls.IsPaused = false;
-    console.log(this.controls.IsABreak);
-    if(this.controls.IsABreak == false){
-      this.timerService.playTimer();
-      this.controls.IsExerciseRunning = true;
-    }
-  }
-
   async presentNextExercise(){
 
-    console.log(this.time);
+    // Finish break between exercises, resume exercise running
     this.controls.IsABreak = false;
     this.controls.IsExerciseRunning = true;
+    // Mark the time of starting the exercise
     this.current.ExerciseStartedAt = this.timerService.timePassed();
+    // If workout has just started, present fist exercise
     if(this.current.ExerciseIndex == null){
       this.current.ExerciseIndex = 0;
     }
     else{
+      // If the current it's not the last exercise, present the next one
       if(this.current.ExerciseIndex < this.exerciseNumber - 1){
         this.current.ExerciseIndex++;
       }
     }
+    // Set the user's result field to the goal
     this.current.InputValue = this.sheetExercises.Structure[this.current.ExerciseIndex].Goal;
   }
 
   async markAsCompleted(){
-    let that = this;
+    // Pause timer for the break and push user's value to results array
     this.timerService.pauseTimer();
-
+    this.controls.IsExerciseRunning = false;
     this.results.push(this.current.InputValue);
 
+    // Record the time this exercise took
     if(this.time.length == 0){
       this.time.push(this.timerService.timePassed());
     }
@@ -172,9 +158,10 @@ export class WorkoutManagerPage implements OnInit {
       this.time.push(this.timerService.timePassed() - this.current.ExerciseStartedAt);
     }
 
-    this.controls.IsExerciseRunning = false;
-
+    let that = this;
+    // If there are more exercises to present
     if(!this.controls.IsFinished){
+      // Make a break
       this.controls.IsABreak = true;
       this.current.BreakSecondsLeft = 2;
       this.timerService.setCountdown(this.current.BreakSecondsLeft,
@@ -182,30 +169,53 @@ export class WorkoutManagerPage implements OnInit {
           that.current.BreakSecondsLeft = seconds;
         },
         function(){
+          // Finsish the break and, if workout is not paused, resume timer
           that.controls.IsABreak = false;
           if(that.controls.IsPaused == false) {
             that.controls.IsExerciseRunning = true;
             that.timerService.playTimer();
           }
+          // Present next exercise
           that.presentNextExercise();
         }
       )
     }
   }
 
+  async pauseWorkout(){
+    this.controls.IsExerciseRunning = false;
+    this.controls.IsPaused = true;
+    // Pause the timer if it's not a break
+    if(this.controls.IsABreak == false){
+      this.timerService.pauseTimer();
+    }
+  }
+
+  async playWorkout(){
+    this.controls.IsPaused = false;
+    // Play timer if it's not a break
+    if(this.controls.IsABreak == false){
+      this.timerService.playTimer();
+      this.controls.IsExerciseRunning = true;
+    }
+  }
+
   async terminateWorkout(){
     let that = this;
+    // Ask user if they want to terminate the workout
     let teminationAlert = await this.alertController.create({
       header: 'Terminate workout?',
       buttons: [
         {
           text: 'Ok',
           handler: () => {
+            // If the workout is in proccess already, stop timer and reset ExerciseIndex
             if(that.current.ExerciseIndex != null){
               that.current.ExerciseIndex = null;
               that.timerService.pauseTimer();
             }
             else{
+              // If it's still the Starting workout in... countdown, stop the countdown
               that.timerService.stopCountdown();
             }
           }
@@ -226,9 +236,10 @@ export class WorkoutManagerPage implements OnInit {
     this.controls.IsPaused = false;
     this.controls.IsFinished = true;
 
+    // Mark last exercise's result and pause timer
     this.markAsCompleted();
-
     this.timerService.pauseTimer();
+    
     console.log("FINISHED");
     console.log(this.results);
     console.log(this.time);
