@@ -22,13 +22,15 @@ export class TimeAndDateService{
     return seconds;
   }
 
-   calculateTimeRatio(time1, time2){
+  // Calculate % between time1 and time2
+  calculateTimeRatio(time1, time2){
     time1 = this.getSeconds(time1);
     time2 = this.getSeconds(time2);
 
     return Math.round(time1 / time2 * 100);
   }
 
+  // Get date in YY/mm/dd format
   async getDate(date){
     let dateString = "";
     if(date == "today"){
