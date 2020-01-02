@@ -45,6 +45,7 @@ app.get("/getSheetExercises/:sheetId", function(req, res){
 
     WorkoutSheet.find({ _id: sheetId})
       .select("Title, Structure")
+      .populate("WorkoutRecordsNumber")
       .exec(function(err, data){
         if(err) throw err;
         res.send(data);

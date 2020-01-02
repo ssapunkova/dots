@@ -42,7 +42,7 @@ export class WorkoutManagerPage implements OnInit {
   public current = {                      // Save temporary values for current state
     InputValue: 0,                        // User's results for current exercise
     ExerciseIndex: null,                  // Exercise index
-    BreakSecondsLeft: 5,                  // Seconds left before next exercise
+    BreakSecondsLeft: 2,                  // Seconds left before next exercise
     ExerciseStartedAt: 0                  // Record start time of exercise ( needed for calculating exercise duration )
   }
 
@@ -180,8 +180,8 @@ export class WorkoutManagerPage implements OnInit {
 
     if(!this.controls.IsFinished){
       this.controls.IsABreak = true;
-      this.current.BreakSecondsLeft = 5;
-      this.timerService.setCountdown(5,
+      this.current.BreakSecondsLeft = 2;
+      this.timerService.setCountdown(this.current.BreakSecondsLeft,
         function(seconds){
           that.current.BreakSecondsLeft = seconds;
         },
@@ -237,30 +237,42 @@ export class WorkoutManagerPage implements OnInit {
     console.log(this.results);
     console.log(this.time);
 
-    // this.storageService.set("timeqq", this.time);
-    //
-    // let timeq = await this.storageService.get("timeqqq");
-    // console.log(timeq);
-    //
-    // let average = this.storageService.get("averageWorkoutTime");
-    //
-
-    let date = await this.timeAndDateService.getDate("today");
-
+    // Add record to database
     let record = {
       SheetId: this.sheetExercises._id,
       RecordId: null,
-      Date: date,
+      Date: await this.timeAndDateService.getDate("today"),
       Values: this.results,
       Columns: this.sheetExercises.Structure.map((col) => col._id)
     }
-
-    console.log(record);
 
     this.workoutService.addRecord(record).subscribe((data: any) =>
     {
       console.log(data);
     });
+
+
+    this.storageService.set("timeqq", this.time);
+
+    let timeq = await this.storageService.get("timeqqq");
+    console.log(timeq);
+
+    let average = await this.storageService.get("averageWorkoutTime");
+    let count = await this.sheetExercises.WorkoutRecordsNumber;
+
+    console.log(average, count)
+
+    if(average == null){
+      this.storageService.set("averageWorkoutTime", this.time);
+    }
+    else{
+      let newAverage = [...average];
+      for(var i = 0; i < newAverage.length; i++){
+        newAverage[i] = (newAverage[i] + this.time[i]) / (count + 1);
+      }
+      console.log(newAverage)
+    }
+
 
   }
 

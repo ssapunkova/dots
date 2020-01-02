@@ -39,7 +39,6 @@ export class WorkoutService {
     );
   }
 
-
   public addRecord(recordData){
     return this.http.post(
       this.connectToServerService.serverUrl + '/addWorkoutRecord',

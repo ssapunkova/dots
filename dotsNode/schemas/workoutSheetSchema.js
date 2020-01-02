@@ -22,10 +22,17 @@ WorkoutSheetSchema.virtual('WorkoutRecords', {
   ref: 'WorkoutRecord', // The model to use
   localField: '_id', // Find people where `localField`
   foreignField: 'SheetId', // is equal to `foreignField`
-  // If `justOne` is true, 'members' will be a single doc as opposed to
-  // an array. `justOne` is false by default.
   justOne: false,
-  options: { sort: { name: -1 } } // Query options, see http://bit.ly/mongoose-query-options
+  options: { sort: { name: -1 } }
+});
+
+WorkoutSheetSchema.virtual('WorkoutRecordsNumber', {
+  ref: 'WorkoutRecord', // The model to use
+  localField: '_id', // Find people where `localField`
+  foreignField: 'SheetId', // is equal to `foreignField`
+  justOne: false,
+  count: true,
+  options: { sort: { name: -1 } }
 });
 
 var WorkoutSheet = mongoose.model('WorkoutSheet', WorkoutSheetSchema);
