@@ -136,7 +136,8 @@ app.post("/editWorkoutRecord", function(req, res){
   WorkoutRecord.remove({
     Date: record.Date,
     _id: { $ne: ObjectId(record.RecordId) }
-  }, function(err, removedDocs){
+  })
+  .then((err, removedDocs) => {
     if(err) throw err;
 
     WorkoutRecord.update({ _id: ObjectId(record.RecordId) }, {
@@ -145,13 +146,13 @@ app.post("/editWorkoutRecord", function(req, res){
         Values: record.Values,
         Columns: record.Columns
       }
-    }, function(err, doc){
+    })
+    .then((err, doc) => {
       if(err) throw err;
       console.log(0);
 
       res.send({ deletedDocs: removedDocs.deletedCount });
     })
-
   })
 })
 
@@ -161,7 +162,8 @@ app.post("/deleteWorkoutRecord", function(req, res){
 
   console.log(recordId);
 
-  WorkoutRecord.findOneAndDelete({_id: ObjectId(recordId)}, function(err){
+  WorkoutRecord.findOneAndDelete({_id: ObjectId(recordId)})
+  .then((err) => {
     if(err) throw err;
     else res.send({ message: "success" });
   })

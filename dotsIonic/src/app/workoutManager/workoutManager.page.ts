@@ -254,12 +254,14 @@ export class WorkoutManagerPage implements OnInit {
       Time: this.time.map((value) => value / 1000),
     }
 
-    this.workoutService.addRecord(record).subscribe((data: any) =>
-    {
+    this.workoutService.addRecord(record).subscribe((data: any) => {
       console.log(data);
     });
 
     // Get average time for exercises
+    // this.workoutService.getAllExerciseTimes().subscribe((data: any) => {
+    //   console.log(data);
+    // });
 
   }
 
