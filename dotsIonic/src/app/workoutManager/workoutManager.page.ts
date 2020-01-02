@@ -239,7 +239,7 @@ export class WorkoutManagerPage implements OnInit {
     // Mark last exercise's result and pause timer
     this.markAsCompleted();
     this.timerService.pauseTimer();
-    
+
     console.log("FINISHED");
     console.log(this.results);
     console.log(this.time);
@@ -250,13 +250,16 @@ export class WorkoutManagerPage implements OnInit {
       RecordId: null,
       Date: await this.timeAndDateService.getDate("today"),
       Values: this.results,
-      Columns: this.sheetExercises.Structure.map((col) => col._id)
+      Columns: this.sheetExercises.Structure.map((col) => col._id),
+      Time: this.time.map((value) => value / 1000),
     }
 
     this.workoutService.addRecord(record).subscribe((data: any) =>
     {
       console.log(data);
     });
+
+    // Get average time for exercises
 
   }
 

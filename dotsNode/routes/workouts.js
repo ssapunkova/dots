@@ -141,7 +141,8 @@ app.post("/addWorkoutRecord", function(req, res){
       $set: {
         SheetId: record.SheetId,
         Values: record.Values,
-        Columns: record.Columns
+        Columns: record.Columns,
+        Time: record.Time
       }
     }, { upsert: true }, function(err, docs){
       if(err) throw err;
@@ -154,12 +155,6 @@ app.post("/addWorkoutRecord", function(req, res){
       res.send({ record: record, docs: docs });
     })
 
-    // record = new WorkoutRecord(record);
-    //
-    // record.save(function(err, doc){
-    //   if(err) throw err;
-    //   else res.send(doc);
-    // })
   });
 })
 
@@ -195,7 +190,6 @@ app.post("/editWorkoutRecord", function(req, res){
     })
   });
 })
-
 
 
 app.post("/deleteWorkoutRecord", function(req, res){

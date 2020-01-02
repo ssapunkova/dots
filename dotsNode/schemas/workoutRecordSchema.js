@@ -7,7 +7,8 @@ var WorkoutRecordSchema = mongoose.Schema({
     SheetId: { type: mongoose.Schema.Types.ObjectId, ref: 'WorkoutSheet'},
     Date: String,
     Columns: Array,
-    Values: Array
+    Values: Array,
+    Time: Array
 },
 { collection: "workoutRecords" }
 );

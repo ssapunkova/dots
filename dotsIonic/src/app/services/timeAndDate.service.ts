@@ -35,10 +35,10 @@ export class TimeAndDateService{
     let dateString = "";
     if(date == "today"){
       let dateObj = new Date();
-      dateString = dateObj.getFullYear() + "/";
+      dateString = dateObj.getFullYear() + "-";
       let month = dateObj.getMonth() + 1;
       if(month < 10) dateString += "0";
-      dateString += month + "/";
+      dateString += month + "-";
       let day = dateObj.getDate();
       if(day < 10) dateString += "0";
       dateString += day;
