@@ -39,13 +39,16 @@ export class WorkoutManagerPage implements OnInit {
   };
 
   public current = {                      // Save temporary values for current state
-    InputValue: 0,                       // User's results for current exercise
-    ExerciseIndex: null,                 // exercise index
-    BreakSecondsLeft: 5
+    InputValue: 0,                        // User's results for current exercise
+    ExerciseIndex: null,                  // Exercise index
+    BreakSecondsLeft: 5,                  // Seconds left before next exercise
+    ExerciseStartedAt: 0                  // Record start time of exercise ( needed for calculating exercise duration )
   }
 
-  public exerciseNumber = 0;
-  public results = [];
+  public exerciseNumber = 0;              // Exercise count
+  public results = [];                    // User's results on each exercise
+  public time = [];                       // How much time has each exercise taken
+
 
   constructor(
     public loadingService: LoadingService,
@@ -64,7 +67,6 @@ export class WorkoutManagerPage implements OnInit {
     this.sheetExercises._id = this.route.snapshot.paramMap.get("sheetId");
     // Load sheet data from database
     this.getsheetExercises();
-
   }
 
   async getsheetExercises(){
@@ -143,8 +145,10 @@ export class WorkoutManagerPage implements OnInit {
   }
 
   async presentNextExercise(){
+    console.log(this.time);
     this.controls.IsABreak = false;
     this.controls.IsExerciseRunning = true;
+    this.current.ExerciseStartedAt = this.timerService.timePassed();
     if(this.current.ExerciseIndex == null){
       this.current.ExerciseIndex = 0;
     }
@@ -158,12 +162,19 @@ export class WorkoutManagerPage implements OnInit {
 
   async markAsCompleted(){
     let that = this;
-
-    this.results.push(this.current.InputValue);
     this.timerService.pauseTimer();
 
-    if(this.controls.IsExerciseRunning){
-      this.controls.IsExerciseRunning = false;
+    this.results.push(this.current.InputValue);
+    if(this.time.length == 0){
+      this.time.push(this.timerService.timePassed());
+    }
+    else{
+      this.time.push(this.timerService.timePassed() - this.current.ExerciseStartedAt);
+    }
+
+    this.controls.IsExerciseRunning = false;
+
+    if(!this.controls.IsFinished){
       this.controls.IsABreak = true;
       this.current.BreakSecondsLeft = 5;
       this.timerService.setCountdown(5,
@@ -212,7 +223,7 @@ export class WorkoutManagerPage implements OnInit {
   }
 
   async finish(){
-    this.controls.IsExerciseRunning = false;
+    this.controls.IsPaused = false;
     this.controls.IsFinished = true;
 
     this.markAsCompleted();

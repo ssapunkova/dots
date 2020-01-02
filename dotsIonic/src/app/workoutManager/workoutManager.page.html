@@ -31,7 +31,7 @@
         </ng-template>
       </ion-segment>
 
-      <ion-item *ngIf="controls.IsExerciseRunning || controls.IsPaused">
+      <ion-item *ngIf="controls.IsExerciseRunning || controls.IsPaused && !controls.IsABreak">
 
         <ion-grid class="ion-text-center">
           <ion-row>
@@ -100,6 +100,7 @@
         <ion-item>
           <h3 class="ion-text-center">Workout duration: {{ timerService.timePassed() | date: "HH:mm:ss": "UTC" }}</h3>
         </ion-item>
+        {{ time }}
       </ion-item>
 
     </ion-card-header>
