@@ -12,9 +12,6 @@ import { DataTableService } from '../services/dataTable.service';
 import { TimerService } from '../services/timer.service';
 import { WorkoutService } from '../services/workout.service';
 import { TimeAndDateService } from '../services/timeAndDate.service';
-import { StorageService } from '../services/storage.service';
-
-
 
 @Component({
   selector: 'app-workouts',
@@ -60,8 +57,7 @@ export class WorkoutManagerPage implements OnInit {
     public modalController: ModalController,
     public workoutService: WorkoutService,
     public dataTableService: DataTableService,
-    public timeAndDateService: TimeAndDateService,
-    public storageService: StorageService
+    public timeAndDateService: TimeAndDateService
   ) { };
 
   ngOnInit() {
@@ -250,29 +246,6 @@ export class WorkoutManagerPage implements OnInit {
     {
       console.log(data);
     });
-
-
-    this.storageService.set("timeqq", this.time);
-
-    let timeq = await this.storageService.get("timeqqq");
-    console.log(timeq);
-
-    let average = await this.storageService.get("averageWorkoutTime");
-    let count = await this.sheetExercises.WorkoutRecordsNumber;
-
-    console.log(average, count)
-
-    if(average == null){
-      this.storageService.set("averageWorkoutTime", this.time);
-    }
-    else{
-      let newAverage = [...average];
-      for(var i = 0; i < newAverage.length; i++){
-        newAverage[i] = (newAverage[i] + this.time[i]) / (count + 1);
-      }
-      console.log(newAverage)
-    }
-
 
   }
 
