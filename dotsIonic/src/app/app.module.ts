@@ -4,6 +4,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicStorageModule } from '@ionic/storage';
 import { FormsModule } from '@angular/forms';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -39,6 +40,7 @@ import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkout
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     FormsModule,

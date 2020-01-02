@@ -83,7 +83,8 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-bluetoothle": {},
-      "cordova-plugin-ble-central": {}
+      "cordova-plugin-ble-central": {},
+      "cordova-sqlite-storage": {}
     }
   }
 }
