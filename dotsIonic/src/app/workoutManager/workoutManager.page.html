@@ -94,24 +94,29 @@
       </ion-item>
 
       <ion-item *ngIf="this.controls.IsFinished">
-        <ion-item><h1 class="ion-text-center"> Well done! </h1></ion-item>
-        <h3 class="ion-text-center">Workout duration: {{ timerService.timePassed() | date: "HH:mm:ss": "UTC" }}</h3>
+        <ion-item>
+          <h1 class="ion-text-center"> Well done! </h1>
+        </ion-item>
+        <ion-item>
+          <h3 class="ion-text-center">Workout duration: {{ timerService.timePassed() | date: "HH:mm:ss": "UTC" }}</h3>
+        </ion-item>
       </ion-item>
 
     </ion-card-header>
 
     <ion-card-content>
 
-        <ion-item color="primary">  Exercises </ion-item>
-
         <ion-grid>
           <ion-row>
-            <ion-col> Exercise </ion-col>
+            <ion-col class="table-header">  Exercises
+            </ion-col>
             <ion-col
               *ngIf="results.length > 0"
-              style="max-width: 80px; text-align: center"> Result </ion-col>
+              style="max-width: 90px;" class="table-header ion-text-center"> Result
+            </ion-col>
             <ion-col
-              style="max-width: 80px; text-align: center"> Goal </ion-col>
+              style="max-width: 90px" class="table-header ion-text-center"> Goal
+            </ion-col>
           </ion-row>
           <ion-row
             *ngFor="let exercise of sheetExercises.Structure; let i = index">

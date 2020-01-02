@@ -106,3 +106,14 @@ ngx-charts-legend{
 //   padding-left: 7px;
 //   padding-right: 7px;
 // }
+
+
+// Table
+
+.table-header{
+  background: var(--ion-color-secondary);
+  color: var(--ion-color-secondary-contrast);
+  padding: 0.5rem;
+  border-radius: 3px;
+  margin: 2px;
+}

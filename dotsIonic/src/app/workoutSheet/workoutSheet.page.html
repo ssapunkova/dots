@@ -70,6 +70,7 @@
 
         <ion-row>
           <ion-col
+            class="table-header"
             title='Date'
             (click)="dataTableService.sortByDate(sheetData.WorkoutRecordsForSelectedPeriod)">
             Date
@@ -78,6 +79,7 @@
           </ion-col>
 
           <ion-col
+            class="table-header"
             *ngFor="let col of sheetData.Structure; let i = index"
             [title]="col.Title"
             (click)="dataTableService.sortCol(col, i, sheetData.WorkoutRecordsForSelectedPeriod)">
