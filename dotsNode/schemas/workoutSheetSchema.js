@@ -26,15 +26,6 @@ WorkoutSheetSchema.virtual('WorkoutRecords', {
   options: { sort: { name: -1 } }
 });
 
-WorkoutSheetSchema.virtual('WorkoutRecordsNumber', {
-  ref: 'WorkoutRecord', // The model to use
-  localField: '_id', // Find people where `localField`
-  foreignField: 'SheetId', // is equal to `foreignField`
-  justOne: false,
-  count: true,
-  options: { sort: { name: -1 } }
-});
-
 var WorkoutSheet = mongoose.model('WorkoutSheet', WorkoutSheetSchema);
 
 module.exports = WorkoutSheet;
