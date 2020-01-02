@@ -230,6 +230,8 @@ export class WorkoutManagerPage implements OnInit {
 
     this.timerService.pauseTimer();
     console.log("FINISHED");
+    console.log(this.results);
+    console.log(this.time);
   }
 
 }

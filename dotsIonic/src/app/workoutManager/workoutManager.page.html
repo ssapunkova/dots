@@ -94,13 +94,18 @@
       </ion-item>
 
       <ion-item *ngIf="this.controls.IsFinished">
-        <ion-item>
-          <h1 class="ion-text-center"> Well done! </h1>
-        </ion-item>
-        <ion-item>
-          <h3 class="ion-text-center">Workout duration: {{ timerService.timePassed() | date: "HH:mm:ss": "UTC" }}</h3>
-        </ion-item>
-        {{ time }}
+        <ion-grid>
+          <ion-row>
+            <ion-col><h1 class="ion-text-center"> Well done! </h1></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <h3 class="ion-text-center">
+                Workout duration: {{ timerService.timePassed() | date: "HH:mm:ss": "UTC" }}
+              </h3>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
 
     </ion-card-header>
@@ -122,7 +127,7 @@
           <ion-row
             *ngFor="let exercise of sheetExercises.Structure; let i = index">
             <ion-col>
-              <ion-icon *ngIf="i == current.ExerciseIndex" name="play"></ion-icon>
+              <ion-icon *ngIf="i == current.ExerciseIndex && !controls.IsFinished" name="play"></ion-icon>
               {{ exercise.Title }}
             </ion-col>
             <ion-col
@@ -166,7 +171,7 @@
     (click)="markAsCompleted()">Mark as completed</ion-button>
 
   <ion-button expand="block"
-    *ngIf="current.ExerciseIndex == exerciseNumber - 1"
+    *ngIf="current.ExerciseIndex == exerciseNumber - 1 && !controls.IsFinished"
     (click)="finish()">Finish</ion-button>
 
 </ion-footer>
