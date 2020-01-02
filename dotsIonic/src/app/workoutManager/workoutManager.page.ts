@@ -12,6 +12,7 @@ import { DataTableService } from '../services/dataTable.service';
 import { TimerService } from '../services/timer.service';
 import { WorkoutService } from '../services/workout.service';
 import { TimeAndDateService } from '../services/timeAndDate.service';
+import { StorageService } from '../services/storage.service';
 
 
 
@@ -59,7 +60,8 @@ export class WorkoutManagerPage implements OnInit {
     public modalController: ModalController,
     public workoutService: WorkoutService,
     public dataTableService: DataTableService,
-    public timeAndDateService: TimeAndDateService
+    public timeAndDateService: TimeAndDateService,
+    public storageService: StorageService
   ) { };
 
   ngOnInit() {
@@ -145,6 +147,7 @@ export class WorkoutManagerPage implements OnInit {
   }
 
   async presentNextExercise(){
+
     console.log(this.time);
     this.controls.IsABreak = false;
     this.controls.IsExerciseRunning = true;
@@ -165,6 +168,7 @@ export class WorkoutManagerPage implements OnInit {
     this.timerService.pauseTimer();
 
     this.results.push(this.current.InputValue);
+
     if(this.time.length == 0){
       this.time.push(this.timerService.timePassed());
     }
@@ -232,6 +236,32 @@ export class WorkoutManagerPage implements OnInit {
     console.log("FINISHED");
     console.log(this.results);
     console.log(this.time);
+
+    // this.storageService.set("timeqq", this.time);
+    //
+    // let timeq = await this.storageService.get("timeqqq");
+    // console.log(timeq);
+    //
+    // let average = this.storageService.get("averageWorkoutTime");
+    //
+
+    let date = await this.timeAndDateService.getDate("today");
+
+    let record = {
+      SheetId: this.sheetExercises._id,
+      RecordId: null,
+      Date: date,
+      Values: this.results,
+      Columns: this.sheetExercises.Structure.map((col) => col._id)
+    }
+
+    console.log(record);
+
+    this.workoutService.addRecord(record).subscribe((data: any) =>
+    {
+      console.log(data);
+    });
+
   }
 
 }

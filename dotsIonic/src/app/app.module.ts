@@ -23,6 +23,7 @@ import { TimeAndDateService } from './services/timeAndDate.service';
 import { TimerService } from './services/timer.service';
 import { ChartService } from './services/chart.service';
 import { WorkoutService } from './services/workout.service';
+import { StorageService } from './services/storage.service';
 
 import { SheetConfigurationPage } from './workouts/sheetConfiguration/sheetConfiguration.page';
 import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkoutRecord.page';
@@ -57,6 +58,7 @@ import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkout
     TimerService,
     ChartService,
     WorkoutService,
+    StorageService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [

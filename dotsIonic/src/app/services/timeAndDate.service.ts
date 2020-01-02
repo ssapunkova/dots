@@ -29,6 +29,22 @@ export class TimeAndDateService{
     return Math.round(time1 / time2 * 100);
   }
 
+  async getDate(date){
+    let dateString = "";
+    if(date == "today"){
+      let dateObj = new Date();
+      dateString = dateObj.getFullYear() + "/";
+      let month = dateObj.getMonth() + 1;
+      if(month < 10) dateString += "0";
+      dateString += month + "/";
+      let day = dateObj.getDate();
+      if(day < 10) dateString += "0";
+      dateString += day;
+    }
+
+    return dateString;
+  }
+
   // Formats date dd.mm
   async formatDate(date){
     let splitDate = date.split("-");
