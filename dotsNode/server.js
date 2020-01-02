@@ -23,15 +23,7 @@ global.include = function(file) {
   return require(abs_path('/' + file));
 }
 
-
-
-// Mongoose
-const mongoose = require('mongoose');
-var dbConnectionSettings = include('dbConnectionSettings');
-console.log(dbConnectionSettings.baseUrl);
-const baseUrl = dbConnectionSettings.baseUrl; // require base url of the database
-const connectParams = dbConnectionSettings.connectParams; // require base url of the database
-
+var dbConnection = include('dbConnection');
 
 // Add headers
 app.use(function (req, res, next) {

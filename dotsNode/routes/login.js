@@ -2,12 +2,6 @@
 var app = require('../server');
 var ObjectId = require('mongodb').ObjectID;
 
-// Mongoose
-var mongoose = require('mongoose');
-var dbConnectionSettings = require('../dbConnectionSettings');
-const baseUrl = dbConnectionSettings.baseUrl; // require base url of the database
-const connectParams = dbConnectionSettings.connectParams; // require base url of the database
-
 // Require bcrypt for hashing passwords
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;

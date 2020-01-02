@@ -1,7 +1,7 @@
 {
   "name": "dotsnode",
   "version": "1.0.0",
-  "main": "dbConnectionSettings.js",
+  "main": "server.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",

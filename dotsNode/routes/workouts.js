@@ -2,13 +2,6 @@
 var app = require('../server');
 var ObjectId = require('mongodb').ObjectID;
 
-// Mongoose
-var mongoose = require('mongoose');
-var dbConnectionSettings = include('dbConnectionSettings');
-console.log(dbConnectionSettings.baseUrl);
-const baseUrl = dbConnectionSettings.baseUrl; // require base url of the database
-const connectParams = dbConnectionSettings.connectParams; // require base url of the database
-
 // Require checkUser for authentication check
 const checkUser = include('routes/functions/checkUser');
 
@@ -16,12 +9,6 @@ var User = require('../schemas/userSchema');
 var WorkoutSheet = require('../schemas/workoutSheetSchema');
 var WorkoutRecord = require('../schemas/workoutRecordSchema');
 
-mongoose.connect(baseUrl, connectParams);
-var db = mongoose.connection;
-db.on('error', (err) => {
-  console.error.bind(console, 'connection error:');
-  throw err;
-});
 
 app.get("/getSheetData/:sheetId", function(req, res){
   var sheetId = req.params.sheetId;

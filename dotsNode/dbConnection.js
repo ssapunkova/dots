@@ -1,5 +1,7 @@
 // Url of the database
 
+var mongoose = require('mongoose');
+
 // Depends on const online
 const online = false;
 // const online = true;
@@ -11,4 +13,10 @@ if(online == true){
 
 var connectParams = { dbName: "dots", useNewUrlParser: true };
 
-module.exports = {"baseUrl": baseUrl, "connectParams": connectParams};
+// Connect to mongoose
+mongoose.connect(baseUrl, connectParams);
+var db = mongoose.connection;
+db.on('error', (err) => {
+  console.error.bind(console, 'connection error:');
+  throw err;
+});

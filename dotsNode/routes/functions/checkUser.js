@@ -1,11 +1,3 @@
-
-// Mongoose
-var mongoose = require('mongoose');
-var dbConnectionSettings = include('dbConnectionSettings');
-console.log(dbConnectionSettings.baseUrl);
-const baseUrl = dbConnectionSettings.baseUrl; // require base url of the database
-const connectParams = dbConnectionSettings.connectParams; // require base url of the database
-
 var ObjectId = require('mongodb').ObjectID;
 
 var User = include('schemas/userSchema');
