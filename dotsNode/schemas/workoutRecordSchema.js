@@ -1,9 +1,9 @@
 //Require Mongoose
-var mongoose = require('mongoose');
-var ObjectId = require('mongodb').ObjectID;
+const mongoose = require('mongoose');
+const ObjectId = require('mongodb').ObjectID;
 
 
-var WorkoutRecordSchema = mongoose.Schema({
+const WorkoutRecordSchema = mongoose.Schema({
     SheetId: { type: mongoose.Schema.Types.ObjectId, ref: 'WorkoutSheet'},
     Date: String,
     Columns: Array,
@@ -14,6 +14,6 @@ var WorkoutRecordSchema = mongoose.Schema({
 );
 
 
-var WorkoutRecord = mongoose.model('WorkoutRecord', WorkoutRecordSchema);
+const WorkoutRecord = mongoose.model('WorkoutRecord', WorkoutRecordSchema);
 
 module.exports = WorkoutRecord;

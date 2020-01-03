@@ -1,21 +1,21 @@
 // REQUIRE APP AND GENERAL FUNCTIONS
-var app = require('../server');
-var ObjectId = require('mongodb').ObjectID;
+const app = require('../server');
+const ObjectId = require('mongodb').ObjectID;
 
-var User = require('../schemas/userSchema');
+const User = require('../schemas/userSchema');
 //
 // app.get("/register", function(req, res){
 //     res.render("register");
 // })
 //
 // app.post("/register", function(req, res){
-//   var userData = req.body;
+//   let userData = req.body;
 //   console.log(userData);
 //
 //   mongoose.connect(baseUrl, connectParams, function (err) {
 //     if(err) throw err;
 //
-//     var newUser = new User(userData);
+//     let newUser = new User(userData);
 //     newUser.Status = "user";
 //
 //     User.findOne( { $or: [{ Username: newUser.Username}, { Email: newUser.Email }] })
@@ -32,7 +32,7 @@ var User = require('../schemas/userSchema');
 //        });
 //       }
 //       else{
-//         var error = "";
+//         let error = "";
 //         if(existingUser.Username == newUser.Username){
 //           error = "SameUsername";
 //         }

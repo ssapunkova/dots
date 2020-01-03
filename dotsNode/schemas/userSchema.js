@@ -1,12 +1,12 @@
 //Require Mongoose
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 // Require bcrypt for hashing passwords
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 //Define a schema
-var UserSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema({
     Username: String,
     Password: String,
     Email: String,
@@ -17,7 +17,7 @@ var UserSchema = mongoose.Schema({
 
 // Hash password before user is saved to database
 UserSchema.pre('save', function (next) {
-  var user = this;
+  let user = this;
   bcrypt.hash(user.Password, 10, function (err, hash){
     if (err) {
       return next(err);
@@ -27,6 +27,6 @@ UserSchema.pre('save', function (next) {
   })
 });
 
-var User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
 module.exports = User;

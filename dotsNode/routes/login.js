@@ -1,12 +1,12 @@
 // REQUIRE APP AND GENERAL FUNCTIONS
-var app = require('../server');
-var ObjectId = require('mongodb').ObjectID;
+const app = require('../server');
+const ObjectId = require('mongodb').ObjectID;
 
 // Require bcrypt for hashing passwords
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
-var User = require('../schemas/userSchema');
+const User = require('../schemas/userSchema');
 //
 // app.get("/login", function(req, res){
 //   if(req.cookies.DotsUserId != null){
@@ -18,7 +18,7 @@ var User = require('../schemas/userSchema');
 // })
 //
 // app.post("/login", function(req, res){
-//   var userData = req.body;
+//   let userData = req.body;
 //   console.log(userData);
 //
 //   mongoose.connect(baseUrl, connectParams, function (err) {
@@ -37,7 +37,7 @@ var User = require('../schemas/userSchema');
 //         bcrypt.compare(userData.Password, user.Password, function (err, result) {
 //           if (result === true) {
 //
-//             var hour = 3600000;
+//             let hour = 3600000;
 //             res.cookie('DotsUsername', user.Username, {maxAge: 14*24*hour}); // 2 weeks
 //             res.cookie('DotsUserId', user.id, {maxAge: 14*24*hour}); // 2 weeks
 //

@@ -1,18 +1,18 @@
 // REQUIRE APP AND GENERAL FUNCTIONS
-var app = require('../server');
-var ObjectId = require('mongodb').ObjectID;
+const app = require('../server');
+const ObjectId = require('mongodb').ObjectID;
 
 // Require checkUser for authentication check
 const checkUser = include('routes/functions/checkUser');
 
-var User = require('../schemas/userSchema');
-var WorkoutSheet = require('../schemas/workoutSheetSchema');
-var WorkoutRecord = require('../schemas/workoutRecordSchema');
+const User = require('../schemas/userSchema');
+const WorkoutSheet = require('../schemas/workoutSheetSchema');
+const WorkoutRecord = require('../schemas/workoutRecordSchema');
 
 
 app.get("/getSheetData/:sheetId", function(req, res){
-  var sheetId = req.params.sheetId;
-  var query = {};
+  let sheetId = req.params.sheetId;
+  let query = {};
   if(sheetId != "all") {
     query = { _id: ObjectId(sheetId) };
   }
@@ -27,7 +27,7 @@ app.get("/getSheetData/:sheetId", function(req, res){
 })
 
 app.get("/getSheetExercises/:sheetId", function(req, res){
-  var sheetId = req.params.sheetId;
+  let sheetId = req.params.sheetId;
 
   WorkoutSheet.find({ _id: sheetId})
     .select("Title, Structure")
@@ -38,11 +38,11 @@ app.get("/getSheetExercises/:sheetId", function(req, res){
 })
 
 app.post("/createSheet", function(req, res){
-  var data = req.body.data;
+  let data = req.body.data;
   data.Structure = [];
   data.WorkoutRecords = [];
 
-  var sheet = new WorkoutSheet(data);
+  let sheet = new WorkoutSheet(data);
 
   sheet.save(function(err){
     if(err) throw err;
@@ -51,7 +51,7 @@ app.post("/createSheet", function(req, res){
 })
 
 app.post("/deleteSheet", function(req, res){
-  var sheetId = req.body.sheetId;
+  let sheetId = req.body.sheetId;
 
   WorkoutSheet.findOne({ _id: ObjectId(sheetId)}).remove(function(err){
     if(err) throw err;
@@ -64,8 +64,8 @@ app.post("/deleteSheet", function(req, res){
 })
 
 app.post("/updateSheetConfiguration", function(req, res){
-  var sheet = req.body.data;
-  var deletedExerciseIds = sheet.DeletedExercisesId;
+  let sheet = req.body.data;
+  let deletedExerciseIds = sheet.DeletedExercisesId;
 
   console.log("Delete", deletedExerciseIds);
   console.log("Orig", sheet);
@@ -87,9 +87,9 @@ app.post("/updateSheetConfiguration", function(req, res){
       if(err) throw err;
       console.log(records);
 
-      for(var i = 0; i < records.length; i++){
-        for(var j = 0; j < deletedExerciseIds.length; j++){
-            var index = records[i].Columns.indexOf(deletedExerciseIds[j]);
+      for(let i = 0; i < records.length; i++){
+        for(let j = 0; j < deletedExerciseIds.length; j++){
+            let index = records[i].Columns.indexOf(deletedExerciseIds[j]);
             records[i].Values.splice(index, 1);
             records[i].Columns.splice(index, 1);
             records[i].save();
@@ -103,7 +103,7 @@ app.post("/updateSheetConfiguration", function(req, res){
 })
 
 app.post("/addWorkoutRecord", function(req, res){
-  var record = req.body.data;
+  let record = req.body.data;
   console.log(record, db);
 
   WorkoutRecord.update({ Date: record.Date }, {
@@ -127,7 +127,7 @@ app.post("/addWorkoutRecord", function(req, res){
 
 
 app.post("/editWorkoutRecord", function(req, res){
-  var record = req.body.data;
+  let record = req.body.data;
 
   console.log(record);
 
@@ -158,7 +158,7 @@ app.post("/editWorkoutRecord", function(req, res){
 
 
 app.post("/deleteWorkoutRecord", function(req, res){
-  var recordId = req.body.recordId;
+  let recordId = req.body.recordId;
 
   console.log(recordId);
 

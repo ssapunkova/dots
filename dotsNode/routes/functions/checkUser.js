@@ -1,6 +1,6 @@
-var ObjectId = require('mongodb').ObjectID;
+const ObjectId = require('mongodb').ObjectID;
 
-var User = include('schemas/userSchema');
+const User = include('schemas/userSchema');
 
 // About checkUser.accessPermission
 // accessPermission takes id cookie from the browser and checks the user in the db
@@ -12,8 +12,8 @@ function resSendLogin(res){
 }
 
 function accessPermission(requiredStatus, req, res, functionIfPermited){
-    var idCookie = req.cookies.DotsUserId;
-    var usernameCookie = req.cookies.DotsUsername;
+    let idCookie = req.cookies.DotsUserId;
+    let usernameCookie = req.cookies.DotsUsername;
 
     if(typeof idCookie == undefined || idCookie == ""){
         resSendLogin(res);
