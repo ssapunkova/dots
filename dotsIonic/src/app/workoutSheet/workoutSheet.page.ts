@@ -61,7 +61,6 @@ export class WorkoutSheetPage implements OnInit {
 
   async getSheetData(){
 
-
     this.workoutService.getWorkoutSheetData(this.sheetData._id).subscribe((data: [any])=> {
 
       // Get data about all sheets
@@ -140,9 +139,11 @@ export class WorkoutSheetPage implements OnInit {
     this.timeAndDateService.sortByDate(this.sheetData.WorkoutRecords, "asc");
 
     // If the sheet is configured, enable adding records and set period to the latest
-    if(this.sheetData.Structure.length > 0 && this.sheetData.WorkoutRecords.length > 0){
+    if(this.sheetData.Structure.length > 0){
       this.isButtonDisabled.addRecord = false;
-      this.setPeriod("");
+      if(this.sheetData.WorkoutRecords.length > 0){
+        this.setPeriod("");
+      }
     }
     else{
       // Don't allow adding records unless sheet is configured

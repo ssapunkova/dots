@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
-import { ModalController, NavParams, ActionSheetController } from '@ionic/angular';
+import { ModalController, NavParams, AlertController, ActionSheetController } from '@ionic/angular';
 
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
 
@@ -11,6 +11,8 @@ import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.ser
 @Injectable()
 export class SheetConfigurationPage implements OnInit {
 
+  public MAX_SHEET_EXERCISES = 15;
+
   public sheet;
   public exerciseTitles = [];
 
@@ -21,6 +23,7 @@ export class SheetConfigurationPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
+    private alertController: AlertController,
     private actionSheetController: ActionSheetController,
     private errorToastAndAlert: ErrorToastAndAlertService
   ) { }
@@ -34,38 +37,54 @@ export class SheetConfigurationPage implements OnInit {
 
   async presentActionSheet() {
 
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Add exercise',
-      buttons: [
+    console.log(this.sheet.Structure.length, this.MAX_SHEET_EXERCISES)
+    if(this.sheet.Structure.length < this.MAX_SHEET_EXERCISES){
+
+      const actionSheet = await this.actionSheetController.create({
+        header: 'Add exercise',
+        buttons: [
+            {
+            text: 'Count repetitons / sets',
+            icon: 'refresh-circle',
+            handler: () => {
+              this.addColumn("Number");
+            }
+          },
           {
-          text: 'Count repetitons / sets',
-          icon: 'refresh-circle',
-          handler: () => {
-            this.addColumn("Number");
+            text: 'Check Done / Not done',
+            icon: 'checkmark',
+            handler: () => {
+              this.addColumn("Bool");
+            }
+          },
+          {
+            text: 'Count duration',
+            icon: 'stopwatch',
+            handler: () => {
+              this.addColumn("Time");
+            }
+          },
+          {
+            text: 'Cancel',
+            icon: 'close',
+            role: 'cancel'
           }
-        },
-        {
-          text: 'Check Done / Not done',
-          icon: 'checkmark',
-          handler: () => {
-            this.addColumn("Bool");
+        ]
+      });
+      await actionSheet.present();
+    }
+    else{
+      let alert = await this.alertController.create({
+        header: 'Too many exercises',
+        message: 'You can have <b> no more than ' + this.MAX_SHEET_EXERCISES + ' exercises in one sheet </b>. But you can have <a href="/workouts">more sheets!</a>',
+        buttons: [
+          {
+            text: 'Ok'
           }
-        },
-        {
-          text: 'Count duration',
-          icon: 'stopwatch',
-          handler: () => {
-            this.addColumn("Time");
-          }
-        },
-        {
-          text: 'Cancel',
-          icon: 'close',
-          role: 'cancel'
-        }
-      ]
-    });
-    await actionSheet.present();
+        ]
+      })
+      await alert.present();
+    }
   }
 
   async addColumn(colType){
