@@ -61,26 +61,32 @@ export class WorkoutSheetPage implements OnInit {
 
   async getSheetData(){
 
+
     this.workoutService.getWorkoutSheetData(this.sheetData._id).subscribe((data: [any])=> {
 
       // Get data about all sheets
       this.sheetData = data[0];
       console.log(this.sheetData);
 
+      if(this.sheetData.WorkoutRecords.length > 0){
+        console.log("se")
+        // Sort records and get workout periods
+        let months = [];
+        this.timeAndDateService.sortByDate(this.sheetData.WorkoutRecords, "asc");
 
-      // Sort records and get workout periods
-      let months = [];
-      this.timeAndDateService.sortByDate(this.sheetData.WorkoutRecords, "asc");
-
-      // Get array of the months of the records
-      // Used to allow the user to select a period ov viewed chart/table
-      this.sheetData.WorkoutRecords.forEach((record) => {
-        let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
-        if(months.indexOf(splitDate) < 0){
-          months.push(splitDate);
-        }
-      })
-      this.sheetData.WorkoutMonths = months;
+        // Get array of the months of the records
+        // Used to allow the user to select a period ov viewed chart/table
+        this.sheetData.WorkoutRecords.forEach((record) => {
+          let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
+          if(months.indexOf(splitDate) < 0){
+            months.push(splitDate);
+          }
+        })
+        this.sheetData.WorkoutMonths = months;
+      }
+      if(this.sheetData.WorkoutRecords.length == 0){
+        this.showNoRecordsAlert();
+      }
 
       this.openSheet();
 
@@ -90,6 +96,21 @@ export class WorkoutSheetPage implements OnInit {
 
     });
   };
+
+  async showNoRecordsAlert(){
+    let message = 'Tap the + button in the right bottom corner to add a record or use the <a href="/workoutManager/"' + this.sheetData._id + '">Workout manager</a>';
+    let alert = await this.alertController.create({
+      header: 'No records yet',
+      message: message,
+      buttons: [
+        {
+          text: 'Ok'
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
   // Set viewing period of chart/table
   // can be triggered programmatically ( case 1 ) or by ion-select ( case 2 )
@@ -109,9 +130,7 @@ export class WorkoutSheetPage implements OnInit {
     this.sheetData.WorkoutRecordsForSelectedPeriod = this.sheetData.WorkoutRecords.filter((record) => this.showPeriods.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
 
     // Format data for chart
-    if(this.sheetData.WorkoutRecordsForSelectedPeriod.length > 0){
-      this.chartService.formatChartData(this.sheetData.WorkoutRecordsForSelectedPeriod, this.sheetData.Structure);
-    }
+    this.chartService.formatChartData(this.sheetData.WorkoutRecordsForSelectedPeriod, this.sheetData.Structure);
 
   }
 
@@ -121,7 +140,7 @@ export class WorkoutSheetPage implements OnInit {
     this.timeAndDateService.sortByDate(this.sheetData.WorkoutRecords, "asc");
 
     // If the sheet is configured, enable adding records and set period to the latest
-    if(this.sheetData.Structure.length > 0){
+    if(this.sheetData.Structure.length > 0 && this.sheetData.WorkoutRecords.length > 0){
       this.isButtonDisabled.addRecord = false;
       this.setPeriod("");
     }
@@ -233,7 +252,7 @@ export class WorkoutSheetPage implements OnInit {
     console.log(record);
 
     // Show alert about deleting the record
-    const alert = await this.alertController.create({
+    let alert = await this.alertController.create({
       header: 'Delete record',
       message: 'The workout record for <b>' + record.Date + '</b> will be permanently deleted.',
       buttons: [
