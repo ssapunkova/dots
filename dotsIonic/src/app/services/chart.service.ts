@@ -83,6 +83,23 @@ export class ChartService{
 
   }
 
+  async formatTimeChartData(data){
+
+    let series = [];
+    for(var i = 0; i < data.length; i++){
+      series.push({
+        "name": i,
+        "value": data[i]
+      })
+    }
+
+    this.chartData[0] = {
+      "name": "Time",
+      "series": series
+    }
+    
+  }
+
   // Choose random green colors for chart's color scheme
   async generateColorScheme(n){
     let step = 200 / n;

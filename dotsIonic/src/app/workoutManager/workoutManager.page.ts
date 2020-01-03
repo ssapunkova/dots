@@ -11,6 +11,7 @@ import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.servic
 import { DataTableService } from '../services/dataTable.service';
 import { TimerService } from '../services/timer.service';
 import { WorkoutService } from '../services/workout.service';
+import { ChartService } from '../services/chart.service';
 import { TimeAndDateService } from '../services/timeAndDate.service';
 
 @Component({
@@ -57,7 +58,8 @@ export class WorkoutManagerPage implements OnInit {
     public modalController: ModalController,
     public workoutService: WorkoutService,
     public dataTableService: DataTableService,
-    public timeAndDateService: TimeAndDateService
+    public timeAndDateService: TimeAndDateService,
+    public chartService: ChartService
   ) { };
 
   ngOnInit() {
@@ -87,6 +89,7 @@ export class WorkoutManagerPage implements OnInit {
     this.workoutService.getExerciseTimes(this.sheetExercises._id).subscribe((records: any) => {
       // Find sum of all records
       let sum = [];
+
       let recordsNum = records.length;
       for(var i = 0; i < recordsNum; i++){
         for(let j = 0; j < records[i].Time.length; j++){
@@ -95,9 +98,16 @@ export class WorkoutManagerPage implements OnInit {
         }
       }
       // Divide every value by current records number
-      let average = sum.map((value) => value / recordsNum);
+      this.averageTime = sum.map((value) => Math.round(value / recordsNum));
 
-      console.log(average);
+      this.sumTime = 0;
+      for(var i = 0; i < this.averageTime.length; i++){
+        this.sumTime += this.averageTime[i];
+      }
+
+      console.log(this.sumTime, this.averageTime);
+
+      // this.chartService.formatTimeChartData(average);
     });
   }
 
