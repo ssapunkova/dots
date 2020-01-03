@@ -31,7 +31,7 @@ export class HomePage implements OnInit {
 
   async test(){
     console.log("a");
-    this.workoutService.getWorkoutSheetsData().subscribe((data: [any])=> {
+    this.workoutService.createSheet().subscribe((data: [any])=> {
       console.log(data);
     })
   }
