@@ -94,6 +94,28 @@ ngx-charts-legend{
   border:1px solid blue;
 }
 
+.chart-tooltip-label{
+  display: flex !important;
+  margin: 3px;
+  align-items: stretch;
+  font-size: 0.9rem !important;
+}
+
+.chart-tooltip-color{
+  min-width: 0.5rem;
+  min-height: 0.5rem;
+  border-radius: 2px;
+}
+
+g.line-chart > g:last-of-type > g g.line-series > path {
+    stroke-width: 2px !important;
+}
+
+// g.line-chart > g:last-of-type > g:nth-child(3) g.line-series > path {
+//     stroke: #72b4ec;
+//     stroke-dasharray: 6 10;
+// }
+
 // ion-fab-button::after{
 //   content: attr(data-desc);
 //   position: absolute;

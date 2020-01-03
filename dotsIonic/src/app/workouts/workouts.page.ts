@@ -107,12 +107,7 @@ export class WorkoutsPage implements OnInit {
 
     });
   };
-  //
-  // async drawCharts(){
-  //   console.log(this.chartData)
-  //   this.chartService.formatNumberCardData(this.chartData);
-  // }
-
+  
   async showSheetActions(sheet, index){
     console.log(sheet, index);
     const actionSheet = await this.actionSheetController.create({

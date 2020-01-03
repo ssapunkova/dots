@@ -73,7 +73,7 @@ app.post("/updateSheetConfiguration", async (req, res) => {
     }
   }
 
-
+  res.send();
 })
 
 app.post("/addWorkoutRecord", async (req, res) => {

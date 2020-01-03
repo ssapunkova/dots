@@ -53,12 +53,23 @@ export class ChartService{
           registeredCols.push(currentCollumn);
           currentColIndex = registeredCols.length - 1;
         }
-
+        console.log(record.Values[i])
+        let value = record.Values[i];
+        if(typeof value == "number"){
+          value = parseFloat(record.Values[i]);
+        }
+        else if(record.Values[i] == true) {
+          value = 10;
+        }
+        else if(record.Values[i] == false) value = 0;
+        else{
+          value = new Date(this.timeAndDateService.getSeconds(record.Values[i]));
+        }
         formatted[currentColIndex].series.push({
           "name": date,
-          "value": parseFloat(record.Values[i])
+          "value": value,
+          "tooltipText": record.Values[i]
         })
-
       }
 
     }
@@ -68,25 +79,18 @@ export class ChartService{
     // Calculate chart's width based on the number of dates shown
     this.chartWidth = this.chartData[0].series.length * this.RECORD_WIDTH;
 
-    this.generateColorScheme();
+    this.generateColorScheme(columns.length);
 
   }
 
-  // async formatNumberCardData(chartData){
-  //
-  //   console.log(chartData)
-  //
-  //   this.chartData = chartData;
-  //
-  //   this.generateColorScheme();
-  // }
-
   // Choose random green colors for chart's color scheme
-  async generateColorScheme(){
-    for(var i = 0; i < 10; i++){
+  async generateColorScheme(n){
+    let step = 200 / n;
+    let hue = 20;
+    for(var i = 0; i < n; i++){
       // Random green hue and light
-      let hue = Math.floor(Math.random() * (140 - 80) ) + 90;
-      let light = Math.floor(Math.random() * (70 - 20) ) + 20;
+      hue += step;
+      let light = Math.floor(Math.random() * (70 - 40) ) + 40;
       this.colorScheme.domain.push("hsl(" + hue + ", 80%, " + light + "%)");
     }
   }

@@ -109,7 +109,9 @@ export class WorkoutSheetPage implements OnInit {
     this.sheetData.WorkoutRecordsForSelectedPeriod = this.sheetData.WorkoutRecords.filter((record) => this.showPeriods.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
 
     // Format data for chart
-    this.chartService.formatChartData(this.sheetData.WorkoutRecordsForSelectedPeriod, this.sheetData.Structure);
+    if(this.sheetData.WorkoutRecordsForSelectedPeriod.length > 0){
+      this.chartService.formatChartData(this.sheetData.WorkoutRecordsForSelectedPeriod, this.sheetData.Structure);
+    }
 
   }
 
