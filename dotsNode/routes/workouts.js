@@ -28,6 +28,19 @@ app.get("/getSheetExercises/:sheetId", async (req, res) => {
   res.send(exercises);
 })
 
+app.get("/getExerciseTimes/:sheetId", async (req, res) => {
+  let sheetId = req.params.sheetId;
+
+  let exerciseTimes = await WorkoutRecord.find(
+    {
+      SheetId: sheetId,
+      Time: { $ne: null }
+    }
+  ).select("Time").exec();
+  if(exerciseTimes.err) throw exerciseTimes.err;
+  res.send(exerciseTimes);
+})
+
 app.post("/createSheet", async (req, res) => {
   let data = req.body.data;
   let sheet = new WorkoutSheet(data);

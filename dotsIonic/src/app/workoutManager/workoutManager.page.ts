@@ -240,6 +240,8 @@ export class WorkoutManagerPage implements OnInit {
     this.markAsCompleted();
     this.timerService.pauseTimer();
 
+    this.time = this.time.map((value) => value / 1000);
+
     console.log("FINISHED");
     console.log(this.results);
     console.log(this.time);
@@ -251,7 +253,7 @@ export class WorkoutManagerPage implements OnInit {
       Date: await this.timeAndDateService.getDate("today"),
       Values: this.results,
       Columns: this.sheetExercises.Structure.map((col) => col._id),
-      Time: this.time.map((value) => value / 1000),
+      Time: this.time
     }
 
     this.workoutService.addRecord(record).subscribe((data: any) => {
@@ -259,9 +261,20 @@ export class WorkoutManagerPage implements OnInit {
     });
 
     // Get average time for exercises
-    // this.workoutService.getAllExerciseTimes().subscribe((data: any) => {
-    //   console.log(data);
-    // });
+    this.workoutService.getExerciseTimes(this.sheetExercises._id).subscribe((average: any) => {
+      // Find sum of all records
+      let sum = this.time;
+      let recordsNum = average.length;
+      for(var i = 0; i < recordsNum; i++){
+        for(let j = 0; j < sum.length; j++){
+          sum[j] += average[i].Time[j];
+        }
+      }
+      // Divide every value by current records number + 1 for the new one
+      let newAverage = sum.map((value) => value / (recordsNum + 1));
+
+      console.log(newAverage);
+    });
 
   }
 
