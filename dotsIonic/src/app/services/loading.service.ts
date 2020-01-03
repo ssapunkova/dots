@@ -26,7 +26,7 @@ export class LoadingService{
 
   // Hide small loading
   async dismissSmallLoading(){
-    if(this.isProcessLoading) this.processLoader.dismiss();
+    if(this.isProcessLoading && this.processLoader != undefined) this.processLoader.dismiss();
   }
 
 }
