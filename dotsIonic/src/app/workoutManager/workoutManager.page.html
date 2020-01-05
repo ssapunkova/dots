@@ -9,7 +9,7 @@
   <ion-card >
     <ion-card-header *ngIf="current.ExerciseIndex != null" class="ion-text-center">
 
-      <ion-segment *ngIf="!controls.IsFinished">
+      <!-- <ion-segment *ngIf="!controls.IsFinished">
         <ion-segment-button (click)="terminateWorkout()">
           <ion-icon name="square"></ion-icon>
         </ion-segment-button>
@@ -28,7 +28,7 @@
             <ion-icon name="play" color="primary"></ion-icon>
           </ion-segment-button>
         </ng-template>
-      </ion-segment>
+      </ion-segment> -->
 
       <ion-item>
         <div id="timer">
@@ -168,17 +168,88 @@
 </ion-content>
 
 <ion-footer style="padding: 0.5rem">
-  <ion-button expand="block"
-    (click)="startWorkout()"
-    *ngIf="current.ExerciseIndex == null">Start</ion-button>
 
-  <ion-button expand="block"
-    *ngIf="current.ExerciseIndex != null && current.ExerciseIndex < exerciseNumber - 1"
-    [disabled]="controls.IsABreak"
-    (click)="markAsCompleted()">Mark as completed</ion-button>
+  <ion-segment *ngIf="!controls.IsFinished">
 
-  <ion-button expand="block"
-    *ngIf="current.ExerciseIndex == exerciseNumber - 1 && !controls.IsFinished"
-    (click)="finish()">Finish</ion-button>
+    <ion-segment-button
+      *ngIf="current.ExerciseIndex != null"
+      (click)="terminateWorkout()">
+      <ion-icon name="square"></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button
+      (click)="startWorkout()"
+      *ngIf="current.ExerciseIndex == null">
+      <ion-icon name="play" color="primary"></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button
+      *ngIf="current.ExerciseIndex != null && current.ExerciseIndex < exerciseNumber - 1"
+      [disabled]="controls.IsABreak"
+      (click)="markAsCompleted()">
+      <ion-icon name="checkmark" color="primary"></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button
+      *ngIf="current.ExerciseIndex == exerciseNumber - 1 && !controls.IsFinished"
+      (click)="finish()">
+      <ion-icon name="checkmark" color="primary"></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button
+      *ngIf="!controls.IsPaused && current.ExerciseIndex != null; else playButton"
+      (click)="pauseWorkout()">
+      <ion-icon name="pause"></ion-icon>
+    </ion-segment-button>
+
+    <ng-template #playButton>
+      <ion-segment-button
+        *ngIf="current.ExerciseIndex != null"
+        (click)="playWorkout()">
+        <ion-icon name="play" color="warning"></ion-icon>
+      </ion-segment-button>
+    </ng-template>
+
+  </ion-segment>
 
 </ion-footer>
+
+
+<!-- <ion-toolbar>
+
+  <ion-item
+    width="30%"
+    (click)="terminateWorkout()" slot="start">
+    <ion-icon name="square" color="danger"></ion-icon>
+  </ion-item>
+
+  <ion-item width="30%"
+    (click)="startWorkout()"
+    *ngIf="current.ExerciseIndex == null">
+    <ion-icon name="play" color="primary"></ion-icon>
+  </ion-item>
+
+  <ion-item width="30%"
+    *ngIf="current.ExerciseIndex != null && current.ExerciseIndex < exerciseNumber - 1"
+    [disabled]="controls.IsABreak"
+    (click)="markAsCompleted()">
+    <ion-icon name="checkmark" color="primary"></ion-icon>
+  </ion-item>
+
+  <ion-item width="30%"
+    *ngIf="current.ExerciseIndex == exerciseNumber - 1 && !controls.IsFinished"
+    (click)="finish()">
+    <ion-icon name="checkmark" color="primary"></ion-icon>
+  </ion-item>
+
+  <ion-item width="30%"
+    *ngIf="!controls.IsPaused; else playButton"
+    (click)="pauseWorkout()">
+    <ion-icon name="pause" color="warning"></ion-icon>
+  </ion-item>
+  <ng-template #playButton>
+    <ion-item (click)="playWorkout()"  width="30%">
+      <ion-icon name="play" color="primary" color="warning"></ion-icon>
+    </ion-item>
+  </ng-template>
+</ion-toolbar> -->
