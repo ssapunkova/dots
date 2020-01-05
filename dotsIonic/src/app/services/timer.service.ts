@@ -10,26 +10,23 @@ import { interval } from 'rxjs';
 @Injectable()
 export class TimerService{
 
-  public startDate = null;
-  public currentDate = null;
-
-  public timer;
+  private milliseconds;
+  private timer;
 
   // Sets timer
   async setTimer(){
-    this.startDate = new Date();
-    this.currentDate = new Date();
+    this.milliseconds = 0;
     this.playTimer();
   }
 
   // Increments seconds
   async timerFunc(){
-    this.currentDate++;
+    this.milliseconds += 1000;
   }
 
   // Show time passed since its running
   timePassed(){
-    return this.currentDate * 1000 - this.startDate * 1000;
+    return this.milliseconds;
   }
 
   // Pauses timer
