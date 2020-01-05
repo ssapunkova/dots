@@ -8,7 +8,7 @@ const WorkoutRecordSchema = mongoose.Schema({
     Date: String,
     Columns: Array,
     Values: Array,
-    Time: Array
+    Time: Number
 },
 { collection: "workoutRecords" }
 );

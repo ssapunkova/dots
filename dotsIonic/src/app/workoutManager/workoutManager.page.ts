@@ -88,22 +88,14 @@ export class WorkoutManagerPage implements OnInit {
     // Get average time for exercises
     this.workoutService.getExerciseTimes(this.sheetExercises._id).subscribe((records: any) => {
       // Find sum of all records
-      let sum = [];
+      let sum = 0;
 
       let recordsNum = records.length;
       for(var i = 0; i < recordsNum; i++){
-        for(let j = 0; j < records[i].Time.length; j++){
-          if(sum[j] == null) sum[j] = 0;
-          sum[j] += records[i].Time[j];
-        }
+        sum += records[i].Time * 1000;
       }
-      // Divide every value by current records number
-      this.averageTime = sum.map((value) => Math.round(value / recordsNum));
-
-      this.sumTime = 0;
-      for(var i = 0; i < this.averageTime.length; i++){
-        this.sumTime += this.averageTime[i];
-      }
+      // Divide value by current records number
+      this.averageTime = sum / recordsNum;
 
       console.log(this.sumTime, this.averageTime);
 
@@ -176,14 +168,6 @@ export class WorkoutManagerPage implements OnInit {
     this.timerService.pauseTimer();
     this.controls.IsExerciseRunning = false;
     this.results.push(this.current.InputValue);
-
-    // Record the time this exercise took
-    if(this.time.length == 0){
-      this.time.push(this.timerService.timePassed());
-    }
-    else{
-      this.time.push(this.timerService.timePassed() - this.current.ExerciseStartedAt);
-    }
 
     let that = this;
     // If there are more exercises to present
@@ -267,7 +251,7 @@ export class WorkoutManagerPage implements OnInit {
     this.markAsCompleted();
     this.timerService.pauseTimer();
 
-    this.time = this.time.map((value) => value / 1000);
+    this.time = this.timerService.timePassed() / 1000;
 
     console.log("FINISHED");
     console.log(this.results);
