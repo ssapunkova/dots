@@ -1,17 +1,23 @@
-.WorkoutSheet{
-  border: 2px solid grey;
-  padding: 0.5rem;
+
+#timer{
   width: 100%;
-}
-
-tr{
+  height: 30px;
+  border-radius: 5px;
   display: flex;
+  position: relative;
 }
 
-.WorkoutSheet td{
-  border: 1px solid grey;
+#time-passed{
+  border-radius: 5px;
+  background: var(--ion-color-primary);
+  height: 100%;
+  transition: 1s linear;
 }
 
-.WorkoutSheet td[data-field="Date"]{
-  max-width: 100px;
+#average-time{
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
 }

@@ -97,9 +97,7 @@ export class WorkoutManagerPage implements OnInit {
       // Divide value by current records number
       this.averageTime = sum / recordsNum;
 
-      console.log(this.sumTime, this.averageTime);
-
-      // this.chartService.formatTimeChartData(average);
+      console.log(this.averageTime);
     });
   }
 

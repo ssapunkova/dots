@@ -10,7 +10,7 @@ import { interval } from 'rxjs';
 @Injectable()
 export class TimerService{
 
-  private milliseconds;
+  public milliseconds;
   private timer;
 
   // Sets timer

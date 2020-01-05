@@ -30,6 +30,14 @@
         </ng-template>
       </ion-segment>
 
+      <ion-item>
+        <div id="timer">
+          <div id="time-passed"
+            [style.width.%]="this.timerService.timePassed() / this.averageTime * 100"></div>
+          <div id="average-time">{{ averageTime | date:'HH:mm:ss':'UTC'}}</div>
+        </div>
+      </ion-item>
+
       <ion-item *ngIf="controls.IsExerciseRunning || controls.IsPaused && !controls.IsABreak">
 
         <ion-grid class="ion-text-center">
@@ -37,11 +45,6 @@
             <ion-col>
               <h1>{{ sheetExercises.Structure[current.ExerciseIndex].Title }}</h1>
             </ion-col>
-          </ion-row>
-          <ion-row>
-            <div style="width: 100%; height: 50px; display: flex">
-              {{ averageTime | date:'HH:mm:ss':'UTC'}}
-            </div>
           </ion-row>
           <ion-row>
             <ion-col size="12" size-sm> Your result: </ion-col>
