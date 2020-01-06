@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-webpack": "^0.803.21",
     "@angular/animations": "^8.2.14",
     "@angular/cdk": "^8.2.3",
     "@angular/common": "~8.1.2",
@@ -37,6 +38,7 @@
     "cordova-plugin-advanced-http": "^2.2.0",
     "cordova-plugin-ble-central": "^1.2.2",
     "cordova-plugin-bluetoothle": "^4.5.5",
+    "cordova-sqlite-storage": "^4.0.0",
     "core-js": "^2.5.4",
     "d3": "^5.14.2",
     "install": "^0.13.0",

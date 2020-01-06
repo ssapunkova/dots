@@ -107,7 +107,7 @@ export class WorkoutsPage implements OnInit {
 
     });
   };
-  
+
   async showSheetActions(sheet, index){
     console.log(sheet, index);
     const actionSheet = await this.actionSheetController.create({

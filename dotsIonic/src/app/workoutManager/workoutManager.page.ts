@@ -46,8 +46,9 @@ export class WorkoutManagerPage implements OnInit {
 
   public exerciseNumber = 0;              // Exercise count
   public results = [];                    // User's results on each exercise
-  public time = [];                       // How much time has each exercise taken
+  public time = 0;                        // Duration of current workout
 
+  public averageTime = 0;
 
   constructor(
     public loadingService: LoadingService,
