@@ -33,11 +33,7 @@ export class WorkoutSheetPage implements OnInit {
 
   public showMode = 'chart';              // Default show mode, can be switched to table
   public showPeriods = [];                // The current viewing periods
-  public showingRecords = []   // Array of json records of all records in selected viewing period
-
-  public isButtonDisabled = {
-    addRecord: true
-  }
+  public showingRecords = []              // Array of json records of all records in selected viewing period
 
 
   constructor(
@@ -118,16 +114,9 @@ export class WorkoutSheetPage implements OnInit {
     // Sort data in case it has changed since last sorting
     this.timeAndDateService.sortByDate(this.sheetData.WorkoutRecords, "asc");
 
-    // If the sheet is configured, enable adding records and set period to the latest
-    if(this.sheetData.Structure.length > 0){
-      this.isButtonDisabled.addRecord = false;
-      if(this.sheetData.WorkoutRecords.length > 0){
-        this.setPeriod("");
-      }
-    }
-    else{
-      // Don't allow adding records unless sheet is configured
-      this.isButtonDisabled.addRecord = true;
+    // Set period to the latest if there are any records
+    if(this.sheetData.WorkoutRecords.length > 0){
+      this.setPeriod("");
     }
 
     // Sort records by date and get array of the months of the records
@@ -149,7 +138,6 @@ export class WorkoutSheetPage implements OnInit {
     }
 
   }
-
 
   async addRecord(){
 
@@ -186,10 +174,8 @@ export class WorkoutSheetPage implements OnInit {
             this.sheetData.WorkoutRecords.push(data.record);
             // Reopen sheet and make a color splash on the new record
             this.openSheet();
-            this.colorSplashRow(this.sheetData.WorkoutRecords[0]);
+            this.dataTableService.colorSplashRow(this.sheetData.WorkoutRecords[0]);
           }
-
-
         },
         error => {
           this.errorToastAndAlertService.showErrorAlert("Oups")
@@ -198,13 +184,6 @@ export class WorkoutSheetPage implements OnInit {
     };
   }
 
-  async colorSplashRow(row){
-    row.color = "primary";
-    let that = this;
-    setTimeout(function(){
-      delete row.color;
-    }, 500);
-  }
 
   async editRecord(record, rowIndex){
     let recordToEdit = record;
@@ -227,7 +206,7 @@ export class WorkoutSheetPage implements OnInit {
     if(modalData != null){
       // Set new data for the edited record and color splash the row
       this.sheetData.WorkoutRecords[rowIndex] = modalData;
-      this.colorSplashRow(this.showingRecords[rowIndex]);
+      this.dataTableService.colorSplashRow(this.showingRecords[rowIndex]);
 
       // Sent a request for editing the record
       this.workoutService.editRecord(modalData).subscribe((data: any)=>
