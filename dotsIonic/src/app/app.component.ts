@@ -29,15 +29,15 @@ export class AppComponent {
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
-    },
-    {
       title: 'Workouts',
       url: '/workouts',
-      icon: 'workouts'
-    }
+      icon: 'play-circle'
+    },
+    {
+      title: 'Nutrition',
+      url: '/nutrition',
+      icon: 'nutrition'
+    },
   ];
 
 

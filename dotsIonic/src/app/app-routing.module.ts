@@ -16,10 +16,6 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
-    path: 'list',
-    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
-  },
-  {
     path: 'workouts',
     loadChildren: () => import('./workouts/workouts.module').then(m => m.WorkoutsPageModule)
   },
@@ -30,7 +26,12 @@ const routes: Routes = [
   {
     path: 'workoutManager/:sheetId',
     loadChildren: () => import('./workoutManager/workoutManager.module').then(m => m.WorkoutManagerPageModule)
+  },
+  {
+    path: 'nutrition',
+    loadChildren: () => import('./nutrition/nutrition.module').then(m => m.NutritionPageModule)
   }
+
 ];
 
 @NgModule({
