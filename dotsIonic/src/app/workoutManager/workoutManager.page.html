@@ -9,27 +9,6 @@
   <ion-card >
     <ion-card-header *ngIf="current.ExerciseIndex != null" class="ion-text-center">
 
-      <!-- <ion-segment *ngIf="!controls.IsFinished">
-        <ion-segment-button (click)="terminateWorkout()">
-          <ion-icon name="square"></ion-icon>
-        </ion-segment-button>
-        <ion-segment-button disabled>
-          <ion-label style="font-size: 1.2rem">
-            {{ timerService.timePassed()  | date:'HH:mm:ss':'UTC'}}
-          </ion-label>
-        </ion-segment-button>
-        <ion-segment-button
-          *ngIf="!controls.IsPaused; else playButton"
-          (click)="pauseWorkout()">
-          <ion-icon name="pause"></ion-icon>
-        </ion-segment-button>
-        <ng-template #playButton>
-          <ion-segment-button (click)="playWorkout()">
-            <ion-icon name="play" color="primary"></ion-icon>
-          </ion-segment-button>
-        </ng-template>
-      </ion-segment> -->
-
       <ion-item>
         <div id="timer">
           <div id="time-passed"
