@@ -67,26 +67,6 @@ export class WorkoutSheetPage implements OnInit {
       this.sheetData = data[0];
       console.log(this.sheetData);
 
-      if(this.sheetData.WorkoutRecords.length > 0){
-        console.log("se")
-        // Sort records and get workout periods
-        let months = [];
-        this.timeAndDateService.sortByDate(this.sheetData.WorkoutRecords, "asc");
-
-        // Get array of the months of the records
-        // Used to allow the user to select a period ov viewed chart/table
-        this.sheetData.WorkoutRecords.forEach((record) => {
-          let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
-          if(months.indexOf(splitDate) < 0){
-            months.push(splitDate);
-          }
-        })
-        this.sheetData.WorkoutMonths = months;
-      }
-      if(this.sheetData.WorkoutRecords.length == 0){
-        this.showNoRecordsAlert();
-      }
-
       this.openSheet();
 
       // Dismiss all loading
@@ -149,6 +129,25 @@ export class WorkoutSheetPage implements OnInit {
       // Don't allow adding records unless sheet is configured
       this.isButtonDisabled.addRecord = true;
     }
+
+    // Sort records by date and get array of the months of the records
+    if(this.sheetData.WorkoutRecords.length > 0){
+      this.timeAndDateService.sortByDate(this.sheetData.WorkoutRecords, "asc");
+
+      // Array of months - Used to allow the user to select a period ov viewed chart/table
+      let months = [];
+      this.sheetData.WorkoutRecords.forEach((record) => {
+        let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
+        if(months.indexOf(splitDate) < 0){
+          months.push(splitDate);
+        }
+      })
+      this.sheetData.WorkoutMonths = months;
+    }
+    else{
+      this.showNoRecordsAlert();
+    }
+
   }
 
 

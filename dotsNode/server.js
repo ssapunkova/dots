@@ -7,9 +7,6 @@ const port = process.env.PORT || 8080;
 const appUrl = 'http://localhost:8100';
 
 app.use(express.static('public'));
-// Parse URL-encoded bodies (as sent by HTML forms)
-app.use(express.urlencoded());
-// Parse JSON bodies (as sent by API clients)
 app.use(express.json());
 app.set('view engine', 'ejs');
 app.use(cookieParser());
