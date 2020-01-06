@@ -34,8 +34,9 @@
         <div id="timer">
           <div id="time-passed"
             [style.width.%]="this.timerService.timePassed() / this.averageTime * 100"></div>
-          <div id="average-time">{{ averageTime | date:'HH:mm:ss':'UTC'}}</div>
+          <div id="average-time">{{ timerService.timePassed() | date:'HH:mm:ss':'UTC' }}</div>
         </div>
+        <div style="display: flex" *ngIf="averageTime != 0">This workout takes {{ averageTime | date:'HH:mm:ss':'UTC'}} in average</div>
       </ion-item>
 
       <ion-item *ngIf="controls.IsExerciseRunning || controls.IsPaused && !controls.IsABreak">

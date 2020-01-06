@@ -88,17 +88,19 @@ export class WorkoutManagerPage implements OnInit {
 
     // Get average time for exercises
     this.workoutService.getExerciseTimes(this.sheetExercises._id).subscribe((records: any) => {
-      // Find sum of all records
-      let sum = 0;
+      if(records.length > 0){
+        // Find sum of all records
+        let sum = 0;
 
-      let recordsNum = records.length;
-      for(var i = 0; i < recordsNum; i++){
-        sum += records[i].Time * 1000;
+        let recordsNum = records.length;
+        for(var i = 0; i < recordsNum; i++){
+          sum += records[i].Time * 1000;
+        }
+        // Divide value by current records number
+        this.averageTime = sum / recordsNum;
+
+        console.log(this.averageTime);
       }
-      // Divide value by current records number
-      this.averageTime = sum / recordsNum;
-
-      console.log(this.averageTime);
     });
   }
 
