@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 // Services
 import { LoadingService } from '../services/loading.service';
-import { WorkoutService } from '../services/workout.service';
 
 
 @Component({
@@ -16,21 +15,11 @@ import { WorkoutService } from '../services/workout.service';
 export class HomePage implements OnInit {
 
   constructor(
-    public loadingService: LoadingService,
-    public workoutService: WorkoutService
+    public loadingService: LoadingService
   ){}
 
   ngOnInit(){
-    this.init();
-  }
-
-  async init(){
-
     this.loadingService.isPageLoading = false;
   }
 
-  async test(){
-    console.log("a");
-    
-  }
 }

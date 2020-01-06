@@ -1,9 +1,94 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>nutrition</ion-title>
+    <ion-title>Nutrition</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-grid>
+
+    <ion-row>
+
+      <ion-col sizeXs="12" sizeLg="4" pushLg="8">
+
+        <ion-grid>
+          <ion-row>
+            <ion-col sizeLg="12" sizeSm="6" sizeXs="12">
+              <ion-card>
+                <ion-card-header>Goals</ion-card-header>
+                <ion-card-content>
+                  <ion-item>Weight: 55kg</ion-item>
+                  <ion-item>Lean body mass: 21%</ion-item>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+            <ion-col sizeLg="12" sizeSm="6" sizeXs="12">
+              <ion-card>
+                <ion-card-header>Note</ion-card-header>
+                <ion-card-content>
+                  <ion-item>Kcal</ion-item>
+                  <ion-item>Macronutrients</ion-item>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-col>
+
+      <ion-col sizeXs="12" sizeLg="8">
+
+        <ion-grid *ngIf="showMode == 'table'" [style.minWidth.px]="chartService.chartWidth">
+
+          <ion-row>
+            <ion-col
+              class="table-header"
+              title='Date'
+              (click)="dataTableService.sortByDate(sheetData.WorkoutRecordsForSelectedPeriod)">
+              Date
+              <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
+              <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
+            </ion-col>
+
+            <ion-col
+              class="table-header"
+              *ngFor="let col of sheetData.Structure; let i = index"
+              [title]="col.Title"
+              (click)="dataTableService.sortCol(col, i, sheetData.WorkoutRecordsForSelectedPeriod)">
+              <ion-label>{{ (col.Title.length > 10) ? (col.Title | slice:0:10) + '...' : (col.Title) }}</ion-label>
+              <ion-icon name="arrow-dropup" *ngIf="col.sorted == 'asc'; else arrowDown"></ion-icon>
+              <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
+            </ion-col>
+          </ion-row>
+
+          <ion-row
+            *ngFor="let record of sheetData.WorkoutRecordsForSelectedPeriod; let i = index">
+              <ion-item-sliding>
+             <ion-item-options side="start">
+               <ion-item-option color="danger" (click)="deleteRecord(record, i)">Delete</ion-item-option>
+               <ion-item-option color="success" (click)="editRecord(record, i)">Edit</ion-item-option>
+             </ion-item-options>
+
+             <ion-item [color]="record.color">
+              <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }}</ion-col>
+              <ion-col *ngFor="let col of sheetData.Structure; let j = index" [title]="col.Title">
+                <ion-label *ngIf="col.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
+                <ng-template #showTick>
+                  <ion-icon name="checkbox" *ngIf="record.Values[j] == true">d</ion-icon>
+                  <ion-icon name="close" *ngIf="record.Values[j] == false">d</ion-icon>
+                </ng-template>
+              </ion-col>
+            </ion-item>
+            </ion-item-sliding>
+          </ion-row>
+
+        </ion-grid>
+
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
 
 </ion-content>
