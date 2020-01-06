@@ -4,7 +4,7 @@ const ObjectId = require('mongodb').ObjectID;
 
 
 const NutritionRecordSchema = mongoose.Schema({
-    SheetId: { type: mongoose.Schema.Types.ObjectId, ref: 'NutritionSheet'},
+    UserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     Date: String,
     Columns: Array,
     Values: Array,
