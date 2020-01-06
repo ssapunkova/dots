@@ -29,11 +29,11 @@ export class WorkoutSheetPage implements OnInit {
     Structure: [],                        // Array of all columns and their goals
     WorkoutRecords: [],                   // Array of json records, raw from database
     WorkoutMonths: [],                    // Array of the available viewing periods (months)
-    WorkoutRecordsForSelectedPeriod: []   // Array of json records of all records in selected viewing period
   };
 
   public showMode = 'chart';              // Default show mode, can be switched to table
   public showPeriods = [];                // The current viewing periods
+  public showingRecords = []   // Array of json records of all records in selected viewing period
 
   public isButtonDisabled = {
     addRecord: true
@@ -106,10 +106,10 @@ export class WorkoutSheetPage implements OnInit {
     }
 
     // Filter which records to show and sort them by date
-    this.sheetData.WorkoutRecordsForSelectedPeriod = this.sheetData.WorkoutRecords.filter((record) => this.showPeriods.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
+    this.showingRecords = this.sheetData.WorkoutRecords.filter((record) => this.showPeriods.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
 
     // Format data for chart
-    this.chartService.formatChartData(this.sheetData.WorkoutRecordsForSelectedPeriod, this.sheetData.Structure);
+    this.chartService.formatChartData(this.showingRecords, this.sheetData.Structure);
 
   }
 
@@ -227,7 +227,7 @@ export class WorkoutSheetPage implements OnInit {
     if(modalData != null){
       // Set new data for the edited record and color splash the row
       this.sheetData.WorkoutRecords[rowIndex] = modalData;
-      this.colorSplashRow(this.sheetData.WorkoutRecordsForSelectedPeriod[rowIndex]);
+      this.colorSplashRow(this.showingRecords[rowIndex]);
 
       // Sent a request for editing the record
       this.workoutService.editRecord(modalData).subscribe((data: any)=>

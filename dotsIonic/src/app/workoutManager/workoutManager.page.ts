@@ -168,7 +168,10 @@ export class WorkoutManagerPage implements OnInit {
     // Pause timer for the break and push user's value to results array
     this.timerService.pauseTimer();
     this.controls.IsExerciseRunning = false;
-    this.results.push(this.current.InputValue);
+    // Manage bool results
+    if(this.current.InputValue == "true") this.results.push(true);
+    else if(this.current.InputValue == "false") this.results.push(false);
+    else this.results.push(this.current.InputValue);
 
     let that = this;
     // If there are more exercises to present

@@ -53,7 +53,6 @@ export class ChartService{
           registeredCols.push(currentCollumn);
           currentColIndex = registeredCols.length - 1;
         }
-        console.log(record.Values[i])
         let value = record.Values[i];
         if(typeof value == "number"){
           value = parseFloat(record.Values[i]);
@@ -63,6 +62,7 @@ export class ChartService{
         }
         else if(record.Values[i] == false) value = 0;
         else{
+          console.log(record.Values[i], new Date(this.timeAndDateService.getSeconds(record.Values[i])));
           value = new Date(this.timeAndDateService.getSeconds(record.Values[i]));
         }
         formatted[currentColIndex].series.push({
@@ -75,6 +75,7 @@ export class ChartService{
     }
 
     this.chartData = formatted;
+    console.log(this.chartData);
 
     // Calculate chart's width based on the number of dates shown
     this.chartWidth = this.chartData[0].series.length * this.RECORD_WIDTH;
