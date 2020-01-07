@@ -34,7 +34,7 @@ export class NutritionPage implements OnInit {
 
   async getNutritionData(){
 
-    this.nutritionService.getNutritionData().subscribe((data: [any])=> {
+    this.nutritionService.getNutritionData().subscribe( async (data: [any])=> {
 
       console.log(data);
       this.nutritionData = data.nutritionData;

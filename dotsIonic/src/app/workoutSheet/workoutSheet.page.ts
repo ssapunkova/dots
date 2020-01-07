@@ -169,7 +169,7 @@ export class WorkoutSheetPage implements OnInit {
     if(modalData != null){
 
       // Add record to database
-      this.workoutService.addRecord(modalData).subscribe((data: any)=>
+      this.workoutService.addRecord(modalData).subscribe( async (data: any)=>
         {
           console.log(data);
 
@@ -215,7 +215,7 @@ export class WorkoutSheetPage implements OnInit {
       this.sheetData.WorkoutRecords[recordToEdit.index] = modalData;
 
       // Sent a request for editing the record
-      this.workoutService.editRecord(modalData).subscribe((data: any)=>
+      this.workoutService.editRecord(modalData).subscribe( async (data: any)=>
         {
           // deletedDocs > 0 means the edited record overrode an older one with the same date
           if(data.deletedDocs > 0){
@@ -250,7 +250,7 @@ export class WorkoutSheetPage implements OnInit {
 
             // Remove from WorkoutRecords
             this.sheetData.WorkoutRecords.splice(record.index, 1);
-            this.workoutService.deleteRecord(record._id).subscribe((data: [any])=>
+            this.workoutService.deleteRecord(record._id).subscribe( async (data: [any])=>
               {
                 this.openSheet();
               },

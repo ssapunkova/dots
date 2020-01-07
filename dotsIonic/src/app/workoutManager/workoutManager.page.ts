@@ -72,7 +72,7 @@ export class WorkoutManagerPage implements OnInit {
 
   async getsheetExercises(){
 
-    this.workoutService.getSheetExercises(this.sheetExercises._id).subscribe((data: [any])=> {
+    this.workoutService.getSheetExercises(this.sheetExercises._id).subscribe( async (data: [any])=> {
 
       // Get data about all sheets
       this.sheetExercises = data[0];
@@ -86,7 +86,7 @@ export class WorkoutManagerPage implements OnInit {
     });
 
     // Get average time for exercises
-    this.workoutService.getExerciseTimes(this.sheetExercises._id).subscribe((records: any) => {
+    this.workoutService.getExerciseTimes(this.sheetExercises._id).subscribe( async (records: any) => {
       if(records.length > 0){
         // Find sum of all records
         let sum = 0;
@@ -270,7 +270,7 @@ export class WorkoutManagerPage implements OnInit {
       Time: this.time
     }
 
-    this.workoutService.addRecord(record).subscribe((data: any) => {
+    this.workoutService.addRecord(record).subscribe( async (data: any) => {
       console.log(data);
     });
 
