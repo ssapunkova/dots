@@ -62,7 +62,7 @@ export class ChartService{
         }
         else if(record.Values[i] == false) value = 0;
         else{
-          console.log(record.Values[i], new Date(this.timeAndDateService.getSeconds(record.Values[i])));
+          // console.log(record.Values[i], new Date(this.timeAndDateService.getSeconds(record.Values[i])));
           value = new Date(this.timeAndDateService.getSeconds(record.Values[i]));
         }
         formatted[currentColIndex].series.push({

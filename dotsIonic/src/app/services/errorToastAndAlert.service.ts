@@ -23,7 +23,7 @@ export class ErrorToastAndAlertService{
   // Show error alert with footer for contacting the admin
   async showErrorAlert(message){
 
-    this.loadingService.dismissSmallLoading();
+    await this.loadingService.dismissSmallLoading();
     let alert = await this.alertController.create({
       header: message,
       message: "Something went wrong. Contact admin: <a href='mailto:elenakikiova@mail.ru'>elenakikiova@mail.ru</a>",

@@ -49,6 +49,7 @@ export class WorkoutSheetPage implements OnInit {
   ) { };
 
   ngOnInit() {
+    this.loadingService.isPageLoading = true;
     // Get sheetId
     this.sheetData._id = this.route.snapshot.paramMap.get("sheetId");
     // Load sheet data from database
@@ -57,17 +58,19 @@ export class WorkoutSheetPage implements OnInit {
 
   async getSheetData(){
 
+    let that = this;
+
     this.workoutService.getWorkoutSheetData(this.sheetData._id).subscribe((data: [any])=> {
 
       // Get data about all sheets
-      this.sheetData = data[0];
+      that.sheetData = data[0];
       console.log(this.sheetData);
 
-      this.openSheet();
+      that.openSheet();
 
       // Dismiss all loading
-      this.loadingService.isPageLoading = false;
-      this.loadingService.dismissSmallLoading();
+      that.loadingService.isPageLoading = false;
+      that.loadingService.dismissSmallLoading();
 
     });
   };
@@ -111,6 +114,8 @@ export class WorkoutSheetPage implements OnInit {
 
   async openSheet(){
 
+    await this.loadingService.presentSmallLoading("Loading data...");
+
     // Sort data in case it has changed since last sorting
     this.timeAndDateService.sortByDate(this.sheetData.WorkoutRecords, "asc");
 
@@ -125,7 +130,8 @@ export class WorkoutSheetPage implements OnInit {
 
       // Array of months - Used to allow the user to select a period ov viewed chart/table
       let months = [];
-      this.sheetData.WorkoutRecords.forEach((record) => {
+      this.sheetData.WorkoutRecords.forEach((record, i) => {
+        record.index = i;
         let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
         if(months.indexOf(splitDate) < 0){
           months.push(splitDate);
@@ -137,7 +143,10 @@ export class WorkoutSheetPage implements OnInit {
       this.showNoRecordsAlert();
     }
 
+    this.loadingService.dismissSmallLoading();
+
   }
+
 
   async addRecord(){
 
@@ -166,15 +175,13 @@ export class WorkoutSheetPage implements OnInit {
 
           // n.nModified > 0 means the new record upserted an older with the same date
           if(data.docs.nModified > 0){
-            this.loadingService.presentSmallLoading("Saving changes...");
             this.getSheetData();
           }
           else{
             // If there are no upserts, just a new record, add it to WorkoutRecords
             this.sheetData.WorkoutRecords.push(data.record);
-            // Reopen sheet and make a color splash on the new record
+            // Reopen sheet and make a color
             this.openSheet();
-            this.dataTableService.colorSplashRow(this.sheetData.WorkoutRecords[0]);
           }
         },
         error => {
@@ -185,7 +192,7 @@ export class WorkoutSheetPage implements OnInit {
   }
 
 
-  async editRecord(record, rowIndex){
+  async editRecord(record){
     let recordToEdit = record;
 
     const modal = await this.modalController.create({
@@ -204,16 +211,14 @@ export class WorkoutSheetPage implements OnInit {
     modalData = modalData.data;
 
     if(modalData != null){
-      // Set new data for the edited record and color splash the row
-      this.sheetData.WorkoutRecords[rowIndex] = modalData;
-      this.dataTableService.colorSplashRow(this.showingRecords[rowIndex]);
+      // Set new data for the edited record
+      this.sheetData.WorkoutRecords[recordToEdit.index] = modalData;
 
       // Sent a request for editing the record
       this.workoutService.editRecord(modalData).subscribe((data: any)=>
         {
           // deletedDocs > 0 means the edited record overrode an older one with the same date
           if(data.deletedDocs > 0){
-            this.loadingService.presentSmallLoading("Saving changes...");
             this.getSheetData();
           }
           else{
@@ -227,7 +232,7 @@ export class WorkoutSheetPage implements OnInit {
     };
   }
 
-  async deleteRecord(record, rowIndex){
+  async deleteRecord(record){
     console.log(record);
 
     // Show alert about deleting the record
@@ -244,7 +249,7 @@ export class WorkoutSheetPage implements OnInit {
           handler: () => {
 
             // Remove from WorkoutRecords
-            this.sheetData.WorkoutRecords.splice(rowIndex, 1);
+            this.sheetData.WorkoutRecords.splice(record.index, 1);
             this.workoutService.deleteRecord(record._id).subscribe((data: [any])=>
               {
                 this.openSheet();

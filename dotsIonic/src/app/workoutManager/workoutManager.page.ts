@@ -82,7 +82,6 @@ export class WorkoutManagerPage implements OnInit {
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;
-      this.loadingService.dismissSmallLoading();
 
     });
 
@@ -169,8 +168,8 @@ export class WorkoutManagerPage implements OnInit {
     this.timerService.pauseTimer();
     this.controls.IsExerciseRunning = false;
     // Manage bool results
-    if(this.current.InputValue == "true") this.results.push(true);
-    else if(this.current.InputValue == "false") this.results.push(false);
+    if(this.current.InputValue.toString() == "true") this.results.push(true);
+    else if(this.current.InputValue.toString() == "false") this.results.push(false);
     else this.results.push(this.current.InputValue);
 
     let that = this;

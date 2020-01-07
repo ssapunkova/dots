@@ -76,13 +76,4 @@ export class DataTableService{
     }
   }
 
-
-  async colorSplashRow(row){
-    row.color = "primary";
-    let that = this;
-    setTimeout(function(){
-      delete row.color;
-    }, 500);
-  }
-
 }

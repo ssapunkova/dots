@@ -8,8 +8,7 @@ import { LoadingController } from '@ionic/angular';
 export class LoadingService{
 
   public isPageLoading = true;                // Controlls full-screen loader
-  public isProcessLoading = false;            // Controlls small loading
-  public processLoader;
+  public processLoader: Loading = null;
 
   constructor(
       public loadingController: LoadingController,
@@ -17,7 +16,6 @@ export class LoadingService{
 
   // Show small loading alert with custom message
   async presentSmallLoading(message){
-    this.isProcessLoading = true;
     this.processLoader = await this.loadingController.create({
       message: message
     });
@@ -26,7 +24,7 @@ export class LoadingService{
 
   // Hide small loading
   async dismissSmallLoading(){
-    if(this.isProcessLoading && this.processLoader != undefined) this.processLoader.dismiss();
+    if(this.processLoader) await this.processLoader.dismiss();
   }
 
 }

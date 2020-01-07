@@ -157,18 +157,18 @@ export class WorkoutsPage implements OnInit {
 
     if(modalData != null){
 
-      this.loadingService.presentSmallLoading("Saving changes");
+      await this.loadingService.presentSmallLoading("Saving changes");
 
       // Update sheet data and reloat sheets
       this.workoutService.updateSheetConfiguration(modalData).subscribe((data: [any])=>
         {
           this.getSheets();
-          this.loadingService.dismissSmallLoading();
         },
         error => {
           this.errorToastAndAlertService.showErrorAlert("Oups")
         }
       );
+      await this.loadingService.dismissSmallLoading();
     }
 
   }
@@ -208,13 +208,11 @@ export class WorkoutsPage implements OnInit {
               }
               else{
                 // If sheet title is fine, add sheet to database
-                this.loadingService.presentSmallLoading("Creating sheet");
+
                 this.workoutService.createSheet(data).subscribe((data: [any])=>
                   {
                     console.log(data)
                     this.workoutSheets.push(data);
-                    this.loadingService.dismissSmallLoading();
-
                     // If reached MAX_SHEETS_NUMBER, disable adding new sheets
                     if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.isButtonDisabled.addSheet = true;
                   },
@@ -222,6 +220,7 @@ export class WorkoutsPage implements OnInit {
                     this.errorToastAndAlertService.showErrorAlert("Oups")
                   }
                 );
+                await this.loadingService.dismissSmallLoading();
               }
             }
           }

@@ -37,7 +37,7 @@ export class NutritionPage implements OnInit {
     this.nutritionService.getNutritionData().subscribe((data: [any])=> {
 
       console.log(data);
-      this.nutritionData = data;
+      this.nutritionData = data.nutritionData;
     });
 
   }

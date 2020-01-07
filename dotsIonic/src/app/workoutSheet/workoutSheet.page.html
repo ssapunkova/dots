@@ -103,15 +103,15 @@
         </ion-row>
 
         <ion-row
-          *ngFor="let record of showingRecords; let i = index">
+          *ngFor="let record of showingRecords">
             <ion-item-sliding>
            <ion-item-options side="start">
-             <ion-item-option color="danger" (click)="deleteRecord(record, i)">Delete</ion-item-option>
-             <ion-item-option color="success" (click)="editRecord(record, i)">Edit</ion-item-option>
+             <ion-item-option color="danger" (click)="deleteRecord(record)">Delete</ion-item-option>
+             <ion-item-option color="success" (click)="editRecord(record)">Edit</ion-item-option>
            </ion-item-options>
 
            <ion-item [color]="record.color">
-            <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }}</ion-col>
+            <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }} {{ record.color}}</ion-col>
             <ion-col *ngFor="let col of sheetData.Structure; let j = index" [title]="col.Title">
               <ion-label *ngIf="col.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
               <ng-template #showTick>
