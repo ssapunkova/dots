@@ -220,8 +220,9 @@ export class WorkoutsPage implements OnInit {
                     this.errorToastAndAlertService.showErrorAlert("Oups")
                   }
                 );
-                await this.loadingService.dismissSmallLoading();
+
               }
+              // await this.loadingService.dismissSmallLoading();
             }
           }
         }

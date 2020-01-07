@@ -60,7 +60,7 @@ export class WorkoutSheetPage implements OnInit {
 
     let that = this;
 
-    this.workoutService.getWorkoutSheetData(this.sheetData._id).subscribe((data: [any])=> {
+    this.workoutService.getWorkoutSheetData(this.sheetData._id).subscribe(async (data: any) => {
 
       // Get data about all sheets
       that.sheetData = data[0];
@@ -70,7 +70,7 @@ export class WorkoutSheetPage implements OnInit {
 
       // Dismiss all loading
       that.loadingService.isPageLoading = false;
-      that.loadingService.dismissSmallLoading();
+      await that.loadingService.dismissSmallLoading();
 
     });
   };
@@ -143,7 +143,7 @@ export class WorkoutSheetPage implements OnInit {
       this.showNoRecordsAlert();
     }
 
-    this.loadingService.dismissSmallLoading();
+    await this.loadingService.dismissSmallLoading();
 
   }
 
