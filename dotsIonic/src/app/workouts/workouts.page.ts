@@ -30,9 +30,7 @@ export class WorkoutsPage implements OnInit {
   public showMode = 'chart';
   public showPeriods = [];
 
-  public isButtonDisabled = {
-    addSheet: false
-  }
+  public canAddSheet = true;
 
   public chartData = [];
 
@@ -94,7 +92,7 @@ export class WorkoutsPage implements OnInit {
         }
 
         // Disable adding a new sheet if there are MAX_SHEETS_NUMBER already
-        if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.isButtonDisabled.addSheet = true;
+        if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.canAddSheet = false;
 
       }
 
@@ -213,7 +211,7 @@ export class WorkoutsPage implements OnInit {
                     console.log(data)
                     this.workoutSheets.push(data);
                     // If reached MAX_SHEETS_NUMBER, disable adding new sheets
-                    if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.isButtonDisabled.addSheet = true;
+                    if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.canAddSheet = false;
                     await this.loadingService.dismissSmallLoading();
                   },
                   error => {
@@ -267,7 +265,7 @@ export class WorkoutsPage implements OnInit {
                   this.workoutSheets.splice(index, 1);
 
                   // Since sheets are definitely < MAX
-                  this.isButtonDisabled.addSheet = false;
+                  this.canAddSheet = true;
 
                 },
                 error => {

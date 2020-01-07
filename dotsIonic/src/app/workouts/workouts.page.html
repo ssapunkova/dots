@@ -80,7 +80,7 @@
 </ion-content>
 
 <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="addSheet()">
+  <ion-fab-button (click)="addSheet()" [disabled]="!canAddSheet">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>
