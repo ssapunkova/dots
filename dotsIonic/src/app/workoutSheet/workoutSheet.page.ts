@@ -57,20 +57,17 @@ export class WorkoutSheetPage implements OnInit {
   }
 
   async getSheetData(){
-
-    let that = this;
-
     this.workoutService.getWorkoutSheetData(this.sheetData._id).subscribe(async (data: any) => {
 
       // Get data about all sheets
-      that.sheetData = data[0];
+      this.sheetData = data[0];
       console.log(this.sheetData);
 
-      that.openSheet();
+      this.openSheet();
 
       // Dismiss all loading
-      that.loadingService.isPageLoading = false;
-      await that.loadingService.dismissSmallLoading();
+      this.loadingService.isPageLoading = false;
+      await this.loadingService.dismissSmallLoading();
 
     });
   };
