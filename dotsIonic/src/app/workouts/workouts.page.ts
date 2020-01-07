@@ -99,11 +99,10 @@ export class WorkoutsPage implements OnInit {
       }
 
       console.log(this.chartData)
-      // this.drawCharts();
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;
-      this.loadingService.dismissSmallLoading();
+      await this.loadingService.dismissSmallLoading();
 
     });
   };
@@ -160,15 +159,15 @@ export class WorkoutsPage implements OnInit {
       await this.loadingService.presentSmallLoading("Saving changes");
 
       // Update sheet data and reloat sheets
-      this.workoutService.updateSheetConfiguration(modalData).subscribe((data: [any])=>
+      this.workoutService.updateSheetConfiguration(modalData).subscribe( async (data: [any])=>
         {
           this.getSheets();
+          await this.loadingService.dismissSmallLoading();
         },
         error => {
           this.errorToastAndAlertService.showErrorAlert("Oups")
         }
       );
-      await this.loadingService.dismissSmallLoading();
     }
 
   }
@@ -209,12 +208,13 @@ export class WorkoutsPage implements OnInit {
               else{
                 // If sheet title is fine, add sheet to database
 
-                this.workoutService.createSheet(data).subscribe((data: [any])=>
+                this.workoutService.createSheet(data).subscribe( async (data: [any])=>
                   {
                     console.log(data)
                     this.workoutSheets.push(data);
                     // If reached MAX_SHEETS_NUMBER, disable adding new sheets
                     if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.isButtonDisabled.addSheet = true;
+                    await this.loadingService.dismissSmallLoading();
                   },
                   error => {
                     this.errorToastAndAlertService.showErrorAlert("Oups")
@@ -222,7 +222,6 @@ export class WorkoutsPage implements OnInit {
                 );
 
               }
-              // await this.loadingService.dismissSmallLoading();
             }
           }
         }

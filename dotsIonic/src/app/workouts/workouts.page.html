@@ -33,7 +33,7 @@
 
             <ion-card-content>
 
-              <ion-grid style="color: black; font-size: 1rem">
+              <ion-grid style="color: black; font-size: 1rem" *ngIf="sheet.Structure != null && sheet.WorkoutRecords != null">
                 <ion-row><ion-col>
                   <ion-label>Stats</ion-label>
                 </ion-col></ion-row>
