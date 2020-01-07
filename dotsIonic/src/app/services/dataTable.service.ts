@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { TimeAndDateService } from './timeAndDate.service';
+import { ChartService } from '../services/chart.service';
 
 // DataTable Service
 // Implements sorting the data, displayed in ion-grid
@@ -13,9 +14,11 @@ export class DataTableService{
   public allRecords = [];
   public showingRecords = [];
   public showingMonths = [];
+  public structure = [];
 
   constructor(
-    public timeAndDateService: TimeAndDateService
+    public timeAndDateService: TimeAndDateService,
+    public chartService: ChartService
   ) { }
 
   // Sort records by date
@@ -84,8 +87,6 @@ export class DataTableService{
   // can be triggered by ion-select ( case 1 ) or by code ( case 2 )
   async setPeriod($event){
 
-    console.log($event)
-
     if($event.target != undefined){
       // case 1, use selected periods from ion-select
       this.showPeriods = $event.target.value;
@@ -99,6 +100,10 @@ export class DataTableService{
 
     // Filter which records to show and sort them by date
     this.showingRecords = this.allRecords.filter((record) => this.showPeriods.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
+
+
+    // Format data for chart
+    this.chartService.formatChartData(this.showingRecords, this.structure);
 
   }
 

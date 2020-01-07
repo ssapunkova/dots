@@ -24,11 +24,8 @@ import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
 export class WorkoutSheetPage implements OnInit {
 
   public sheetData = {
-    _id: null,                            // sheetId, comes with url
-    Title: "",                            // Sheet title
-    Structure: [],                        // Array of all columns and their goals
-    WorkoutRecords: [],                   // Array of json records, raw from database
-    WorkoutMonths: [],                    // Array of the available viewing periods (months)
+    _id: null,                            // SheetId, comes with url
+    Title: ""                             // Sheet title
   };
 
   public showMode = 'chart';              // Default show mode, can be switched to table
@@ -60,7 +57,8 @@ export class WorkoutSheetPage implements OnInit {
     this.workoutService.getWorkoutSheetData(this.sheetData._id).subscribe(async (data: any) => {
 
       // Get data about all sheets
-      this.sheetData = data[0];
+      this.sheetData.Title = data[0].Title;
+      this.dataTableService.structure = data[0].Structure;
       this.dataTableService.allRecords = data[0].WorkoutRecords;
       console.log(this.sheetData);
 
@@ -104,7 +102,7 @@ export class WorkoutSheetPage implements OnInit {
       this.dataTableService.getShowingMonths();
 
       // Format data for chart
-      this.chartService.formatChartData(this.dataTableService.showingRecords, this.sheetData.Structure);
+      this.chartService.formatChartData(this.dataTableService.showingRecords, this.dataTableService.structure);
 
     }
     else{
@@ -124,7 +122,7 @@ export class WorkoutSheetPage implements OnInit {
       componentProps: {
         sheetId: this.sheetData._id,
         recordId: null,
-        fields: this.sheetData.Structure,
+        fields: this.dataTableService.structure,
         date: null,
         values: null
       }
@@ -168,7 +166,7 @@ export class WorkoutSheetPage implements OnInit {
       componentProps: {
         sheetId: this.sheetData._id,
         recordId: recordToEdit._id,
-        fields: this.sheetData.Structure,
+        fields: this.dataTableService.structure,
         date: recordToEdit.Date,
         values: recordToEdit.Values
       }
