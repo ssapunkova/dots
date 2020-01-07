@@ -61,6 +61,7 @@ export class WorkoutSheetPage implements OnInit {
 
       // Get data about all sheets
       this.sheetData = data[0];
+      this.dataTableService.allRecords = data[0].WorkoutRecords;
       console.log(this.sheetData);
 
       this.openSheet();
@@ -87,54 +88,24 @@ export class WorkoutSheetPage implements OnInit {
     await alert.present();
   }
 
-  // Set viewing period of chart/table
-  // can be triggered programmatically ( case 1 ) or by ion-select ( case 2 )
-  async setPeriod($event){
-
-    if($event == "" || $event.target.value.length < 1){
-      // case 1, set showPeriod to the latest
-      let lastRecordDate = this.sheetData.WorkoutRecords[0].Date.split("-");
-      this.showPeriods = [lastRecordDate[1] + "." + lastRecordDate[0]];
-    }
-    else{
-      // case 2, use selected periods from ion-select
-      this.showPeriods = $event.target.value;
-    }
-
-    // Filter which records to show and sort them by date
-    this.showingRecords = this.sheetData.WorkoutRecords.filter((record) => this.showPeriods.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
-
-    // Format data for chart
-    this.chartService.formatChartData(this.showingRecords, this.sheetData.Structure);
-
-  }
 
   async openSheet(){
 
     await this.loadingService.presentSmallLoading("Loading data...");
 
-    // Sort data in case it has changed since last sorting
-    this.timeAndDateService.sortByDate(this.sheetData.WorkoutRecords, "asc");
-
     // Set period to the latest if there are any records
-    if(this.sheetData.WorkoutRecords.length > 0){
-      this.setPeriod("");
-    }
+    if(this.dataTableService.allRecords.length > 0){
 
-    // Sort records by date and get array of the months of the records
-    if(this.sheetData.WorkoutRecords.length > 0){
-      this.timeAndDateService.sortByDate(this.sheetData.WorkoutRecords, "asc");
+      this.dataTableService.setPeriod("");
 
-      // Array of months - Used to allow the user to select a period ov viewed chart/table
-      let months = [];
-      this.sheetData.WorkoutRecords.forEach((record, i) => {
-        record.index = i;
-        let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
-        if(months.indexOf(splitDate) < 0){
-          months.push(splitDate);
-        }
-      })
-      this.sheetData.WorkoutMonths = months;
+      // Sort records by date and get array of the months of the records
+      this.timeAndDateService.sortByDate(this.dataTableService.allRecords, "asc");
+
+      this.dataTableService.getShowingMonths();
+
+      // Format data for chart
+      this.chartService.formatChartData(this.dataTableService.showingRecords, this.sheetData.Structure);
+
     }
     else{
       this.showNoRecordsAlert();
@@ -175,8 +146,8 @@ export class WorkoutSheetPage implements OnInit {
             this.getSheetData();
           }
           else{
-            // If there are no upserts, just a new record, add it to WorkoutRecords
-            this.sheetData.WorkoutRecords.push(data.record);
+            // If there are no upserts, just a new record, add it to allRecords
+            this.dataTableService.allRecords.push(data.record);
             // Reopen sheet and make a color
             this.openSheet();
           }
@@ -209,7 +180,7 @@ export class WorkoutSheetPage implements OnInit {
 
     if(modalData != null){
       // Set new data for the edited record
-      this.sheetData.WorkoutRecords[recordToEdit.index] = modalData;
+      this.dataTableService.allRecords[recordToEdit.index] = modalData;
 
       // Sent a request for editing the record
       this.workoutService.editRecord(modalData).subscribe( async (data: any)=>
@@ -245,8 +216,8 @@ export class WorkoutSheetPage implements OnInit {
           text: 'Delete',
           handler: () => {
 
-            // Remove from WorkoutRecords
-            this.sheetData.WorkoutRecords.splice(record.index, 1);
+            // Remove from allRecords
+            this.dataTableService.allRecords.splice(record.index, 1);
             this.workoutService.deleteRecord(record._id).subscribe( async (data: [any])=>
               {
                 this.openSheet();

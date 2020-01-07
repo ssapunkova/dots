@@ -57,12 +57,9 @@ export class ChartService{
         if(typeof value == "number"){
           value = parseFloat(record.Values[i]);
         }
-        else if(record.Values[i] == true) {
-          value = 10;
-        }
+        else if(record.Values[i] == true) value = 10;
         else if(record.Values[i] == false) value = 0;
         else{
-          // console.log(record.Values[i], new Date(this.timeAndDateService.getSeconds(record.Values[i])));
           value = new Date(this.timeAndDateService.getSeconds(record.Values[i]));
         }
         formatted[currentColIndex].series.push({

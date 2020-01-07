@@ -25,10 +25,10 @@
         <ion-select
           placeholder="Select period"
           multiple
-          [(ngModel)]="showPeriods"
-          (ionChange)="setPeriod($event)">
+          [(ngModel)]="dataTableService.showPeriods"
+          (ionChange)="dataTableService.setPeriod($event)">
           <ion-select-option
-            *ngFor="let month of sheetData.WorkoutMonths"
+            *ngFor="let month of dataTableService.showingMonths"
             [value]="month">
               {{ month }}
           </ion-select-option>
@@ -85,7 +85,7 @@
           <ion-col
             class="table-header"
             title='Date'
-            (click)="dataTableService.sortByDate(showingRecords)">
+            (click)="dataTableService.sortByDate()">
             Date
             <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
             <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
@@ -95,7 +95,7 @@
             class="table-header"
             *ngFor="let col of sheetData.Structure; let i = index"
             [title]="col.Title"
-            (click)="dataTableService.sortCol(col, i, showingRecords)">
+            (click)="dataTableService.sortCol(col, i)">
             <ion-label>{{ (col.Title.length > 10) ? (col.Title | slice:0:10) + '...' : (col.Title) }}</ion-label>
             <ion-icon name="arrow-dropup" *ngIf="col.sorted == 'asc'; else arrowDown"></ion-icon>
             <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
@@ -103,7 +103,7 @@
         </ion-row>
 
         <ion-row
-          *ngFor="let record of showingRecords">
+          *ngFor="let record of dataTableService.showingRecords">
             <ion-item-sliding>
            <ion-item-options side="start">
              <ion-item-option color="danger" (click)="deleteRecord(record)">Delete</ion-item-option>
