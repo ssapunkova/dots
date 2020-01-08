@@ -23,15 +23,9 @@ import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
 @Injectable()
 export class WorkoutSheetPage implements OnInit {
 
-  public sheetData = {
-    _id: null,                            // SheetId, comes with url
-    Title: ""                             // Sheet title
-  };
+  public sheetId = null;
 
-  public showMode = 'chart';              // Default show mode, can be switched to table
-  public showPeriods = [];                // The current viewing periods
-  public showingRecords = []              // Array of json records of all records in selected viewing period
-
+  public noRecords = true;
 
   constructor(
     public loadingService: LoadingService,
@@ -48,21 +42,19 @@ export class WorkoutSheetPage implements OnInit {
   ngOnInit() {
     this.loadingService.isPageLoading = true;
     // Get sheetId
-    this.sheetData._id = this.route.snapshot.paramMap.get("sheetId");
+    this.sheetId = this.route.snapshot.paramMap.get("sheetId");
     // Load sheet data from database
     this.getSheetData();
   }
 
   async getSheetData(){
-    this.workoutService.getWorkoutSheetData(this.sheetData._id).subscribe(async (data: any) => {
+    this.workoutService.getWorkoutSheetData(this.sheetId).subscribe(async (data: any) => {
 
       // Get data about all sheets
-      this.sheetData.Title = data[0].Title;
-      this.dataTableService.structure = data[0].Structure;
-      this.dataTableService.allRecords = data[0].WorkoutRecords;
-      console.log(this.sheetData);
+      this.dataTableService.initializeDataTable(data[0]);
+      console.log(this.dataTableService);
 
-      this.openSheet();
+      if(data[0].WorkoutRecords.length > 0) this.noRecords = false;
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;
@@ -71,56 +63,13 @@ export class WorkoutSheetPage implements OnInit {
     });
   };
 
-  async showNoRecordsAlert(){
-    let message = 'Tap the + button in the right bottom corner to add a record or use the <a href="/workoutManager/"' + this.sheetData._id + '">Workout manager</a>';
-    let alert = await this.alertController.create({
-      header: 'No records yet',
-      message: message,
-      buttons: [
-        {
-          text: 'Ok'
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-
-  async openSheet(){
-
-    await this.loadingService.presentSmallLoading("Loading data...");
-
-    // Set period to the latest if there are any records
-    if(this.dataTableService.allRecords.length > 0){
-
-      this.dataTableService.setPeriod("");
-
-      // Sort records by date and get array of the months of the records
-      this.timeAndDateService.sortByDate(this.dataTableService.allRecords, "asc");
-
-      this.dataTableService.getShowingMonths();
-
-      // Format data for chart
-      this.chartService.formatChartData(this.dataTableService.showingRecords, this.dataTableService.structure);
-
-    }
-    else{
-      this.showNoRecordsAlert();
-    }
-
-    await this.loadingService.dismissSmallLoading();
-
-  }
-
-
   async addRecord(){
 
     // Show modal for adding a record
     const modal = await this.modalController.create({
       component: NewWorkoutRecordPage,
       componentProps: {
-        sheetId: this.sheetData._id,
+        sheetId: this.sheetId,
         recordId: null,
         fields: this.dataTableService.structure,
         date: null,
@@ -137,8 +86,6 @@ export class WorkoutSheetPage implements OnInit {
       // Add record to database
       this.workoutService.addRecord(modalData).subscribe( async (data: any)=>
         {
-          console.log(data);
-
           // n.nModified > 0 means the new record upserted an older with the same date
           if(data.docs.nModified > 0){
             this.getSheetData();
@@ -146,8 +93,7 @@ export class WorkoutSheetPage implements OnInit {
           else{
             // If there are no upserts, just a new record, add it to allRecords
             this.dataTableService.allRecords.push(data.record);
-            // Reopen sheet and make a color
-            this.openSheet();
+            this.dataTableService.initializeDataTable();
           }
         },
         error => {
@@ -164,7 +110,7 @@ export class WorkoutSheetPage implements OnInit {
     const modal = await this.modalController.create({
       component: NewWorkoutRecordPage,
       componentProps: {
-        sheetId: this.sheetData._id,
+        sheetId: this.sheetId,
         recordId: recordToEdit._id,
         fields: this.dataTableService.structure,
         date: recordToEdit.Date,
@@ -188,7 +134,7 @@ export class WorkoutSheetPage implements OnInit {
             this.getSheetData();
           }
           else{
-            this.openSheet();
+            this.dataTableService.initializeDataTable();
           }
         },
         error => {
@@ -199,7 +145,6 @@ export class WorkoutSheetPage implements OnInit {
   }
 
   async deleteRecord(record){
-    console.log(record);
 
     // Show alert about deleting the record
     let alert = await this.alertController.create({
@@ -218,7 +163,7 @@ export class WorkoutSheetPage implements OnInit {
             this.dataTableService.allRecords.splice(record.index, 1);
             this.workoutService.deleteRecord(record._id).subscribe( async (data: [any])=>
               {
-                this.openSheet();
+                this.dataTableService.initializeDataTable();
               },
               error => {
                 this.errorToastAndAlertService.showErrorAlert("Oups")

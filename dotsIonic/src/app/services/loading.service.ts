@@ -8,7 +8,7 @@ import { LoadingController } from '@ionic/angular';
 export class LoadingService{
 
   public isPageLoading = true;                // Controlls full-screen loader
-  public processLoader: Loading = null;
+  public processLoader = null;
 
   constructor(
       public loadingController: LoadingController,

@@ -41,6 +41,7 @@ export class ChartService{
     for(var j = 0; j < data.length; j++){
       let record = data[j];
 
+
       for(var i = 0; i < record.Values.length; i++){
         let date = await this.timeAndDateService.formatDate(record.Date);
         let currentCollumn = columns[i].Title;

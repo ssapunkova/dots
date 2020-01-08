@@ -8,7 +8,7 @@
     <ion-buttons slot="end">
       <ion-icon name="grid"></ion-icon>
       <ion-toggle checked
-        (click)="showMode == 'chart' ? showMode = 'table' : showMode = 'chart'"></ion-toggle>
+        (click)="dataTableService.changeShowMode()"></ion-toggle>
       <ion-icon name="podium"></ion-icon>
     </ion-buttons>
 
@@ -25,10 +25,10 @@
         <ion-select
           placeholder="Select period"
           multiple
-          [(ngModel)]="dataTableService.showPeriods"
+          [(ngModel)]="dataTableService.showingPeriod"
           (ionChange)="dataTableService.setPeriod($event)">
           <ion-select-option
-            *ngFor="let month of dataTableService.showingMonths"
+            *ngFor="let month of dataTableService.months"
             [value]="month">
               {{ month }}
           </ion-select-option>
@@ -38,7 +38,7 @@
 
     <div style="height: 100%; overflow-x: auto; width: 100%">
 
-      <div *ngIf="showMode == 'chart'" style="width: 100%; min-height: 400px; height: 100%" [style.minWidth.px]="chartService.chartWidth">
+      <div *ngIf="dataTableService.showMode == 'chart' && !noRecords" style="width: 100%; min-height: 400px; height: 100%" [style.minWidth.px]="chartService.chartWidth">
 
         <ngx-charts-line-chart
             [view]="view"
@@ -79,7 +79,7 @@
 
       </div>
 
-      <ion-grid *ngIf="showMode == 'table'" [style.minWidth.px]="chartService.chartWidth">
+      <ion-grid *ngIf="dataTableService.showMode == 'table'" [style.minWidth.px]="chartService.chartWidth">
 
         <ion-row>
           <ion-col
