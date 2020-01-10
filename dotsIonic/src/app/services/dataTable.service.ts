@@ -10,7 +10,6 @@ import { ChartService } from '../services/chart.service';
 @Injectable()
 export class DataTableService{
 
-  public sortedByDate = "asc";
 
   public showMode = 'chart';              // Default show mode, can be switched to table
 
@@ -20,6 +19,8 @@ export class DataTableService{
   public showingRecords = [];
   public showingPeriod = [];
   public months = [];
+
+  public sortedByDate = "asc";
 
   constructor(
     public timeAndDateService: TimeAndDateService,
@@ -43,10 +44,12 @@ export class DataTableService{
       this.allRecords = sheetData.WorkoutRecords;
       this.prepareData();
     }
+
   }
 
   async prepareData(){
     this.timeAndDateService.sortByDate(this.allRecords, "asc");
+    this.chartService.chartData = [];
     this.getShowingMonths();
     this.setPeriod("");
   }
