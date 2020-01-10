@@ -106,9 +106,19 @@ export class DataTableService{
     this.months = months;
   }
 
-  async addRecord(record){
-    this.allRecords.push(record);
-    this.prepareData();
+  async addRecord(modalProps){
+    const modal = await this.modalController.create(modalProps);
+
+    await modal.present();
+    let modalData = await modal.onWillDismiss();
+    modalData = modalData.data;
+
+    if(modalData != null){
+      // Set new data for the edited record
+      this.allRecords.push(modalData);
+      this.prepareData();
+    };
+    return modalData;
   }
 
   async editRecord(record, modalProps){
@@ -122,7 +132,6 @@ export class DataTableService{
       // Set new data for the edited record
       this.allRecords[record.index] = modalData;
       this.prepareData();
-      // handlerFunc()
     };
     return modalData;
 

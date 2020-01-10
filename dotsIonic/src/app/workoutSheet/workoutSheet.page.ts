@@ -65,8 +65,7 @@ export class WorkoutSheetPage implements OnInit {
 
   async addRecord(){
 
-    // Show modal for adding a record
-    const modal = await this.modalController.create({
+    let modalProps = {
       component: NewWorkoutRecordPage,
       componentProps: {
         sheetId: this.sheetId,
@@ -75,31 +74,57 @@ export class WorkoutSheetPage implements OnInit {
         date: null,
         values: null
       }
-    });
-    await modal.present();
-    // Get modal data and process it if it's not null
-    let modalData = await modal.onWillDismiss();
-    modalData = modalData.data;
-
-    if(modalData != null){
-
-      // Add record to database
-      this.workoutService.addRecord(modalData).subscribe( async (data: any)=>
-        {
-          // n.nModified > 0 means the new record upserted an older with the same date
-          if(data.docs.nModified > 0){
-            this.getSheetData();
-          }
-          else{
-            // If there are no upserts, just a new record, add it to allRecords
-            this.dataTableService.addRecord(data.record);
-          }
-        },
-        error => {
-          this.errorToastAndAlertService.showErrorAlert("Oups")
-        }
-      );
     };
+
+    let newRecord = await this.dataTableService.addRecord(modalProps);
+
+    this.workoutService.addRecord(newRecord).subscribe( async (data: any) =>
+      {
+        // n.nModified > 0 means the new record upserted an older with the same date
+        if(data.docs.nModified > 0){
+          this.getSheetData();
+        }
+      },
+      error => {
+        this.errorToastAndAlertService.showErrorAlert("Oups")
+      }
+    );
+
+    // // Show modal for adding a record
+    // const modal = await this.modalController.create({
+    //   component: NewWorkoutRecordPage,
+    //   componentProps: {
+    //     sheetId: this.sheetId,
+    //     recordId: null,
+    //     fields: this.dataTableService.structure,
+    //     date: null,
+    //     values: null
+    //   }
+    // });
+    // await modal.present();
+    // // Get modal data and process it if it's not null
+    // let modalData = await modal.onWillDismiss();
+    // modalData = modalData.data;
+    //
+    // if(modalData != null){
+    //
+    //   // Add record to database
+    //   this.workoutService.addRecord(modalData).subscribe( async (data: any)=>
+    //     {
+    //       // n.nModified > 0 means the new record upserted an older with the same date
+    //       if(data.docs.nModified > 0){
+    //         this.getSheetData();
+    //       }
+    //       else{
+    //         // If there are no upserts, just a new record, add it to allRecords
+    //         this.dataTableService.addRecord(data.record);
+    //       }
+    //     },
+    //     error => {
+    //       this.errorToastAndAlertService.showErrorAlert("Oups")
+    //     }
+    //   );
+    // };
   }
 
 
@@ -130,41 +155,6 @@ export class WorkoutSheetPage implements OnInit {
         this.errorToastAndAlertService.showErrorAlert("Oups")
       }
     );
-
-    // const modal = await this.modalController.create({
-    //   component: NewWorkoutRecordPage,
-    //   componentProps: {
-    //     sheetId: this.sheetId,
-    //     recordId: recordToEdit._id,
-    //     fields: this.dataTableService.structure,
-    //     date: recordToEdit.Date,
-    //     values: recordToEdit.Values
-    //   }
-    // });
-    //
-    // await modal.present();
-    // let modalData = await modal.onWillDismiss();
-    // modalData = modalData.data;
-    //
-    // if(modalData != null){
-    //   // Set new data for the edited record
-    //
-    //   // Sent a request for editing the record
-    //   this.workoutService.editRecord(modalData).subscribe( async (data: any)=>
-    //     {
-    //       // deletedDocs > 0 means the edited record overrode an older one with the same date
-    //       if(data.deletedDocs > 0){
-    //         this.getSheetData();
-    //       }
-    //       else{
-    //         this.dataTableService.editRecord(recordToEdit.index, modalData);
-    //       }
-    //     },
-    //     error => {
-    //       this.errorToastAndAlertService.showErrorAlert("Oups")
-    //     }
-    //   );
-    // };
   }
 
   async deleteRecord(record){
