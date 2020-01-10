@@ -104,42 +104,67 @@ export class WorkoutSheetPage implements OnInit {
 
 
   async editRecord(record){
-    let recordToEdit = record;
 
-    const modal = await this.modalController.create({
+    let modalProps = {
       component: NewWorkoutRecordPage,
       componentProps: {
         sheetId: this.sheetId,
-        recordId: recordToEdit._id,
+        recordId: record._id,
         fields: this.dataTableService.structure,
-        date: recordToEdit.Date,
-        values: recordToEdit.Values
+        date: record.Date,
+        values: record.Values
       }
-    });
+    }
 
-    await modal.present();
-    let modalData = await modal.onWillDismiss();
-    modalData = modalData.data;
+    let editedRecord = await this.dataTableService.editRecord(record, modalProps);
+    console.log(editedRecord)
 
-    if(modalData != null){
-      // Set new data for the edited record
-
-      // Sent a request for editing the record
-      this.workoutService.editRecord(modalData).subscribe( async (data: any)=>
-        {
-          // deletedDocs > 0 means the edited record overrode an older one with the same date
-          if(data.deletedDocs > 0){
-            this.getSheetData();
-          }
-          else{
-            this.dataTableService.editRecord(recordToEdit.index, modalData);
-          }
-        },
-        error => {
-          this.errorToastAndAlertService.showErrorAlert("Oups")
+    this.workoutService.editRecord(editedRecord).subscribe( async (data: any)=>
+      {
+        // deletedDocs > 0 means the edited record overrode an older one with the same date
+        if(data.deletedDocs > 0){
+          this.getSheetData();
         }
-      );
-    };
+      },
+      error => {
+        this.errorToastAndAlertService.showErrorAlert("Oups")
+      }
+    );
+
+    // const modal = await this.modalController.create({
+    //   component: NewWorkoutRecordPage,
+    //   componentProps: {
+    //     sheetId: this.sheetId,
+    //     recordId: recordToEdit._id,
+    //     fields: this.dataTableService.structure,
+    //     date: recordToEdit.Date,
+    //     values: recordToEdit.Values
+    //   }
+    // });
+    //
+    // await modal.present();
+    // let modalData = await modal.onWillDismiss();
+    // modalData = modalData.data;
+    //
+    // if(modalData != null){
+    //   // Set new data for the edited record
+    //
+    //   // Sent a request for editing the record
+    //   this.workoutService.editRecord(modalData).subscribe( async (data: any)=>
+    //     {
+    //       // deletedDocs > 0 means the edited record overrode an older one with the same date
+    //       if(data.deletedDocs > 0){
+    //         this.getSheetData();
+    //       }
+    //       else{
+    //         this.dataTableService.editRecord(recordToEdit.index, modalData);
+    //       }
+    //     },
+    //     error => {
+    //       this.errorToastAndAlertService.showErrorAlert("Oups")
+    //     }
+    //   );
+    // };
   }
 
   async deleteRecord(record){
@@ -153,36 +178,6 @@ export class WorkoutSheetPage implements OnInit {
         )
       }
     )
-
-    // // Show alert about deleting the record
-    // let alert = await this.alertController.create({
-    //   header: 'Delete record',
-    //   message: 'The record for <b>' + record.Date + '</b> will be permanently deleted.',
-    //   buttons: [
-    //     {
-    //       text: 'Cancel',
-    //       role: 'cancel',
-    //       cssClass: 'secondary'
-    //     }, {
-    //       text: 'Delete',
-    //       handler: () => {
-    //
-    //         // Remove from allRecords
-    //         this.workoutService.deleteRecord(record._id).subscribe( async (data: [any])=>
-    //           {
-    //             this.dataTableService.deleteRecord(record.index);
-    //           },
-    //           error => {
-    //             this.errorToastAndAlertService.showErrorAlert("Oups")
-    //           }
-    //         );
-    //
-    //       }
-    //     }
-    //   ]
-    // });
-    //
-    // await alert.present();
 
   }
 

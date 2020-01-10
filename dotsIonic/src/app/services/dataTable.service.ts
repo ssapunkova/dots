@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 
 import { TimeAndDateService } from './timeAndDate.service';
 import { ChartService } from '../services/chart.service';
@@ -24,7 +24,8 @@ export class DataTableService{
   constructor(
     public timeAndDateService: TimeAndDateService,
     public chartService: ChartService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public modalController: ModalController
   ) { }
 
 
@@ -110,9 +111,21 @@ export class DataTableService{
     this.prepareData();
   }
 
-  async editRecord(index, record){
-    this.allRecords[index] = record;
-    this.prepareData();
+  async editRecord(record, modalProps){
+    const modal = await this.modalController.create(modalProps);
+
+    await modal.present();
+    let modalData = await modal.onWillDismiss();
+    modalData = modalData.data;
+
+    if(modalData != null){
+      // Set new data for the edited record
+      this.allRecords[record.index] = modalData;
+      this.prepareData();
+      // handlerFunc()
+    };
+    return modalData;
+
   }
 
   async deleteRecord(record, handlerFunc){
