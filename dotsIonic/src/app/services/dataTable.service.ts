@@ -40,12 +40,15 @@ export class DataTableService{
     }
     else{
       this.allRecords = sheetData.WorkoutRecords;
-      this.timeAndDateService.sortByDate(this.allRecords, "asc");
-      this.getShowingMonths();
-      this.setPeriod("");
+      this.prepareData();
     }
   }
 
+  async prepareData(){
+    this.timeAndDateService.sortByDate(this.allRecords, "asc");
+    this.getShowingMonths();
+    this.setPeriod("");
+  }
 
   async showNoRecordsAlert(){
     let message = 'Tap the + button in the right bottom corner to add a record';
@@ -102,26 +105,62 @@ export class DataTableService{
     this.months = months;
   }
 
+  async addRecord(record){
+    this.allRecords.push(record);
+    this.prepareData();
+  }
 
-    // Sort records by date
-    // records - workoutSheets[currentSheetIndex].WorkoutRecordsForSelectedPeriod
-    async sortByDate(){
+  async editRecord(index, record){
+    this.allRecords[index] = record;
+    this.prepareData();
+  }
 
-      let that = this;
-      let result;
+  async deleteRecord(record, handlerFunc){
 
-      // Sort records using TimeAndDateService
-      // Set new sortedByDate value
-      if(that.sortedByDate == "asc"){
-        this.timeAndDateService.sortByDate(this.showingRecords, "desc");
-        this.sortedByDate = "desc";
-      }
-      else{
-        this.timeAndDateService.sortByDate(this.showingRecords, "asc");
-        this.sortedByDate = "asc";
-      }
+    // Show alert about deleting the record
+    let alert = await this.alertController.create({
+      header: 'Delete record',
+      message: 'The record for <b>' + record.Date + '</b> will be permanently deleted.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Delete',
+          handler: () => {
+            // Remove from allRecords
+            this.allRecords.splice(record.index, 1);
+            this.prepareData();
+            handlerFunc()
+          }
+        }
+      ]
+    });
 
+    await alert.present();
+
+  }
+
+  // Sort records by date
+  // records - workoutSheets[currentSheetIndex].WorkoutRecordsForSelectedPeriod
+  async sortByDate(){
+
+    let that = this;
+    let result;
+
+    // Sort records using TimeAndDateService
+    // Set new sortedByDate value
+    if(that.sortedByDate == "asc"){
+      this.timeAndDateService.sortByDate(this.showingRecords, "desc");
+      this.sortedByDate = "desc";
     }
+    else{
+      this.timeAndDateService.sortByDate(this.showingRecords, "asc");
+      this.sortedByDate = "asc";
+    }
+
+  }
 
   // Sort records by values asc or desc
   // col - for accessing "sorted" value ( has field been sorted asc or desc )

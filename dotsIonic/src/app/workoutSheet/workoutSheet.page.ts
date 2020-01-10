@@ -92,8 +92,7 @@ export class WorkoutSheetPage implements OnInit {
           }
           else{
             // If there are no upserts, just a new record, add it to allRecords
-            this.dataTableService.allRecords.push(data.record);
-            this.dataTableService.initializeDataTable();
+            this.dataTableService.addRecord(data.record);
           }
         },
         error => {
@@ -124,7 +123,6 @@ export class WorkoutSheetPage implements OnInit {
 
     if(modalData != null){
       // Set new data for the edited record
-      this.dataTableService.allRecords[recordToEdit.index] = modalData;
 
       // Sent a request for editing the record
       this.workoutService.editRecord(modalData).subscribe( async (data: any)=>
@@ -134,7 +132,7 @@ export class WorkoutSheetPage implements OnInit {
             this.getSheetData();
           }
           else{
-            this.dataTableService.initializeDataTable();
+            this.dataTableService.editRecord(recordToEdit.index, modalData);
           }
         },
         error => {
@@ -146,36 +144,45 @@ export class WorkoutSheetPage implements OnInit {
 
   async deleteRecord(record){
 
-    // Show alert about deleting the record
-    let alert = await this.alertController.create({
-      header: 'Delete record',
-      message: 'The workout record for <b>' + record.Date + '</b> will be permanently deleted.',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Delete',
-          handler: () => {
-
-            // Remove from allRecords
-            this.dataTableService.allRecords.splice(record.index, 1);
-            this.workoutService.deleteRecord(record._id).subscribe( async (data: [any])=>
-              {
-                this.dataTableService.initializeDataTable();
-              },
-              error => {
-                this.errorToastAndAlertService.showErrorAlert("Oups")
-              }
-            );
-
+    this.dataTableService.deleteRecord(record, () =>
+      {
+        this.workoutService.deleteRecord(record._id).subscribe( async (data: [any])=>
+          {}, error => {
+            this.errorToastAndAlertService.showErrorAlert("Oups")
           }
-        }
-      ]
-    });
+        )
+      }
+    )
 
-    await alert.present();
+    // // Show alert about deleting the record
+    // let alert = await this.alertController.create({
+    //   header: 'Delete record',
+    //   message: 'The record for <b>' + record.Date + '</b> will be permanently deleted.',
+    //   buttons: [
+    //     {
+    //       text: 'Cancel',
+    //       role: 'cancel',
+    //       cssClass: 'secondary'
+    //     }, {
+    //       text: 'Delete',
+    //       handler: () => {
+    //
+    //         // Remove from allRecords
+    //         this.workoutService.deleteRecord(record._id).subscribe( async (data: [any])=>
+    //           {
+    //             this.dataTableService.deleteRecord(record.index);
+    //           },
+    //           error => {
+    //             this.errorToastAndAlertService.showErrorAlert("Oups")
+    //           }
+    //         );
+    //
+    //       }
+    //     }
+    //   ]
+    // });
+    //
+    // await alert.present();
 
   }
 
