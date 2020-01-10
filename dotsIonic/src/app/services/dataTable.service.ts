@@ -30,18 +30,18 @@ export class DataTableService{
   ) { }
 
 
-  async initializeDataTable(sheetData){
+  async initializeDataTable(data, records){
 
-    console.log(sheetData);
+    console.log(data);
 
-    this.title = sheetData.Title;
-    this.structure = sheetData.Structure;
+    this.title = data.Title;
+    this.structure = data.Structure;
 
-    if(sheetData.WorkoutRecords.length < 1){
+    if(records.length < 1){
       this.showNoRecordsAlert();
     }
     else{
-      this.allRecords = sheetData.WorkoutRecords;
+      this.allRecords = records;
       this.prepareData();
     }
 
@@ -168,7 +168,6 @@ export class DataTableService{
   }
 
   // Sort records by date
-  // records - workoutSheets[currentSheetIndex].WorkoutRecordsForSelectedPeriod
   async sortByDate(){
 
     let that = this;
@@ -190,7 +189,6 @@ export class DataTableService{
   // Sort records by values asc or desc
   // col - for accessing "sorted" value ( has field been sorted asc or desc )
   // colIndex - access the correct value in Values array of the records
-  // records - workoutSheets[currentSheetIndex].WorkoutRecordsForSelectedPeriod
 
   async sortCol(col, colIndex){
 

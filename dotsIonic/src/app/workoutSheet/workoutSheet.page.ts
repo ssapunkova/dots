@@ -1,15 +1,14 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
 
 // Services
 import { LoadingService } from '../services/loading.service';
 import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 import { DataTableService } from '../services/dataTable.service';
-import { TimeAndDateService } from '../services/timeAndDate.service';
-import { ChartService } from '../services/chart.service';
 import { WorkoutService } from '../services/workout.service';
+import { ChartService } from '../services/chart.service';
 
 import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
 
@@ -29,9 +28,7 @@ export class WorkoutSheetPage implements OnInit {
     public loadingService: LoadingService,
     public route: ActivatedRoute,
     public errorToastAndAlertService: ErrorToastAndAlertService,
-    public timeAndDateService: TimeAndDateService,
     public alertController: AlertController,
-    public modalController: ModalController,
     public workoutService: WorkoutService,
     public dataTableService: DataTableService,
     public chartService: ChartService
@@ -49,10 +46,8 @@ export class WorkoutSheetPage implements OnInit {
     this.workoutService.getWorkoutSheetData(this.sheetId).subscribe(async (data: any) => {
 
       // Get data about all sheets
-      this.dataTableService.initializeDataTable(data[0]);
+      this.dataTableService.initializeDataTable(data[0], data[0].WorkoutRecords);
       console.log(this.dataTableService);
-      //
-      // if(data[0].WorkoutRecords.length > 0) this.noRecords = false;
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;

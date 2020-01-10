@@ -12,8 +12,8 @@ const NutritionRecord = require('../schemas/nutritionRecordSchema');
 
 app.get("/getNutritionData", async (req, res) => {
 
-  let nutritionData = await WorkoutSheet.find({}).exec();  // replace with userid later
-  let nutritionRecords = await WorkoutSheet.find({}).exec(); // replace with userid later
+  let nutritionData = await Nutrition.find({}).exec();  // replace with userid later
+  let nutritionRecords = await NutritionRecord.find({}).exec(); // replace with userid later
   if(nutritionData.err) throw nutritionData.err;
   if(nutritionRecords.err) throw nutritionRecords.err;
   res.send({ nutritionData: nutritionData, nutritionRecords: nutritionRecords});
