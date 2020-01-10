@@ -7,8 +7,7 @@ const NutritionRecordSchema = mongoose.Schema({
     UserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     Date: String,
     Columns: Array,
-    Values: Array,
-    Time: Number
+    Values: Array
 },
 { collection: "nutritionRecords" }
 );

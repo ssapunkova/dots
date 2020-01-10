@@ -18,48 +18,7 @@ app.get("/getNutritionData", async (req, res) => {
   if(nutritionRecords.err) throw nutritionRecords.err;
   res.send({ nutritionData: nutritionData, nutritionRecords: nutritionRecords});
 })
-//
-// app.get("/getSheetExercises/:sheetId", async (req, res) => {
-//   let sheetId = req.params.sheetId;
-//
-//   let exercises = await WorkoutSheet.find({ _id: sheetId}).select("Title, Structure").exec();
-//   if(exercises.err) throw exercises.err;
-//   res.send(exercises);
-// })
-//
-// app.get("/getExerciseTimes/:sheetId", async (req, res) => {
-//   let sheetId = req.params.sheetId;
-//
-//   let exerciseTimes = await WorkoutRecord.find(
-//     {
-//       SheetId: sheetId,
-//       Time: { $ne: null }
-//     }
-//   ).select("Time").exec();
-//   if(exerciseTimes.err) throw exerciseTimes.err;
-//   res.send(exerciseTimes);
-// })
-//
-// app.post("/createSheet", async (req, res) => {
-//   let data = req.body.data;
-//   let sheet = new WorkoutSheet(data);
-//
-//   let saveSheet = await sheet.save();
-//   if(saveSheet.err) throw saveSheet.err;
-//   else res.send(sheet);
-// })
-//
-// app.post("/deleteSheet", async (req, res) => {
-//   let sheetId = req.body.sheetId;
-//
-//   let removeSheet = await WorkoutSheet.findOne({ _id: ObjectId(sheetId)}).remove();
-//   let removeSheetRecords = WorkoutRecord.find({ SheetId: ObjectId(sheetId)}).remove();
-//   if(removeSheet.err) throw removeSheet.err;
-//   else if(removeSheetRecords.err) throw removeSheetRecords.err;
-//   else res.send();
-//
-// })
-//
+
 // app.post("/updateSheetConfiguration", async (req, res) => {
 //   let sheet = req.body.data;
 //   let deletedExerciseIds = sheet.DeletedExercisesId;
@@ -88,28 +47,26 @@ app.get("/getNutritionData", async (req, res) => {
 //   res.send();
 // })
 //
-// app.post("/addWorkoutRecord", async (req, res) => {
-//   let record = req.body.data;
-//
-//   let upsertRecord = await WorkoutRecord.update({ Date: record.Date }, {
-//     $set: {
-//       SheetId: record.SheetId,
-//       Values: record.Values,
-//       Columns: record.Columns,
-//       Time: record.Time
-//     }
-//   }, { upsert: true });
-//
-//   if(upsertRecord.err) throw upsertRecord.err;
-//   else{
-//     if(upsertRecord.upserted != undefined){
-//       if(upsertRecord.upserted[0]._id != undefined){
-//         record._id = upsertRecord.upserted[0]._id;
-//       }
-//     }
-//     res.send({ record: record, docs: upsertRecord });
-//   }
-// })
+app.post("/addNutritionRecord", async (req, res) => {
+  let record = req.body.data;
+
+  let upsertRecord = await NutritionRecord.update({ Date: record.Date }, {
+    $set: {
+      Values: record.Values,
+      Columns: record.Columns
+    }
+  }, { upsert: true });
+
+  if(upsertRecord.err) throw upsertRecord.err;
+  else{
+    if(upsertRecord.upserted != undefined){
+      if(upsertRecord.upserted[0]._id != undefined){
+        record._id = upsertRecord.upserted[0]._id;
+      }
+    }
+    res.send({ record: record, docs: upsertRecord });
+  }
+})
 //
 //
 // app.post("/editWorkoutRecord", async (req, res) => {

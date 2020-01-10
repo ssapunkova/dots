@@ -27,16 +27,19 @@ import { StorageService } from './services/storage.service';
 
 import { SheetConfigurationPage } from './workouts/sheetConfiguration/sheetConfiguration.page';
 import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkoutRecord.page';
+import { NewNutritionRecordPage } from './nutrition/newNutritionRecord/newNutritionRecord.page';
 
 @NgModule({
   declarations: [
     AppComponent,
     SheetConfigurationPage,
-    NewWorkoutRecordPage
+    NewWorkoutRecordPage,
+    NewNutritionRecordPage
   ],
   entryComponents: [
     SheetConfigurationPage,
-    NewWorkoutRecordPage
+    NewWorkoutRecordPage,
+    NewNutritionRecordPage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,8 @@ import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkout
   ],
   exports: [
     SheetConfigurationPage,
-    NewWorkoutRecordPage
+    NewWorkoutRecordPage,
+    NewNutritionRecordPage,
   ],
   bootstrap: [AppComponent]
 })

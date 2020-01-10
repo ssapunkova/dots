@@ -9,6 +9,7 @@ import { DataTableService } from '../services/dataTable.service';
 import { ChartService } from '../services/chart.service';
 import { NutritionService } from '../services/nutrition.service';
 
+import { NewNutritionRecordPage } from './newNutritionRecord/newNutritionRecord.page';
 
 @Component({
   selector: 'app-nutrition',
@@ -27,15 +28,22 @@ export class NutritionPage implements OnInit {
 
   ngOnInit() {
     this.loadingService.isPageLoading = true;
-    // Load sheet data from database
+    // Load nutrition data from database
     this.getNutritionData();
   }
 
   async getNutritionData(){
-    console.log("a")
     this.nutritionService.getNutritionData().subscribe(async (data: any) => {
 
-      // Get data about all sheets
+      // Initialise DataTable, which will controll chart and table
+
+      // If no custom structure and goals - take default
+      if(data.nutritionData.Structure == null){
+        data.nutritionData.Structure = this.nutritionService.DefaultStructure;
+      }
+      if(data.nutritionData.Goals == null){
+        data.nutritionData.Goals = this.nutritionService.DefaultGoals;
+      }
       this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords);
       console.log(this.dataTableService);
 
@@ -49,9 +57,8 @@ export class NutritionPage implements OnInit {
   async addRecord(){
 
     let modalProps = {
-      // component: NewWorkoutRecordPage,
+      component: NewNutritionRecordPage,
       componentProps: {
-        sheetId: this.sheetId,
         recordId: null,
         fields: this.dataTableService.structure,
         date: null,
@@ -65,7 +72,7 @@ export class NutritionPage implements OnInit {
       {
         // n.nModified > 0 means the new record upserted an older with the same date
         if(data.docs.nModified > 0){
-          this.getSheetData();
+          this.getNutritionData();
         }
       },
       error => {
@@ -79,9 +86,8 @@ export class NutritionPage implements OnInit {
   async editRecord(record){
 
     let modalProps = {
-      // component: NewWorkoutRecordPage,
+      component: NewNutritionRecordPage,
       componentProps: {
-        sheetId: this.sheetId,
         recordId: record._id,
         fields: this.dataTableService.structure,
         date: record.Date,
@@ -96,7 +102,7 @@ export class NutritionPage implements OnInit {
       {
         // deletedDocs > 0 means the edited record overrode an older one with the same date
         if(data.deletedDocs > 0){
-          this.getSheetData();
+          this.getNutritionData();
         }
       },
       error => {
