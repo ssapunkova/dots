@@ -94,6 +94,8 @@ export class DataTableService{
     // Format data for chart
     this.chartService.formatChartData(this.showingRecords, this.structure);
 
+    console.log(this.chartService.chartData)
+
   }
 
   async getShowingMonths(){

@@ -65,6 +65,7 @@ import { NewNutritionRecordPage } from './nutrition/newNutritionRecord/newNutrit
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [
+    NgxChartsModule,
     SheetConfigurationPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,

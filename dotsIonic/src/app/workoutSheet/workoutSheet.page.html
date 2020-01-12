@@ -41,7 +41,7 @@
       <div *ngIf="dataTableService.showMode == 'chart' && dataTableService.showingRecords.length > 0" style="width: 100%; min-height: 400px; height: 100%" [style.minWidth.px]="chartService.chartWidth">
 
         <ngx-charts-line-chart
-            [view]="view"
+            view=""
             [results]="chartService.chartData"
             [scheme]="chartService.colorScheme"
             schemeType="ordinal"
