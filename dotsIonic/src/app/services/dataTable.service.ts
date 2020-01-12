@@ -11,7 +11,7 @@ import { ChartService } from '../services/chart.service';
 export class DataTableService{
 
 
-  public showMode = 'chart';              // Default show mode, can be switched to table
+  public showMode = 'table';              // Default show mode, can be switched to table
 
   public title = "";
   public structure = [];

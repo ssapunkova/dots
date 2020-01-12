@@ -14,7 +14,6 @@ export class NewNutritionRecordPage implements OnInit {
   public fields;
   public values;
   public record = {
-    SheetId: null,
     RecordId: null,
     Date: "",
     Values: [],
@@ -35,14 +34,13 @@ export class NewNutritionRecordPage implements OnInit {
   ngOnInit() {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
 
-    this.record.SheetId = data.sheetId;
     this.record.RecordId = data.recordId;
     this.record.Date = data.date;
     this.fields = data.fields;
     this.values = data.values;
 
     for(var i = 0; i < this.fields.length; i++){
-      this.record.Columns.push(this.fields[i]._id);
+      this.record.Columns.push(this.fields[i].index);
 
       if(this.values == null){
         if(this.fields[i].Type != "Bool") {

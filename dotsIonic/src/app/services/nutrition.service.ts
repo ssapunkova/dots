@@ -10,21 +10,25 @@ export class NutritionService {
 
   public Structure = [
     {
+      index: 0,
       Title: "kcal",
       Goal: 2000,
       Type: "Number"
     },
     {
+      index: 1,
       Title: "Blocks",
       Goal: 12,
       Type: "Number"
     },
     {
+      index: 2,
       Title: "Sugar",
       Goal: 40,
       Type: "Number"
     },
     {
+      index: 3,
       Title: "Protein (gr)",
       Goal: 85,
       Type: "Number"
@@ -32,9 +36,14 @@ export class NutritionService {
   ]
 
   public Goals = [
-    "Weight",
-    "Lean body mass",
-    "Fat %"
+    {
+      index: 0,
+      Title: "Weight (kg)"
+    },
+    {
+      index: 1,
+      Title: "Lean body mass"
+    }
   ]
 
   public DefaultStructure = [this.Structure[0]];

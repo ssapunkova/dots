@@ -3,8 +3,8 @@
     <div id="DotsLogo">dots</div>
   </div>
 
-  <ion-split-pane>
-    <ion-menu type="overlay">
+  <ion-split-pane contentId="my-content">
+    <ion-menu type="overlay" contentId="my-content">
       <ion-header>
         <ion-toolbar>
           <ion-img src="assets/logo.png" style="height: 30px"></ion-img>
@@ -23,6 +23,6 @@
         </ion-list>
       </ion-content>
     </ion-menu>
-    <ion-router-outlet main></ion-router-outlet>
+    <ion-router-outlet id="my-content"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>

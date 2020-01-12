@@ -1,6 +1,17 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/workouts"></ion-back-button>
+    </ion-buttons>
     <ion-title>Nutrition</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-icon name="grid"></ion-icon>
+      <ion-toggle checked
+        (click)="dataTableService.changeShowMode()"></ion-toggle>
+      <ion-icon name="podium"></ion-icon>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
@@ -10,7 +21,7 @@
 
     <ion-row>
 
-      <ion-col sizeXs="12" sizeLg="4" pushLg="8">
+      <ion-col sizeXs="12" sizeLg="4">
 
         <ion-grid>
           <ion-row>
@@ -39,13 +50,13 @@
 
       <ion-col sizeXs="12" sizeLg="8">
 
-        <ion-grid *ngIf="showMode == 'table'" [style.minWidth.px]="chartService.chartWidth">
+        <ion-grid *ngIf="dataTableService.showMode == 'table'" [style.minWidth.px]="chartService.chartWidth">
 
           <ion-row>
             <ion-col
               class="table-header"
               title='Date'
-              (click)="dataTableService.sortByDate(nutritionData.WorkoutRecordsForSelectedPeriod)">
+              (click)="dataTableService.sortByDate()">
               Date
               <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
               <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
@@ -53,9 +64,9 @@
 
             <ion-col
               class="table-header"
-              *ngFor="let col of nutritionData.Structure; let i = index"
+              *ngFor="let col of dataTableService.structure; let i = index"
               [title]="col.Title"
-              (click)="dataTableService.sortCol(col, i, nutritionData.WorkoutRecordsForSelectedPeriod)">
+              (click)="dataTableService.sortCol(col, i)">
               <ion-label>{{ (col.Title.length > 10) ? (col.Title | slice:0:10) + '...' : (col.Title) }}</ion-label>
               <ion-icon name="arrow-dropup" *ngIf="col.sorted == 'asc'; else arrowDown"></ion-icon>
               <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
@@ -63,16 +74,16 @@
           </ion-row>
 
           <ion-row
-            *ngFor="let record of nutritionData.WorkoutRecordsForSelectedPeriod; let i = index">
+            *ngFor="let record of dataTableService.showingRecords">
               <ion-item-sliding>
              <ion-item-options side="start">
-               <ion-item-option color="danger" (click)="deleteRecord(record, i)">Delete</ion-item-option>
-               <ion-item-option color="success" (click)="editRecord(record, i)">Edit</ion-item-option>
+               <ion-item-option color="danger" (click)="deleteRecord(record)">Delete</ion-item-option>
+               <ion-item-option color="success" (click)="editRecord(record)">Edit</ion-item-option>
              </ion-item-options>
 
              <ion-item [color]="record.color">
-              <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }}</ion-col>
-              <ion-col *ngFor="let col of nutritionData.Structure; let j = index" [title]="col.Title">
+              <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }} {{ record.color}}</ion-col>
+              <ion-col *ngFor="let col of dataTableService.structure; let j = index" [title]="col.Title">
                 <ion-label *ngIf="col.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
                 <ng-template #showTick>
                   <ion-icon name="checkbox" *ngIf="record.Values[j] == true">d</ion-icon>

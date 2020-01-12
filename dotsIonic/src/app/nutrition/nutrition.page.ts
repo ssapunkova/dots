@@ -23,7 +23,8 @@ export class NutritionPage implements OnInit {
     public errorToastAndAlertService: ErrorToastAndAlertService,
     public alertController: AlertController,
     public nutritionService: NutritionService,
-    public dataTableService: DataTableService
+    public dataTableService: DataTableService,
+    public chartService: ChartService
   ) { };
 
   ngOnInit() {
