@@ -67,9 +67,9 @@
           </ion-item>
         </ion-toolbar>
 
-        <div style="height: 100%; overflow-x: auto; width: 100%">
+        <div style="height: 100%; max-height: 80vh; overflow-x: auto; width: 100%">
 
-          <div *ngIf="dataTableService.showMode == 'chart' && dataTableService.showingRecords.length > 0" style="width: 100%; min-height: 400px; height: 100%" [style.minWidth.px]="chartService.chartWidth">
+          <div *ngIf="dataTableService.showMode == 'chart' && dataTableService.showingRecords.length > 0" style="width: 100%; min-height: 400px; max-height: 80vh;" [style.minWidth.px]="chartService.chartWidth">
 
             <ngx-charts-line-chart
                 view=""
