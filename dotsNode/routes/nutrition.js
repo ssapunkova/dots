@@ -68,35 +68,35 @@ app.post("/addNutritionRecord", async (req, res) => {
   }
 })
 //
-//
-// app.post("/editWorkoutRecord", async (req, res) => {
-//   let record = req.body.data;
-//
-//   // Remove existing record with the same date
-//
-//   let removedRecords = await WorkoutRecord.remove({
-//     Date: record.Date,
-//     _id: { $ne: ObjectId(record.RecordId) }
-//   })
-//
-//   let updateRecord = await WorkoutRecord.update({ _id: ObjectId(record.RecordId) }, {
-//     $set: {
-//       Date: record.Date,
-//       Values: record.Values,
-//       Columns: record.Columns
-//     }
-//   })
-//   if(removedRecords.err) throw removedRecords.err;
-//   else if(updateRecord.err) throw updateRecord.err;
-//   else res.send({ deletedDocs: removedRecords.deletedCount });
-//
-// })
-//
-//
-// app.post("/deleteWorkoutRecord", async (req, res) => {
-//   let recordId = req.body.recordId;
-//
-//   let deleteRecord = await WorkoutRecord.findOneAndDelete({_id: ObjectId(recordId)})
-//   if(deleteRecord.err) throw deleteRecord.err;
-//   else res.send();
-// })
+
+app.post("/editNutritionRecord", async (req, res) => {
+  let record = req.body.data;
+
+  // Remove existing record with the same date
+
+  let removedRecords = await NutritionRecord.remove({
+    Date: record.Date,
+    _id: { $ne: ObjectId(record.RecordId) }
+  })
+
+  let updateRecord = await NutritionRecord.update({ _id: ObjectId(record.RecordId) }, {
+    $set: {
+      Date: record.Date,
+      Values: record.Values,
+      Columns: record.Columns
+    }
+  })
+  if(removedRecords.err) throw removedRecords.err;
+  else if(updateRecord.err) throw updateRecord.err;
+  else res.send({ deletedDocs: removedRecords.deletedCount });
+
+})
+
+
+app.post("/deleteNutritionRecord", async (req, res) => {
+  let recordId = req.body.recordId;
+
+  let deleteRecord = await NutritionRecord.findOneAndDelete({_id: ObjectId(recordId)})
+  if(deleteRecord.err) throw deleteRecord.err;
+  else res.send();
+})
