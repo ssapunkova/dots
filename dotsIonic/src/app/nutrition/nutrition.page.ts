@@ -1,13 +1,13 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 
 // Services
 import { LoadingService } from '../services/loading.service';
 import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 import { DataTableService } from '../services/dataTable.service';
-import { NutritionService } from '../services/nutrition.service';
 import { ChartService } from '../services/chart.service';
+import { NutritionService } from '../services/nutrition.service';
 
 import { NewNutritionRecordPage } from './newNutritionRecord/newNutritionRecord.page';
 
