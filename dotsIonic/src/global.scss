@@ -54,10 +54,18 @@ input{
   color: white;
 }
 
+.split-pane-visible >.split-pane-side {
+  min-width: 200px !important;
+  max-width: 200px !important;
+
+  ion-icon{
+    margin: 1rem !important;
+  }
+}
+
 ion-item-divider{
   font-size: 1rem !important;
 }
-
 
 ion-alert, .alert-head, .alert-button-group{
   text-align: center !important;

@@ -26,17 +26,20 @@ export class AppComponent {
     {
       title: 'Home',
       url: '/home',
-      icon: 'home'
+      icon: 'home',
+      iconColor: 'primary'
     },
     {
       title: 'Workouts',
       url: '/workouts',
-      icon: 'play-circle'
+      icon: 'play-circle',
+      iconColor: 'secondary'
     },
     {
       title: 'Nutrition',
       url: '/nutrition',
-      icon: 'nutrition'
+      icon: 'nutrition',
+      iconColor: 'tertiary'
     },
   ];
 
