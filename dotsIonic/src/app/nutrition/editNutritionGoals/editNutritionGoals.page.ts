@@ -11,8 +11,8 @@ import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.ser
 @Injectable()
 export class EditNutritionGoalsPage implements OnInit {
 
-  public goals;
-  public deletedGoals;
+  public params;
+  public deletedParams;
 
   constructor(
     private modalController: ModalController,
@@ -23,17 +23,16 @@ export class EditNutritionGoalsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.goals = JSON.parse(JSON.stringify(this.navParams.data)).Goals;
-    this.deletedGoals = [];
-    console.log(this.goals)
+    this.params = JSON.parse(JSON.stringify(this.navParams.data)).Params;
+    this.deletedParams = [];
+    console.log(this.params)
   }
 
 
   async presentActionSheet() {
 
-
     const actionSheet = await this.actionSheetController.create({
-      header: 'Add exercise',
+      header: 'Add goal',
       buttons: [
       ]
     });
@@ -41,35 +40,35 @@ export class EditNutritionGoalsPage implements OnInit {
 
   }
 
-  async addGoal(goalIndex){
-    this.goals.push(goalIndex);
+  async addParam(paramIndex){
+    this.params.push(paramIndex);
   }
 
-  async deleteExercise(index){
-    this.deletedGoals.push(this.goals._id);
-    console.log(this.deletedGoals);
+  async deleteParam(index){
+    this.deletedParams.push(this.params._id);
+    console.log(this.deletedParams);
 
-    this.goals.splice(index, 1);
+    this.params.splice(index, 1);
 
-    console.log(this.goals, this.deletedGoals);
+    console.log(this.params, this.deletedParams);
   }
 
   async saveChanges() {
 
-    for(var i = 0; i < this.goals.length; i++){
-      let checking = this.goals[i];
+    for(var i = 0; i < this.params.length; i++){
+      let checking = this.params[i];
       if(checking.Type != "Bool" &&
-        (checking.Goal == null || checking.Goal == "")
+        (checking.Param == null || checking.Param == "")
       ){
-        this.goals.splice(i, 1);
+        this.params.splice(i, 1);
 
         console.log("not needed")
       }
     }
 
-    console.log(this.goals);
+    console.log(this.params);
 
-    await this.modalController.dismiss(this.goals);
+    await this.modalController.dismiss(this.params);
   }
 
   async closeModal(){

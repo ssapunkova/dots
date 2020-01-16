@@ -56,14 +56,10 @@ export class NutritionPage implements OnInit {
 
   async editGoals(){
 
-    console.log("a")
-
     // Select configureable data about the sheet
     let updateData = {
-      Goals: this.dataTableService.goals
+      Params: this.dataTableService.params
     };
-
-
 
     // Show a configuration modal
     const modal = await this.modalController.create({

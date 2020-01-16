@@ -22,39 +22,19 @@
     <ion-row>
 
       <ion-col sizeXs="12" sizeLg="4">
+        <ion-card>
+          <ion-card-header>Goals</ion-card-header>
+          <ion-card-content>
+            <ion-item *ngFor="let param of dataTableService.params">
+              {{ param.Title }}: {{ param.Goal }}
+            </ion-item>
+          </ion-card-content>
 
-        <ion-grid>
-          <ion-row>
-            <ion-col sizeLg="12" sizeSm="6" sizeXs="12">
-              <ion-card>
-                <ion-card-header>Goals</ion-card-header>
-                <ion-card-content>
-                  <ion-item>Weight: 55kg</ion-item>
-                  <ion-item>Lean body mass: 21%</ion-item>
-                </ion-card-content>
+          <ion-button (click)="editGoals()">
+            EDIT
+          </ion-button>
 
-                <ion-button (click)="editGoals()">
-                  EDIT
-                </ion-button>
-
-              </ion-card>
-            </ion-col>
-            <ion-col sizeLg="12" sizeSm="6" sizeXs="12">
-              <ion-card>
-                <ion-card-header>Tracking</ion-card-header>
-                <ion-card-content>
-                  <ion-item>Kcal</ion-item>
-                  <ion-item>Macronutrients</ion-item>
-                </ion-card-content>
-
-                <ion-button click="editTracking()">
-                  EDIT
-                </ion-button>
-              </ion-card>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-
+        </ion-card>
       </ion-col>
 
       <ion-col sizeXs="12" sizeLg="8">

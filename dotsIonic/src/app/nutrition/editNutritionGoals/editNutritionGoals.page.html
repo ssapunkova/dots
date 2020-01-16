@@ -1,12 +1,8 @@
 <ion-header>
     <ion-toolbar>
-      <ion-title>Configure sheet </ion-title>
+      <ion-title> Edit nutrition goals </ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <ion-item color="primary">
-    Exercises with no title or goal will not be saved
-  </ion-item>
 
   <ion-content class="padding">
 
@@ -16,11 +12,10 @@
           <ion-icon name="add"></ion-icon>
         </ion-button>
       </ion-buttons>
-      {{ goals | json}}
-      <ion-item *ngFor="let goal of goals; let i = index">
-        <ion-input type="text" placeholder="Exercise title" [(ngModel)]='goal.Title'></ion-input>
-        
-        <ion-input type="number" placeholder="Goal" [(ngModel)]='goal.Goal'>
+      <ion-item *ngFor="let param of params; let i = index">
+        <ion-input type="text" placeholder="Exercise title" [(ngModel)]='param.Title'></ion-input>
+
+        <ion-input type="number" placeholder="Goal" [(ngModel)]='param.Goal'>
         </ion-input>
 
         <ion-button color="danger" (click)="deleteExercise(i)" slot="end">
