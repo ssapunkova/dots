@@ -12,8 +12,8 @@ const NutritionRecord = require('../schemas/nutritionRecordSchema');
 
 app.get("/getNutritionData", async (req, res) => {
 
-  let nutritionData = await Nutrition.findOne({ }).exec();  // replace with userid later
-  let nutritionRecords = await NutritionRecord.find({ }).exec(); // replace with userid later
+  let nutritionData = await Nutrition.findOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }).exec();  // replace with userid later
+  let nutritionRecords = await NutritionRecord.find({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }).exec(); // replace with userid later
   if(nutritionData.err) throw nutritionData.err;
   if(nutritionRecords.err) throw nutritionRecords.err;
   res.send({ nutritionData: nutritionData, nutritionRecords: nutritionRecords});
@@ -24,13 +24,12 @@ app.post("/updateNutritionParams", async (req, res) => {
   let params = data.params;
   let deletedParams = data.deletedParams;
 
-  let nutritionObj = new Nutrition({
-    UserId: null,
+  let nutritionObj = {
     Goals: null,
     Params: params
-  });
+  }
 
-  let updateObj = await Nutrition.updateOne({ UserId: ObjectId(null) }, nutritionObj, { upsert: true }).exec();
+  let updateObj = await Nutrition.updateOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }, nutritionObj, { upsert: true }).exec();
   if(updateObj.err) throw updateObj.err;
 
   if(deletedParams.length > 0){

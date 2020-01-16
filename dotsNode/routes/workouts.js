@@ -65,9 +65,7 @@ app.post("/updateSheetConfiguration", async (req, res) => {
   let sheet = req.body.data;
   let deletedExerciseIds = sheet.DeletedExercisesId;
 
-  let sheetObj = new WorkoutSheet(sheet);
-
-  let updateSheet = await WorkoutSheet.updateOne({ _id: sheet._id }, sheetObj).exec();
+  let updateSheet = await WorkoutSheet.updateOne({ _id: sheet._id }, sheet).exec();
   if(updateSheet.err) throw updateSheet.err;
 
   if(deletedExerciseIds.length > 0){
