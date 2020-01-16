@@ -40,8 +40,6 @@ export class NutritionPage implements OnInit {
 
       // Initialise DataTable, which will controll chart and table
 
-      console.log(data);
-
       // If no custom params - take default
       if(data.nutritionData.Params == null){
         data.nutritionData.Params = this.nutritionService.DefaultParamIndexes;
