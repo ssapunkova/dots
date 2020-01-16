@@ -37,8 +37,8 @@ export class NewWorkoutRecordPage implements OnInit {
 
     console.log(data)
 
-    this.record.SheetId = data.sheetId;
-    this.record.RecordId = data.recordId;
+    this.record.SheetId = data.SheetId;
+    this.record.RecordId = data.RecordId;
     this.record.Date = data.Date;
     this.fields = data.Fields;
     this.values = data.Values;

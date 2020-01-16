@@ -98,8 +98,8 @@ export class NutritionPage implements OnInit {
     let modalProps = {
       component: NewNutritionRecordPage,
       componentProps: {
-        recordId: null,
-        fields: this.dataTableService.goals,
+        RecordId: null,
+        Fields: this.dataTableService.goals,
         Date: null,
         Values: null
       }
@@ -127,8 +127,8 @@ export class NutritionPage implements OnInit {
     let modalProps = {
       component: NewNutritionRecordPage,
       componentProps: {
-        recordId: record._id,
-        fields: this.dataTableService.goals,
+        RecordId: record._id,
+        Fields: this.dataTableService.goals,
         Date: record.Date,
         Values: record.Values
       }

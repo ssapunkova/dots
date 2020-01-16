@@ -59,10 +59,10 @@ export class NutritionService {
     );
   }
 
-  public deleteRecord(recordId){
+  public deleteRecord(RecordId){
     return this.http.post(
       this.connectToServerService.serverUrl + '/deleteNutritionRecord',
-      {recordId: recordId}
+      {RecordId: RecordId}
     );
   }
 

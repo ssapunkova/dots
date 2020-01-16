@@ -34,7 +34,7 @@ export class NewNutritionRecordPage implements OnInit {
   ngOnInit() {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
 
-    this.record.RecordId = data.recordId;
+    this.record.RecordId = data.RecordId;
     this.record.Date = data.Date;
     this.fields = data.Fields;
     this.values = data.Values;
