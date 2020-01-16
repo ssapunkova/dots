@@ -18,11 +18,11 @@ export class NewWorkoutRecordPage implements OnInit {
     RecordId: null,
     Date: "",
     Values: [],
-    Columns: []
+    Params: []
   };
 
   public isButtonDisabled = {
-    addColumn: false
+    addParam: false
   }
 
   constructor(
@@ -42,7 +42,7 @@ export class NewWorkoutRecordPage implements OnInit {
     this.values = data.values;
 
     for(var i = 0; i < this.fields.length; i++){
-      this.record.Columns.push(this.fields[i]._id);
+      this.record.Params.push(this.fields[i]._id);
 
       if(this.values == null){
         if(this.fields[i].Type != "Bool") {

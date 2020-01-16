@@ -14,11 +14,13 @@ export class DataTableService{
   public showMode = 'table';              // Default show mode, can be switched to table
 
   public title = "";
-  public structure = [];
+  public params = [];
   public allRecords = [];
   public showingRecords = [];
   public showingPeriod = [];
   public months = [];
+
+  public goals = [];
 
   public sortedByDate = "asc";
 
@@ -30,12 +32,12 @@ export class DataTableService{
   ) { }
 
 
-  async initializeDataTable(data, records){
+  async initializeDataTable(data, records, goals){
 
     console.log(data);
 
     this.title = data.Title;
-    this.structure = data.Structure;
+    this.params = data.Params;
 
     if(records.length < 1){
       this.showNoRecordsAlert();
@@ -92,7 +94,7 @@ export class DataTableService{
 
 
     // Format data for chart
-    this.chartService.formatChartData(this.showingRecords, this.structure);
+    this.chartService.formatChartData(this.showingRecords, this.params);
 
     console.log(this.chartService.chartData)
 

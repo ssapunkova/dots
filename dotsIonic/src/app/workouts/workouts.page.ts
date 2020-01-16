@@ -81,7 +81,7 @@ export class WorkoutsPage implements OnInit {
           this.chartData[i].push(
             {
               "name": "Exercises",
-              "value": this.workoutSheets[i].Structure.length
+              "value": this.workoutSheets[i].Params.length
             },
             {
               "name": "Workout records",
@@ -138,7 +138,7 @@ export class WorkoutsPage implements OnInit {
     let updateData = {
       _id: sheet._id,
       Title: sheet.Title,
-      Structure: sheet.Structure
+      Params: sheet.Params
     };
 
     // Show a configuration modal

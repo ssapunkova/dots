@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>Configure sheet </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-item color="primary">
+    Exercises with no title or goal will not be saved
+  </ion-item>
+
+  <ion-content class="padding">
+
+    <ion-list>
+      <ion-buttons slot="secondary">
+        <ion-button fill="solid" color="primary" (click)="presentActionSheet()">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      {{ goals | json}}
+      <ion-item *ngFor="let goal of goals; let i = index">
+        <ion-input type="text" placeholder="Exercise title" [(ngModel)]='goal.Title'></ion-input>
+        
+        <ion-input type="number" placeholder="Goal" [(ngModel)]='goal.Goal'>
+        </ion-input>
+
+        <ion-button color="danger" (click)="deleteExercise(i)" slot="end">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ion-button (click)="closeModal()">Cancel</ion-button>
+    <ion-button (click)="saveChanges()">Save</ion-button>
+
+  </ion-content>

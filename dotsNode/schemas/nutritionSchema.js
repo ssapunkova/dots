@@ -5,7 +5,7 @@ const ObjectId = require('mongodb').ObjectID;
 
 const NutritionSchema = mongoose.Schema({
     UserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-	  Structure: Array,
+	  Params: Array,
 	  Goals: Array
 },
 { collection: "nutrition"}

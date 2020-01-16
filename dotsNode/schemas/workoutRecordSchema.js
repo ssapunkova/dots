@@ -6,7 +6,7 @@ const ObjectId = require('mongodb').ObjectID;
 const WorkoutRecordSchema = mongoose.Schema({
     SheetId: { type: mongoose.Schema.Types.ObjectId, ref: 'WorkoutSheet'},
     Date: String,
-    Columns: Array,
+    Params: Array,
     Values: Array,
     Time: Number
 },

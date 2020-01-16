@@ -17,11 +17,11 @@ export class NewNutritionRecordPage implements OnInit {
     RecordId: null,
     Date: "",
     Values: [],
-    Columns: []
+    Params: []
   };
 
   public isButtonDisabled = {
-    addColumn: false
+    addParam: false
   }
 
   constructor(
@@ -40,7 +40,7 @@ export class NewNutritionRecordPage implements OnInit {
     this.values = data.values;
 
     for(var i = 0; i < this.fields.length; i++){
-      this.record.Columns.push(this.fields[i].index);
+      this.record.Params.push(this.fields[i].index);
 
       if(this.values == null){
         if(this.fields[i].Type != "Bool") {

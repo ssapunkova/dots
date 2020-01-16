@@ -19,13 +19,13 @@
         <ion-toolbar>
           <ion-label>Exercises</ion-label>
           <ion-buttons slot="secondary">
-            <ion-button fill="solid" color="primary" (click)="presentActionSheet()" disabled="{{ isButtonDisabled.addColumn }}">
+            <ion-button fill="solid" color="primary" (click)="presentActionSheet()" disabled="{{ isButtonDisabled.addParam }}">
               <ion-icon name="add"></ion-icon>
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-item-divider>
-      <ion-item *ngFor="let col of sheet.Structure; let i = index" [color]="col.NameRepeated ? 'danger' : ''">
+      <ion-item *ngFor="let col of sheet.Params; let i = index" [color]="col.NameRepeated ? 'danger' : ''">
         <ion-input type="text" placeholder="Exercise title" [(ngModel)]='col.Title'></ion-input>
         <!-- exercise type -->
         <ion-input *ngIf="col.Type == 'Number'" type="number" placeholder="Goal" [(ngModel)]='col.Goal'>

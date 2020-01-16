@@ -19,6 +19,7 @@ app.get("/getNutritionData", async (req, res) => {
   res.send({ nutritionData: nutritionData, nutritionRecords: nutritionRecords});
 })
 
+
 // app.post("/updateSheetConfiguration", async (req, res) => {
 //   let sheet = req.body.data;
 //   let deletedExerciseIds = sheet.DeletedExercisesId;
@@ -30,14 +31,14 @@ app.get("/getNutritionData", async (req, res) => {
 //
 //   if(deletedExerciseIds.length > 0){
 //
-//     let recordsOfDeletedExercises = await WorkoutRecord.find({ Columns: { $in: deletedExerciseIds }}).exec();
+//     let recordsOfDeletedExercises = await WorkoutRecord.find({ Params: { $in: deletedExerciseIds }}).exec();
 //     if(recordsOfDeletedExercises.err) throw findRecordsOfDeletedExercises.err;
 //     else{
 //       for(let i = 0; i < recordsOfDeletedExercises.length; i++){
 //         for(let j = 0; j < deletedExerciseIds.length; j++){
-//             let index = recordsOfDeletedExercises[i].Columns.indexOf(deletedExerciseIds[j]);
+//             let index = recordsOfDeletedExercises[i].Params.indexOf(deletedExerciseIds[j]);
 //             recordsOfDeletedExercises[i].Values.splice(index, 1);
-//             recordsOfDeletedExercises[i].Columns.splice(index, 1);
+//             recordsOfDeletedExercises[i].Params.splice(index, 1);
 //             recordsOfDeletedExercises[i].save();
 //         }
 //       }
@@ -53,7 +54,7 @@ app.post("/addNutritionRecord", async (req, res) => {
   let upsertRecord = await NutritionRecord.update({ Date: record.Date }, {
     $set: {
       Values: record.Values,
-      Columns: record.Columns
+      Params: record.Params
     }
   }, { upsert: true });
 
@@ -67,7 +68,7 @@ app.post("/addNutritionRecord", async (req, res) => {
     res.send({ record: record, docs: upsertRecord });
   }
 })
-//
+
 
 app.post("/editNutritionRecord", async (req, res) => {
   let record = req.body.data;
@@ -83,7 +84,7 @@ app.post("/editNutritionRecord", async (req, res) => {
     $set: {
       Date: record.Date,
       Values: record.Values,
-      Columns: record.Columns
+      Params: record.Params
     }
   })
   if(removedRecords.err) throw removedRecords.err;

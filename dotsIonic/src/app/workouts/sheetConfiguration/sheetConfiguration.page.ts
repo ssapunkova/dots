@@ -17,7 +17,7 @@ export class SheetConfigurationPage implements OnInit {
   public exerciseTitles = [];
 
   public isButtonDisabled = {
-    addColumn: false
+    addParam: false
   }
 
   constructor(
@@ -37,8 +37,8 @@ export class SheetConfigurationPage implements OnInit {
 
   async presentActionSheet() {
 
-    console.log(this.sheet.Structure.length, this.MAX_SHEET_EXERCISES)
-    if(this.sheet.Structure.length < this.MAX_SHEET_EXERCISES){
+    console.log(this.sheet.Params.length, this.MAX_SHEET_EXERCISES)
+    if(this.sheet.Params.length < this.MAX_SHEET_EXERCISES){
 
       const actionSheet = await this.actionSheetController.create({
         header: 'Add exercise',
@@ -47,21 +47,21 @@ export class SheetConfigurationPage implements OnInit {
             text: 'Count repetitons / sets',
             icon: 'refresh-circle',
             handler: () => {
-              this.addColumn("Number");
+              this.addParam("Number");
             }
           },
           {
             text: 'Check Done / Not done',
             icon: 'checkmark',
             handler: () => {
-              this.addColumn("Bool");
+              this.addParam("Bool");
             }
           },
           {
             text: 'Count duration',
             icon: 'stopwatch',
             handler: () => {
-              this.addColumn("Time");
+              this.addParam("Time");
             }
           },
           {
@@ -87,34 +87,34 @@ export class SheetConfigurationPage implements OnInit {
     }
   }
 
-  async addColumn(colType){
+  async addParam(colType){
     let col = { Title: "", Goal: "", Type: colType };
     if(colType == "Bool"){
       col.Goal = "true";
     }
-    this.sheet.Structure.push(col);
+    this.sheet.Params.push(col);
   }
 
   async deleteExercise(index){
-    this.sheet.DeletedExercisesId.push(this.sheet.Structure[index]._id);
+    this.sheet.DeletedExercisesId.push(this.sheet.Params[index]._id);
     console.log(this.sheet.DeletedExercisesId);
 
-    this.sheet.Structure.splice(index, 1);
+    this.sheet.Params.splice(index, 1);
 
-    console.log(this.sheet.Structure);
+    console.log(this.sheet.Params);
   }
 
   async saveChanges() {
 
     let repeatedNames = false;
 
-    let exerciseTitles = this.sheet.Structure.map((col) => col.Title).toString();
+    let exerciseTitles = this.sheet.Params.map((col) => col.Title).toString();
 
     console.log(repeatedNames);
 
     // Check for name repetition and Delete empty columns
-    for(var i = 0; i < this.sheet.Structure.length; i++){
-      let checking = this.sheet.Structure[i];
+    for(var i = 0; i < this.sheet.Params.length; i++){
+      let checking = this.sheet.Params[i];
       var regex = new RegExp(checking.Title, 'g');
       if(exerciseTitles.match(regex).length > 1){
         repeatedNames = true;
@@ -130,7 +130,7 @@ export class SheetConfigurationPage implements OnInit {
           (checking.Goal == null || checking.Goal == "")
         )
       ){
-        this.sheet.Structure.splice(i, 1);
+        this.sheet.Params.splice(i, 1);
 
         console.log("not needed")
       }

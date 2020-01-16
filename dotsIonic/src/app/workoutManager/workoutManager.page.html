@@ -24,16 +24,16 @@
         <ion-grid class="ion-text-center">
           <ion-row>
             <ion-col>
-              <h1>{{ sheetExercises.Structure[current.ExerciseIndex].Title }}</h1>
+              <h1>{{ sheetExercises.Params[current.ExerciseIndex].Title }}</h1>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="12" size-sm> Your result: </ion-col>
             <ion-col size="12" size-sm>
-              <ion-input *ngIf="sheetExercises.Structure[current.ExerciseIndex].Type != 'Bool'; else checkbox"
-                [type]="sheetExercises.Structure[current.ExerciseIndex].Type"
+              <ion-input *ngIf="sheetExercises.Params[current.ExerciseIndex].Type != 'Bool'; else checkbox"
+                [type]="sheetExercises.Params[current.ExerciseIndex].Type"
                 size="12" size-sm
-                [value]="sheetExercises.Structure[current.ExerciseIndex].Goal"
+                [value]="sheetExercises.Params[current.ExerciseIndex].Goal"
                 [(ngModel)]="current.InputValue">
               </ion-input>
 
@@ -43,17 +43,17 @@
             </ion-col>
             <ion-col size="12" size-sm>
               <ion-chip [color]="
-                current.InputValue < sheetExercises.Structure[current.ExerciseIndex].Goal * 2/5 ? 'danger' :
-                current.InputValue < sheetExercises.Structure[current.ExerciseIndex].Goal * 1/2 ? 'warning' :
+                current.InputValue < sheetExercises.Params[current.ExerciseIndex].Goal * 2/5 ? 'danger' :
+                current.InputValue < sheetExercises.Params[current.ExerciseIndex].Goal * 1/2 ? 'warning' :
                 'primary'
                 ">
-                <ion-label *ngIf="sheetExercises.Structure[current.ExerciseIndex].Type == 'Number'">
-                  {{ current.InputValue * 100 / sheetExercises.Structure[current.ExerciseIndex].Goal | number: '1.0-0' }}
-                  % of your goal ( {{ sheetExercises.Structure[current.ExerciseIndex].Goal }} )
+                <ion-label *ngIf="sheetExercises.Params[current.ExerciseIndex].Type == 'Number'">
+                  {{ current.InputValue * 100 / sheetExercises.Params[current.ExerciseIndex].Goal | number: '1.0-0' }}
+                  % of your goal ( {{ sheetExercises.Params[current.ExerciseIndex].Goal }} )
                 </ion-label>
-                <ion-label *ngIf="sheetExercises.Structure[current.ExerciseIndex].Type == 'Time'">
-                  {{ timeAndDateService.calculateTimeRatio(current.InputValue, sheetExercises.Structure[current.ExerciseIndex].Goal) }}
-                  % of your goal ( {{ sheetExercises.Structure[current.ExerciseIndex].Goal }} )
+                <ion-label *ngIf="sheetExercises.Params[current.ExerciseIndex].Type == 'Time'">
+                  {{ timeAndDateService.calculateTimeRatio(current.InputValue, sheetExercises.Params[current.ExerciseIndex].Goal) }}
+                  % of your goal ( {{ sheetExercises.Params[current.ExerciseIndex].Goal }} )
                 </ion-label>
               </ion-chip>
             </ion-col>
@@ -70,7 +70,7 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              Next exercise: {{ sheetExercises.Structure[current.ExerciseIndex + 1].Title }} in
+              Next exercise: {{ sheetExercises.Params[current.ExerciseIndex + 1].Title }} in
             </ion-col>
           </ion-row>
           <ion-row>
@@ -113,7 +113,7 @@
             </ion-col>
           </ion-row>
           <ion-row
-            *ngFor="let exercise of sheetExercises.Structure; let i = index">
+            *ngFor="let exercise of sheetExercises.Params; let i = index">
             <ion-col>
               <ion-icon *ngIf="i == current.ExerciseIndex && !controls.IsFinished" name="play"></ion-icon>
               {{ exercise.Title }}

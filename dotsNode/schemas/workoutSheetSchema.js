@@ -5,12 +5,12 @@ const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectID;
 
 
-const StructureSchema = mongoose.Schema({ Title: String, Goal: String, Type: String});
+const ParameterSchema = mongoose.Schema({ Title: String, Goal: String, Type: String});
 
 const WorkoutSheetSchema = mongoose.Schema({
     UserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	  Title: String,
-	  Structure: [StructureSchema]
+	  Params: [ParameterSchema]
 },
 { collection: "workoutSheets"}
 );

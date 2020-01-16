@@ -8,45 +8,30 @@ import { ConnectToServerService } from './connectToServer.service';
 })
 export class NutritionService {
 
-  public Structure = [
+  public Goals = [
     {
       index: 0,
       Title: "kcal",
-      Goal: 2000,
-      Type: "Number"
+      Goal: 2000
     },
     {
       index: 1,
       Title: "Blocks",
-      Goal: 12,
-      Type: "Number"
+      Goal: 12
     },
     {
       index: 2,
       Title: "Sugar",
-      Goal: 40,
-      Type: "Number"
+      Goal: 40
     },
     {
       index: 3,
       Title: "Protein (gr)",
-      Goal: 85,
-      Type: "Number"
+      Goal: 85
     }
   ]
 
-  public Goals = [
-    {
-      index: 0,
-      Title: "Weight (kg)"
-    },
-    {
-      index: 1,
-      Title: "Lean body mass"
-    }
-  ]
 
-  public DefaultStructure = [this.Structure[0]];
   public DefaultGoals = [this.Goals[0]];
 
   constructor(

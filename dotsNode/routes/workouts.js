@@ -23,7 +23,7 @@ app.get("/getSheetData/:sheetId", async (req, res) => {
 app.get("/getSheetExercises/:sheetId", async (req, res) => {
   let sheetId = req.params.sheetId;
 
-  let exercises = await WorkoutSheet.find({ _id: sheetId}).select("Title, Structure").exec();
+  let exercises = await WorkoutSheet.find({ _id: sheetId}).select("Title, Params").exec();
   if(exercises.err) throw exercises.err;
   res.send(exercises);
 })
@@ -72,14 +72,14 @@ app.post("/updateSheetConfiguration", async (req, res) => {
 
   if(deletedExerciseIds.length > 0){
 
-    let recordsOfDeletedExercises = await WorkoutRecord.find({ Columns: { $in: deletedExerciseIds }}).exec();
+    let recordsOfDeletedExercises = await WorkoutRecord.find({ Params: { $in: deletedExerciseIds }}).exec();
     if(recordsOfDeletedExercises.err) throw findRecordsOfDeletedExercises.err;
     else{
       for(let i = 0; i < recordsOfDeletedExercises.length; i++){
         for(let j = 0; j < deletedExerciseIds.length; j++){
-            let index = recordsOfDeletedExercises[i].Columns.indexOf(deletedExerciseIds[j]);
+            let index = recordsOfDeletedExercises[i].Params.indexOf(deletedExerciseIds[j]);
             recordsOfDeletedExercises[i].Values.splice(index, 1);
-            recordsOfDeletedExercises[i].Columns.splice(index, 1);
+            recordsOfDeletedExercises[i].Params.splice(index, 1);
             recordsOfDeletedExercises[i].save();
         }
       }
@@ -96,7 +96,7 @@ app.post("/addWorkoutRecord", async (req, res) => {
     $set: {
       SheetId: record.SheetId,
       Values: record.Values,
-      Columns: record.Columns,
+      Params: record.Params,
       Time: record.Time
     }
   }, { upsert: true });
@@ -127,7 +127,7 @@ app.post("/editWorkoutRecord", async (req, res) => {
     $set: {
       Date: record.Date,
       Values: record.Values,
-      Columns: record.Columns
+      Params: record.Params
     }
   })
   if(removedRecords.err) throw removedRecords.err;

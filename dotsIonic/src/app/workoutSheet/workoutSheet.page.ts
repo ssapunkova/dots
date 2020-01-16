@@ -63,7 +63,7 @@ export class WorkoutSheetPage implements OnInit {
       componentProps: {
         sheetId: this.sheetId,
         recordId: null,
-        fields: this.dataTableService.structure,
+        fields: this.dataTableService.Params,
         date: null,
         values: null
       }
@@ -93,7 +93,7 @@ export class WorkoutSheetPage implements OnInit {
       componentProps: {
         sheetId: this.sheetId,
         recordId: record._id,
-        fields: this.dataTableService.structure,
+        fields: this.dataTableService.Params,
         date: record.Date,
         values: record.Values
       }

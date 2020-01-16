@@ -34,7 +34,7 @@ export class WorkoutManagerPage implements OnInit {
   public sheetExercises = {
     _id: null,                            // sheetId, comes with url
     Title: "",                            // Sheet title
-    Structure: []                         // Structure - array of json exercises
+    Params: []                         // Params - array of json exercises
   };
 
   public current = {                      // Save temporary values for current state
@@ -78,7 +78,7 @@ export class WorkoutManagerPage implements OnInit {
       this.sheetExercises = data[0];
       console.log(this.sheetExercises);
 
-      this.exerciseNumber = this.sheetExercises.Structure.length;
+      this.exerciseNumber = this.sheetExercises.Params.length;
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;
@@ -160,7 +160,7 @@ export class WorkoutManagerPage implements OnInit {
       }
     }
     // Set the user's result field to the goal
-    this.current.InputValue = this.sheetExercises.Structure[this.current.ExerciseIndex].Goal;
+    this.current.InputValue = this.sheetExercises.Params[this.current.ExerciseIndex].Goal;
   }
 
   async markAsCompleted(){
@@ -266,7 +266,7 @@ export class WorkoutManagerPage implements OnInit {
       RecordId: null,
       Date: await this.timeAndDateService.getDate("today"),
       Values: this.results,
-      Columns: this.sheetExercises.Structure.map((col) => col._id),
+      Columns: this.sheetExercises.Params.map((col) => col._id),
       Time: this.time
     }
 

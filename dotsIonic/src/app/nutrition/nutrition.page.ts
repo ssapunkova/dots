@@ -10,6 +10,7 @@ import { ChartService } from '../services/chart.service';
 import { NutritionService } from '../services/nutrition.service';
 
 import { NewNutritionRecordPage } from './newNutritionRecord/newNutritionRecord.page';
+import { EditNutritionGoalsPage } from './editNutritionGoals/editNutritionGoals.page';
 
 @Component({
   selector: 'app-nutrition',
@@ -22,6 +23,7 @@ export class NutritionPage implements OnInit {
     public loadingService: LoadingService,
     public errorToastAndAlertService: ErrorToastAndAlertService,
     public alertController: AlertController,
+    public modalController: ModalController,
     public nutritionService: NutritionService,
     public dataTableService: DataTableService,
     public chartService: ChartService
@@ -38,14 +40,11 @@ export class NutritionPage implements OnInit {
 
       // Initialise DataTable, which will controll chart and table
 
-      // If no custom structure and goals - take default
-      if(data.nutritionData.Structure == null){
-        data.nutritionData.Structure = this.nutritionService.DefaultStructure;
-      }
+      // If no custom goals - take default
       if(data.nutritionData.Goals == null){
         data.nutritionData.Goals = this.nutritionService.DefaultGoals;
       }
-      this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords);
+      this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords, data.nutritionData.Goals);
       console.log(this.dataTableService);
 
       // Dismiss all loading
@@ -55,13 +54,52 @@ export class NutritionPage implements OnInit {
     });
   };
 
+  async editGoals(){
+
+    console.log("a")
+
+    // Select configureable data about the sheet
+    let updateData = {
+      Goals: this.dataTableService.goals
+    };
+
+
+
+    // Show a configuration modal
+    const modal = await this.modalController.create({
+      component: EditNutritionGoalsPage,
+      componentProps: updateData
+    });
+    await modal.present();
+
+    // Get modal data and process it if it's not null
+    let modalData = await modal.onWillDismiss();
+    modalData = modalData.data;
+
+    if(modalData != null){
+
+      await this.loadingService.presentSmallLoading("Saving changes");
+
+      // Update sheet data and reloat sheets
+      // this.workoutService.updateSheetConfiguration(modalData).subscribe( async (data: [any])=>
+      //   {
+      //     this.getSheets();
+      //     await this.loadingService.dismissSmallLoading();
+      //   },
+      //   error => {
+      //     this.errorToastAndAlertService.showErrorAlert("Oups")
+      //   }
+      // );
+    }
+  }
+
   async addRecord(){
 
     let modalProps = {
       component: NewNutritionRecordPage,
       componentProps: {
         recordId: null,
-        fields: this.dataTableService.structure,
+        fields: this.dataTableService.goals,
         date: null,
         values: null
       }
@@ -90,7 +128,7 @@ export class NutritionPage implements OnInit {
       component: NewNutritionRecordPage,
       componentProps: {
         recordId: record._id,
-        fields: this.dataTableService.structure,
+        fields: this.dataTableService.goals,
         date: record.Date,
         values: record.Values
       }
