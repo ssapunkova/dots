@@ -133,11 +133,11 @@
 
               <ion-col
                 class="table-header"
-                *ngFor="let col of dataTableService.goals; let i = index"
-                [title]="col.Title"
+                *ngFor="let param of dataTableService.params; let i = index"
+                [title]="param.Title"
                 (click)="dataTableService.sortCol(col, i)">
-                <ion-label>{{ (col.Title.length > 10) ? (col.Title | slice:0:10) + '...' : (col.Title) }}</ion-label>
-                <ion-icon name="arrow-dropup" *ngIf="col.sorted == 'asc'; else arrowDown"></ion-icon>
+                <ion-label>{{ (param.Title.length > 10) ? (param.Title | slice:0:10) + '...' : (param.Title) }}</ion-label>
+                <ion-icon name="arrow-dropup" *ngIf="param.sorted == 'asc'; else arrowDown"></ion-icon>
                 <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
               </ion-col>
             </ion-row>
@@ -152,8 +152,8 @@
 
                <ion-item [color]="record.color">
                 <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }} {{ record.color}}</ion-col>
-                <ion-col *ngFor="let col of dataTableService.goals; let j = index" [title]="col.Title">
-                  <ion-label *ngIf="col.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
+                <ion-col *ngFor="let param of dataTableService.params; let j = index" [title]="param.Title">
+                  <ion-label *ngIf="param.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
                   <ng-template #showTick>
                     <ion-icon name="checkbox" *ngIf="record.Values[j] == true">d</ion-icon>
                     <ion-icon name="close" *ngIf="record.Values[j] == false">d</ion-icon>

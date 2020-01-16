@@ -66,7 +66,7 @@ export class NewWorkoutRecordPage implements OnInit {
 
     console.log(this.record);
 
-    if(this.record.Date == ""){
+    if(this.record.Date == null){
       this.errorToastAndAlertService.showErrorToast("Please fill in date");
       return false;
     }

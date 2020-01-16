@@ -99,11 +99,13 @@ export class NutritionPage implements OnInit {
       component: NewNutritionRecordPage,
       componentProps: {
         RecordId: null,
-        Fields: this.dataTableService.goals,
+        Fields: this.dataTableService.params,
         Date: null,
         Values: null
       }
     };
+
+    console.log(modalProps);
 
     let newRecord = await this.dataTableService.addRecord(modalProps);
 

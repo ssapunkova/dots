@@ -37,13 +37,13 @@ export class WorkoutSheetPage implements OnInit {
   ngOnInit() {
     this.loadingService.isPageLoading = true;
     // Get sheetId
-    this.SheetId = this.route.snapshot.paramMap.get("sheetId");
+    this.sheetId = this.route.snapshot.paramMap.get("sheetId");
     // Load sheet data from database
     this.getSheetData();
   }
 
   async getSheetData(){
-    this.workoutService.getWorkoutSheetData(this.SheetId).subscribe(async (data: any) => {
+    this.workoutService.getWorkoutSheetData(this.sheetId).subscribe(async (data: any) => {
 
       // Initialise DataTable, which will controll chart and table
       this.dataTableService.initializeDataTable(data[0], data[0].WorkoutRecords);
@@ -61,9 +61,9 @@ export class WorkoutSheetPage implements OnInit {
     let modalProps = {
       component: NewWorkoutRecordPage,
       componentProps: {
-        SheetId: this.SheetId,
+        SheetId: this.sheetId,
         RecordId: null,
-        Fields: this.dataTableService.Params,
+        Fields: this.dataTableService.params,
         Date: null,
         Values: null
       }
@@ -93,9 +93,9 @@ export class WorkoutSheetPage implements OnInit {
     let modalProps = {
       component: NewWorkoutRecordPage,
       componentProps: {
-        SheetId: this.SheetId,
+        SheetId: this.sheetId,
         RecordId: record._id,
-        Fields: this.dataTableService.Params,
+        Fields: this.dataTableService.params,
         Date: record.Date,
         Values: record.Values
       }
