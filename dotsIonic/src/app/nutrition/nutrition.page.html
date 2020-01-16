@@ -25,8 +25,18 @@
         <ion-card>
           <ion-card-header>Goals</ion-card-header>
           <ion-card-content>
-            <ion-item *ngFor="let paramIndex of dataTableService.params">
-              {{ nutritionService.Params[paramIndex].Title }}: {{ nutritionService.Params[paramIndex].Goal }}
+            <ion-item *ngFor="let paramIndex of dataTableService.params; let i = index">
+              {{ nutritionService.Params[paramIndex].Title }}:
+              <ion-label *ngIf="dataTableService.goals[i] != null; else defaultValue">
+                {{ dataTableService.goals[i] }}
+                <ion-chip color="warning">Custom goal</ion-chip>
+              </ion-label>
+
+              <ng-template #defaultValue>
+                <ion-label>
+                  {{ nutritionService.Params[paramIndex].Goal }}
+                </ion-label>
+              </ng-template>
             </ion-item>
           </ion-card-content>
 

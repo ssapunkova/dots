@@ -17,7 +17,7 @@
       <ion-item *ngFor="let param of params; let i = index">
         <ion-label> {{ nutritionService.Params[param].Title }} </ion-label>
 
-        <ion-input type="number" placeholder="Goal" [(ngModel)]='customGoals[param]'>
+        <ion-input type="number" placeholder="Goal" [(ngModel)]='goalValues[param]'>
         </ion-input>
 
         <ion-button color="danger" (click)="deleteParam(i)" slot="end">

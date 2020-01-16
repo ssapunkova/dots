@@ -22,12 +22,15 @@ app.get("/getNutritionData", async (req, res) => {
 app.post("/updateNutritionParams", async (req, res) => {
   let data = req.body.data;
   let params = data.params;
+  let customGoals = data.customGoals;
   let deletedParams = data.deletedParams;
 
   let nutritionObj = {
-    Goals: null,
+    Goals: customGoals,
     Params: params
   }
+
+  console.log(nutritionObj)
 
   let updateObj = await Nutrition.updateOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }, nutritionObj, { upsert: true }).exec();
   if(updateObj.err) throw updateObj.err;

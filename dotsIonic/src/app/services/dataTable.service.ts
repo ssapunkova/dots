@@ -38,6 +38,7 @@ export class DataTableService{
 
     this.title = data.Title;
     this.params = data.Params;
+    this.goals = data.Goals;
 
     if(records.length < 1){
       this.showNoRecordsAlert();

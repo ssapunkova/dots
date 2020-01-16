@@ -15,6 +15,7 @@ export class EditNutritionGoalsPage implements OnInit {
   public params;
   public deletedParams;
 
+  public goalValues = [];
   public customGoals = [];
 
   constructor(
@@ -27,12 +28,24 @@ export class EditNutritionGoalsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.params = JSON.parse(JSON.stringify(this.navParams.data)).Params;
+    let data = JSON.parse(JSON.stringify(this.navParams.data));
+    this.params = data.Params;
+    this.customGoals = data.CustomGoals;
     this.deletedParams = [];
-    console.log(this.params)
+    console.log(data)
 
     for(var i = 0; i < this.nutritionService.Params.length; i++){
-      this.customGoals[i] = this.nutritionService.Params[i].Goal;
+      let possibleParam = this.nutritionService.Params[i];
+      this.goalValues[i] = possibleParam.Goal;
+      console.log(possibleParam, this.params);
+      let indexInParams = this.params.indexOf(possibleParam.Index);
+      console.log(indexInParams)
+      if(indexInParams >= 0){
+        let customGoal = this.customGoals[indexInParams];
+        if(customGoal != null){
+          this.goalValues[i] = customGoal;
+        }
+      }
     }
   }
 
@@ -77,27 +90,37 @@ export class EditNutritionGoalsPage implements OnInit {
 
   async deleteParam(index){
     this.deletedParams.push(this.params[index]);
-    console.log(this.deletedParams);
-
     this.params.splice(index, 1);
-
-    console.log(this.params, this.deletedParams);
   }
 
   async saveChanges() {
 
     for(var i = 0; i < this.params.length; i++){
-      let checking = this.customGoals[this.params[i]];
+      let checking = this.goalValues[this.params[i]];
+
+      // If value is null, then delete param
       if(checking == null || checking == ""){
         this.params.splice(i, 1);
+      }
 
-        console.log("not needed")
+      // If there is a custom goal
+      if(checking != this.nutritionService.Params[this.params[i]].Goal){
+        this.customGoals[i] = checking;
+      }
+      else {
+        this.customGoals[i] = null;
       }
     }
 
-    console.log(this.params, this.deletedParams);
+    let results = {
+      params: this.params,
+      deletedParams: this.deletedParams,
+      customGoals: this.customGoals
+    }
 
-    await this.modalController.dismiss({ params: this.params, deletedParams: this.deletedParams });
+    console.log(results);
+
+    await this.modalController.dismiss(results);
   }
 
   async closeModal(){

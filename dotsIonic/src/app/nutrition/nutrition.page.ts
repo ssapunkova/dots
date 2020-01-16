@@ -42,7 +42,7 @@ export class NutritionPage implements OnInit {
 
       console.log(data);
 
-      // If no custom goals - take default
+      // If no custom params - take default
       if(data.nutritionData.Params == null){
         data.nutritionData.Params = this.nutritionService.DefaultParamIndexes;
       }
@@ -60,7 +60,8 @@ export class NutritionPage implements OnInit {
 
     // Select configureable data about the sheet
     let updateData = {
-      Params: this.dataTableService.params
+      Params: this.dataTableService.params,
+      CustomGoals: this.dataTableService.goals
     };
 
     // Show a configuration modal
