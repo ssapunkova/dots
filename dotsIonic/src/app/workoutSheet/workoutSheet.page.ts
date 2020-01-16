@@ -64,10 +64,12 @@ export class WorkoutSheetPage implements OnInit {
         sheetId: this.sheetId,
         recordId: null,
         fields: this.dataTableService.Params,
-        date: null,
-        values: null
+        Date: null,
+        Values: null
       }
     };
+
+    console.log(modalProps)
 
     let newRecord = await this.dataTableService.addRecord(modalProps);
 
@@ -94,8 +96,8 @@ export class WorkoutSheetPage implements OnInit {
         sheetId: this.sheetId,
         recordId: record._id,
         fields: this.dataTableService.Params,
-        date: record.Date,
-        values: record.Values
+        Date: record.Date,
+        Values: record.Values
       }
     }
 

@@ -35,9 +35,9 @@ export class NewNutritionRecordPage implements OnInit {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
 
     this.record.RecordId = data.recordId;
-    this.record.Date = data.date;
-    this.fields = data.fields;
-    this.values = data.values;
+    this.record.Date = data.Date;
+    this.fields = data.Fields;
+    this.values = data.Values;
 
     for(var i = 0; i < this.fields.length; i++){
       this.record.Params.push(this.fields[i].index);

@@ -14,7 +14,7 @@ export class DataTableService{
   public showMode = 'table';              // Default show mode, can be switched to table
 
   public title = "";
-  public params = [];
+  public Params = [];
   public allRecords = [];
   public showingRecords = [];
   public showingPeriod = [];
@@ -32,12 +32,12 @@ export class DataTableService{
   ) { }
 
 
-  async initializeDataTable(data, records, goals){
+  async initializeDataTable(data, records){
 
     console.log(data);
 
     this.title = data.Title;
-    this.params = data.Params;
+    this.Params = data.Params;
 
     if(records.length < 1){
       this.showNoRecordsAlert();
@@ -82,7 +82,7 @@ export class DataTableService{
 
     if($event.target != undefined){
       // case 1, use selected periods from ion-select
-      this.showingPeriod = $event.target.value;
+      this.showingPeriod = $event.target.Value;
     }
     else{
       // case 2, set showingPeriod to the latest
@@ -94,7 +94,7 @@ export class DataTableService{
 
 
     // Format data for chart
-    this.chartService.formatChartData(this.showingRecords, this.params);
+    this.chartService.formatChartData(this.showingRecords, this.Params);
 
     console.log(this.chartService.chartData)
 

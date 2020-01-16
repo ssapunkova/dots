@@ -44,7 +44,7 @@ export class NutritionPage implements OnInit {
       if(data.nutritionData.Goals == null){
         data.nutritionData.Goals = this.nutritionService.DefaultGoals;
       }
-      this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords, data.nutritionData.Goals);
+      this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords);
       console.log(this.dataTableService);
 
       // Dismiss all loading
@@ -100,8 +100,8 @@ export class NutritionPage implements OnInit {
       componentProps: {
         recordId: null,
         fields: this.dataTableService.goals,
-        date: null,
-        values: null
+        Date: null,
+        Values: null
       }
     };
 
@@ -129,8 +129,8 @@ export class NutritionPage implements OnInit {
       componentProps: {
         recordId: record._id,
         fields: this.dataTableService.goals,
-        date: record.Date,
-        values: record.Values
+        Date: record.Date,
+        Values: record.Values
       }
     }
 

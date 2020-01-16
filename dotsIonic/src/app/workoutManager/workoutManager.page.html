@@ -13,10 +13,10 @@
         <div id="timer">
           <div id="time-passed"
             [style.width.%]="this.timerService.timePassed() / this.averageTime * 100"></div>
-          <div id="average-time">{{ timerService.timePassed() | date:'HH:mm:ss':'UTC' }}</div>
+          <div id="average-time">{{ timerService.timePassed() | Date:'HH:mm:ss':'UTC' }}</div>
         </div>
       </ion-item>
-      <ion-label *ngIf="averageTime != 0">This workout takes {{ averageTime | date:'HH:mm:ss':'UTC'}} in average
+      <ion-label *ngIf="averageTime != 0">This workout takes {{ averageTime | Date:'HH:mm:ss':'UTC'}} in average
       </ion-label>
 
       <ion-item *ngIf="controls.IsExerciseRunning || controls.IsPaused && !controls.IsABreak">
@@ -89,7 +89,7 @@
           <ion-row>
             <ion-col>
               <h3 class="ion-text-center">
-                Workout duration: {{ timerService.timePassed() | date: "HH:mm:ss": "UTC" }}
+                Workout duration: {{ timerService.timePassed() | Date: "HH:mm:ss": "UTC" }}
               </h3>
             </ion-col>
           </ion-row>

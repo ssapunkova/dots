@@ -35,11 +35,13 @@ export class NewWorkoutRecordPage implements OnInit {
   ngOnInit() {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
 
+    console.log(data)
+
     this.record.SheetId = data.sheetId;
     this.record.RecordId = data.recordId;
-    this.record.Date = data.date;
-    this.fields = data.fields;
-    this.values = data.values;
+    this.record.Date = data.Date;
+    this.fields = data.Fields;
+    this.values = data.Values;
 
     for(var i = 0; i < this.fields.length; i++){
       this.record.Params.push(this.fields[i]._id);
