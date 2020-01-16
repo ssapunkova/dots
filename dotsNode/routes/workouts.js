@@ -67,20 +67,20 @@ app.post("/updateSheetConfiguration", async (req, res) => {
 
   let sheetObj = new WorkoutSheet(sheet);
 
-  let updateSheet = await WorkoutSheet.update({ _id: sheet._id }, sheetObj).exec();
+  let updateSheet = await WorkoutSheet.updateOne({ _id: sheet._id }, sheetObj).exec();
   if(updateSheet.err) throw updateSheet.err;
 
   if(deletedExerciseIds.length > 0){
 
     let recordsOfDeletedExercises = await WorkoutRecord.find({ Params: { $in: deletedExerciseIds }}).exec();
-    if(recordsOfDeletedExercises.err) throw findRecordsOfDeletedExercises.err;
+    if(recordsOfDeletedExercises.err) throw recordsOfDeletedExercises.err;
     else{
       for(let i = 0; i < recordsOfDeletedExercises.length; i++){
         for(let j = 0; j < deletedExerciseIds.length; j++){
-            let index = recordsOfDeletedExercises[i].Params.indexOf(deletedExerciseIds[j]);
-            recordsOfDeletedExercises[i].Values.splice(index, 1);
-            recordsOfDeletedExercises[i].Params.splice(index, 1);
-            recordsOfDeletedExercises[i].save();
+          let index = recordsOfDeletedExercises[i].Params.indexOf(deletedExerciseIds[j]);
+          recordsOfDeletedExercises[i].Values.splice(index, 1);
+          recordsOfDeletedExercises[i].Params.splice(index, 1);
+          recordsOfDeletedExercises[i].save();
         }
       }
     }
@@ -92,7 +92,7 @@ app.post("/updateSheetConfiguration", async (req, res) => {
 app.post("/addWorkoutRecord", async (req, res) => {
   let record = req.body.data;
 
-  let upsertRecord = await WorkoutRecord.update({ Date: record.Date }, {
+  let upsertRecord = await WorkoutRecord.updateOne({ Date: record.Date }, {
     $set: {
       SheetId: record.SheetId,
       Values: record.Values,
@@ -123,7 +123,7 @@ app.post("/editWorkoutRecord", async (req, res) => {
     _id: { $ne: ObjectId(record.RecordId) }
   })
 
-  let updateRecord = await WorkoutRecord.update({ _id: ObjectId(record.RecordId) }, {
+  let updateRecord = await WorkoutRecord.updateOne({ _id: ObjectId(record.RecordId) }, {
     $set: {
       Date: record.Date,
       Values: record.Values,

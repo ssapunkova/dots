@@ -6,19 +6,21 @@
 
   <ion-content class="padding">
 
+
     <ion-list>
       <ion-buttons slot="secondary">
         <ion-button fill="solid" color="primary" (click)="presentActionSheet()">
           <ion-icon name="add"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <ion-item *ngFor="let param of params; let i = index">
-        <ion-input type="text" placeholder="Exercise title" [(ngModel)]='param.Title'></ion-input>
 
-        <ion-input type="number" placeholder="Goal" [(ngModel)]='param.Goal'>
+      <ion-item *ngFor="let param of params; let i = index">
+        <ion-label> {{ nutritionService.Params[param].Title }} </ion-label>
+
+        <ion-input type="number" placeholder="Goal" [(ngModel)]='customGoals[param]'>
         </ion-input>
 
-        <ion-button color="danger" (click)="deleteExercise(i)" slot="end">
+        <ion-button color="danger" (click)="deleteParam(i)" slot="end">
           <ion-icon name="trash"></ion-icon>
         </ion-button>
       </ion-item>

@@ -40,9 +40,11 @@ export class NutritionPage implements OnInit {
 
       // Initialise DataTable, which will controll chart and table
 
+      console.log(data);
+
       // If no custom goals - take default
       if(data.nutritionData.Params == null){
-        data.nutritionData.Params = this.nutritionService.DefaultParams;
+        data.nutritionData.Params = this.nutritionService.DefaultParamIndexes;
       }
       this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords);
       console.log(this.dataTableService);
@@ -72,20 +74,22 @@ export class NutritionPage implements OnInit {
     let modalData = await modal.onWillDismiss();
     modalData = modalData.data;
 
+    console.log(modalData);
+
     if(modalData != null){
 
       await this.loadingService.presentSmallLoading("Saving changes");
 
-      // Update sheet data and reloat sheets
-      // this.workoutService.updateSheetConfiguration(modalData).subscribe( async (data: [any])=>
-      //   {
-      //     this.getSheets();
-      //     await this.loadingService.dismissSmallLoading();
-      //   },
-      //   error => {
-      //     this.errorToastAndAlertService.showErrorAlert("Oups")
-      //   }
-      // );
+      // Update nutrition params
+      this.nutritionService.updateNutritionParams(modalData).subscribe( async (data: [any])=>
+        {
+          this.getNutritionData();
+          await this.loadingService.dismissSmallLoading();
+        },
+        error => {
+          this.errorToastAndAlertService.showErrorAlert("Oups")
+        }
+      );
     }
   }
 

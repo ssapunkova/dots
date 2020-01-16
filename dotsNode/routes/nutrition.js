@@ -12,42 +12,46 @@ const NutritionRecord = require('../schemas/nutritionRecordSchema');
 
 app.get("/getNutritionData", async (req, res) => {
 
-  let nutritionData = await Nutrition.find({}).exec();  // replace with userid later
-  let nutritionRecords = await NutritionRecord.find({}).exec(); // replace with userid later
+  let nutritionData = await Nutrition.findOne({ }).exec();  // replace with userid later
+  let nutritionRecords = await NutritionRecord.find({ }).exec(); // replace with userid later
   if(nutritionData.err) throw nutritionData.err;
   if(nutritionRecords.err) throw nutritionRecords.err;
   res.send({ nutritionData: nutritionData, nutritionRecords: nutritionRecords});
 })
 
+app.post("/updateNutritionParams", async (req, res) => {
+  let data = req.body.data;
+  let params = data.params;
+  let deletedParams = data.deletedParams;
 
-// app.post("/updateSheetConfiguration", async (req, res) => {
-//   let sheet = req.body.data;
-//   let deletedExerciseIds = sheet.DeletedExercisesId;
-//
-//   let sheetObj = new WorkoutSheet(sheet);
-//
-//   let updateSheet = await WorkoutSheet.update({ _id: sheet._id }, sheetObj).exec();
-//   if(updateSheet.err) throw updateSheet.err;
-//
-//   if(deletedExerciseIds.length > 0){
-//
-//     let recordsOfDeletedExercises = await WorkoutRecord.find({ Params: { $in: deletedExerciseIds }}).exec();
-//     if(recordsOfDeletedExercises.err) throw findRecordsOfDeletedExercises.err;
-//     else{
-//       for(let i = 0; i < recordsOfDeletedExercises.length; i++){
-//         for(let j = 0; j < deletedExerciseIds.length; j++){
-//             let index = recordsOfDeletedExercises[i].Params.indexOf(deletedExerciseIds[j]);
-//             recordsOfDeletedExercises[i].Values.splice(index, 1);
-//             recordsOfDeletedExercises[i].Params.splice(index, 1);
-//             recordsOfDeletedExercises[i].save();
-//         }
-//       }
-//     }
-//   }
-//
-//   res.send();
-// })
-//
+  let nutritionObj = new Nutrition({
+    UserId: null,
+    Goals: null,
+    Params: params
+  });
+
+  let updateObj = await Nutrition.updateOne({ UserId: ObjectId(null) }, nutritionObj, { upsert: true }).exec();
+  if(updateObj.err) throw updateObj.err;
+
+  if(deletedParams.length > 0){
+
+    let recordsOfDeletedParams = await NutritionRecord.find({ Params: { $in: deletedParams }}).exec();
+    if(recordsOfDeletedParams.err) throw recordsOfDeletedParams.err;
+    else{
+      for(let i = 0; i < recordsOfDeletedParams.length; i++){
+        for(let j = 0; j < deletedParams.length; j++){
+          let index = recordsOfDeletedParams[i].Params.indexOf(deletedParams[j]);
+          recordsOfDeletedParams[i].Values.splice(index, 1);
+          recordsOfDeletedParams[i].Params.splice(index, 1);
+          recordsOfDeletedParams[i].save();
+        }
+      }
+    }
+  }
+
+  res.send();
+})
+
 app.post("/addNutritionRecord", async (req, res) => {
   let record = req.body.data;
 

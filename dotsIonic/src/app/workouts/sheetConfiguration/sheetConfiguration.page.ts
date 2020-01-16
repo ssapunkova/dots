@@ -43,7 +43,7 @@ export class SheetConfigurationPage implements OnInit {
       const actionSheet = await this.actionSheetController.create({
         header: 'Add exercise',
         buttons: [
-            {
+          {
             text: 'Count repetitons / sets',
             icon: 'refresh-circle',
             handler: () => {

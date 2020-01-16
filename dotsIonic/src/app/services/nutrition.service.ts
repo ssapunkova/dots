@@ -10,29 +10,29 @@ export class NutritionService {
 
   public Params = [
     {
-      index: 0,
+      Index: 0,
       Title: "kcal",
       Goal: 2000
     },
     {
-      index: 1,
+      Index: 1,
       Title: "Blocks",
       Goal: 12
     },
     {
-      index: 2,
+      Index: 2,
       Title: "Sugar",
       Goal: 40
     },
     {
-      index: 3,
+      Index: 3,
       Title: "Protein (gr)",
       Goal: 85
     }
   ]
 
 
-  public DefaultParams = [this.Params[0]];
+  public DefaultParamIndexes = [0];
 
   constructor(
       public http: HttpClient,
@@ -43,6 +43,12 @@ export class NutritionService {
     return this.http.get(this.connectToServerService.serverUrl + '/getNutritionData')
   }
 
+  public updateNutritionParams(data){
+    return this.http.post(
+      this.connectToServerService.serverUrl + '/updateNutritionParams',
+      {data: data}
+    )
+  }
 
   public addRecord(recordData){
     console.log(recordData);
