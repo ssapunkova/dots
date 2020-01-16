@@ -266,7 +266,7 @@ export class WorkoutManagerPage implements OnInit {
       RecordId: null,
       Date: await this.timeAndDateService.getDate("today"),
       Values: this.results,
-      Columns: this.sheetExercises.Params.map((col) => col._id),
+      Params: this.sheetExercises.Params.map((col) => col._id),
       Time: this.time
     }
 

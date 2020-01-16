@@ -14,7 +14,7 @@ export class DataTableService{
   public showMode = 'table';              // Default show mode, can be switched to table
 
   public title = "";
-  public Params = [];
+  public params = [];
   public allRecords = [];
   public showingRecords = [];
   public showingPeriod = [];
@@ -37,7 +37,7 @@ export class DataTableService{
     console.log(data);
 
     this.title = data.Title;
-    this.Params = data.Params;
+    this.params = data.Params;
 
     if(records.length < 1){
       this.showNoRecordsAlert();
@@ -94,7 +94,7 @@ export class DataTableService{
 
 
     // Format data for chart
-    this.chartService.formatChartData(this.showingRecords, this.Params);
+    this.chartService.formatChartData(this.showingRecords, this.params);
 
     console.log(this.chartService.chartData)
 

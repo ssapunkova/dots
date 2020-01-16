@@ -41,8 +41,8 @@ export class NutritionPage implements OnInit {
       // Initialise DataTable, which will controll chart and table
 
       // If no custom goals - take default
-      if(data.nutritionData.Goals == null){
-        data.nutritionData.Goals = this.nutritionService.DefaultGoals;
+      if(data.nutritionData.Params == null){
+        data.nutritionData.Params = this.nutritionService.DefaultParams;
       }
       this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords);
       console.log(this.dataTableService);

@@ -17,7 +17,7 @@
 
 <ion-content>
 
-  <div *ngIf="dataTableService.Params.length > 0 && dataTableService.allRecords != null">
+  <div *ngIf="dataTableService.params.length > 0 && dataTableService.allRecords != null">
 
     <ion-toolbar>
       <ion-item>
@@ -93,7 +93,7 @@
 
           <ion-col
             class="table-header"
-            *ngFor="let col of dataTableService.Params; let i = index"
+            *ngFor="let col of dataTableService.params; let i = index"
             [title]="col.Title"
             (click)="dataTableService.sortCol(col, i)">
             <ion-label>{{ (col.Title.length > 10) ? (col.Title | slice:0:10) + '...' : (col.Title) }}</ion-label>
@@ -112,7 +112,7 @@
 
            <ion-item [color]="record.color">
             <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }} {{ record.color}}</ion-col>
-            <ion-col *ngFor="let col of dataTableService.Params; let j = index" [title]="col.Title">
+            <ion-col *ngFor="let col of dataTableService.params; let j = index" [title]="col.Title">
               <ion-label *ngIf="col.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
               <ng-template #showTick>
                 <ion-icon name="checkbox" *ngIf="record.Values[j] == true">d</ion-icon>

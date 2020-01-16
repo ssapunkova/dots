@@ -8,7 +8,7 @@ import { ConnectToServerService } from './connectToServer.service';
 })
 export class NutritionService {
 
-  public Goals = [
+  public Params = [
     {
       index: 0,
       Title: "kcal",
@@ -32,7 +32,7 @@ export class NutritionService {
   ]
 
 
-  public DefaultGoals = [this.Goals[0]];
+  public DefaultParams = [this.Params[0]];
 
   constructor(
       public http: HttpClient,

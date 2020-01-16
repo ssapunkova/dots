@@ -131,7 +131,7 @@ export class WorkoutsPage implements OnInit {
   }
 
 
-  // Configure sheet's columns (exercises) and set goals for them
+  // Configure sheet's params (exercises) and set goals for them
   async configureSheet(sheet, index){
 
     // Select configureable data about the sheet

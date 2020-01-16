@@ -112,7 +112,7 @@ export class SheetConfigurationPage implements OnInit {
 
     console.log(repeatedNames);
 
-    // Check for name repetition and Delete empty columns
+    // Check for name repetition and Delete empty params
     for(var i = 0; i < this.sheet.Params.length; i++){
       let checking = this.sheet.Params[i];
       var regex = new RegExp(checking.Title, 'g');
