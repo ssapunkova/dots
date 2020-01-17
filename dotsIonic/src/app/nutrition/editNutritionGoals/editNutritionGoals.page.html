@@ -15,6 +15,11 @@
       </ion-buttons>
 
       <ion-item *ngFor="let param of params; let i = index">
+
+        <ion-chip color="secondary" (click)="showRecommendations()">
+          <ion-icon name="help"></ion-icon>
+        </ion-chip>
+
         <ion-label> {{ nutritionService.Params[param].Title }} </ion-label>
 
         <ion-input type="number" placeholder="Goal" [(ngModel)]='goalValues[param]'>
