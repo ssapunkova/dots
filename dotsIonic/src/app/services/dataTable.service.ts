@@ -12,12 +12,12 @@ export class DataTableService{
 
   public showMode: String;
   public title: String;
-  public params: Array;
-  public allRecords: Array;
-  public showingRecords: Array;
-  public showingPeriod: Array;
-  public months: Array;
-  public goals: Array;
+  public params: any[];
+  public allRecords: any[];
+  public showingRecords: any[];
+  public showingPeriod: any[];
+  public months: any[];
+  public goals: any[];
 
   public sortedByDate: String;
 

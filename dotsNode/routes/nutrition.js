@@ -12,9 +12,14 @@ const NutritionRecord = require('../schemas/nutritionRecordSchema');
 
 app.get("/getNutritionData", async (req, res) => {
 
-  let nutritionData = await Nutrition.findOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }).exec();  // replace with userid later
-  let nutritionRecords = await NutritionRecord.find({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }).exec(); // replace with userid later
-  if(nutritionData.err) throw nutritionData.err;
+  let nutritionData = await Nutrition.findOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") });  // replace with userid later
+  let nutritionRecords = await NutritionRecord.find({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }); // replace with userid later
+  if(nutritionData != null) {
+    if(nutritionData.err) throw nutritionData.err;
+  }
+  else{
+    new Nutrition({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }).save();
+  }
   if(nutritionRecords.err) throw nutritionRecords.err;
   res.send({ nutritionData: nutritionData, nutritionRecords: nutritionRecords});
 })
@@ -32,12 +37,12 @@ app.post("/updateNutritionParams", async (req, res) => {
 
   console.log(nutritionObj)
 
-  let updateObj = await Nutrition.updateOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }, nutritionObj, { upsert: true }).exec();
+  let updateObj = await Nutrition.updateOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }, nutritionObj, { upsert: true });
   if(updateObj.err) throw updateObj.err;
 
   if(deletedParams.length > 0){
 
-    let recordsOfDeletedParams = await NutritionRecord.find({ Params: { $in: deletedParams }}).exec();
+    let recordsOfDeletedParams = await NutritionRecord.find({ Params: { $in: deletedParams }});
     if(recordsOfDeletedParams.err) throw recordsOfDeletedParams.err;
     else{
       for(let i = 0; i < recordsOfDeletedParams.length; i++){
