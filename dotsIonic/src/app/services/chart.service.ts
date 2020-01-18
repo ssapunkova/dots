@@ -41,13 +41,15 @@ export class ChartService{
     for(var j = 0; j < data.length; j++){
       let record = data[j];
 
+      console.log(record);
+
       for(var i = 0; i < record.Values.length; i++){
         let date = await this.timeAndDateService.formatDate(record.Date);
-        let currentParam = record.Params[i];
+        let currentParam = params[i];
         let currentParamIndex = registeredParams.indexOf(currentParam);
         if(currentParamIndex < 0){
           formatted.push({
-            "name": currentParam,
+            "name": currentParam.Title,
             "series": []
           })
           registeredParams.push(currentParam);
