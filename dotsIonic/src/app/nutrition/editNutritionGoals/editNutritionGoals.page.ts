@@ -64,7 +64,7 @@ export class EditNutritionGoalsPage implements OnInit {
     possibleParams.push({
       text: 'Cancel',
       icon: 'close',
-      role: 'cancel'
+      handler: null
     })
 
     const actionSheet = await this.actionSheetController.create({
@@ -87,7 +87,7 @@ export class EditNutritionGoalsPage implements OnInit {
   async saveChanges() {
 
     for(var i = 0; i < this.params.length; i++){
-      let checking = this.goalValues[this.params[i]];
+      let checking = this.goalValues[this.params[i].Index];
 
       // If value is null, then delete param
       if(checking == null || checking == ""){

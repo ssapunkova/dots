@@ -14,16 +14,13 @@ export class NewNutritionRecordPage implements OnInit {
 
   public fields;
   public values;
+  public customGoals
   public record = {
     RecordId: null,
     Date: "",
     Values: [],
     Params: []
   };
-
-  public isButtonDisabled = {
-    addParam: false
-  }
 
   constructor(
     private modalController: ModalController,
