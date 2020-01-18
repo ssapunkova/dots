@@ -45,6 +45,8 @@ export class WorkoutSheetPage implements OnInit {
   async getSheetData(){
     this.workoutService.getWorkoutSheetData(this.sheetId).subscribe(async (data: any) => {
 
+      console.log(data);
+
       // Initialise DataTable, which will controll chart and table
       this.dataTableService.initializeDataTable(data[0], data[0].WorkoutRecords);
       console.log(this.dataTableService);

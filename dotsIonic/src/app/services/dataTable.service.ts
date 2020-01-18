@@ -54,7 +54,7 @@ export class DataTableService{
     this.timeAndDateService.sortByDate(this.allRecords, "asc");
     this.chartService.chartData = [];
     this.getShowingMonths();
-    this.setPeriod("");
+    this.setPeriod(null, true);
   }
 
   async showNoRecordsAlert(){
@@ -78,24 +78,23 @@ export class DataTableService{
   }
 
   // Set viewing period of chart/table
-  // can be triggered by ion-select ( case 1 ) or by code ( case 2 )
-  async setPeriod($event){
+  // can be triggered by ion-select or by code (default == true)
+  async setPeriod($event, setByDefault){
 
-    if($event.target != undefined){
-      // case 1, use selected periods from ion-select
-      this.showingPeriod = $event.target.Value;
-    }
-    else{
-      // case 2, set showingPeriod to the latest
+    if(setByDefault){
+      // set showingPeriod to the latest by default
       this.showingPeriod = this.months[0];
     }
 
     // Filter which records to show and sort them by date
     this.showingRecords = this.allRecords.filter((record) => this.showingPeriod.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
 
-
     // Format data for chart
-    this.chartService.formatChartData(this.showingRecords, this.params);
+    console.log(this.showingPeriod)
+    if(this.showingPeriod.length > 0){
+      this.chartService.formatChartData(this.showingRecords,
+       this.params);
+    }
 
     console.log(this.chartService.chartData)
 
