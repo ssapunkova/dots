@@ -38,7 +38,7 @@ export class EditNutritionGoalsPage implements OnInit {
       let possibleParam = this.nutritionService.Params[i];
       this.goalValues[i] = possibleParam.Goal;
       console.log(possibleParam, this.params);
-      let indexInParams = this.params.indexOf(possibleParam.Index);
+      let indexInParams = this.params.indexOf(possibleParam);
       console.log(indexInParams)
       if(indexInParams >= 0){
         let customGoal = this.customGoals[indexInParams];
@@ -47,28 +47,52 @@ export class EditNutritionGoalsPage implements OnInit {
         }
       }
     }
+
+    // for(var i = 0; i < this.nutritionService.Params.length; i++){
+    //   let possibleParam = this.nutritionService.Params[i];
+    //   this.goalValues[i] = possibleParam.Goal;
+    //   console.log(possibleParam, this.params);
+    //   let indexInParams = this.params.indexOf(possibleParam);
+    //   console.log(indexInParams)
+    //   if(indexInParams >= 0){
+    //     let customGoal = this.customGoals[indexInParams];
+    //     if(customGoal != null){
+    //       this.goalValues[i] = customGoal;
+    //     }
+    //   }
+    // }
   }
 
 
   async presentActionSheet() {
 
-    let possibleGoals = [];
-
-    for(var i = 0; i < this.nutritionService.Params.length; i++){
-      let currentGoalIndex = this.nutritionService.Params[i].Index;
-
-      console.log(currentGoalIndex, this.params, this.params.indexOf(currentGoalIndex));
-
-      if(this.params.indexOf(currentGoalIndex) < 0){
-        possibleGoals.push({
-          text: this.nutritionService.Params[currentGoalIndex].Title,
-          icon: 'refresh-circle',
-          handler: () => {
-            this.addParam(currentGoalIndex);
-          }
-        });
+    let usedParamIndexes = this.params.map((param) => param.Index);
+    let notUsedParams = this.nutritionService.Params.filter((param) => usedParamIndexes.indexOf(param.Index) < 0);
+    let possibleGoals = notUsedParams.map((param) => {
+      return {
+        text: param.Title,
+        icon: 'refresh-circle',
+        handler: () => {
+          this.addParam(param)
+        }
       }
-    }
+    })
+
+    // for(var i = 0; i < this.nutritionService.Params.length; i++){
+    //   let currentGoal = this.nutritionService.Params[i].Index;
+    //
+    //   console.log(currentGoal, this.params, this.params.indexOf(currentGoal));
+    //
+    //   if(this.params.indexOf(currentGoal) < 0){
+    //     possibleGoals.push({
+    //       text: this.nutritionService.Params[currentGoal].Title,
+    //       icon: 'refresh-circle',
+    //       handler: () => {
+    //         this.addParam(currentGoal.Index);
+    //       }
+    //     });
+    //   }
+    // }
 
     possibleGoals.push({
       text: 'Cancel',
@@ -84,8 +108,8 @@ export class EditNutritionGoalsPage implements OnInit {
 
   }
 
-  async addParam(paramIndex){
-    this.params.push(paramIndex);
+  async addParam(param){
+    this.params.push(param);
   }
 
   async deleteParam(index){

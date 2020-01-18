@@ -20,9 +20,9 @@
           <ion-icon name="help"></ion-icon>
         </ion-chip>
 
-        <ion-label> {{ nutritionService.Params[param].Title }} </ion-label>
+        <ion-label> {{ param.Title }} </ion-label>
 
-        <ion-input type="number" placeholder="Goal" [(ngModel)]='goalValues[param]'>
+        <ion-input type="number" placeholder="Goal" [(ngModel)]='goalValues[i]'>
         </ion-input>
 
         <ion-button color="danger" (click)="deleteParam(i)" slot="end">
