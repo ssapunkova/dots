@@ -10,19 +10,16 @@ import { ChartService } from '../services/chart.service';
 @Injectable()
 export class DataTableService{
 
+  public showMode: String;
+  public title: String;
+  public params: Array;
+  public allRecords: Array;
+  public showingRecords: Array;
+  public showingPeriod: Array;
+  public months: Array;
+  public goals: Array;
 
-  public showMode = 'chart';              // Default show mode, can be switched to table
-
-  public title = "";
-  public params = [];
-  public allRecords = [];
-  public showingRecords = [];
-  public showingPeriod = [];
-  public months = [];
-
-  public goals = [];
-
-  public sortedByDate = "asc";
+  public sortedByDate: String;
 
   constructor(
     public timeAndDateService: TimeAndDateService,
@@ -36,10 +33,11 @@ export class DataTableService{
 
     console.log(data);
 
-    // Clear data
-    this.params = [];
-    this.allRecords = [];
     this.showingRecords = [];
+    this.showingPeriod = [];
+    this.months = [];
+    this.sortedByDate = "asc";
+    this.showMode = 'chart';              // Default show mode, can be switched to table
 
     this.title = data.Title;
     this.params = data.Params;
@@ -235,7 +233,5 @@ export class DataTableService{
       col.sorted = "asc";
     }
   }
-
-
 
 }

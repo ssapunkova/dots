@@ -15,7 +15,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="!loadingService.isPageLoading">
 
   <div *ngIf="dataTableService.params.length > 0 && dataTableService.allRecords != null">
 
