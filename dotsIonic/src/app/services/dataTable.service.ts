@@ -11,7 +11,7 @@ import { ChartService } from '../services/chart.service';
 export class DataTableService{
 
 
-  public showMode = 'table';              // Default show mode, can be switched to table
+  public showMode = 'chart';              // Default show mode, can be switched to table
 
   public title = "";
   public params = [];
@@ -35,6 +35,11 @@ export class DataTableService{
   async initializeDataTable(data, records){
 
     console.log(data);
+
+    // Clear data
+    this.params = [];
+    this.allRecords = [];
+    this.showingRecords = [];
 
     this.title = data.Title;
     this.params = data.Params;
