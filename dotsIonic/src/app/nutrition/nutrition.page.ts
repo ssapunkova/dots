@@ -47,11 +47,9 @@ export class NutritionPage implements OnInit {
         data.nutritionData.Params = this.nutritionService.DefaultParams;
       }
       else{
-        let fullParamInfo = [];
         for(var i = 0; i < data.nutritionData.Params.length; i++){
-          fullParamInfo.push(this.nutritionService.Params[data.nutritionData.Params[i]]);
+          data.nutritionData.Params[i] = this.nutritionService.Params[data.nutritionData.Params[i]];
         }
-        data.nutritionData.Params = fullParamInfo;
       }
 
       this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords);

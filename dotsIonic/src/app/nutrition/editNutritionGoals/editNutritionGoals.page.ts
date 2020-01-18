@@ -128,7 +128,7 @@ export class EditNutritionGoalsPage implements OnInit {
       }
 
       // If there is a custom goal
-      if(checking != this.nutritionService.Params[this.params[i]].Goal){
+      if(checking != this.params[i].Goal){
         this.customGoals[i] = checking;
       }
       else {
@@ -137,7 +137,7 @@ export class EditNutritionGoalsPage implements OnInit {
     }
 
     let results = {
-      params: this.params,
+      params: this.params.map((param) => param.Index),
       deletedParams: this.deletedParams,
       customGoals: this.customGoals
     }

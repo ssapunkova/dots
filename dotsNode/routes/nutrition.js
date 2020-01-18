@@ -36,14 +36,19 @@ app.post("/updateNutritionParams", async (req, res) => {
     Params: params
   }
 
-  console.log(nutritionObj)
-
   let updateObj = await Nutrition.updateOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }, nutritionObj, { upsert: true });
   if(updateObj.err) throw updateObj.err;
 
+  console.log(deletedParams);
+
   if(deletedParams.length > 0){
 
-    let recordsOfDeletedParams = await NutritionRecord.find({ Params: { $in: deletedParams }});
+    let recordsOfDeletedParams = await NutritionRecord.find(
+      {
+        UserId: ObjectId("5d98ade96dfda51dc84991d9"),
+        Params: { $in: deletedParams }
+      }
+    );
     if(recordsOfDeletedParams.err) throw recordsOfDeletedParams.err;
     else{
       for(let i = 0; i < recordsOfDeletedParams.length; i++){

@@ -41,7 +41,7 @@ export class ChartService{
     for(var j = 0; j < data.length; j++){
       let record = data[j];
 
-      console.log(record);
+      console.log(record, params);
 
       for(var i = 0; i < record.Values.length; i++){
         let date = await this.timeAndDateService.formatDate(record.Date);

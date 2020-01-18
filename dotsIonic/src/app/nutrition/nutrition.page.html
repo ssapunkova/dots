@@ -24,6 +24,7 @@
       <ion-col sizeXs="12" sizeLg="4">
         <ion-card>
           <ion-card-header>Goals</ion-card-header>
+          {{ param }}
           <ion-card-content>
             <ion-item *ngFor="let param of dataTableService.params; let i = index">
               {{ param.Title }}:
