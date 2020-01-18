@@ -95,6 +95,8 @@ export class DataTableService{
     // Format data for chart
     console.log(this.showingPeriod)
     console.log(this.params);
+
+
     if(this.showingPeriod.length > 0){
       this.chartService.formatChartData(this.showingRecords,
        this.params);

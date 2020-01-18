@@ -25,8 +25,8 @@
         <ion-card>
           <ion-card-header>Goals</ion-card-header>
           <ion-card-content>
-            <ion-item *ngFor="let paramIndex of dataTableService.params; let i = index">
-              {{ nutritionService.Params[paramIndex].Title }}:
+            <ion-item *ngFor="let param of dataTableService.params; let i = index">
+              {{ param.Title }}:
               <ion-label *ngIf="dataTableService.goals[i] != null; else defaultValue">
                 {{ dataTableService.goals[i] }}
                 <ion-chip color="warning">Custom goal</ion-chip>
@@ -34,7 +34,7 @@
 
               <ng-template #defaultValue>
                 <ion-label>
-                  {{ nutritionService.Params[paramIndex].Goal }}
+                  {{ param.Goal }}
                 </ion-label>
               </ng-template>
             </ion-item>
@@ -123,13 +123,13 @@
 
               <ion-col
                 class="table-header"
-                *ngFor="let paramIndex of dataTableService.params; let i = index"
-                [title]="nutritionService.Params[paramIndex].Title"
+                *ngFor="let param of dataTableService.params; let i = index"
+                [title]="param.Title"
                 (click)="dataTableService.sortCol(col, i)">
                 <ion-label>
-                  {{ (nutritionService.Params[paramIndex].Title.length > 10) ? (nutritionService.Params[paramIndex].Title | slice:0:10) + '...' : (nutritionService.Params[paramIndex].Title) }}
+                  {{ (param.Title.length > 10) ? (param.Title | slice:0:10) + '...' : (param.Title) }}
                 </ion-label>
-                <ion-icon name="arrow-dropup" *ngIf="paramIndex.sorted == 'asc'; else arrowDown"></ion-icon>
+                <ion-icon name="arrow-dropup" *ngIf="param.sorted == 'asc'; else arrowDown"></ion-icon>
                 <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
               </ion-col>
             </ion-row>
@@ -144,8 +144,8 @@
 
                <ion-item [color]="record.color">
                 <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }} {{ record.color}}</ion-col>
-                <ion-col *ngFor="let paramIndex of dataTableService.params; let j = index"
-                  [title]="nutritionService.Params[paramIndex].Title">
+                <ion-col *ngFor="let param of dataTableService.params; let j = index"
+                  [title]="param.Title">
                   <ion-label>{{ record.Values[j] }}</ion-label>
                 </ion-col>
               </ion-item>

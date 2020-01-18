@@ -16,15 +16,15 @@
         <ion-label>Goals</ion-label>
       </ion-item-divider>
 
-      <ion-item *ngFor="let paramIndex of fields; let i = index" >
+      <ion-item *ngFor="let param of fields; let i = index" >
 
-         <ion-label style="min-width: 60px">{{ nutritionService.Params[paramIndex].Title }}</ion-label>
+         <ion-label style="min-width: 60px">{{ param.Title }}</ion-label>
 
         <ion-input type="number" placeholder="Result" [(ngModel)]='record.Values[i]'>
         </ion-input>
 
         <ion-label slot="end">
-          Goal: {{ customGoals[i] || nutritionService.Params[paramIndex].Goal }}
+          Goal: {{ customGoals[i] || param.Goal }}
         </ion-label>
 
       </ion-item>

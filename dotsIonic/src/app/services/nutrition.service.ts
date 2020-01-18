@@ -34,6 +34,8 @@ export class NutritionService {
 
   public DefaultParamIndexes = [0];
 
+  public DefaultParams = this.Params[0];
+
   constructor(
       public http: HttpClient,
       public connectToServerService: ConnectToServerService,
