@@ -22,7 +22,7 @@
 
         <ion-label> {{ param.Title }} </ion-label>
 
-        <ion-input type="number" placeholder="Goal" [(ngModel)]='goalValues[i]'>
+        <ion-input type="number" placeholder="Goal" [(ngModel)]='goalValues[param.Index]'>
         </ion-input>
 
         <ion-button color="danger" (click)="deleteParam(i)" slot="end">

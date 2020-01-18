@@ -32,35 +32,18 @@ export class EditNutritionGoalsPage implements OnInit {
     this.params = data.Params;
     this.customGoals = data.CustomGoals;
     this.deletedParams = [];
+    this.goalValues = [];
     console.log(data)
 
+    // Get goal values for all existing params
+    // if there is a custom goal for current param, use it
+    // else, use the default param goal
     for(var i = 0; i < this.nutritionService.Params.length; i++){
-      let possibleParam = this.nutritionService.Params[i];
-      this.goalValues[i] = possibleParam.Goal;
-      console.log(possibleParam, this.params);
-      let indexInParams = this.params.indexOf(possibleParam);
-      console.log(indexInParams)
-      if(indexInParams >= 0){
-        let customGoal = this.customGoals[indexInParams];
-        if(customGoal != null){
-          this.goalValues[i] = customGoal;
-        }
-      }
+      let customGoal = this.customGoals[i];
+      if(customGoal != null) this.goalValues.push(customGoal);
+      else this.goalValues.push(this.nutritionService.Params[i].Goal);
     }
 
-    // for(var i = 0; i < this.nutritionService.Params.length; i++){
-    //   let possibleParam = this.nutritionService.Params[i];
-    //   this.goalValues[i] = possibleParam.Goal;
-    //   console.log(possibleParam, this.params);
-    //   let indexInParams = this.params.indexOf(possibleParam);
-    //   console.log(indexInParams)
-    //   if(indexInParams >= 0){
-    //     let customGoal = this.customGoals[indexInParams];
-    //     if(customGoal != null){
-    //       this.goalValues[i] = customGoal;
-    //     }
-    //   }
-    // }
   }
 
 
@@ -68,7 +51,7 @@ export class EditNutritionGoalsPage implements OnInit {
 
     let usedParamIndexes = this.params.map((param) => param.Index);
     let notUsedParams = this.nutritionService.Params.filter((param) => usedParamIndexes.indexOf(param.Index) < 0);
-    let possibleGoals = notUsedParams.map((param) => {
+    let possibleParams = notUsedParams.map((param) => {
       return {
         text: param.Title,
         icon: 'refresh-circle',
@@ -78,23 +61,7 @@ export class EditNutritionGoalsPage implements OnInit {
       }
     })
 
-    // for(var i = 0; i < this.nutritionService.Params.length; i++){
-    //   let currentGoal = this.nutritionService.Params[i].Index;
-    //
-    //   console.log(currentGoal, this.params, this.params.indexOf(currentGoal));
-    //
-    //   if(this.params.indexOf(currentGoal) < 0){
-    //     possibleGoals.push({
-    //       text: this.nutritionService.Params[currentGoal].Title,
-    //       icon: 'refresh-circle',
-    //       handler: () => {
-    //         this.addParam(currentGoal.Index);
-    //       }
-    //     });
-    //   }
-    // }
-
-    possibleGoals.push({
+    possibleParams.push({
       text: 'Cancel',
       icon: 'close',
       role: 'cancel'
@@ -102,7 +69,7 @@ export class EditNutritionGoalsPage implements OnInit {
 
     const actionSheet = await this.actionSheetController.create({
       header: 'Add goal',
-      buttons: possibleGoals
+      buttons: possibleParams
     });
     await actionSheet.present();
 
