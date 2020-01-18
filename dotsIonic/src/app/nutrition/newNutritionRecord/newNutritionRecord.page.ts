@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { ModalController, NavParams, ActionSheetController } from '@ionic/angular';
 
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
+import { NutritionService } from '../../services/nutrition.service';
 
 @Component({
   selector: 'modal-page',
@@ -28,34 +29,35 @@ export class NewNutritionRecordPage implements OnInit {
     private modalController: ModalController,
     private navParams: NavParams,
     private actionSheetController: ActionSheetController,
+    private nutritionService: NutritionService,
     private errorToastAndAlertService: ErrorToastAndAlertService
   ) { }
 
   ngOnInit() {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
 
+    console.log(data);
+
     this.record.RecordId = data.RecordId;
     this.record.Date = data.Date;
     this.fields = data.Fields;
+    this.customGoals = data.CustomGoals;
+
     this.values = data.Values;
 
     for(var i = 0; i < this.fields.length; i++){
       this.record.Params.push(this.fields[i].index);
 
       if(this.values == null){
-        if(this.fields[i].Type != "Bool") {
-          this.record.Values.push(null);
-        }
-        else{
-          this.record.Values.push(false);
-        }
+        this.record.Values.push(null);
       }
       else{
         this.record.Values.push(this.values[i]);
       }
+
     }
 
-    console.log(this.fields);
+    console.log(this);
   }
 
   async saveChanges() {

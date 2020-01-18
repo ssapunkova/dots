@@ -40,8 +40,10 @@ export class NutritionPage implements OnInit {
 
       // Initialise DataTable, which will controll chart and table
 
+      console.log(data)
+
       // If no custom params - take default
-      if(data.nutritionData.Params == null){
+      if(data.nutritionData.Params.length == 0){
         data.nutritionData.Params = this.nutritionService.DefaultParamIndexes;
       }
       this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords);
@@ -99,6 +101,7 @@ export class NutritionPage implements OnInit {
       componentProps: {
         RecordId: null,
         Fields: this.dataTableService.params,
+        CustomGoals: this.dataTableService.goals,
         Date: null,
         Values: null
       }

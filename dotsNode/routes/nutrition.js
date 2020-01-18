@@ -18,7 +18,8 @@ app.get("/getNutritionData", async (req, res) => {
     if(nutritionData.err) throw nutritionData.err;
   }
   else{
-    new Nutrition({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }).save();
+    nutritionData = new Nutrition({ UserId: ObjectId("5d98ade96dfda51dc84991d9") })
+    nutritionData.save();
   }
   if(nutritionRecords.err) throw nutritionRecords.err;
   res.send({ nutritionData: nutritionData, nutritionRecords: nutritionRecords});

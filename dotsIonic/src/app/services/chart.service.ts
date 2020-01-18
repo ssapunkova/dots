@@ -43,7 +43,7 @@ export class ChartService{
 
       for(var i = 0; i < record.Values.length; i++){
         let date = await this.timeAndDateService.formatDate(record.Date);
-        let currentParam = params[i].Title;
+        let currentParam = record.Params[i];
         let currentParamIndex = registeredParams.indexOf(currentParam);
         if(currentParamIndex < 0){
           formatted.push({
