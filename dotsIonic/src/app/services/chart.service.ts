@@ -15,6 +15,8 @@ export class ChartService{
   public RECORD_WIDTH = 100;
 
   public chartData = [];
+  public legendData = ["a"];
+  public legendColors;
   public chartWidth;
 
   public cardColor = "#eeeeee";
@@ -76,6 +78,8 @@ export class ChartService{
     }
 
     this.chartData = formatted;
+
+    this.legendColors = ["#fcaaab", "#bcafaf"]
     console.log(this.chartData);
 
     // Calculate chart's width based on the number of dates shown
