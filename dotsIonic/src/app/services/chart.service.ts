@@ -50,7 +50,7 @@ export class ChartService{
 
         let currentParamIndex = registeredParams.indexOf(currentParam);
         if(currentParamIndex < 0){
-          formatted.push({
+          this.chartData.push({
             "name": currentParam.Title,
             "series": []
           })
@@ -80,7 +80,7 @@ export class ChartService{
         }
 
 
-        formatted[currentParamIndex].series.push({
+        this.chartData[currentParamIndex].series.push({
           "name": date,
           "value": percentageOfGoal,
           "realValue": record.Values[i],
@@ -89,8 +89,6 @@ export class ChartService{
       }
 
     }
-
-    this.chartData = formatted;
 
     this.legendColors = ["#fcaaab", "#bcafaf"]
     console.log(this.chartData);
