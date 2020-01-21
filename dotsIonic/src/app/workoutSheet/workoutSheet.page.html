@@ -56,7 +56,7 @@
           >
           <ng-template #tooltipTemplate let-model="model">
               <div class="chart-tooltip-color" [style.backgroundColor]="value.color"></div>
-              <div style="padding: 5px; display: flex">
+              <div class="chart-legend-item">
                 <div style="padding-right: 2px">{{model[0].series}} - </div>
                 <ion-icon name="checkmark" *ngIf="model[0].realValue == true"></ion-icon>
                 <ion-icon name="checkmark" *ngIf="model[0].realValue == false"></ion-icon>
@@ -70,9 +70,8 @@
           </ng-template>
 
          <ng-template #seriesTooltipTemplate let-model="model">
-           <ion-label class="chart-tooltip-label" *ngFor="let value of model">
+           <ion-label class="chart-legend-item" *ngFor="let value of model">
              <div class="chart-tooltip-color" [style.backgroundColor]="value.color"></div>
-             <div style="padding: 5px; display: flex">
                <div style="padding-right: 2px">{{value.series}} - </div>
                <ion-icon name="checkmark" *ngIf="value.realValue == true"></ion-icon>
                <ion-icon name="checkmark" *ngIf="value.realValue == false"></ion-icon>
@@ -82,7 +81,6 @@
                <div style="padding-left: 5px">
                  {{ value.percentageOfGoal }} % of your goal
                </div>
-             </div>
            </ion-label>
 
          </ng-template>
