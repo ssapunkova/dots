@@ -75,15 +75,6 @@ export class NewWorkoutRecordPage implements OnInit {
         this.errorToastAndAlertService.showErrorToast("Please fill your workout results");
         return false;
       }
-      else{
-        for(var i = 0; i < this.record.Values.length; i++){
-          if(this.record.Values[i] == null){
-            console.log(this.record.Values[i]);
-            this.errorToastAndAlertService.showErrorToast("Please fill all the fields");
-            return false;
-          }
-        }
-      }
 
       await this.modalController.dismiss(this.record);
     }
