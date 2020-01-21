@@ -40,8 +40,6 @@ export class NutritionPage implements OnInit {
 
       // Initialise DataTable, which will controll chart and table
 
-      console.log(data)
-
       // If no custom params - take default
       if(data.nutritionData.Params.length == 0){
         data.nutritionData.Params = this.nutritionService.DefaultParams;
@@ -55,14 +53,11 @@ export class NutritionPage implements OnInit {
       // Get goals - combine custom and default goals
       for(var i = 0; i < data.nutritionData.Goals.length; i++){
         if( data.nutritionData.Goals[i] == null){
-          console.log(this.nutritionService.Params, data.nutritionData.Params[i].Index)
-          console.log(this.nutritionService.Params[data.nutritionData.Params[i].Index])
            data.nutritionData.Goals[i] = this.nutritionService.Params[data.nutritionData.Params[i].Index].Goal;
         }
       }
 
       this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords);
-      console.log(this.dataTableService);
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;
@@ -148,13 +143,15 @@ export class NutritionPage implements OnInit {
       componentProps: {
         RecordId: record._id,
         Fields: this.dataTableService.params,
+        Goals: this.dataTableService.goals,
         Date: record.Date,
         Values: record.Values
       }
     }
 
+    console.log(modalProps)
+
     let editedRecord = await this.dataTableService.editRecord(record, modalProps);
-    console.log(editedRecord)
 
     this.nutritionService.editRecord(editedRecord).subscribe( async (data: any)=>
       {

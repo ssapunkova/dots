@@ -52,6 +52,8 @@ export class DataTableService{
       this.prepareData();
     }
 
+    console.log(this);
+
   }
 
   async prepareData(){
@@ -59,7 +61,6 @@ export class DataTableService{
     this.chartService.chartData = [];
     this.getShowingMonths();
     this.setPeriod(null, true);
-
   }
 
   async showNoRecordsAlert(){
@@ -95,16 +96,10 @@ export class DataTableService{
     this.showingRecords = this.allRecords.filter((record) => this.showingPeriod.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
 
     // Format data for chart
-    console.log(this.showingPeriod)
-    console.log(this.params);
-
-
     if(this.showingPeriod.length > 0){
       this.chartService.formatChartData(this.showingRecords,
        this.params);
     }
-
-    console.log(this.chartService.chartData)
 
   }
 

@@ -90,12 +90,13 @@ export class ChartService{
     }
 
     this.legendColors = ["#fcaaab", "#bcafaf"]
-    console.log(this.chartData);
 
     // Calculate chart's width based on the number of dates shown
     this.chartWidth = this.chartData[0].series.length * this.RECORD_WIDTH;
 
     this.generateColorScheme(params.length);
+
+    console.log(this);
 
   }
 
