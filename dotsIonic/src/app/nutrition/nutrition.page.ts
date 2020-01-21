@@ -90,7 +90,7 @@ export class NutritionPage implements OnInit {
       // Update nutrition params
       this.nutritionService.updateNutritionParams(modalData).subscribe( async (data: [any])=>
         {
-          this.getNutritionData();
+          await this.getNutritionData();
           await this.loadingService.dismissSmallLoading();
         },
         error => {

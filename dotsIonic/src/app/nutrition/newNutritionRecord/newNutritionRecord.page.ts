@@ -43,7 +43,8 @@ export class NewNutritionRecordPage implements OnInit {
     this.values = data.Values;
 
     for(var i = 0; i < this.fields.length; i++){
-      this.record.Params.push(this.fields[i].index);
+      this.record.Params.push(this.fields[i].Index);
+      console.log(this.record.Params)
 
       if(this.values == null){
         this.record.Values.push(null);
