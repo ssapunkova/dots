@@ -53,8 +53,8 @@ app.post("/createSheet", async (req, res) => {
 app.post("/deleteSheet", async (req, res) => {
   let sheetId = req.body.sheetId;
 
-  let removeSheet = await WorkoutSheet.findOne({ _id: ObjectId(sheetId)}).remove();
-  let removeSheetRecords = WorkoutRecord.find({ SheetId: ObjectId(sheetId)}).remove();
+  let removeSheet = await WorkoutSheet.removeOne({ _id: ObjectId(sheetId)})
+  let removeSheetRecords = WorkoutRecord.removeMany({ SheetId: ObjectId(sheetId)});
   if(removeSheet.err) throw removeSheet.err;
   else if(removeSheetRecords.err) throw removeSheetRecords.err;
   else res.send();
@@ -116,7 +116,7 @@ app.post("/editWorkoutRecord", async (req, res) => {
 
   // Remove existing record with the same date
 
-  let removedRecords = await WorkoutRecord.remove({
+  let removedRecord = await WorkoutRecord.removeOne({
     Date: record.Date,
     _id: { $ne: ObjectId(record.RecordId) }
   })
@@ -128,9 +128,9 @@ app.post("/editWorkoutRecord", async (req, res) => {
       Params: record.Params
     }
   })
-  if(removedRecords.err) throw removedRecords.err;
+  if(removedRecord.err) throw removedRecord.err;
   else if(updateRecord.err) throw updateRecord.err;
-  else res.send({ deletedDocs: removedRecords.deletedCount });
+  else res.send({ deletedDocs: removedRecord.deletedCount });
 
 })
 

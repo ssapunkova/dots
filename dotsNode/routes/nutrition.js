@@ -68,7 +68,7 @@ app.post("/updateNutritionParams", async (req, res) => {
 app.post("/addNutritionRecord", async (req, res) => {
   let record = req.body.data;
 
-  let upsertRecord = await NutritionRecord.update(
+  let upsertRecord = await NutritionRecord.updateOne(
     {
       UserId: ObjectId("5d98ade96dfda51dc84991d9"),
       Date: record.Date },
@@ -96,12 +96,12 @@ app.post("/editNutritionRecord", async (req, res) => {
 
   // Remove existing record with the same date
 
-  let removedRecords = await NutritionRecord.remove({
+  let removedRecords = await NutritionRecord.removeOne({
     Date: record.Date,
     _id: { $ne: ObjectId(record.RecordId) }
   })
 
-  let updateRecord = await NutritionRecord.update({ _id: ObjectId(record.RecordId) }, {
+  let updateRecord = await NutritionRecord.updateOne({ _id: ObjectId(record.RecordId) }, {
     $set: {
       Date: record.Date,
       Values: record.Values,
