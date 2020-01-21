@@ -32,19 +32,23 @@ import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkout
 import { NewNutritionRecordPage } from './nutrition/newNutritionRecord/newNutritionRecord.page';
 import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutritionGoals.page';
 
+import { ChartTooltipComponent } from './components/chart-tooltip/chart-tooltip.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     SheetConfigurationPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,
-    EditNutritionGoalsPage
+    EditNutritionGoalsPage,
+    ChartTooltipComponent
   ],
   entryComponents: [
     SheetConfigurationPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,
-    EditNutritionGoalsPage
+    EditNutritionGoalsPage,
+    ChartTooltipComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +79,8 @@ import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutri
     SheetConfigurationPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,
-    EditNutritionGoalsPage
+    EditNutritionGoalsPage,
+    ChartTooltipComponent
   ],
   bootstrap: [AppComponent]
 })

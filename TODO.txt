@@ -8,7 +8,7 @@
     * Maybe move card to the right
 
   TODO:
-    Goals shown on table/chart
+    * Goals shown on table/chart
 21.01
   TODO:
     Make tooltip Component
