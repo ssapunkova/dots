@@ -51,11 +51,12 @@ export class NutritionPage implements OnInit {
       }
 
       // Get goals - combine custom and default goals
-      for(var i = 0; i < data.nutritionData.Goals.length; i++){
-        if( data.nutritionData.Goals[i] == null){
-           data.nutritionData.Goals[i] = this.nutritionService.Params[data.nutritionData.Params[i].Index].Goal;
+
+        for(var i = 0; i < data.nutritionData.Params.length; i++){
+          if(data.nutritionData.Goals[i] == null){
+             data.nutritionData.Goals[i] = this.nutritionService.Params[data.nutritionData.Params[i].Index].Goal;
+          }
         }
-      }
 
       this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords);
 

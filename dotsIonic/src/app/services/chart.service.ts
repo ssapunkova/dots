@@ -35,7 +35,7 @@ export class ChartService{
   // input - an array of json objects, each has a date and values for every param
   // output - an array of json objects, each representing values of a param for every date (series)
 
-  async formatChartData(data, params){
+  async formatChartData(data, params, goals){
 
     let formatted = [];
     let registeredParams = [];
@@ -61,13 +61,16 @@ export class ChartService{
         let percentageOfGoal = 0;
         if(typeof value == "number"){
           value = parseFloat(record.Values[i]);
-          percentageOfGoal = Math.round(value * 100 / currentParam.Goal);
+          percentageOfGoal = Math.round(value * 100 / goals[i]);
         }
-        else if(record.Values[i] == true) {
+        else if(value == null){
+          value = 0;
+        }
+        else if(value == true) {
           value = 100;
           percentageOfGoal = 100;
         }
-        else if(record.Values[i] == false) {
+        else if(value == false) {
           value = 0;
           percentageOfGoal = 0;
         }
@@ -96,6 +99,7 @@ export class ChartService{
 
     this.generateColorScheme(params.length);
 
+    console.log(goals)
     console.log(this);
 
   }
