@@ -4,8 +4,8 @@
     Make calculators for weight, blocks, kcal, etc
 18.01
   FIX:
-    chart legend overlays goals card
-    maybe move card to the right
+    * chart legend overlays goals card
+    * maybe move card to the right
 
   TODO:
     Goals shown on table/chart

@@ -43,8 +43,6 @@ export class ChartService{
     for(var j = 0; j < data.length; j++){
       let record = data[j];
 
-      console.log(record, params);
-
       for(var i = 0; i < record.Values.length; i++){
         let date = await this.timeAndDateService.formatDate(record.Date);
         let currentParam = params[i];
@@ -59,19 +57,34 @@ export class ChartService{
           registeredParams.push(currentParam);
           currentParamIndex = registeredParams.length - 1;
         }
+
         let value = record.Values[i];
+        let percentageOfGoal = 0;
         if(typeof value == "number"){
           value = parseFloat(record.Values[i]);
+          percentageOfGoal = Math.round(value * 100 / currentParam.Goal);
         }
-        else if(record.Values[i] == true) value = 10;
-        else if(record.Values[i] == false) value = 0;
+        else if(record.Values[i] == true) {
+          value = 100;
+          percentageOfGoal = 100;
+        }
+        else if(record.Values[i] == false) {
+          value = 0;
+          percentageOfGoal = 0;
+        }
         else{
-          value = new Date(this.timeAndDateService.getSeconds(record.Values[i]));
+          value = this.timeAndDateService.getSeconds(record.Values[i]);
+          let goal = this.timeAndDateService.getSeconds(currentParam.Goal);
+          percentageOfGoal = Math.round(value * 100 / goal);
+          value = new Date(value);
         }
+
+
         formatted[currentParamIndex].series.push({
           "name": date,
-          "value": value,
-          "tooltipText": record.Values[i]
+          "value": percentageOfGoal,
+          "realValue": record.Values[i],
+          "percentageOfGoal": percentageOfGoal
         })
       }
 
