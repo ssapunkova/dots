@@ -44,6 +44,7 @@ export class DataTableService{
     this.goals = data.Goals;
 
     if(records.length < 1){
+      this.allRecords = [];
       this.showNoRecordsAlert();
     }
     else{
