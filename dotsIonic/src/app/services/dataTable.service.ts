@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 
+import { GeneralService } from './general.service';
 import { TimeAndDateService } from './timeAndDate.service';
 import { ChartService } from '../services/chart.service';
 
@@ -24,6 +25,7 @@ export class DataTableService{
   constructor(
     public timeAndDateService: TimeAndDateService,
     public chartService: ChartService,
+    public generalService: GeneralService,
     public alertController: AlertController,
     public modalController: ModalController
   ) { }
@@ -60,12 +62,22 @@ export class DataTableService{
       }
     }
 
+
+    for(var i = 0; i < this.allRecords.length; i++){
+      let record = this.allRecords[i];
+      record.PercentageOfGoal = [];
+      for(var j = 0; j < record.Values.length; j++){
+        record.PercentageOfGoal[j] = this.generalService.calculatePercentage(record.Values[j], this.goals[j]);
+      }
+    }
+
     console.log(this);
 
   }
 
   async prepareData(){
     this.timeAndDateService.sortByDate(this.allRecords, "asc");
+
     this.chartService.chartData = [];
     this.getShowingMonths();
     this.setPeriod(null, true);

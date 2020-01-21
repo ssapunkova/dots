@@ -88,18 +88,30 @@
                   <div *ngIf="model[0].realValue != true && model[0].realValue != false">
                     {{model[0].realValue}}
                   </div>
-                  <div style="padding-left: 5px">
-                    {{ model[0].percentageOfGoal }} % of your goal
-                  </div>
+                  <ion-chip style="padding: 5px"
+                    [color]="model[0].percentageOfGoal < 90 ? model[0].percentageOfGoal < 60 ? 'danger' : 'warning' : 'success'">
+                    <ion-icon name="checkmark-circle"
+                      style="margin: 0px"
+                    ></ion-icon>
+                    <ion-label style="margin-right: 5px">
+                      {{ model[0].percentageOfGoal }}%
+                    </ion-label>
+                  </ion-chip>
               </ng-template>
 
              <ng-template #seriesTooltipTemplate let-model="model" class="chart-tooltip">
                <ion-label class="chart-legend-item" *ngFor="let value of model">
                  <div class="chart-legend-color" [style.backgroundColor]="value.color"></div>
                  {{value.series}} - {{value.realValue}}
-                 <div style="padding-left: 5px">
-                   {{ value.percentageOfGoal }} % of your goal
-                 </div>
+                 <ion-chip style="padding: 5px"
+                   [color]="value.percentageOfGoal < 90 ? value.percentageOfGoal < 60 ? 'danger' : 'warning' : 'success'">
+                   <ion-icon name="checkmark-circle"
+                     style="margin: 0px"
+                   ></ion-icon>
+                   <ion-label style="margin-right: 5px">
+                     {{ value.percentageOfGoal }}%
+                   </ion-label>
+                 </ion-chip>
                </ion-label>
              </ng-template>
             </ngx-charts-line-chart>
@@ -143,9 +155,19 @@
                 <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }} {{ record.color}}</ion-col>
                 <ion-col *ngFor="let param of dataTableService.params; let j = index"
                   [title]="param.Title">
-                  <ion-label>{{ record.Values[j] }}</ion-label> /
-                  <ion-label>{{ dataTableService.goals[j] }}</ion-label>
-                  <ion-label>{{ generalService.calculatePercentage(record.Values[j], dataTableService.goals[j]) }}</ion-label>
+                  <div style="display: flex">
+                    <ion-label>{{ record.Values[j] }}</ion-label>
+                    <ion-chip style="padding: 5px"
+                      [color]="record.PercentageOfGoal[j] < 90 ? record.PercentageOfGoal[j] < 60 ? 'danger' : 'warning' : 'success'"
+                      *ngIf="record.Values[j] != null">
+                      <ion-icon name="checkmark-circle"
+                        style="margin: 0px"
+                      ></ion-icon>
+                      <ion-label style="margin-right: 5px">
+                        {{ record.PercentageOfGoal[j] }}%
+                      </ion-label>
+                    </ion-chip>
+                  </div>
                 </ion-col>
               </ion-item>
               </ion-item-sliding>

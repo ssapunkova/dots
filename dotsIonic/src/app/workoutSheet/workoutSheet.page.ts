@@ -5,6 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 
 // Services
 import { LoadingService } from '../services/loading.service';
+import { GeneralService } from '../services/general.service';
 import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 import { DataTableService } from '../services/dataTable.service';
 import { WorkoutService } from '../services/workout.service';
@@ -27,6 +28,7 @@ export class WorkoutSheetPage implements OnInit {
   constructor(
     public loadingService: LoadingService,
     public route: ActivatedRoute,
+    public generalService: GeneralService,
     public errorToastAndAlertService: ErrorToastAndAlertService,
     public alertController: AlertController,
     public workoutService: WorkoutService,

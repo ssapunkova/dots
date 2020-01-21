@@ -60,12 +60,19 @@
                 <div style="padding-right: 2px">{{model[0].series}} - </div>
                 <ion-icon name="checkmark" *ngIf="model[0].realValue == true"></ion-icon>
                 <ion-icon name="checkmark" *ngIf="model[0].realValue == false"></ion-icon>
-                <div *ngIf="model[0].realValue != true && model[0].realValue != false">
+                <div *ngIf="generalService.getType(model[0].realValue) != 'boolean'">
                   {{model[0].realValue}}
+                  <ion-chip style="padding: 5px"
+                    [color]="model[0].percentageOfGoal < 90 ? model[0].percentageOfGoal < 60 ? 'danger' : 'warning' : 'success'">
+                    <ion-icon name="checkmark-circle"
+                      style="margin: 0px"
+                    ></ion-icon>
+                    <ion-label style="margin-right: 5px">
+                      {{ model[0].percentageOfGoal }}%
+                    </ion-label>
+                  </ion-chip>
                 </div>
-                <div style="padding-left: 5px">
-                  {{ model[0].percentageOfGoal }} % of your goal
-                </div>
+
               </div>
           </ng-template>
 
@@ -75,12 +82,19 @@
                <div style="padding-right: 2px">{{value.series}} - </div>
                <ion-icon name="checkmark" *ngIf="value.realValue == true"></ion-icon>
                <ion-icon name="checkmark" *ngIf="value.realValue == false"></ion-icon>
-               <div *ngIf="value.realValue != true && value.realValue != false">
+               <div *ngIf="generalService.getType(value.realValue) != 'boolean'">
                  {{ value.realValue }}
+                 <ion-chip style="padding: 5px"
+                   [color]="value.percentageOfGoal < 90 ? value.percentageOfGoal < 60 ? 'danger' : 'warning' : 'success'">
+                   <ion-icon name="checkmark-circle"
+                     style="margin: 0px"
+                   ></ion-icon>
+                   <ion-label style="margin-right: 5px">
+                     {{ value.percentageOfGoal }}%
+                   </ion-label>
+                 </ion-chip>
                </div>
-               <div style="padding-left: 5px">
-                 {{ value.percentageOfGoal }} % of your goal
-               </div>
+
            </ion-label>
 
          </ng-template>
@@ -121,13 +135,24 @@
 
            <ion-item [color]="record.color">
             <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }} {{ record.color}}</ion-col>
-            <ion-col *ngFor="let col of dataTableService.params; let j = index" [title]="col.Title">
-              <ion-label *ngIf="col.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
+            <ion-col *ngFor="let param of dataTableService.params; let j = index" [title]="param.Title">
+              <ion-label *ngIf="param.Type != 'Bool'; else showTick">
+                {{ record.Values[j] }}
+              </ion-label>
               <ng-template #showTick>
                 <ion-icon name="checkbox" *ngIf="record.Values[j] == true"></ion-icon>
                 <ion-icon name="close" *ngIf="record.Values[j] == false"></ion-icon>
               </ng-template>
-              {{ dataTableService.goals[j] }}
+              <ion-chip style="padding: 5px"
+                [color]="record.PercentageOfGoal[j] < 90 ? record.PercentageOfGoal[j] < 60 ? 'danger' : 'warning' : 'success'"
+                *ngIf="record.Values[j] != null && param.Type != 'Bool'">
+                <ion-icon name="checkmark-circle"
+                  style="margin: 0px"
+                ></ion-icon>
+                <ion-label style="margin-right: 5px">
+                  {{ record.PercentageOfGoal[j] }}%
+                </ion-label>
+              </ion-chip>
             </ion-col>
           </ion-item>
           </ion-item-sliding>
