@@ -7,6 +7,7 @@ import { interval } from 'rxjs';
 
 // Services
 import { LoadingService } from '../services/loading.service';
+import { GeneralService } from '../services/general.service';
 import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 import { DataTableService } from '../services/dataTable.service';
 import { TimerService } from '../services/timer.service';
@@ -53,6 +54,7 @@ export class WorkoutManagerPage implements OnInit {
   constructor(
     public loadingService: LoadingService,
     public route: ActivatedRoute,
+    public generalService: GeneralService,
     public errorToastAndAlertService: ErrorToastAndAlertService,
     public timerService: TimerService,
     public alertController: AlertController,

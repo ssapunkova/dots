@@ -9,6 +9,10 @@ import { TimeAndDateService } from './timeAndDate.service';
 @Injectable()
 export class GeneralService{
 
+  constructor(
+    public timeAndDateService: TimeAndDateService
+  ) {}
+
   calculatePercentage(value, goal){
 
     let percentageOfGoal = 0;
@@ -18,6 +22,7 @@ export class GeneralService{
     }
     else if(value == null){
       value = 0;
+      percentageOfGoal = 0;
     }
     else if(value == true) {
       value = 100;

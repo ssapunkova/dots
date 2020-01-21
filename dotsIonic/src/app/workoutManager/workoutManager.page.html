@@ -13,10 +13,10 @@
         <div id="timer">
           <div id="time-passed"
             [style.width.%]="this.timerService.timePassed() / this.averageTime * 100"></div>
-          <div id="average-time">{{ timerService.timePassed() | Date:'HH:mm:ss':'UTC' }}</div>
+          <div id="average-time">{{ timerService.timePassed() | date:'HH:mm:ss':'UTC' }}</div>
         </div>
       </ion-item>
-      <ion-label *ngIf="averageTime != 0">This workout takes {{ averageTime | Date:'HH:mm:ss':'UTC'}} in average
+      <ion-label *ngIf="averageTime != 0">This workout takes {{ averageTime | date:'HH:mm:ss':'UTC'}} in average
       </ion-label>
 
       <ion-item *ngIf="controls.IsExerciseRunning || controls.IsPaused && !controls.IsABreak">
@@ -47,12 +47,8 @@
                 current.InputValue < sheetExercises.Params[current.ExerciseIndex].Goal * 1/2 ? 'warning' :
                 'primary'
                 ">
-                <ion-label *ngIf="sheetExercises.Params[current.ExerciseIndex].Type == 'Number'">
-                  {{ current.InputValue * 100 / sheetExercises.Params[current.ExerciseIndex].Goal | number: '1.0-0' }}
-                  % of your goal ( {{ sheetExercises.Params[current.ExerciseIndex].Goal }} )
-                </ion-label>
-                <ion-label *ngIf="sheetExercises.Params[current.ExerciseIndex].Type == 'Time'">
-                  {{ timeAndDateService.calculateTimeRatio(current.InputValue, sheetExercises.Params[current.ExerciseIndex].Goal) }}
+                <ion-label>
+                  {{ generalService.calculatePercentage(current.InputValue, sheetExercises.Params[current.ExerciseIndex].Goal) }}
                   % of your goal ( {{ sheetExercises.Params[current.ExerciseIndex].Goal }} )
                 </ion-label>
               </ion-chip>
@@ -89,7 +85,7 @@
           <ion-row>
             <ion-col>
               <h3 class="ion-text-center">
-                Workout duration: {{ timerService.timePassed() | Date: "HH:mm:ss": "UTC" }}
+                Workout duration: {{ timerService.timePassed() | date: "HH:mm:ss": "UTC" }}
               </h3>
             </ion-col>
           </ion-row>
