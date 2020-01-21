@@ -18,6 +18,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ConnectToServerService } from './services/connectToServer.service';
 import { LoadingService } from './services/loading.service';
 import { ErrorToastAndAlertService } from './services/errorToastAndAlert.service';
+import { GeneralService } from './services/general.service';
 import { DataTableService } from './services/dataTable.service';
 import { TimeAndDateService } from './services/timeAndDate.service';
 import { TimerService } from './services/timer.service';
@@ -58,6 +59,7 @@ import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutri
     StatusBar,
     ConnectToServerService,
     LoadingService,
+    GeneralService,
     ErrorToastAndAlertService,
     DataTableService,
     TimeAndDateService,

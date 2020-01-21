@@ -124,9 +124,10 @@
             <ion-col *ngFor="let col of dataTableService.params; let j = index" [title]="col.Title">
               <ion-label *ngIf="col.Type != 'Bool'; else showTick">{{ record.Values[j] }}</ion-label>
               <ng-template #showTick>
-                <ion-icon name="checkbox" *ngIf="record.Values[j] == true">d</ion-icon>
-                <ion-icon name="close" *ngIf="record.Values[j] == false">d</ion-icon>
+                <ion-icon name="checkbox" *ngIf="record.Values[j] == true"></ion-icon>
+                <ion-icon name="close" *ngIf="record.Values[j] == false"></ion-icon>
               </ng-template>
+              {{ dataTableService.goals[j] }}
             </ion-col>
           </ion-item>
           </ion-item-sliding>

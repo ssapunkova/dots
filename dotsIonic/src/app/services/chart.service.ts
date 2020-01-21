@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { GeneralService } from './general.service';
 import { TimeAndDateService } from './timeAndDate.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +29,7 @@ export class ChartService{
 
   constructor(
     public ngxChartsModule: NgxChartsModule,
+    public generalService: GeneralService,
     public timeAndDateService: TimeAndDateService
   ){ }
 
@@ -39,6 +41,15 @@ export class ChartService{
 
     let formatted = [];
     let registeredParams = [];
+
+    if(goals == null){
+      goals = [];
+      for(var i = 0; i < params.length; i++){
+        goals.push(params[i].Goal);
+      }
+    }
+
+    console.log(goals);
 
     for(var j = 0; j < data.length; j++){
       let record = data[j];
@@ -57,30 +68,7 @@ export class ChartService{
           currentParamIndex = registeredParams.length - 1;
         }
 
-        let value = record.Values[i];
-        let percentageOfGoal = 0;
-        if(typeof value == "number"){
-          value = parseFloat(record.Values[i]);
-          percentageOfGoal = Math.round(value * 100 / goals[i]);
-        }
-        else if(value == null){
-          value = 0;
-        }
-        else if(value == true) {
-          value = 100;
-          percentageOfGoal = 100;
-        }
-        else if(value == false) {
-          value = 0;
-          percentageOfGoal = 0;
-        }
-        else{
-          value = this.timeAndDateService.getSeconds(record.Values[i]);
-          let goal = this.timeAndDateService.getSeconds(currentParam.Goal);
-          percentageOfGoal = Math.round(value * 100 / goal);
-          value = new Date(value);
-        }
-
+        let percentageOfGoal = this.generalService.calculatePercentage(record.Values[i], goals[i]);
 
         this.chartData[currentParamIndex].series.push({
           "name": date,

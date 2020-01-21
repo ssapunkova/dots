@@ -4,6 +4,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 
 // Services
 import { LoadingService } from '../services/loading.service';
+import { GeneralService } from '../services/general.service'
 import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 import { DataTableService } from '../services/dataTable.service';
 import { ChartService } from '../services/chart.service';
@@ -21,6 +22,7 @@ export class NutritionPage implements OnInit {
 
   constructor(
     public loadingService: LoadingService,
+    public generalService: GeneralService,
     public errorToastAndAlertService: ErrorToastAndAlertService,
     public alertController: AlertController,
     public modalController: ModalController,

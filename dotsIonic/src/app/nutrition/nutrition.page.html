@@ -143,8 +143,9 @@
                 <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }} {{ record.color}}</ion-col>
                 <ion-col *ngFor="let param of dataTableService.params; let j = index"
                   [title]="param.Title">
-                  <ion-label>{{ record.Values[j] }}</ion-label>
-                  <ion-label>{{ goals | json}}</ion-label>
+                  <ion-label>{{ record.Values[j] }}</ion-label> /
+                  <ion-label>{{ dataTableService.goals[j] }}</ion-label>
+                  <ion-label>{{ generalService.calculatePercentage(record.Values[j], dataTableService.goals[j]) }}</ion-label>
                 </ion-col>
               </ion-item>
               </ion-item-sliding>

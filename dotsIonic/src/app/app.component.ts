@@ -5,6 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 // Services
 import { ConnectToServerService } from './services/connectToServer.service';
 import { LoadingService } from './services/loading.service';
+import { GeneralService } from './services/general.service';
 import { ErrorToastAndAlertService } from './services/errorToastAndAlert.service';
 import { DataTableService } from './services/dataTable.service';
 import { TimeAndDateService } from './services/timeAndDate.service';

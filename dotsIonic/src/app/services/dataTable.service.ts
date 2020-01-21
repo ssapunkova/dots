@@ -52,6 +52,14 @@ export class DataTableService{
       this.prepareData();
     }
 
+    if(this.goals == null){
+      this.goals = [];
+      for(var i = 0; i < this.params.length; i++){
+        console.log(this.params[i])
+        this.goals.push(this.params[i].Goal);
+      }
+    }
+
     console.log(this);
 
   }
