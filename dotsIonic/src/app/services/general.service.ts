@@ -17,7 +17,6 @@ export class GeneralService{
 
     let percentageOfGoal = 0;
     if(typeof value == "number"){
-      value = parseFloat(value);
       percentageOfGoal = Math.round(value * 100 / goal);
     }
     else if(value == null){
