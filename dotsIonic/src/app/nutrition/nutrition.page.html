@@ -28,16 +28,11 @@
             <ion-label class="chart-legend-item" *ngFor="let param of dataTableService.params; let i = index">
               <div class="chart-legend-color" [style.backgroundColor]="chartService.colorScheme.domain[i]"></div>
               {{ param.Title }}:
-              <ion-label *ngIf="dataTableService.goals[i] != null; else defaultValue">
+              <ion-label>
                 {{ dataTableService.goals[i] }}
-                <ion-chip color="warning">Custom goal</ion-chip>
               </ion-label>
 
-              <ng-template #defaultValue>
-                <ion-label>
-                  {{ param.Goal }}
-                </ion-label>
-              </ng-template>
+              <ion-chip color="warning" *ngIf="dataTableService.goals[i] != param.Goal">Custom goal</ion-chip>
             </ion-label>
 
 
@@ -149,6 +144,7 @@
                 <ion-col *ngFor="let param of dataTableService.params; let j = index"
                   [title]="param.Title">
                   <ion-label>{{ record.Values[j] }}</ion-label>
+                  <ion-label>{{ goals | json}}</ion-label>
                 </ion-col>
               </ion-item>
               </ion-item-sliding>

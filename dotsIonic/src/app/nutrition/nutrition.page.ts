@@ -52,6 +52,15 @@ export class NutritionPage implements OnInit {
         }
       }
 
+      // Get goals - combine custom and default goals
+      for(var i = 0; i < data.nutritionData.Goals.length; i++){
+        if( data.nutritionData.Goals[i] == null){
+          console.log(this.nutritionService.Params, data.nutritionData.Params[i].Index)
+          console.log(this.nutritionService.Params[data.nutritionData.Params[i].Index])
+           data.nutritionData.Goals[i] = this.nutritionService.Params[data.nutritionData.Params[i].Index].Goal;
+        }
+      }
+
       this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords);
       console.log(this.dataTableService);
 
@@ -67,7 +76,7 @@ export class NutritionPage implements OnInit {
     // Select configureable data about the sheet
     let updateData = {
       Params: this.dataTableService.params,
-      CustomGoals: this.dataTableService.goals
+      Goals: this.dataTableService.goals
     };
 
     // Show a configuration modal
@@ -107,7 +116,7 @@ export class NutritionPage implements OnInit {
       componentProps: {
         RecordId: null,
         Fields: this.dataTableService.params,
-        CustomGoals: this.dataTableService.goals,
+        Goals: this.dataTableService.goals,
         Date: null,
         Values: null
       }

@@ -14,7 +14,8 @@ export class NewNutritionRecordPage implements OnInit {
 
   public fields;
   public values;
-  public customGoals;
+  public goals;
+  // public customGoals;
   public record = {
     RecordId: null,
     Date: "",
@@ -39,14 +40,15 @@ export class NewNutritionRecordPage implements OnInit {
     this.record.Date = data.Date;
 
     this.fields = data.Fields;
-    this.customGoals = data.CustomGoals;
+    this.goals = data.Goals;
+    // this.customGoals = data.CustomGoals;
     this.values = data.Values;
 
     console.log(this.record);
 
-    if(typeof this.customGoals == "undefined"){
-      this.customGoals = [];
-    }
+    // if(typeof this.customGoals == "undefined"){
+    //   this.customGoals = [];
+    // }
 
     for(var i = 0; i < this.fields.length; i++){
 
@@ -60,8 +62,8 @@ export class NewNutritionRecordPage implements OnInit {
       }
       console.log(this.fields[i]);
       console.log(this.record)
-      console.log(this.customGoals[i]);
-      console.log(this.customGoals);
+      // console.log(this.customGoals[i]);
+      // console.log(this.customGoals);
 
     }
 

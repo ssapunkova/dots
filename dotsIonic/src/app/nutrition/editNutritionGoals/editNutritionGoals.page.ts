@@ -15,7 +15,7 @@ export class EditNutritionGoalsPage implements OnInit {
   public params;
   public deletedParams;
 
-  public goalValues = [];
+  public goals = [];
   public customGoals = [];
 
   constructor(
@@ -30,19 +30,18 @@ export class EditNutritionGoalsPage implements OnInit {
   ngOnInit() {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
     this.params = data.Params;
-    this.customGoals = data.CustomGoals;
+    this.goals = data.Goals;
     this.deletedParams = [];
-    this.goalValues = [];
     console.log(data)
 
     // Get goal values for all existing params
     // if there is a custom goal for current param, use it
     // else, use the default param goal
-    for(var i = 0; i < this.nutritionService.Params.length; i++){
-      let customGoal = this.customGoals[i];
-      if(customGoal != null) this.goalValues.push(customGoal);
-      else this.goalValues.push(this.nutritionService.Params[i].Goal);
-    }
+    // for(var i = 0; i < this.nutritionService.Params.length; i++){
+    //   let customGoal = this.customGoals[i];
+    //   if(customGoal != null) this.goalValues.push(customGoal);
+    //   else this.goalValues.push(this.nutritionService.Params[i].Goal);
+    // }
 
   }
 
@@ -87,14 +86,10 @@ export class EditNutritionGoalsPage implements OnInit {
   async saveChanges() {
 
     for(var i = 0; i < this.params.length; i++){
-      let checking = this.goalValues[this.params[i].Index];
-
-      // If value is null, then delete param
-      if(checking == null || checking == ""){
-        this.params.splice(i, 1);
-      }
+      let checking = this.goals[i];
 
       // If there is a custom goal
+      console.log(this.params, i)
       if(checking != this.params[i].Goal){
         this.customGoals[i] = checking;
       }

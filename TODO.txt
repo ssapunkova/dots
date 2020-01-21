@@ -1,11 +1,14 @@
 16.01
   TODO:
-    Indicate custom goals
+    * Indicate custom goals
     Make calculators for weight, blocks, kcal, etc
 18.01
   FIX:
-    * chart legend overlays goals card
-    * maybe move card to the right
+    * Chart legend overlays goals card
+    * Maybe move card to the right
 
   TODO:
     Goals shown on table/chart
+21.01
+  TODO:
+    Make tooltip Component
