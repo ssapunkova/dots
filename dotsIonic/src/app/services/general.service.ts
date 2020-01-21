@@ -16,6 +16,7 @@ export class GeneralService{
   calculatePercentage(value, goal){
 
     let percentageOfGoal = 0;
+    console.log(value, goal);
     if(typeof value == "number"){
       value = parseFloat(value);
       percentageOfGoal = Math.round(value * 100 / goal);
@@ -24,11 +25,11 @@ export class GeneralService{
       value = 0;
       percentageOfGoal = 0;
     }
-    else if(value == true) {
+    else if(value == true || value == "true") {
       value = 100;
       percentageOfGoal = 100;
     }
-    else if(value == false) {
+    else if(value == false || value == "false") {
       value = 0;
       percentageOfGoal = 0;
     }
