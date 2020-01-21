@@ -138,7 +138,7 @@ export class NutritionPage implements OnInit {
       component: NewNutritionRecordPage,
       componentProps: {
         RecordId: record._id,
-        Fields: this.dataTableService.goals,
+        Fields: this.dataTableService.params,
         Date: record.Date,
         Values: record.Values
       }
