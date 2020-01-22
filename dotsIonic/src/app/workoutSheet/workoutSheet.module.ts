@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { WorkoutSheetPage } from './workoutSheet.page';
+import { ComponentsModule  } from '../components/components.module';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     NgxChartsModule,
+    ComponentsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [WorkoutSheetPage]

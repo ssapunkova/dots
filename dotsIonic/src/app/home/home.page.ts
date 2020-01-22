@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 // Services
 import { LoadingService } from '../services/loading.service';
 
-
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',

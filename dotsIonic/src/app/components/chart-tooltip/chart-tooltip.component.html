@@ -1,3 +1,13 @@
-<p>
-  chart-tooltip works!
-</p>
+<ion-label class="chart-legend-item" *ngFor="let value of data">
+  <div class="chart-legend-color" [style.backgroundColor]="value.color"></div>
+  {{value.series}} - {{value.realValue}}
+  <ion-chip style="padding: 5px"
+    [color]="value.percentageOfGoal < 90 ? value.percentageOfGoal < 60 ? 'danger' : 'warning' : 'success'">
+    <ion-icon name="checkmark-circle"
+      style="margin: 0px"
+    ></ion-icon>
+    <ion-label style="margin-right: 5px">
+      {{ value.percentageOfGoal }}%
+    </ion-label>
+  </ion-chip>
+</ion-label>

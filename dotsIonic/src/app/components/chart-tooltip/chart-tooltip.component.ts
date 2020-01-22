@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'chart-tooltip',
@@ -7,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChartTooltipComponent implements OnInit {
 
+  @Input() data: any[];
+
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }

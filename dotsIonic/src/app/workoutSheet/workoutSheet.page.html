@@ -55,48 +55,11 @@
             showYAxisLabel="false"
           >
           <ng-template #tooltipTemplate let-model="model">
-              <div class="chart-tooltip-color" [style.backgroundColor]="value.color"></div>
-              <div class="chart-legend-item">
-                <div style="padding-right: 2px">{{model[0].series}} - </div>
-                <ion-icon name="checkmark" *ngIf="model[0].realValue == true"></ion-icon>
-                <ion-icon name="checkmark" *ngIf="model[0].realValue == false"></ion-icon>
-                <div *ngIf="generalService.getType(model[0].realValue) != 'boolean'">
-                  {{model[0].realValue}}
-                  <ion-chip style="padding: 5px"
-                    [color]="model[0].percentageOfGoal < 90 ? model[0].percentageOfGoal < 60 ? 'danger' : 'warning' : 'success'">
-                    <ion-icon name="checkmark-circle"
-                      style="margin: 0px"
-                    ></ion-icon>
-                    <ion-label style="margin-right: 5px">
-                      {{ model[0].percentageOfGoal }}%
-                    </ion-label>
-                  </ion-chip>
-                </div>
-
-              </div>
+            <chart-tooltip [data]="model"></chart-tooltip>
           </ng-template>
 
          <ng-template #seriesTooltipTemplate let-model="model">
-           <ion-label class="chart-legend-item" *ngFor="let value of model">
-             <div class="chart-tooltip-color" [style.backgroundColor]="value.color"></div>
-               <div style="padding-right: 2px">{{value.series}} - </div>
-               <ion-icon name="checkmark" *ngIf="value.realValue == true"></ion-icon>
-               <ion-icon name="checkmark" *ngIf="value.realValue == false"></ion-icon>
-               <div *ngIf="generalService.getType(value.realValue) != 'boolean'">
-                 {{ value.realValue }}
-                 <ion-chip style="padding: 5px"
-                   [color]="value.percentageOfGoal < 90 ? value.percentageOfGoal < 60 ? 'danger' : 'warning' : 'success'">
-                   <ion-icon name="checkmark-circle"
-                     style="margin: 0px"
-                   ></ion-icon>
-                   <ion-label style="margin-right: 5px">
-                     {{ value.percentageOfGoal }}%
-                   </ion-label>
-                 </ion-chip>
-               </div>
-
-           </ion-label>
-
+           <chart-tooltip [data]="model"></chart-tooltip>
          </ng-template>
         </ngx-charts-line-chart>
 
