@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 
 import { GeneralService } from './general.service';
@@ -34,6 +34,8 @@ export class DataTableService{
     "nutrition": this.nutritionService
   }
 
+  @Output reloadData = new EventEmitter();
+
   constructor(
     public timeAndDateService: TimeAndDateService,
     public chartService: ChartService,
@@ -45,6 +47,10 @@ export class DataTableService{
     public nutritionService: NutritionService
   ) { }
 
+
+  async reloadData(){
+    this.reloadData.emit();
+  }
 
   async initializeDataTable(data, records, service){
 
@@ -177,7 +183,7 @@ export class DataTableService{
       {
         // n.nModified > 0 means the new record upserted an older with the same date
         if(data.docs.nModified > 0){
-          this.getSheetData();
+          this.reloadData();
         }
       },
       error => {
@@ -203,7 +209,7 @@ export class DataTableService{
       {
         // deletedDocs > 0 means the edited record overrode an older one with the same date
         if(data.deletedDocs > 0){
-          this.getSheetData();
+          this.reloadData();
         }
       },
       error => {

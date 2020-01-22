@@ -14,5 +14,9 @@
     * Make tooltip Component
 22.01
   TODO:
-    Style chart legend and chart tooltip components
-    Make dataTable component
+    * Style chart legend and chart tooltip components
+    * Make dataTable component
+
+  FIX:
+    Adding new/editing row in table doesn't display normally
+    getSheetData in dataTable.service

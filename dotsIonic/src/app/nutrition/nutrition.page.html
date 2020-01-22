@@ -20,6 +20,7 @@
     [data]="data.nutritionData"
     [records]="data.nutritionRecords"
     service="nutrition"
+    (reloadData)="getNutritionData()"
     (addRecordClicked)="addRecord()"
     (editRecordClicked)="editRecord($event)"
     (deleteRecordClicked)="deleteRecord($event)"

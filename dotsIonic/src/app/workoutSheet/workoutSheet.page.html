@@ -20,6 +20,7 @@
     [data]="data[0]"
     [records]="data[0].WorkoutRecords"
     service="workout"
+    (reloadData)="getSheetData()"
     (addRecordClicked)="addRecord()"
     (editRecordClicked)="editRecord($event)"
     (deleteRecordClicked)="deleteRecord($event)"

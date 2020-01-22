@@ -70,6 +70,8 @@ export class NutritionPage implements OnInit {
       this.loadingService.isPageLoading = false;
       await this.loadingService.dismissSmallLoading();
 
+      console.log(this);
+
     });
   };
 
