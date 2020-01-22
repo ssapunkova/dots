@@ -74,19 +74,19 @@ export class WorkoutSheetPage implements OnInit {
 
     console.log(modalProps)
 
-    let newRecord = await this.dataTableService.addRecord(modalProps);
+    this.dataTableService.addRecord(modalProps);
 
-    this.workoutService.addRecord(newRecord).subscribe( async (data: any) =>
-      {
-        // n.nModified > 0 means the new record upserted an older with the same date
-        if(data.docs.nModified > 0){
-          this.getSheetData();
-        }
-      },
-      error => {
-        this.errorToastAndAlertService.showErrorAlert("Oups")
-      }
-    );
+    // this.workoutService.addRecord(newRecord).subscribe( async (data: any) =>
+    //   {
+    //     // n.nModified > 0 means the new record upserted an older with the same date
+    //     if(data.docs.nModified > 0){
+    //       this.getSheetData();
+    //     }
+    //   },
+    //   error => {
+    //     this.errorToastAndAlertService.showErrorAlert("Oups")
+    //   }
+    // );
 
   }
 

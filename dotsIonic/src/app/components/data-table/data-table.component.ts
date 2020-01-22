@@ -15,6 +15,7 @@ export class DataTableComponent implements OnInit {
 
   @Input() data: any[];
   @Input() records: any[];
+  @Input() service: String;
 
   @Output() addRecordClicked = new EventEmitter();
 
@@ -34,7 +35,7 @@ export class DataTableComponent implements OnInit {
 
 
   ngOnInit(){
-    this.dataTableService.initializeDataTable(this.data, this.records);
+    this.dataTableService.initializeDataTable(this.data, this.records, this.service);
   }
 
 }

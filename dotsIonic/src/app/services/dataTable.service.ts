@@ -5,6 +5,8 @@ import { GeneralService } from './general.service';
 import { TimeAndDateService } from './timeAndDate.service';
 import { ChartService } from '../services/chart.service';
 
+import { WorkoutService } from '../services/workout.service';
+
 // DataTable Service
 // Implements sorting the data, displayed in ion-grid
 
@@ -20,6 +22,10 @@ export class DataTableService{
   public months: any[];
   public goals: any[];
 
+  public tableWidth = 0;
+
+  public service;
+
   public sortedByDate: String;
 
   constructor(
@@ -27,11 +33,13 @@ export class DataTableService{
     public chartService: ChartService,
     public generalService: GeneralService,
     public alertController: AlertController,
-    public modalController: ModalController
+    public modalController: ModalController,
+
+    public workoutService: WorkoutService
   ) { }
 
 
-  async initializeDataTable(data, records){
+  async initializeDataTable(data, records, service){
 
     console.log(data);
 
@@ -46,6 +54,13 @@ export class DataTableService{
     this.title = data.Title;
     this.params = data.Params;
     this.goals = data.Goals;
+
+    if(service == 'workout'){
+      console.log("q")
+      this.service = this.workoutService;
+    }
+
+    console.log("A", this.service, service);
 
     if(records.length < 1){
       this.allRecords = [];
@@ -153,7 +168,19 @@ export class DataTableService{
       this.allRecords.push(modalData);
       this.prepareData();
     };
-    return modalData;
+    // return modalData;
+
+    this.service.addRecord(modalData).subscribe( async (data: any) =>
+      {
+        // n.nModified > 0 means the new record upserted an older with the same date
+        if(data.docs.nModified > 0){
+          this.getSheetData();
+        }
+      },
+      error => {
+        this.errorToastAndAlertService.showErrorAlert("Oups")
+      }
+    );
   }
 
   async editRecord(record, modalProps){
