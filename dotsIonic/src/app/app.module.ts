@@ -72,6 +72,7 @@ import { ChartTooltipComponent } from './components/chart-tooltip/chart-tooltip.
     ChartService,
     WorkoutService,
     StorageService,
+    ChartTooltipComponent,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [

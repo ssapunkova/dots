@@ -14,6 +14,9 @@ import { ChartService } from './services/chart.service';
 import { WorkoutService } from './services/workout.service';
 import { StorageService } from './services/storage.service';
 
+
+import { ChartTooltipComponent } from './components/chart-tooltip/chart-tooltip.component';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -53,7 +56,8 @@ export class AppComponent {
     private timeAndDateService: TimeAndDateService,
     private chartService: ChartService,
     private workoutService: WorkoutService,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private chartTooltipComponent: ChartTooltipComponent
   ) {
     this.initializeApp();
   }
