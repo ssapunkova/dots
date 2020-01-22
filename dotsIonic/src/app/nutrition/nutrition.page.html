@@ -16,6 +16,10 @@
 
 <ion-content *ngIf="!loadingService.isPageLoading">
 
-  <data-table [data]="data.nutritionData" [records]="data.nutritionRecords"></data-table>
+  <data-table
+    [data]="data.nutritionData"
+    [records]="data.nutritionRecords"
+    (addRecordClicked)="addRecord()"
+  ></data-table>
 
 </ion-content>

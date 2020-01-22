@@ -52,10 +52,6 @@ export class WorkoutSheetPage implements OnInit {
       console.log(data);
       this.data = data;
 
-      // Initialise DataTable, which will controll chart and table
-      // this.dataTableService.initializeDataTable(data[0], data[0].WorkoutRecords);
-      // console.log(this.dataTableService);
-
       // Dismiss all loading
       this.loadingService.isPageLoading = false;
       await this.loadingService.dismissSmallLoading();
