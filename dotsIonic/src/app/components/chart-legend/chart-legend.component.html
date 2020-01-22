@@ -1,12 +1,14 @@
 <ion-card>
 
-  <ion-toolbar>
-    <ion-label slot="start">Legend</ion-label>
-    <ion-button slot="end" (click)="editGoals()">
-      <ion-icon name="create"></ion-icon>
-    </ion-button>
-  </ion-toolbar>
   <ion-card-content>
+
+    <ion-toolbar>
+      <ion-label slot="start">Legend</ion-label>
+      <ion-button slot="end" (click)="editGoals()">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+
     <ion-label class="chart-legend-item" *ngFor="let param of data; let i = index">
       <div class="chart-legend-color" [style.backgroundColor]="colorScheme[i]"></div>
       {{ param.Title }}:
@@ -28,4 +30,5 @@
     </ion-label>
 
   </ion-card-content>
+  
 </ion-card>

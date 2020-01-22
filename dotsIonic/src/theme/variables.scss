@@ -66,15 +66,3 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 }
-
-ion-menu > ion-content{
-  background: #a8ff78; /* fallback for old browsers */
- background: -webkit-linear-gradient(to top, #a8ff78, #78ffd6); /* Chrome 10-25, Safari 5.1-6 */
- background: linear-gradient(to top, #a8ff78, #78ffd6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  --ion-text-color: var(--ion-color-light-primary-contrast);
-
-
-}
-ion-list {/* optional, but it needs when you use gradient as a background color.*/
-  background: transparent;
-}

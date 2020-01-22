@@ -76,23 +76,6 @@ ion-alert, .alert-head, .alert-button-group{
   color: var(--ion-color-secondary);
 }
 
-ngx-charts-legend{
-  position: fixed;
-  left: 10px;
-  margin-top: 10px;
-  width: 100%;
-  background: white !important;
-  box-shadow: 0 0 1px grey;
-
-  ul{
-    background: none !important;
-  }
-
-  .legend-label{
-      color: #666 !important;
-  }
-}
-
 .y .axis{
   position: absolute;
   left: 0px;
@@ -105,6 +88,11 @@ ngx-charts-legend{
 
 g.line-chart > g:last-of-type > g g.line-series > path {
     stroke-width: 2px !important;
+}
+
+ion-label{
+  font-size: 1rem !important;
+  color: var(--ion-color-light-primary-contrast) !important;
 }
 
 // g.line-chart > g:last-of-type > g:nth-child(3) g.line-series > path {
