@@ -6,10 +6,9 @@
     <ion-title>Workout sheet</ion-title>
 
     <ion-buttons slot="end">
-      <ion-icon name="grid"></ion-icon>
-      <ion-toggle checked
-        (click)="dataTableService.changeShowMode()"></ion-toggle>
-      <ion-icon name="podium"></ion-icon>
+
+      <toggle-showing-mode></toggle-showing-mode>
+
     </ion-buttons>
 
   </ion-toolbar>
@@ -17,84 +16,8 @@
 
 <ion-content *ngIf="!loadingService.isPageLoading">
 
-  <div *ngIf="dataTableService.params.length > 0 && dataTableService.allRecords != null">
 
-    <ion-grid>
+    <data-table [data]="data[0]" [records]="data[0].WorkoutRecords"></data-table>
 
-      <ion-row>
-        <ion-col sizeXs="12" sizeLg="4" pushLg="8">
-          <chart-legend
-            [data]="dataTableService.params"
-            [goals]="dataTableService.goals"
-            [colorScheme]="chartService.colorScheme.domain"
-            (editGoalsButtonClicked)="editGoals()"
-          ></chart-legend>
-        </ion-col>
-
-        <ion-col sizeXs="12" sizeLg="8" pullLg="4">
-
-          <ion-toolbar>
-            <ion-item>
-              <ion-label>Show records for: </ion-label>
-              <ion-select
-                placeholder="Select period"
-                multiple
-                [(ngModel)]="dataTableService.showingPeriod"
-                (ionChange)="dataTableService.setPeriod($event, false)">
-                <ion-select-option
-                  *ngFor="let month of dataTableService.months"
-                  [value]="month">
-                    {{ month }}
-                </ion-select-option>
-              </ion-select>
-            </ion-item>
-          </ion-toolbar>
-
-          <div style="height: 100%; overflow-x: auto; width: 100%">
-
-            <div *ngIf="dataTableService.showMode == 'chart' && dataTableService.showingRecords.length > 0" style="width: 100%; min-height: 400px; max-height: 80vh;" [style.minWidth.px]="chartService.chartWidth">
-
-              <ngx-charts-line-chart
-                  view=""
-                  [results]="chartService.chartData"
-                  [scheme]="chartService.colorScheme"
-                  schemeType="ordinal"
-                  [gradient]="false"
-                  showDataLabel="true"
-                  xAxis="false"
-                  yAxis="true"
-                  showXAxisLabel="false"
-                  showYAxisLabel="false"
-                >
-                <ng-template #tooltipTemplate let-model="model">
-                  <chart-tooltip [data]="model"></chart-tooltip>
-                </ng-template>
-
-                <ng-template #seriesTooltipTemplate let-model="model">
-                  <chart-tooltip [data]="model"></chart-tooltip>
-                </ng-template>
-              </ngx-charts-line-chart>
-
-            </div>
-
-            <data-table></data-table>
-
-
-          </div>
-
-        </ion-col>
-
-      </ion-row>
-
-  </ion-grid>
-
-  </div>
-
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="addRecord()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 
 </ion-content>

@@ -25,6 +25,8 @@ export class WorkoutSheetPage implements OnInit {
 
   public sheetId = null;
 
+  public data = [];
+
   constructor(
     public loadingService: LoadingService,
     public route: ActivatedRoute,
@@ -48,10 +50,11 @@ export class WorkoutSheetPage implements OnInit {
     this.workoutService.getWorkoutSheetData(this.sheetId).subscribe(async (data: any) => {
 
       console.log(data);
+      this.data = data;
 
       // Initialise DataTable, which will controll chart and table
-      this.dataTableService.initializeDataTable(data[0], data[0].WorkoutRecords);
-      console.log(this.dataTableService);
+      // this.dataTableService.initializeDataTable(data[0], data[0].WorkoutRecords);
+      // console.log(this.dataTableService);
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;

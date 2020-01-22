@@ -1,25 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { ChartTooltipComponent } from './chart-tooltip/chart-tooltip.component';
 import { ChartLegendComponent } from './chart-legend/chart-legend.component';
 import { DataTableComponent } from './data-table/data-table.component';
+import { ToggleShowingMode } from './toggle-showing-mode/toggle-showing-mode.component';
+
 
 @NgModule({
   declarations: [
     ChartTooltipComponent,
     ChartLegendComponent,
-    DataTableComponent
+    DataTableComponent,
+    ToggleShowingMode
   ],
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule,
+    NgxChartsModule
   ],
   exports: [
     ChartTooltipComponent,
     ChartLegendComponent,
-    DataTableComponent
+    DataTableComponent,
+    ToggleShowingMode
   ]
 })
 export class ComponentsModule { }
