@@ -39,7 +39,7 @@ export class DataTableService{
     this.showingPeriod = [];
     this.months = [];
     this.sortedByDate = "asc";
-    this.showMode = "chart";              // Default show mode, can be switched to table
+    this.showMode = "table";              // Default show mode, can be switched to table
 
     this.title = data.Title;
     this.params = data.Params;

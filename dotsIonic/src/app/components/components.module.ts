@@ -4,11 +4,13 @@ import { IonicModule } from '@ionic/angular';
 
 import { ChartTooltipComponent } from './chart-tooltip/chart-tooltip.component';
 import { ChartLegendComponent } from './chart-legend/chart-legend.component';
+import { DataTableComponent } from './data-table/data-table.component';
 
 @NgModule({
   declarations: [
     ChartTooltipComponent,
-    ChartLegendComponent
+    ChartLegendComponent,
+    DataTableComponent
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { ChartLegendComponent } from './chart-legend/chart-legend.component';
   ],
   exports: [
     ChartTooltipComponent,
-    ChartLegendComponent
+    ChartLegendComponent,
+    DataTableComponent
   ]
 })
 export class ComponentsModule { }

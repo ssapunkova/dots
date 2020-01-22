@@ -92,7 +92,7 @@
                 class="table-header"
                 *ngFor="let param of dataTableService.params; let i = index"
                 [title]="param.Title"
-                (click)="dataTableService.sortCol(col, i)">
+                (click)="dataTableService.sortCol(param, i)">
                 <ion-label>
                   {{ (param.Title.length > 10) ? (param.Title | slice:0:10) + '...' : (param.Title) }}
                 </ion-label>

@@ -77,65 +77,7 @@
 
             </div>
 
-          <ion-grid *ngIf="dataTableService.showMode == 'table'" [style.minWidth.px]="chartService.chartWidth">
-
-            <ion-row>
-              <ion-col
-                class="table-header"
-                title='Date'
-                (click)="dataTableService.sortByDate()">
-                Date
-                <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
-                <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
-              </ion-col>
-
-              <ion-col
-                class="table-header"
-                *ngFor="let col of dataTableService.params; let i = index"
-                [title]="col.Title"
-                (click)="dataTableService.sortCol(col, i)">
-                <ion-label>{{ (col.Title.length > 10) ? (col.Title | slice:0:10) + '...' : (col.Title) }}</ion-label>
-                <ion-icon name="arrow-dropup" *ngIf="col.sorted == 'asc'; else arrowDown"></ion-icon>
-                <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
-              </ion-col>
-            </ion-row>
-
-            <ion-row *ngFor="let record of dataTableService.showingRecords">
-              <ion-item-sliding>
-
-                <ion-item-options side="start">
-                  <ion-item-option color="danger" (click)="deleteRecord(record)">Delete</ion-item-option>
-                  <ion-item-option color="success" (click)="editRecord(record)">Edit</ion-item-option>
-                </ion-item-options>
-
-                <ion-item [color]="record.color">
-                  <ion-col title='Date'>{{ record.Date | date : 'dd.MM.yy' }} {{ record.color}}</ion-col>
-                  <ion-col *ngFor="let param of dataTableService.params; let j = index" [title]="param.Title">
-
-                    <ion-label *ngIf="param.Type != 'Bool'; else showTick">
-                      {{ record.Values[j] }}
-                    </ion-label>
-
-                    <ng-template #showTick>
-                      <ion-icon name="checkmark-circle" *ngIf="record.Values[j] == true"></ion-icon>
-                      <ion-icon name="close-circle" *ngIf="record.Values[j] == false"></ion-icon>
-                    </ng-template>
-
-                    <ion-chip style="padding: 5px"
-                      [color]="record.PercentageOfGoal[j] < 90 ? record.PercentageOfGoal[j] < 60 ? 'danger' : 'warning' : 'success'"
-                      *ngIf="record.Values[j] != null && param.Type != 'Bool'">
-                      <ion-icon name="checkmark-circle" style="margin: 0px"></ion-icon>
-                      <ion-label style="margin-right: 5px">
-                        {{ record.PercentageOfGoal[j] }}%
-                      </ion-label>
-                    </ion-chip>
-
-                  </ion-col>
-                </ion-item>
-
-              </ion-item-sliding>
-            </ion-row>
-          </ion-grid>
+            <data-table></data-table>
 
 
           </div>
