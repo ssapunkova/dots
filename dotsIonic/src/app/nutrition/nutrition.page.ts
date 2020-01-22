@@ -71,6 +71,8 @@ export class NutritionPage implements OnInit {
 
   async editGoals(){
 
+    console.log("clicked")
+
     // Select configureable data about the sheet
     let updateData = {
       Params: this.dataTableService.params,

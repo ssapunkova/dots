@@ -22,7 +22,7 @@
     <ion-row>
 
       <ion-col sizeXs="12" sizeLg="4" pushLg="8">
-        <ion-card>
+        <!-- <ion-card>
           <ion-card-header>Goals</ion-card-header>
           <ion-card-content>
             <ion-label class="chart-legend-item" *ngFor="let param of dataTableService.params; let i = index">
@@ -42,7 +42,13 @@
             EDIT
           </ion-button>
 
-        </ion-card>
+        </ion-card> -->
+        <chart-legend
+          [data]="dataTableService.params"
+          [goals]="dataTableService.goals"
+          [colorScheme]="chartService.colorScheme.domain"
+          (editGoalsButtonClicked)="editGoals()"
+          ></chart-legend>
       </ion-col>
 
       <ion-col sizeXs="12" sizeLg="8" pullLg="4">
