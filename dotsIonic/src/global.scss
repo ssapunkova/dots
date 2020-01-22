@@ -100,22 +100,7 @@ ngx-charts-legend{
 }
 
 .chart-tooltip{
-  padding: 1rem;
-}
-
-.chart-legend-item{
-  display: flex;
-  align-items: stretch;
-  font-size: 1rem !important;
-  padding: 5px;
-}
-
-
-.chart-legend-color{
-  width: 1.3rem;
-  height: 1.3rem;
-  border-radius: 2px;
-  margin-right: 5px;
+  padding: 0px !important;
 }
 
 g.line-chart > g:last-of-type > g g.line-series > path {

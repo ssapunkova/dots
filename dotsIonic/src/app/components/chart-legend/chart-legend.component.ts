@@ -1,8 +1,11 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 
+import { GeneralService } from '../../services/general.service';
+
 @Component({
   selector: 'chart-legend',
-  templateUrl: './chart-legend.component.html'
+  templateUrl: './chart-legend.component.html',
+  styleUrls: ['./chart-legend.component.scss']
 })
 export class ChartLegendComponent implements OnInit {
 
@@ -17,7 +20,9 @@ export class ChartLegendComponent implements OnInit {
     this.editGoalsButtonClicked.emit()
   }
 
-  constructor() { }
+  constructor(
+    public generalService: GeneralService
+  ) { }
 
   ngOnInit() { }
 

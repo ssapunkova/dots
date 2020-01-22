@@ -41,7 +41,16 @@ export class GeneralService{
   }
 
   getType(variable){
-    return typeof variable;
+    let result = typeof variable;
+
+    // Check for 'true' and 'false' strings
+    if(result == 'string'){
+      if(variable == 'true' || variable == 'false'){
+        result = 'boolean';
+      }
+    }
+
+    return result;
   }
 
 }

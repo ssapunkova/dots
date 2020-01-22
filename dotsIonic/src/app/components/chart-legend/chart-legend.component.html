@@ -11,7 +11,17 @@
       <div class="chart-legend-color" [style.backgroundColor]="colorScheme[i]"></div>
       {{ param.Title }}:
       <ion-label>
-        {{ goals[i] }}
+
+        <div *ngIf="generalService.getType(goals[i]) != 'boolean'">
+          {{ goals[i] }}
+        </div>
+        <div *ngIf="goals[i] == 'true'">
+          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+        </div>
+        <div *ngIf="goals[i] == 'false'">
+          <ion-icon name="close-circle" color="danger"></ion-icon>
+        </div>
+
       </ion-label>
 
       <ion-chip color="warning" *ngIf="goals[i] != param.Goal">Custom goal</ion-chip>
