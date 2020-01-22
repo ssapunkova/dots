@@ -19,6 +19,7 @@ export class DataTableComponent implements OnInit {
 
   @Output() addRecordClicked = new EventEmitter();
   @Output() editRecordClicked = new EventEmitter();
+  @Output() deleteRecordClicked = new EventEmitter();
 
   constructor(
     public timeAndDateService: TimeAndDateService,
@@ -34,14 +35,19 @@ export class DataTableComponent implements OnInit {
     this.dataTableService.initializeDataTable(this.data, this.records, this.service);
   }
 
+  async addRecord() {
+    // Emit addRecordClicked event to parent (nutrition.page.html)
+    this.addRecordClicked.emit()
+  }
+
   async editRecord($event){
     // Emit editRecordClicked event to parent (nutrition.page.html)
     this.editRecordClicked.emit($event)
   }
 
-  addRecord() {
+  async deleteRecord($event) {
     // Emit addRecordClicked event to parent (nutrition.page.html)
-    this.addRecordClicked.emit()
+    this.deleteRecordClicked.emit($event)
   }
 
 }

@@ -76,17 +76,6 @@ export class WorkoutSheetPage implements OnInit {
 
     this.dataTableService.addRecord(modalProps);
 
-    // this.workoutService.addRecord(newRecord).subscribe( async (data: any) =>
-    //   {
-    //     // n.nModified > 0 means the new record upserted an older with the same date
-    //     if(data.docs.nModified > 0){
-    //       this.getSheetData();
-    //     }
-    //   },
-    //   error => {
-    //     this.errorToastAndAlertService.showErrorAlert("Oups")
-    //   }
-    // );
 
   }
 
@@ -106,18 +95,11 @@ export class WorkoutSheetPage implements OnInit {
 
     this.dataTableService.editRecord(record, modalProps);
 
-    
   }
 
   async deleteRecord(record){
 
-    this.dataTableService.deleteRecord(record, () => {
-        this.workoutService.deleteRecord(record._id).subscribe( async (data: [any]) =>
-          {}, error => {
-            this.errorToastAndAlertService.showErrorAlert("Oups")
-          }
-        )
-    })
+    this.dataTableService.deleteRecord(record);
 
   }
 

@@ -168,7 +168,6 @@ export class DataTableService{
       this.allRecords.push(modalData);
       this.prepareData();
     };
-    // return modalData;
 
     this.service.addRecord(modalData).subscribe( async (data: any) =>
       {
@@ -195,7 +194,6 @@ export class DataTableService{
       this.allRecords[record.index] = modalData;
       this.prepareData();
     };
-    // return modalData;
 
     this.service.editRecord(modalData).subscribe( async (data: any)=>
       {
@@ -228,7 +226,12 @@ export class DataTableService{
             // Remove from allRecords
             this.allRecords.splice(record.index, 1);
             this.prepareData();
-            handlerFunc()
+
+            this.service.deleteRecord(record._id).subscribe( async (data: [any]) =>
+              {}, error => {
+                this.errorToastAndAlertService.showErrorAlert("Oups")
+              }
+            )
           }
         }
       ]
