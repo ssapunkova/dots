@@ -104,20 +104,9 @@ export class WorkoutSheetPage implements OnInit {
       }
     }
 
-    let editedRecord = await this.dataTableService.editRecord(record, modalProps);
-    console.log(editedRecord)
+    this.dataTableService.editRecord(record, modalProps);
 
-    this.workoutService.editRecord(editedRecord).subscribe( async (data: any)=>
-      {
-        // deletedDocs > 0 means the edited record overrode an older one with the same date
-        if(data.deletedDocs > 0){
-          this.getSheetData();
-        }
-      },
-      error => {
-        this.errorToastAndAlertService.showErrorAlert("Oups")
-      }
-    );
+    
   }
 
   async deleteRecord(record){

@@ -18,11 +18,7 @@ export class DataTableComponent implements OnInit {
   @Input() service: String;
 
   @Output() addRecordClicked = new EventEmitter();
-
-  addRecord() {
-    // Emit editGoalsButtonClicked event to parent (nutrition.page.html)
-    this.addRecordClicked.emit()
-  }
+  @Output() editRecordClicked = new EventEmitter();
 
   constructor(
     public timeAndDateService: TimeAndDateService,
@@ -36,6 +32,16 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(){
     this.dataTableService.initializeDataTable(this.data, this.records, this.service);
+  }
+
+  async editRecord($event){
+    // Emit editRecordClicked event to parent (nutrition.page.html)
+    this.editRecordClicked.emit($event)
+  }
+
+  addRecord() {
+    // Emit addRecordClicked event to parent (nutrition.page.html)
+    this.addRecordClicked.emit()
   }
 
 }

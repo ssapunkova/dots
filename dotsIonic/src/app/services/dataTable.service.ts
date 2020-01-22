@@ -195,7 +195,19 @@ export class DataTableService{
       this.allRecords[record.index] = modalData;
       this.prepareData();
     };
-    return modalData;
+    // return modalData;
+
+    this.service.editRecord(modalData).subscribe( async (data: any)=>
+      {
+        // deletedDocs > 0 means the edited record overrode an older one with the same date
+        if(data.deletedDocs > 0){
+          this.getSheetData();
+        }
+      },
+      error => {
+        this.errorToastAndAlertService.showErrorAlert("Oups")
+      }
+    );
 
   }
 
