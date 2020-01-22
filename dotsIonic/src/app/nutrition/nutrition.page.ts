@@ -126,21 +126,7 @@ export class NutritionPage implements OnInit {
       }
     };
 
-    console.log(modalProps);
-
-    let newRecord = await this.dataTableService.addRecord(modalProps);
-
-    this.nutritionService.addRecord(newRecord).subscribe( async (data: any) =>
-      {
-        // n.nModified > 0 means the new record upserted an older with the same date
-        if(data.docs.nModified > 0){
-          this.getNutritionData();
-        }
-      },
-      error => {
-        this.errorToastAndAlertService.showErrorAlert("Oups")
-      }
-    );
+    this.dataTableService.addRecord(modalProps);
 
   }
 
@@ -158,32 +144,13 @@ export class NutritionPage implements OnInit {
       }
     }
 
-    console.log(modalProps)
+    this.dataTableService.editRecord(record, modalProps);
 
-    let editedRecord = await this.dataTableService.editRecord(record, modalProps);
-
-    this.nutritionService.editRecord(editedRecord).subscribe( async (data: any)=>
-      {
-        // deletedDocs > 0 means the edited record overrode an older one with the same date
-        if(data.deletedDocs > 0){
-          this.getNutritionData();
-        }
-      },
-      error => {
-        this.errorToastAndAlertService.showErrorAlert("Oups")
-      }
-    );
   }
 
   async deleteRecord(record){
 
-    this.dataTableService.deleteRecord(record, () => {
-        this.nutritionService.deleteRecord(record._id).subscribe( async (data: [any]) =>
-          {}, error => {
-            this.errorToastAndAlertService.showErrorAlert("Oups")
-          }
-        )
-    })
+    this.dataTableService.deleteRecord(record);
 
   }
 

@@ -94,9 +94,9 @@ app.post("/addNutritionRecord", async (req, res) => {
 app.post("/editNutritionRecord", async (req, res) => {
   let record = req.body.data;
 
-  // Remove existing record with the same date
+  // delete existing record with the same date
 
-  let removedRecords = await NutritionRecord.removeOne({
+  let deletedRecords = await NutritionRecord.deleteOne({
     Date: record.Date,
     _id: { $ne: ObjectId(record.RecordId) }
   })
@@ -108,9 +108,9 @@ app.post("/editNutritionRecord", async (req, res) => {
       Params: record.Params
     }
   })
-  if(removedRecords.err) throw removedRecords.err;
+  if(deletedRecords.err) throw deletedRecords.err;
   else if(updateRecord.err) throw updateRecord.err;
-  else res.send({ deletedDocs: removedRecords.deletedCount });
+  else res.send({ deletedDocs: deletedRecords.deletedCount });
 
 })
 
@@ -119,6 +119,6 @@ app.post("/deleteNutritionRecord", async (req, res) => {
   let recordId = req.body.recordId;
 
   let deleteRecord = await NutritionRecord.findOneAndDelete({_id: ObjectId(recordId)})
-  if(deleteRecord.err) throw deleteRecord.err;
+  if(deleteRecord != null && deleteRecord.err) throw deleteRecord.err;
   else res.send();
 })

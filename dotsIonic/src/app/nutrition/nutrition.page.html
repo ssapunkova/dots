@@ -21,6 +21,8 @@
     [records]="data.nutritionRecords"
     service="nutrition"
     (addRecordClicked)="addRecord()"
+    (editRecordClicked)="editRecord($event)"
+    (deleteRecordClicked)="deleteRecord($event)"
   ></data-table>
 
 </ion-content>

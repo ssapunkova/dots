@@ -6,6 +6,7 @@ import { TimeAndDateService } from './timeAndDate.service';
 import { ChartService } from '../services/chart.service';
 
 import { WorkoutService } from '../services/workout.service';
+import { NutritionService } from '../services/nutrition.service';
 
 // DataTable Service
 // Implements sorting the data, displayed in ion-grid
@@ -28,6 +29,11 @@ export class DataTableService{
 
   public sortedByDate: String;
 
+  public services = {
+    "workout": this.workoutService,
+    "nutrition": this.nutritionService
+  }
+
   constructor(
     public timeAndDateService: TimeAndDateService,
     public chartService: ChartService,
@@ -35,7 +41,8 @@ export class DataTableService{
     public alertController: AlertController,
     public modalController: ModalController,
 
-    public workoutService: WorkoutService
+    public workoutService: WorkoutService,
+    public nutritionService: NutritionService
   ) { }
 
 
@@ -55,10 +62,7 @@ export class DataTableService{
     this.params = data.Params;
     this.goals = data.Goals;
 
-    if(service == 'workout'){
-      console.log("q")
-      this.service = this.workoutService;
-    }
+    this.service = this.services[service];
 
     console.log("A", this.service, service);
 

@@ -31,7 +31,6 @@ export class NutritionService {
     }
   ]
 
-
   public DefaultParamIndexes = [0];
 
   public DefaultParams = [this.Params[0]];
@@ -67,10 +66,10 @@ export class NutritionService {
     );
   }
 
-  public deleteRecord(RecordId){
+  public deleteRecord(recordId){
     return this.http.post(
       this.connectToServerService.serverUrl + '/deleteNutritionRecord',
-      {RecordId: RecordId}
+      {recordId: recordId}
     );
   }
 

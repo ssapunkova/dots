@@ -72,13 +72,9 @@ export class WorkoutSheetPage implements OnInit {
       }
     };
 
-    console.log(modalProps)
-
     this.dataTableService.addRecord(modalProps);
 
-
   }
-
 
   async editRecord(record){
 
