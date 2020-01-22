@@ -11,4 +11,4 @@
     * Goals shown on table/chart
 21.01
   TODO:
-    Make tooltip Component
+    * Make tooltip Component

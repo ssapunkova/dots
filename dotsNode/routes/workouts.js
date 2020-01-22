@@ -138,7 +138,9 @@ app.post("/editWorkoutRecord", async (req, res) => {
 app.post("/deleteWorkoutRecord", async (req, res) => {
   let recordId = req.body.recordId;
 
+  console.log(recordId)
+
   let deleteRecord = await WorkoutRecord.findOneAndDelete({_id: ObjectId(recordId)})
-  if(deleteRecord.err) throw deleteRecord.err;
+  if(deleteRecord != null && deleteRecord.err) throw deleteRecord.err;
   else res.send();
 })

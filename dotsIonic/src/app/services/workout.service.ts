@@ -58,10 +58,10 @@ export class WorkoutService {
     );
   }
 
-  public deleteRecord(RecordId){
+  public deleteRecord(recordId){
     return this.http.post(
       this.connectToServerService.serverUrl + '/deleteWorkoutRecord',
-      {RecordId: RecordId}
+      {recordId: recordId}
     );
   }
 
