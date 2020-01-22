@@ -16,6 +16,7 @@
   TODO:
     * Style chart legend and chart tooltip components
     * Make dataTable component
+    * Show/hide legend
 
   FIX:
     Adding new/editing row in table doesn't display normally
