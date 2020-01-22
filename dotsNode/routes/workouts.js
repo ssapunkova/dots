@@ -53,10 +53,12 @@ app.post("/createSheet", async (req, res) => {
 app.post("/deleteSheet", async (req, res) => {
   let sheetId = req.body.sheetId;
 
-  let removeSheet = await WorkoutSheet.removeOne({ _id: ObjectId(sheetId)})
-  let removeSheetRecords = WorkoutRecord.removeMany({ SheetId: ObjectId(sheetId)});
-  if(removeSheet.err) throw removeSheet.err;
-  else if(removeSheetRecords.err) throw removeSheetRecords.err;
+  console.log(sheetId)
+
+  let deleteSheet = await WorkoutSheet.deleteOne({ _id: ObjectId(sheetId)})
+  let deleteSheetRecords = await WorkoutRecord.deleteMany({ SheetId: ObjectId(sheetId)});
+  if(deleteSheet.err) throw deleteSheet.err;
+  else if(deleteSheetRecords.err) throw deleteSheetRecords.err;
   else res.send();
 
 })
@@ -114,9 +116,9 @@ app.post("/addWorkoutRecord", async (req, res) => {
 app.post("/editWorkoutRecord", async (req, res) => {
   let record = req.body.data;
 
-  // Remove existing record with the same date
+  // delete existing record with the same date
 
-  let removedRecord = await WorkoutRecord.removeOne({
+  let deletedRecord = await WorkoutRecord.deleteOne({
     Date: record.Date,
     _id: { $ne: ObjectId(record.RecordId) }
   })
@@ -128,9 +130,9 @@ app.post("/editWorkoutRecord", async (req, res) => {
       Params: record.Params
     }
   })
-  if(removedRecord.err) throw removedRecord.err;
+  if(deletedRecord.err) throw deletedRecord.err;
   else if(updateRecord.err) throw updateRecord.err;
-  else res.send({ deletedDocs: removedRecord.deletedCount });
+  else res.send({ deletedDocs: deletedRecord.deletedCount });
 
 })
 

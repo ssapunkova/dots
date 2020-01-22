@@ -230,6 +230,7 @@ export class WorkoutsPage implements OnInit {
   }
 
   async deleteSheet(sheet, index){
+    console.log(sheet)
     // Show alert, where the user has to confirm the name of the sheet to be deleted
     const alert = await this.alertController.create({
       header: 'Delete sheet',

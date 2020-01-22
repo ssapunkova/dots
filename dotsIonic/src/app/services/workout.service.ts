@@ -39,7 +39,7 @@ export class WorkoutService {
   public deleteSheet(sheetId){
     return this.http.post(
       this.connectToServerService.serverUrl + '/deleteSheet',
-      {SheetId: sheetId}
+      {sheetId: sheetId}
     );
   }
 
