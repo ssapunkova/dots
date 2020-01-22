@@ -12,3 +12,7 @@
 21.01
   TODO:
     * Make tooltip Component
+22.01
+  TODO:
+    Style chart legend and chart tooltip components
+    Make dataTable component
