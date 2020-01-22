@@ -32,23 +32,19 @@ import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkout
 import { NewNutritionRecordPage } from './nutrition/newNutritionRecord/newNutritionRecord.page';
 import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutritionGoals.page';
 
-import { ChartTooltipComponent } from './components/chart-tooltip/chart-tooltip.component';
-
 @NgModule({
   declarations: [
     AppComponent,
     SheetConfigurationPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,
-    EditNutritionGoalsPage,
-    ChartTooltipComponent
+    EditNutritionGoalsPage
   ],
   entryComponents: [
     SheetConfigurationPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,
-    EditNutritionGoalsPage,
-    ChartTooltipComponent
+    EditNutritionGoalsPage
   ],
   imports: [
     BrowserModule,
@@ -72,7 +68,6 @@ import { ChartTooltipComponent } from './components/chart-tooltip/chart-tooltip.
     ChartService,
     WorkoutService,
     StorageService,
-    ChartTooltipComponent,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [
@@ -80,8 +75,7 @@ import { ChartTooltipComponent } from './components/chart-tooltip/chart-tooltip.
     SheetConfigurationPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,
-    EditNutritionGoalsPage,
-    ChartTooltipComponent
+    EditNutritionGoalsPage
   ],
   bootstrap: [AppComponent]
 })

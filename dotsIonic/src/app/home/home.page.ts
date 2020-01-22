@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 // Services
 import { LoadingService } from '../services/loading.service';
 
-import { ChartTooltipComponent } from '../components/chart-tooltip/chart-tooltip.component';
-
 
 
 @Component({
