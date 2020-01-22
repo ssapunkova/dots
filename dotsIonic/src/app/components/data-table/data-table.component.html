@@ -16,6 +16,23 @@
 
         <div style="height: 100%; overflow-x: auto; width: 100%">
 
+          <ion-toolbar>
+            <ion-item>
+              <ion-label>Show records for: </ion-label>
+              <ion-select
+                placeholder="Select period"
+                multiple
+                [(ngModel)]="dataTableService.showingPeriod"
+                (ionChange)="dataTableService.setPeriod($event)">
+                <ion-select-option
+                  *ngFor="let month of dataTableService.months"
+                  [value]="month">
+                    {{ month }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-toolbar>
+
           <div *ngIf="dataTableService.showMode == 'chart' && dataTableService.showingRecords.length > 0" style="width: 100%; min-height: 400px; max-height: 80vh;" [style.minWidth.px]="chartService.chartWidth">
 
             <ngx-charts-line-chart
