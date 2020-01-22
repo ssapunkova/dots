@@ -20,6 +20,8 @@ import { EditNutritionGoalsPage } from './editNutritionGoals/editNutritionGoals.
 })
 export class NutritionPage implements OnInit {
 
+  public data = [];
+
   constructor(
     public loadingService: LoadingService,
     public generalService: GeneralService,
@@ -42,25 +44,27 @@ export class NutritionPage implements OnInit {
 
       // Initialise DataTable, which will controll chart and table
 
+      this.data = data;
+
       // If no custom params - take default
-      if(data.nutritionData.Params.length == 0){
-        data.nutritionData.Params = this.nutritionService.DefaultParams;
+      if(this.data.nutritionData.Params.length == 0){
+        this.data.nutritionData.Params = this.nutritionService.DefaultParams;
       }
       else{
-        for(var i = 0; i < data.nutritionData.Params.length; i++){
-          data.nutritionData.Params[i] = this.nutritionService.Params[data.nutritionData.Params[i]];
+        for(var i = 0; i < this.data.nutritionData.Params.length; i++){
+          this.data.nutritionData.Params[i] = this.nutritionService.Params[this.data.nutritionData.Params[i]];
         }
       }
 
       // Get goals - combine custom and default goals
 
         for(var i = 0; i < data.nutritionData.Params.length; i++){
-          if(data.nutritionData.Goals[i] == null){
-             data.nutritionData.Goals[i] = this.nutritionService.Params[data.nutritionData.Params[i].Index].Goal;
+          if(this.data.nutritionData.Goals[i] == null){
+             this.data.nutritionData.Goals[i] = this.nutritionService.Params[this.data.nutritionData.Params[i].Index].Goal;
           }
         }
 
-      this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords);
+      // this.dataTableService.initializeDataTable(data.nutritionData, data.nutritionRecords);
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;

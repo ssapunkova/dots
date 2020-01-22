@@ -41,6 +41,8 @@ export class DataTableService{
     this.sortedByDate = "asc";
     this.showMode = "table";              // Default show mode, can be switched to table
 
+    this.tableWidth = 0;
+
     this.title = data.Title;
     this.params = data.Params;
     this.goals = data.Goals;
@@ -62,13 +64,16 @@ export class DataTableService{
       }
     }
 
-
     for(var i = 0; i < this.allRecords.length; i++){
       let record = this.allRecords[i];
       record.PercentageOfGoal = [];
       for(var j = 0; j < record.Values.length; j++){
         record.PercentageOfGoal[j] = this.generalService.calculatePercentage(record.Values[j], this.goals[j]);
       }
+    }
+
+    for(var i = 0; i < this.params.length; i++){
+      this.tableWidth += 100;
     }
 
     console.log(this);

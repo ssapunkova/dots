@@ -4,8 +4,8 @@
         <div class="chart-legend-color" [style.backgroundColor]="value.color"></div>
       </ion-col>
       <ion-col>
-        <ion-label *ngIf="value.series.length > 8; else fullValue"> {{ value.series | slice:0:8 }}...  </ion-label>
-        <ng-template #fullValue> {{ value.series }} </ng-template>
+        <ion-label *ngIf="value.series.length > 8; else fullTitle"> {{ value.series | slice:0:8 }}...  </ion-label>
+        <ng-template #fullTitle> {{ value.series }} </ng-template>
       </ion-col>
       <ion-col style="padding-left: 5px;">
         <div *ngIf="generalService.getType(value.realValue) != 'boolean'">

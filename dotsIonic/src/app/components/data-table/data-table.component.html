@@ -14,7 +14,6 @@
 
       <ion-col sizeXs="12" sizeLg="8" pullLg="4">
 
-
         <div style="height: 100%; overflow-x: auto; width: 100%">
 
           <div *ngIf="dataTableService.showMode == 'chart' && dataTableService.showingRecords.length > 0" style="width: 100%; min-height: 400px; max-height: 80vh;" [style.minWidth.px]="chartService.chartWidth">
@@ -42,7 +41,7 @@
 
           </div>
 
-          <ion-grid *ngIf="dataTableService.showMode == 'table'" [style.minWidth.px]="chartService.chartWidth">
+          <ion-grid *ngIf="dataTableService.showMode == 'table'" [style.minWidth.px]="dataTableService.tableWidth">
 
             <ion-row>
               <ion-col
@@ -60,7 +59,8 @@
                 [title]="param.Title"
                 (click)="dataTableService.sortCol(param, i)">
                 <ion-label>
-                  {{ (param.Title.length > 10) ? (param.Title | slice:0:10) + '...' : (param.Title) }}
+                  <ion-label *ngIf="param.Title.length > 8; else fullTitle"> {{ param.Title | slice:0:8 }}...  </ion-label>
+                  <ng-template #fullTitle> {{ param.Title }} </ng-template>
                 </ion-label>
                 <ion-icon name="arrow-dropup" *ngIf="param.sorted == 'asc'; else arrowDown"></ion-icon>
                 <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
