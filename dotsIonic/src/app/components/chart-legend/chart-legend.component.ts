@@ -13,6 +13,8 @@ export class ChartLegendComponent implements OnInit {
   @Input() goals: any[];
   @Input() colorScheme: any[];
 
+  public showLegend = true;               // Show or hide legend
+
   @Output() editGoalsButtonClicked = new EventEmitter();
 
   editGoals() {

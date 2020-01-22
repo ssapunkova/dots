@@ -17,6 +17,7 @@ export class DataTableComponent implements OnInit {
   @Input() records: any[];
   @Input() service: String;
 
+
   @Output() addRecordClicked = new EventEmitter();
   @Output() editRecordClicked = new EventEmitter();
   @Output() deleteRecordClicked = new EventEmitter();

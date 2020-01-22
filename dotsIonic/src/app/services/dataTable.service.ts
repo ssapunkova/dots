@@ -70,7 +70,6 @@ export class DataTableService{
 
     this.service = this.services[service];
 
-    console.log("A", this.service, service);
 
     if(records.length < 1){
       this.allRecords = [];
