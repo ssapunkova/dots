@@ -251,6 +251,7 @@ export class WorkoutManagerPage implements OnInit {
   async finish(){
     this.controls.IsPaused = false;
     this.controls.IsFinished = true;
+    
 
     // Mark last exercise's result and pause timer
     this.markAsCompleted();

@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="controls.IsFinished || current.ExerciseIndex == null">
+      <ion-back-button defaultHref="/workouts"></ion-back-button>
+    </ion-buttons>
     <ion-title>Workout manager</ion-title>
   </ion-toolbar>
 </ion-header>
