@@ -13,8 +13,8 @@ import { DataTableService } from '../../services/dataTable.service';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() data: any[];
-  @Input() records: any[];
+  // @Input() data: any[];
+  // @Input() records: any[];
   @Input() service: String;
 
 
@@ -33,7 +33,7 @@ export class DataTableComponent implements OnInit {
 
 
   ngOnInit(){
-    this.dataTableService.initializeDataTable(this.data, this.records, this.service);
+    this.dataTableService.initializeDataTable(this.service);
   }
 
   async addRecord() {

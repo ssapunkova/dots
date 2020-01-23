@@ -22,7 +22,7 @@ app.get("/getNutritionData", async (req, res) => {
     nutritionData.save();
   }
   if(nutritionRecords.err) throw nutritionRecords.err;
-  res.send({ nutritionData: nutritionData, nutritionRecords: nutritionRecords});
+  res.send({ general: nutritionData, records: nutritionRecords});
 })
 
 app.post("/updateNutritionParams", async (req, res) => {

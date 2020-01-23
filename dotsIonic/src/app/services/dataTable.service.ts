@@ -30,12 +30,19 @@ export class DataTableService{
 
   public sortedByDate: String;
 
+  // public general = {
+  //   Title: String,
+  //   Params: [],
+  //   Goals: []
+  // };
+
+  // public records = [];
+
   public services = {
     "workout": this.workoutService,
     "nutrition": this.nutritionService
   }
 
-  @Output() reloadDataTriggered = new EventEmitter();
 
   constructor(
     public timeAndDateService: TimeAndDateService,
@@ -51,12 +58,15 @@ export class DataTableService{
 
 
   async reloadData(){
-    this.reloadDataTriggered.emit();
+    this.service.loadData();
+    this.initializeDataTable(this.service);
+    // this.initializeDataTable(data, records, service);
   }
 
-  async initializeDataTable(data, records, service){
+  async initializeDataTable(service){
 
-    console.log(data);
+    this.service = this.services[service];
+    console.log(this.service);
 
     this.showingRecords = [];
     this.showingPeriod = [];
@@ -66,19 +76,19 @@ export class DataTableService{
 
     this.tableWidth = 0;
 
-    this.title = data.Title;
-    this.params = data.Params;
-    this.goals = data.Goals;
+    this.title = this.service.data.general.Title;
+    this.params = this.service.data.general.Params;
+    this.goals = this.service.data.general.Goals;
 
     this.service = this.services[service];
 
 
-    if(records.length < 1){
+    if(this.service.data.records.length < 1){
       this.allRecords = [];
       this.showNoRecordsAlert();
     }
     else{
-      this.allRecords = records;
+      this.allRecords = this.service.data.records;
       this.prepareData();
     }
 
