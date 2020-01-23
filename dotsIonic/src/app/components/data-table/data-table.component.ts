@@ -13,10 +13,7 @@ import { DataTableService } from '../../services/dataTable.service';
 })
 export class DataTableComponent implements OnInit {
 
-  // @Input() data: any[];
-  // @Input() records: any[];
   @Input() service: String;
-
 
   @Output() addRecordClicked = new EventEmitter();
   @Output() editRecordClicked = new EventEmitter();

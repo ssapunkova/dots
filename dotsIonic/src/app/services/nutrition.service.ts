@@ -51,6 +51,12 @@ export class NutritionService {
 
 
     async loadData(){
+
+      this.data = {
+        general: [],
+        records: []
+      };
+
       this.http.get(this.connectToServerService.serverUrl + '/getNutritionData').subscribe(async (data: any) => {
 
         // If no custom params - take default
@@ -78,6 +84,8 @@ export class NutritionService {
         await this.loadingService.dismissSmallLoading();
 
         console.log(this);
+
+        return this.data;
 
       });
     };

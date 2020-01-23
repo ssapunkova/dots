@@ -56,13 +56,6 @@ export class DataTableService{
     public nutritionService: NutritionService
   ) { }
 
-
-  async reloadData(){
-    await this.service.loadData();
-    await this.initializeDataTable(this.service);
-    // this.initializeDataTable(data, records, service);
-  }
-
   async initializeDataTable(service){
 
     if(typeof service == "string") this.service = this.services[service];
@@ -88,7 +81,9 @@ export class DataTableService{
       this.showNoRecordsAlert();
     }
     else{
+      console.log("service records ", this.service.data.records)
       this.allRecords = this.service.data.records;
+      console.log("dataTable records ", this.allRecords)
       this.prepareData();
     }
 
@@ -100,6 +95,7 @@ export class DataTableService{
       }
     }
 
+    console.log(this.allRecords);
     for(var i = 0; i < this.allRecords.length; i++){
       let record = this.allRecords[i];
       record.PercentageOfGoal = [];
@@ -111,6 +107,8 @@ export class DataTableService{
     for(var i = 0; i < this.params.length; i++){
       this.tableWidth += 100;
     }
+
+    console.log(this.allRecords);
 
     console.log(this);
 
@@ -191,18 +189,14 @@ export class DataTableService{
     modalData = modalData.data;
 
     if(modalData != null){
-      // Set new data for the edited record
+      // remove any records with the same date as the new one
+      this.allRecords = this.allRecords.filter((record) => record.Date != modalData.Date);
+      // add new record to allRecords
       this.allRecords.push(modalData);
       this.prepareData();
     };
 
     this.service.addRecord(modalData).subscribe( async (data: any) =>
-      {
-        // n.nModified > 0 means the new record upserted an older with the same date
-        if(data.docs.nModified > 0){
-          this.reloadData();
-        }
-      },
       error => {
         this.errorToastAndAlertService.showErrorAlert("Oups")
       }
@@ -217,18 +211,20 @@ export class DataTableService{
     modalData = modalData.data;
 
     if(modalData != null){
-      // Set new data for the edited record
-      this.allRecords[record.index] = modalData;
+      // remove the edited record and any record with the new date
+
+      console.log("**Remove records with dates: ", modalData.Date, record.Date);
+
+      this.allRecords = this.allRecords.filter((rec) =>
+        rec.Date != modalData.Date && rec.Date != record.Date
+      );
+      // add edited record
+      this.allRecords.push(modalData);
+
       this.prepareData();
     };
 
     this.service.editRecord(modalData).subscribe( async (data: any)=>
-      {
-        // deletedDocs > 0 means the edited record overrode an older one with the same date
-        if(data.deletedDocs > 0){
-          this.reloadData();
-        }
-      },
       error => {
         this.errorToastAndAlertService.showErrorAlert("Oups")
       }
