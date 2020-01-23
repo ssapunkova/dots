@@ -9,8 +9,6 @@ import { DataTableService } from '../../services/dataTable.service';
 })
 export class ToggleShowingMode implements OnInit {
 
-  ngOnInit() { }
-
   constructor(
     public dataTableService: DataTableService
   ) { }

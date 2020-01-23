@@ -3,6 +3,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 
 import { GeneralService } from './general.service';
 import { TimeAndDateService } from './timeAndDate.service';
+import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 import { ChartService } from '../services/chart.service';
 
 import { WorkoutService } from '../services/workout.service';
@@ -34,7 +35,7 @@ export class DataTableService{
     "nutrition": this.nutritionService
   }
 
-  @Output reloadData = new EventEmitter();
+  @Output() reloadDataTriggered = new EventEmitter();
 
   constructor(
     public timeAndDateService: TimeAndDateService,
@@ -42,6 +43,7 @@ export class DataTableService{
     public generalService: GeneralService,
     public alertController: AlertController,
     public modalController: ModalController,
+    public errorToastAndAlertService: ErrorToastAndAlertService,
 
     public workoutService: WorkoutService,
     public nutritionService: NutritionService
@@ -49,7 +51,7 @@ export class DataTableService{
 
 
   async reloadData(){
-    this.reloadData.emit();
+    this.reloadDataTriggered.emit();
   }
 
   async initializeDataTable(data, records, service){
@@ -218,7 +220,7 @@ export class DataTableService{
 
   }
 
-  async deleteRecord(record, handlerFunc){
+  async deleteRecord(record){
 
     // Show alert about deleting the record
     let alert = await this.alertController.create({

@@ -65,13 +65,11 @@ export class ChartService{
           currentParamIndex = registeredParams.length - 1;
         }
 
-        let percentageOfGoal = this.generalService.calculatePercentage(record.Values[i], goals[i]);
-
         this.chartData[currentParamIndex].series.push({
           "name": date,
-          "value": percentageOfGoal,
+          "value": record.PercentageOfGoal[j],
           "realValue": record.Values[i],
-          "percentageOfGoal": percentageOfGoal
+          "percentageOfGoal": record.PercentageOfGoal[j]
         })
       }
 

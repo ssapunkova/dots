@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { ModalController, NavParams, ActionSheetController } from '@ionic/angular';
 
+import { GeneralService } from '../../services/general.service';
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
 import { NutritionService } from '../../services/nutrition.service';
 
@@ -26,6 +27,7 @@ export class NewNutritionRecordPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
+    private generalService: GeneralService,
     private actionSheetController: ActionSheetController,
     private nutritionService: NutritionService,
     private errorToastAndAlertService: ErrorToastAndAlertService
@@ -38,6 +40,7 @@ export class NewNutritionRecordPage implements OnInit {
 
     this.record.RecordId = data.RecordId;
     this.record.Date = data.Date;
+    this.record.PercentageOfGoal = [];
 
     this.fields = data.Fields;
     this.goals = data.Goals;
@@ -52,9 +55,11 @@ export class NewNutritionRecordPage implements OnInit {
 
       if(this.values == null){
         this.record.Values.push(null);
+        this.record.PercentageOfGoal.push(0);
       }
       else{
         this.record.Values.push(this.values[i]);
+        this.record.PercentageOfGoal.push(this.generalService.calculatePercentage(this.values[i], this.goals[i]))
       }
       console.log(this.fields[i]);
       console.log(this.record)
