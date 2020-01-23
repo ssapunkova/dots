@@ -68,10 +68,13 @@ app.post("/updateNutritionParams", async (req, res) => {
 app.post("/addNutritionRecord", async (req, res) => {
   let record = req.body.data;
 
+  console.log("adding record", record);
+
   let upsertRecord = await NutritionRecord.updateOne(
     {
       UserId: ObjectId("5d98ade96dfda51dc84991d9"),
-      Date: record.Date },
+      Date: record.Date
+    },
     {
       $set: {
         Values: record.Values,

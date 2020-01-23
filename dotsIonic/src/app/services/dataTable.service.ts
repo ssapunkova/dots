@@ -69,6 +69,7 @@ export class DataTableService{
 
     console.log(this.service);
 
+    this.allRecords = [];
     this.showingRecords = [];
     this.showingPeriod = [];
     this.months = [];
