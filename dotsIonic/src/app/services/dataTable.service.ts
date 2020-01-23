@@ -58,14 +58,15 @@ export class DataTableService{
 
 
   async reloadData(){
-    this.service.loadData();
-    this.initializeDataTable(this.service);
+    await this.service.loadData();
+    await this.initializeDataTable(this.service);
     // this.initializeDataTable(data, records, service);
   }
 
   async initializeDataTable(service){
 
-    this.service = this.services[service];
+    if(typeof service == "string") this.service = this.services[service];
+
     console.log(this.service);
 
     this.showingRecords = [];
@@ -79,8 +80,6 @@ export class DataTableService{
     this.title = this.service.data.general.Title;
     this.params = this.service.data.general.Params;
     this.goals = this.service.data.general.Goals;
-
-    this.service = this.services[service];
 
 
     if(this.service.data.records.length < 1){
