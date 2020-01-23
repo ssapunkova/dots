@@ -105,14 +105,10 @@
                       <ion-icon name="close-circle" *ngIf="record.Values[j] == false"></ion-icon>
                     </ng-template>
 
-                    <ion-chip style="padding: 5px"
-                      [color]="record.PercentageOfGoal[j] < 90 ? record.PercentageOfGoal[j] < 60 ? 'danger' : 'warning' : 'success'"
-                      *ngIf="record.Values[j] != null && param.Type != 'Bool'">
-                      <ion-icon name="checkmark-circle" style="margin: 0px"></ion-icon>
-                      <ion-label style="margin-right: 5px">
-                        {{ record.PercentageOfGoal[j] }}%
-                      </ion-label>
-                    </ion-chip>
+                    <percentage-chip
+                      *ngIf="record.Values[j] != null && param.Type != 'Bool'"
+                      [percentage]="record.PercentageOfGoal[j]"></percentage-chip>
+
                   </ion-col>
 
                 </ion-item>

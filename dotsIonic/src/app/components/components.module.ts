@@ -9,6 +9,7 @@ import { ChartTooltipComponent } from './chart-tooltip/chart-tooltip.component';
 import { ChartLegendComponent } from './chart-legend/chart-legend.component';
 import { DataTableComponent } from './data-table/data-table.component';
 import { ToggleShowingMode } from './toggle-showing-mode/toggle-showing-mode.component';
+import { PercentageChip } from './percentage-chip/percentage-chip.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ToggleShowingMode } from './toggle-showing-mode/toggle-showing-mode.com
     ChartTooltipComponent,
     ChartLegendComponent,
     DataTableComponent,
-    ToggleShowingMode
+    ToggleShowingMode,
+    PercentageChip
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { ToggleShowingMode } from './toggle-showing-mode/toggle-showing-mode.com
     ChartTooltipComponent,
     ChartLegendComponent,
     DataTableComponent,
-    ToggleShowingMode
+    ToggleShowingMode,
+    PercentageChip
   ]
 })
 export class ComponentsModule { }

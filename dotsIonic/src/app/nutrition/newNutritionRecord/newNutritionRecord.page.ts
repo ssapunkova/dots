@@ -21,7 +21,8 @@ export class NewNutritionRecordPage implements OnInit {
     RecordId: null,
     Date: "",
     Values: [],
-    Params: []
+    Params: [],
+    PercentageOfGoal: []
   };
 
   constructor(
