@@ -84,12 +84,7 @@ app.post("/addNutritionRecord", async (req, res) => {
 
   if(upsertRecord.err) throw upsertRecord.err;
   else{
-    if(upsertRecord.upserted != undefined){
-      if(upsertRecord.upserted[0]._id != undefined){
-        record._id = upsertRecord.upserted[0]._id;
-      }
-    }
-    res.send({ record: record, docs: upsertRecord });
+    res.send({ record: record });
   }
 })
 
