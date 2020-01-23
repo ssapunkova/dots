@@ -42,16 +42,10 @@
               </ng-template>
             </ion-col>
             <ion-col size="12" size-sm>
-              <ion-chip [color]="
-                current.InputValue < sheetExercises.Params[current.ExerciseIndex].Goal * 2/5 ? 'danger' :
-                current.InputValue < sheetExercises.Params[current.ExerciseIndex].Goal * 1/2 ? 'warning' :
-                'primary'
-                ">
-                <ion-label>
-                  {{ generalService.calculatePercentage(current.InputValue, sheetExercises.Params[current.ExerciseIndex].Goal) }}
-                  % of your goal ( {{ sheetExercises.Params[current.ExerciseIndex].Goal }} )
-                </ion-label>
-              </ion-chip>
+
+              <percentage-chip
+                [percentage]="generalService.calculatePercentage(current.InputValue, sheetExercises.Params[current.ExerciseIndex].Goal)"></percentage-chip>
+
             </ion-col>
           </ion-row>
         </ion-grid>
