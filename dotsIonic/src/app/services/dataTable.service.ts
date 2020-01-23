@@ -120,7 +120,13 @@ export class DataTableService{
 
     this.chartService.chartData = [];
     this.getShowingMonths();
-    this.setPeriod(null, true);
+
+    if(this.showingPeriod.length == 0){
+      this.setPeriod(null, true);
+    }
+    else{
+      this.setPeriod(this.showingPeriod, false);
+    }
   }
 
   async showNoRecordsAlert(){
