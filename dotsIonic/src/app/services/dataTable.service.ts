@@ -30,14 +30,6 @@ export class DataTableService{
 
   public sortedByDate: String;
 
-  // public general = {
-  //   Title: String,
-  //   Params: [],
-  //   Goals: []
-  // };
-
-  // public records = [];
-  //
   public services = {
     "workout": this.workoutService,
     "nutrition": this.nutritionService
@@ -56,36 +48,39 @@ export class DataTableService{
     public nutritionService: NutritionService
   ) { }
 
+// initializeDataTable is called by data-table component
+// general - json with params, goals and etc.
+// records - array with json records
+// service - name of the service the page is using ( dataTable.service imports all services and then uses the one needed for adding, editing and deleting records )
+
   async initializeDataTable(general, records, service){
 
-    this.service = this.services[service];
-    console.log(general, records, service)
+    this.service = this.services[service];    // Get needed service for current page
 
-    this.allRecords = [];
-    this.showingRecords = [];
-    this.showingPeriod = [];
-    this.months = [];
-    this.sortedByDate = "asc";
-    this.showMode = "table";              // Default show mode, can be switched to table
+    this.allRecords = [];                     // Records for all periods
+    this.showingRecords = [];                 // Only records that are during showing period
+    this.showingPeriod = [];                  // Array of months that are the chosen showing period
+    this.months = [];                         // Array of all record months
+    this.sortedByDate = "asc";                // Which way is the date sorted (asc/desc)
+    this.showMode = "table";                  // Default show mode, can be switched to table
 
-    this.tableWidth = 0;
+    this.tableWidth = 0;                      // Min table width, calculated on table's column number
 
-    this.title = general.Title;
+    this.title = general.Title;               // General information
     this.params = general.Params;
     this.goals = general.Goals;
 
-
-    if(records.length < 1){
+    // If no records yet
+    if(records.length == 0){
       this.allRecords = [];
       this.showNoRecordsAlert();
     }
     else{
-      console.log("service records ", records)
       this.allRecords = records;
-      console.log("dataTable records ", this.allRecords)
       this.prepareData();
     }
 
+    // If there are no user-selected goals, use params' default goals
     if(this.goals == null){
       this.goals = [];
       for(var i = 0; i < this.params.length; i++){
@@ -94,7 +89,7 @@ export class DataTableService{
       }
     }
 
-    console.log(this.allRecords);
+    // Calculate each record's params % of goal
     for(var i = 0; i < this.allRecords.length; i++){
       let record = this.allRecords[i];
       record.PercentageOfGoal = [];
@@ -103,21 +98,23 @@ export class DataTableService{
       }
     }
 
+    // Calculate table width based on table column number
     for(var i = 0; i < this.params.length; i++){
       this.tableWidth += 100;
     }
 
-    console.log(this.allRecords);
-
-    console.log(this);
+    console.log("*** DataTableService", this);
 
   }
 
+  // Sorts data, gets and sets showing period
   async prepareData(){
     this.timeAndDateService.sortByDate(this.allRecords, "asc");
 
     this.getShowingMonths();
 
+    // If there is no showingPeriod set, params for this.setPeriod function will be
+    // null for $event and true for default
     if(this.showingPeriod.length == 0){
       this.setPeriod(null, true);
     }
@@ -131,16 +128,12 @@ export class DataTableService{
     let alert = await this.alertController.create({
       header: 'No records yet',
       message: message,
-      buttons: [
-        {
-          text: 'Ok'
-        }
-      ]
+      buttons: [ { text: 'Ok' }]
     });
-
     await alert.present();
   }
 
+  // Switch from table/chart view mode
   async changeShowMode(){
     if(this.showMode == "chart") this.showMode = "table";
     else this.showMode = "chart";
@@ -166,6 +159,7 @@ export class DataTableService{
 
   }
 
+  // Get array of records months
   async getShowingMonths(){
     // Array of months - Used to allow the user to select a period ov viewed chart/table
     let months = [];
@@ -179,6 +173,7 @@ export class DataTableService{
     this.months = months;
   }
 
+  // Add record via modal and send modalData to the corresponding service
   async addRecord(modalProps){
     const modal = await this.modalController.create(modalProps);
 
@@ -186,10 +181,11 @@ export class DataTableService{
     let modalData = await modal.onWillDismiss();
 
     if(modalData.data != null){
-      // remove any records with the same date as the new one
+      // remove any records with the same date as the new one to avoid duplicates
       this.allRecords = this.allRecords.filter((record) => record.Date != modalData.data.Date);
       // add new record to allRecords
       this.allRecords.push(modalData.data);
+      // sort records and set new showingPeriod
       this.prepareData();
     };
 
@@ -200,6 +196,7 @@ export class DataTableService{
     )
   }
 
+  // Edit record via modal and send modalData to the corresponding service
   async editRecord(record, modalProps){
     const modal = await this.modalController.create(modalProps);
 
@@ -207,16 +204,13 @@ export class DataTableService{
     let modalData = await modal.onWillDismiss();
 
     if(modalData.data != null){
-      // remove the edited record and any record with the new date
-
-      console.log("**Remove records with dates: ", modalData.data.Date, record.Date);
-
+      // remove any records with the same date as the record before and after editing to avoid duplicates
       this.allRecords = this.allRecords.filter((rec) =>
         rec.Date != modalData.data.Date && rec.Date != record.Date
       );
-      // add edited record
+      // add edited record to allRecords
       this.allRecords.push(modalData.data);
-
+      // sort records and set new showingPeriod
       this.prepareData();
     };
 
@@ -227,7 +221,7 @@ export class DataTableService{
     );
   }
 
-
+  // Delete record and send record._id to the corresponding service
   async deleteRecord(record){
 
     // Show alert about deleting the record

@@ -49,47 +49,6 @@ export class NutritionService {
       public loadingService: LoadingService,
   ) { }
 
-
-    // async loadData(){
-    //
-    //   this.data = {
-    //     general: [],
-    //     records: []
-    //   };
-    //
-    //   this.http.get(this.connectToServerService.serverUrl + '/getNutritionData').subscribe(async (data: any) => {
-    //
-    //     // If no custom params - take default
-    //     if(data.general.Params.length == 0){
-    //       data.general.Params = this.DefaultParams;
-    //     }
-    //     else{
-    //       for(var i = 0; i < data.general.Params.length; i++){
-    //         data.general.Params[i] = this.Params[data.general.Params[i]];
-    //       }
-    //     }
-    //
-    //     // Get goals - combine custom and default goals
-    //
-    //       for(var i = 0; i < data.general.Params.length; i++){
-    //         if(data.general.Goals[i] == null){
-    //            data.general.Goals[i] = this.Params[data.general.Params[i].Index].Goal;
-    //         }
-    //       }
-    //
-    //     // Dismiss all loading
-    //
-    //     this.data = data;
-    //     this.loadingService.isPageLoading = false;
-    //     await this.loadingService.dismissSmallLoading();
-    //
-    //     console.log(this);
-    //
-    //     return this.data;
-    //
-    //   });
-    // };
-
   public getNutritionData(){
     return this.http.get(this.connectToServerService.serverUrl + '/getNutritionData')
   }
