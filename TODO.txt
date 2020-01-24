@@ -1,7 +1,7 @@
 16.01
   TODO:
     * Indicate custom goals
-    Make calculators for weight, blocks, kcal, etc
+
 18.01
   FIX:
     * Chart legend overlays goals card
@@ -22,4 +22,8 @@
     * Adding new/editing row in table doesn't display normally
     * getSheetData in dataTable.service
 
-    Slide item edit and delete!!!!
+    * Slide item edit and delete!!!!
+
+24.01
+  TODO:
+    Make calculators for weight, blocks, kcal, etc
