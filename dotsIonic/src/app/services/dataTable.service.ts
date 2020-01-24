@@ -1,5 +1,6 @@
 import { Injectable, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core';
 
 import { GeneralService } from './general.service';
 import { TimeAndDateService } from './timeAndDate.service';
@@ -186,21 +187,20 @@ export class DataTableService{
 
     await modal.present();
     let modalData = await modal.onWillDismiss();
-    modalData = modalData.data;
 
-    if(modalData != null){
+    if(modalData.data != null){
       // remove any records with the same date as the new one
-      this.allRecords = this.allRecords.filter((record) => record.Date != modalData.Date);
+      this.allRecords = this.allRecords.filter((record) => record.Date != modalData.data.Date);
       // add new record to allRecords
-      this.allRecords.push(modalData);
+      this.allRecords.push(modalData.data);
       this.prepareData();
     };
 
-    this.service.addRecord(modalData).subscribe( async (data: any) =>
+    this.service.addRecord(modalData.data).subscribe( async (data: any) =>
       error => {
         this.errorToastAndAlertService.showErrorAlert("Oups")
       }
-    );
+    )
   }
 
   async editRecord(record, modalProps){
@@ -208,29 +208,28 @@ export class DataTableService{
 
     await modal.present();
     let modalData = await modal.onWillDismiss();
-    modalData = modalData.data;
 
-    if(modalData != null){
+    if(modalData.data != null){
       // remove the edited record and any record with the new date
 
-      console.log("**Remove records with dates: ", modalData.Date, record.Date);
+      console.log("**Remove records with dates: ", modalData.data.Date, record.Date);
 
       this.allRecords = this.allRecords.filter((rec) =>
-        rec.Date != modalData.Date && rec.Date != record.Date
+        rec.Date != modalData.data.Date && rec.Date != record.Date
       );
       // add edited record
-      this.allRecords.push(modalData);
+      this.allRecords.push(modalData.data);
 
       this.prepareData();
     };
 
-    this.service.editRecord(modalData).subscribe( async (data: any)=>
+    this.service.editRecord(modalData.data).subscribe( async (data: any)=>
       error => {
         this.errorToastAndAlertService.showErrorAlert("Oups")
       }
     );
-
   }
+
 
   async deleteRecord(record){
 
