@@ -37,7 +37,7 @@ export class DataTableService{
   // };
 
   // public records = [];
-
+  //
   public services = {
     "workout": this.workoutService,
     "nutrition": this.nutritionService
@@ -56,11 +56,10 @@ export class DataTableService{
     public nutritionService: NutritionService
   ) { }
 
-  async initializeDataTable(service){
+  async initializeDataTable(general, records, service){
 
-    if(typeof service == "string") this.service = this.services[service];
-
-    console.log(this.service);
+    this.service = this.services[service];
+    console.log(general, records, service)
 
     this.allRecords = [];
     this.showingRecords = [];
@@ -71,18 +70,18 @@ export class DataTableService{
 
     this.tableWidth = 0;
 
-    this.title = this.service.data.general.Title;
-    this.params = this.service.data.general.Params;
-    this.goals = this.service.data.general.Goals;
+    this.title = general.Title;
+    this.params = general.Params;
+    this.goals = general.Goals;
 
 
-    if(this.service.data.records.length < 1){
+    if(records.length < 1){
       this.allRecords = [];
       this.showNoRecordsAlert();
     }
     else{
-      console.log("service records ", this.service.data.records)
-      this.allRecords = this.service.data.records;
+      console.log("service records ", records)
+      this.allRecords = records;
       console.log("dataTable records ", this.allRecords)
       this.prepareData();
     }
@@ -117,7 +116,6 @@ export class DataTableService{
   async prepareData(){
     this.timeAndDateService.sortByDate(this.allRecords, "asc");
 
-    this.chartService.chartData = [];
     this.getShowingMonths();
 
     if(this.showingPeriod.length == 0){

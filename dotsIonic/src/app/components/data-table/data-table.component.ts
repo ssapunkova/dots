@@ -13,16 +13,13 @@ import { DataTableService } from '../../services/dataTable.service';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input()
-  data: [];
-  records: [];
-  service: String;
+  @Input() general: [];
+  @Input() records: [];
+  @Input() service: String;
 
-
-  @Output()
-  addRecordClicked = new EventEmitter();
-  editRecordClicked = new EventEmitter();
-  deleteRecordClicked = new EventEmitter();
+  @Output() addRecordClicked = new EventEmitter();
+  @Output() editRecordClicked = new EventEmitter();
+  @Output() deleteRecordClicked = new EventEmitter();
 
   constructor(
     public timeAndDateService: TimeAndDateService,
@@ -35,7 +32,7 @@ export class DataTableComponent implements OnInit {
 
 
   ngOnInit(){
-    this.dataTableService.initializeDataTable(this.service);
+    this.dataTableService.initializeDataTable(this.general, this.records, this.service);
   }
 
   async addRecord() {

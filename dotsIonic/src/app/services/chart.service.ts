@@ -36,6 +36,8 @@ export class ChartService{
 
   async formatChartData(data, params, goals){
 
+    this.chartData = [];
+
     let formatted = [];
     let registeredParams = [];
 

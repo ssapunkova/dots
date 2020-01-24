@@ -20,6 +20,11 @@ import { EditNutritionGoalsPage } from './editNutritionGoals/editNutritionGoals.
 })
 export class NutritionPage implements OnInit {
 
+  public data = {
+    general: [],
+    records: []
+  };
+
   constructor(
     public loadingService: LoadingService,
     public generalService: GeneralService,
@@ -38,25 +43,27 @@ export class NutritionPage implements OnInit {
   }
 
   async getNutritionData(){
+
+
     this.nutritionService.getNutritionData().subscribe(async (data: any) => {
 
       // If no custom params - take default
-      if(data.nutritionData.Params.length == 0){
-        data.nutritionData.Params = this.nutritionService.DefaultParams;
+      if(data.general.Params.length == 0){
+        data.general.Params = this.nutritionService.DefaultParams;
       }
       else{
-        for(var i = 0; i < data.nutritionData.Params.length; i++){
-          data.nutritionData.Params[i] = this.nutritionService.Params[data.nutritionData.Params[i]];
+        for(var i = 0; i < data.general.Params.length; i++){
+          data.general.Params[i] = this.nutritionService.Params[data.general.Params[i]];
         }
       }
 
       // Get goals - combine custom and default goals
 
-        for(var i = 0; i < data.nutritionData.Params.length; i++){
-          if(data.nutritionData.Goals[i] == null){
-             data.nutritionData.Goals[i] = this.nutritionService.Params[data.nutritionData.Params[i].Index].Goal;
-          }
+      for(var i = 0; i < data.general.Params.length; i++){
+        if(data.general.Goals[i] == null){
+           data.general.Goals[i] = this.nutritionService.Params[data.general.Params[i].Index].Goal;
         }
+      }
 
       // Dismiss all loading
 
@@ -99,7 +106,7 @@ export class NutritionPage implements OnInit {
       // Update nutrition params
       this.nutritionService.updateNutritionParams(modalData).subscribe( async (data: [any])=>
         {
-          await this.nutritionService.loadData();
+          await this.getNutritionData();
           await this.loadingService.dismissSmallLoading();
         },
         error => {
