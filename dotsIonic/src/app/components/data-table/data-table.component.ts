@@ -1,8 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
 
 import { GeneralService } from '../../services/general.service';
-import { TimeAndDateService } from '../../services/timeAndDate.service';
 import { ChartService } from '../../services/chart.service';
 import { DataTableService } from '../../services/dataTable.service';
 
@@ -17,16 +15,14 @@ export class DataTableComponent implements OnInit {
   @Input() records: [];
   @Input() service: String;
 
+  // Event emitters for click actions inside data-table component
   @Output() addRecordClicked = new EventEmitter();
   @Output() editRecordClicked = new EventEmitter();
   @Output() deleteRecordClicked = new EventEmitter();
 
   constructor(
-    public timeAndDateService: TimeAndDateService,
     public chartService: ChartService,
     public generalService: GeneralService,
-    public alertController: AlertController,
-    public modalController: ModalController,
     public dataTableService: DataTableService
   ) { }
 
