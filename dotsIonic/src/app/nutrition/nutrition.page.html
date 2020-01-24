@@ -16,21 +16,20 @@
 
 <ion-content *ngIf="!loadingService.isPageLoading">
 
+  <!-- <data-table
+    service="nutrition"
+    (addRecordClicked)="addRecord()"
+    (editRecordClicked)="editRecord($event)"
+    (deleteRecordClicked)="deleteRecord($event)"
+  ></data-table> -->
+
   <data-table
+    [data]="nutritionService.data.general"
+    [records]="nutritionService.data.records"
     service="nutrition"
     (addRecordClicked)="addRecord()"
     (editRecordClicked)="editRecord($event)"
     (deleteRecordClicked)="deleteRecord($event)"
   ></data-table>
-
-  <!-- <data-table
-    [data]="nutritionService.data.general"
-    [records]="nutritionService.data.records"
-    service="nutrition"
-    (reloadDataTriggered)="nutritionService.loadData()"
-    (addRecordClicked)="addRecord()"
-    (editRecordClicked)="editRecord($event)"
-    (deleteRecordClicked)="deleteRecord($event)"
-  ></data-table> -->
 
 </ion-content>

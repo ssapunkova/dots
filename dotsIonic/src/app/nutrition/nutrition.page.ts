@@ -34,40 +34,40 @@ export class NutritionPage implements OnInit {
   ngOnInit() {
     this.loadingService.isPageLoading = true;
     // Load nutrition data from database
-    this.nutritionService.loadData();
+    this.getNutritionData();
   }
-  //
-  // async getNutritionData(){
-  //   this.nutritionService.getNutritionData().subscribe(async (data: any) => {
-  //
-  //     // If no custom params - take default
-  //     if(data.nutritionData.Params.length == 0){
-  //       data.nutritionData.Params = this.nutritionService.DefaultParams;
-  //     }
-  //     else{
-  //       for(var i = 0; i < data.nutritionData.Params.length; i++){
-  //         data.nutritionData.Params[i] = this.nutritionService.Params[data.nutritionData.Params[i]];
-  //       }
-  //     }
-  //
-  //     // Get goals - combine custom and default goals
-  //
-  //       for(var i = 0; i < data.nutritionData.Params.length; i++){
-  //         if(data.nutritionData.Goals[i] == null){
-  //            data.nutritionData.Goals[i] = this.nutritionService.Params[data.nutritionData.Params[i].Index].Goal;
-  //         }
-  //       }
-  //
-  //     // Dismiss all loading
-  //
-  //     this.data = data;
-  //     this.loadingService.isPageLoading = false;
-  //     await this.loadingService.dismissSmallLoading();
-  //
-  //     console.log(this);
-  //
-  //   });
-  // };
+
+  async getNutritionData(){
+    this.nutritionService.getNutritionData().subscribe(async (data: any) => {
+
+      // If no custom params - take default
+      if(data.nutritionData.Params.length == 0){
+        data.nutritionData.Params = this.nutritionService.DefaultParams;
+      }
+      else{
+        for(var i = 0; i < data.nutritionData.Params.length; i++){
+          data.nutritionData.Params[i] = this.nutritionService.Params[data.nutritionData.Params[i]];
+        }
+      }
+
+      // Get goals - combine custom and default goals
+
+        for(var i = 0; i < data.nutritionData.Params.length; i++){
+          if(data.nutritionData.Goals[i] == null){
+             data.nutritionData.Goals[i] = this.nutritionService.Params[data.nutritionData.Params[i].Index].Goal;
+          }
+        }
+
+      // Dismiss all loading
+
+      this.data = data;
+      this.loadingService.isPageLoading = false;
+      await this.loadingService.dismissSmallLoading();
+
+      console.log(this);
+
+    });
+  };
 
   async editGoals(){
 

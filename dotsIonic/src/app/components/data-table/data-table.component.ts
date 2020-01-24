@@ -13,11 +13,16 @@ import { DataTableService } from '../../services/dataTable.service';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() service: String;
+  @Input()
+  data: [];
+  records: [];
+  service: String;
 
-  @Output() addRecordClicked = new EventEmitter();
-  @Output() editRecordClicked = new EventEmitter();
-  @Output() deleteRecordClicked = new EventEmitter();
+
+  @Output()
+  addRecordClicked = new EventEmitter();
+  editRecordClicked = new EventEmitter();
+  deleteRecordClicked = new EventEmitter();
 
   constructor(
     public timeAndDateService: TimeAndDateService,
