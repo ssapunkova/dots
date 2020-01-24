@@ -31,6 +31,9 @@ export class ChartService{
   ){ }
 
   // Takes records and formarts it for ngx line chart
+  // data - records
+  // params - param data
+  // goals - goals fro each param (params' default goals merged with user's custom ones)
   // input - an array of json objects, each has a date and values for every param
   // output - an array of json objects, each representing values of a param for every date (series)
 
@@ -41,6 +44,7 @@ export class ChartService{
     let formatted = [];
     let registeredParams = [];
 
+    // if no user custom goals
     if(goals == null){
       goals = [];
       for(var i = 0; i < params.length; i++){
@@ -48,15 +52,16 @@ export class ChartService{
       }
     }
 
-    console.log(goals);
-
+    // Go through each record
     for(var j = 0; j < data.length; j++){
       let record = data[j];
 
+      // Go through every param of current record, get it's value and percentageOfGoal
       for(var i = 0; i < record.Values.length; i++){
-        let date = await this.timeAndDateService.formatDate(record.Date);
         let currentParam = params[i];
+        let date = await this.timeAndDateService.formatDate(record.Date);
 
+        // if it's a new, unregistered yet param
         let currentParamIndex = registeredParams.indexOf(currentParam);
         if(currentParamIndex < 0){
           this.chartData.push({
@@ -67,35 +72,35 @@ export class ChartService{
           currentParamIndex = registeredParams.length - 1;
         }
 
+        // push values to current param series
         this.chartData[currentParamIndex].series.push({
           "name": date,
-          "value": record.PercentageOfGoal[j],
+          "value": record.PercentageOfGoal[i],
           "realValue": record.Values[i],
-          "percentageOfGoal": record.PercentageOfGoal[j]
+          "percentageOfGoal": record.PercentageOfGoal[i]
         })
       }
 
     }
-
-    this.legendColors = ["#fcaaab", "#bcafaf"]
 
     // Calculate chart's width based on the number of dates shown
     this.chartWidth = this.chartData[0].series.length * this.RECORD_WIDTH;
 
     this.generateColorScheme(params.length);
 
-    console.log(goals)
-    console.log(this);
+    console.log("***ChartService", this);
 
   }
 
-  // Choose random green colors for chart's color scheme
+  // Choose random colors for chart's color scheme
   async generateColorScheme(n){
+    // Wanted colors with hue in range (20; 220)
+    // so step = 200 / number of records
     let step = 200 / n;
     let hue = 20;
     for(var i = 0; i < n; i++){
-      // Random green hue and light
       hue += step;
+      // Random light
       let light = Math.floor(Math.random() * (70 - 40) ) + 40;
       this.colorScheme.domain.push("hsl(" + hue + ", 80%, " + light + "%)");
     }
