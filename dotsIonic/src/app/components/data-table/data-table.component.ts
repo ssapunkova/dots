@@ -16,9 +16,8 @@ export class DataTableComponent implements OnInit {
   @Input() service: String;
 
   // Event emitters for click actions inside data-table component
+  @Output() showRecordOptionsClicked = new EventEmitter();
   @Output() addRecordClicked = new EventEmitter();
-  @Output() editRecordClicked = new EventEmitter();
-  @Output() deleteRecordClicked = new EventEmitter();
 
   constructor(
     public chartService: ChartService,
@@ -36,14 +35,11 @@ export class DataTableComponent implements OnInit {
     this.addRecordClicked.emit()
   }
 
-  async editRecord($event){
-    // Emit editRecordClicked event to parent (nutrition.page.html)
-    this.editRecordClicked.emit($event)
+  async showRecordOptions($event){
+    console.log("a")
+    // Emit showRecordOptionsClicked event to parent (nutrition.page.html)
+    this.showRecordOptionsClicked.emit($event)
   }
 
-  async deleteRecord($event) {
-    // Emit addRecordClicked event to parent (nutrition.page.html)
-    this.deleteRecordClicked.emit($event)
-  }
 
 }

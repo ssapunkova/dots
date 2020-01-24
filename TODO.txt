@@ -19,7 +19,7 @@
     * Show/hide legend
 
   FIX:
-    Adding new/editing row in table doesn't display normally
-    getSheetData in dataTable.service
+    * Adding new/editing row in table doesn't display normally
+    * getSheetData in dataTable.service
 
     Slide item edit and delete!!!!

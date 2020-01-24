@@ -175,6 +175,7 @@ export class DataTableService{
     this.months = months;
   }
 
+
   // Add record via modal and send modalData to the corresponding service
   async addRecord(modalProps){
     const modal = await this.modalController.create(modalProps);

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
-import { ModalController, NavParams, ActionSheetController } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 
 import { GeneralService } from '../../services/general.service';
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
@@ -29,7 +29,6 @@ export class NewNutritionRecordPage implements OnInit {
     private modalController: ModalController,
     private navParams: NavParams,
     private generalService: GeneralService,
-    private actionSheetController: ActionSheetController,
     private nutritionService: NutritionService,
     private errorToastAndAlertService: ErrorToastAndAlertService
   ) { }

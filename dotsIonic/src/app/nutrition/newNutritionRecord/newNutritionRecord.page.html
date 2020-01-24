@@ -1,6 +1,9 @@
 <ion-header>
     <ion-toolbar>
-      <ion-title> New nutrition record</ion-title>
+      <ion-title *ngIf="record.Date == null; else editTitle"> New nutrition record</ion-title>
+      <ng-template #editTitle>
+        <ion-title>Edit nutrition record</ion-title>
+      </ng-template>
     </ion-toolbar>
   </ion-header>
 

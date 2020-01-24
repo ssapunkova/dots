@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ActionSheetController } from '@ionic/angular';
 
 // Services
 import { LoadingService } from '../services/loading.service';
@@ -30,6 +30,7 @@ export class NutritionPage implements OnInit {
     public generalService: GeneralService,
     public errorToastAndAlertService: ErrorToastAndAlertService,
     public alertController: AlertController,
+    public actionSheetController: ActionSheetController,
     public modalController: ModalController,
     public nutritionService: NutritionService,
     public dataTableService: DataTableService,
@@ -116,6 +117,35 @@ export class NutritionPage implements OnInit {
     }
   }
 
+  async showRecordOptions(record){
+    console.log("a")
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Record',
+      buttons: [
+        {
+          text: 'Edit',
+          icon: 'checkmark',
+          handler: () => {
+            this.editRecord(record);
+          }
+        },
+        {
+          text: 'Delete',
+          icon: 'trash',
+          handler: () => {
+            this.deleteRecord(record);
+          }
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel'
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+
   async addRecord(){
 
     let modalProps = {
@@ -136,6 +166,8 @@ export class NutritionPage implements OnInit {
 
   async editRecord(record){
 
+    console.log("edit")
+
     let modalProps = {
       component: NewNutritionRecordPage,
       componentProps: {
@@ -150,6 +182,7 @@ export class NutritionPage implements OnInit {
     this.dataTableService.editRecord(record, modalProps);
 
   }
+
 
   async deleteRecord(record){
 

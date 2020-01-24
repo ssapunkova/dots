@@ -1,6 +1,9 @@
 <ion-header>
     <ion-toolbar>
-      <ion-title> New workout record</ion-title>
+      <ion-title *ngIf="record.Date == null; else editTitle"> New workout record</ion-title>
+      <ng-template #editTitle>
+        <ion-title>Edit workout record</ion-title>
+      </ng-template>
     </ion-toolbar>
   </ion-header>
 
