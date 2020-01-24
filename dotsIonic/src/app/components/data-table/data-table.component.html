@@ -86,11 +86,8 @@
 
             <ion-row *ngFor="let record of dataTableService.showingRecords">
 
-                  <!-- <ion-item-option color="danger" (click)="deleteRecord(record)">Delete</ion-item-option> -->
-                  <!-- <ion-item-option color="success" (click)="editRecord(record)">Edit</ion-item-option> -->
-
                   <ion-col title='Date'>
-                    <ion-button (click)="showRecordOptions(record)">
+                    <ion-button (click)="showRecordOptions(record)" fill="clear" class="showRecordOptionsButton">
                       <ion-icon name="more"></ion-icon>
                     </ion-button>
                     {{ record.Date | date : 'dd.MM.yy' }}
