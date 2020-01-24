@@ -17,13 +17,12 @@
 <ion-content *ngIf="!loadingService.isPageLoading">
 
   <data-table
-    [data]="data[0]"
+    [general]="data[0]"
     [records]="data[0].WorkoutRecords"
     service="workout"
-    (reloadDataTriggered)="getSheetData()"
     (addRecordClicked)="addRecord()"
     (editRecordClicked)="editRecord($event)"
     (deleteRecordClicked)="deleteRecord($event)"
-    ></data-table>
+  ></data-table>
 
 </ion-content>

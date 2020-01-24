@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { ModalController, NavParams, ActionSheetController } from '@ionic/angular';
 
+import { GeneralService } from '../../services/general.service';
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class NewWorkoutRecordPage implements OnInit {
     RecordId: null,
     Date: "",
     Values: [],
-    Params: []
+    Params: [],
+    PercentageOfGoal: []
   };
 
   public isButtonDisabled = {
@@ -28,6 +30,7 @@ export class NewWorkoutRecordPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
+    public generalService: GeneralService,
     private actionSheetController: ActionSheetController,
     private errorToastAndAlertService: ErrorToastAndAlertService
   ) { }

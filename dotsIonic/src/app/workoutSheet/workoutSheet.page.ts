@@ -49,12 +49,13 @@ export class WorkoutSheetPage implements OnInit {
   async getSheetData(){
     this.workoutService.getWorkoutSheetData(this.sheetId).subscribe(async (data: any) => {
 
-      console.log(data);
       this.data = data;
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;
       await this.loadingService.dismissSmallLoading();
+
+      console.log("***WorkoutSheetPage ", this)
 
     });
   };

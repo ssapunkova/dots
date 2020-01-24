@@ -15,6 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
+import { ComponentsModule } from './components/components.module';
+
 // Services
 import { ConnectToServerService } from './services/connectToServer.service';
 import { LoadingService } from './services/loading.service';
@@ -48,6 +50,7 @@ import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutri
   ],
   imports: [
     BrowserModule,
+    ComponentsModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
@@ -68,6 +71,7 @@ import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutri
     ChartService,
     WorkoutService,
     StorageService,
+    ComponentsModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [
@@ -75,7 +79,8 @@ import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutri
     SheetConfigurationPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,
-    EditNutritionGoalsPage
+    EditNutritionGoalsPage,
+    ComponentsModule
   ],
   bootstrap: [AppComponent]
 })

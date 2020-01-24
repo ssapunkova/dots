@@ -9,6 +9,8 @@ import { ChartService } from '../services/chart.service';
 import { WorkoutService } from '../services/workout.service';
 import { NutritionService } from '../services/nutrition.service';
 
+import { ComponentsModule } from '../components/components.module';
+
 // DataTable Service
 // Implements sorting the data, displayed in ion-grid
 
@@ -179,6 +181,8 @@ export class DataTableService{
 
     await modal.present();
     let modalData = await modal.onWillDismiss();
+
+    console.log(modalData);
 
     if(modalData.data != null){
       // remove any records with the same date as the new one to avoid duplicates
