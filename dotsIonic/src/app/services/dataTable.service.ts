@@ -1,6 +1,5 @@
 import { Injectable, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
-import { OverlayEventDetail } from '@ionic/core';
 
 import { GeneralService } from './general.service';
 import { TimeAndDateService } from './timeAndDate.service';
