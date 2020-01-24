@@ -37,13 +37,11 @@ export class NutritionPage implements OnInit {
   ) { };
 
   ngOnInit() {
-    this.loadingService.isPageLoading = true;
     // Load nutrition data from database
     this.getNutritionData();
   }
 
   async getNutritionData(){
-
 
     this.nutritionService.getNutritionData().subscribe(async (data: any) => {
 
@@ -65,22 +63,14 @@ export class NutritionPage implements OnInit {
         }
       }
 
-      // Dismiss all loading
-
-      this.data = data;
-      this.loadingService.isPageLoading = false;
-      await this.loadingService.dismissSmallLoading();
-
-      console.log(this);
+      console.log("***NutritionService ", this);
 
     });
   };
 
   async editGoals(){
 
-    console.log("clicked")
-
-    // Select configureable data about the sheet
+    // Select nutrition params
     let updateData = {
       Params: this.dataTableService.params,
       Goals: this.dataTableService.goals
@@ -96,8 +86,6 @@ export class NutritionPage implements OnInit {
     // Get modal data and process it if it's not null
     let modalData = await modal.onWillDismiss();
     modalData = modalData.data;
-
-    console.log(modalData);
 
     if(modalData != null){
 
@@ -156,7 +144,6 @@ export class NutritionPage implements OnInit {
     this.dataTableService.deleteRecord(record);
 
   }
-
 
 
 }
