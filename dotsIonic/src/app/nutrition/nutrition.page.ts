@@ -81,8 +81,6 @@ export class NutritionPage implements OnInit {
 
   async editParams(){
 
-    console.log("clicked")
-
     // Select configureable data about the sheet
     let updateData = {
       Params: this.dataTableService.params,
@@ -99,8 +97,6 @@ export class NutritionPage implements OnInit {
     // Get modal data and process it if it's not null
     let modalData = await modal.onWillDismiss();
     modalData = modalData.data;
-
-    console.log(modalData);
 
     if(modalData != null){
 
@@ -120,7 +116,7 @@ export class NutritionPage implements OnInit {
   }
 
   async showRecordOptions(record){
-    console.log("a")
+
     const actionSheet = await this.actionSheetController.create({
       header: 'Record',
       buttons: [
@@ -167,8 +163,6 @@ export class NutritionPage implements OnInit {
 
 
   async editRecord(record){
-
-    console.log("edit")
 
     let modalProps = {
       component: NewNutritionRecordPage,

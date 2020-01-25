@@ -11,8 +11,6 @@ import { DataTableService } from '../../services/dataTable.service';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() general: [];
-  @Input() records: [];
   @Input() service: String;
 
   // Event emitters for click actions inside data-table component
@@ -41,7 +39,6 @@ export class DataTableComponent implements OnInit {
   }
 
   async showRecordOptions($event){
-    console.log("a")
     // Emit showRecordOptionsClicked event to parent (nutrition.page.html)
     this.showRecordOptionsClicked.emit($event)
   }

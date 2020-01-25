@@ -17,8 +17,6 @@
 <ion-content *ngIf="!loadingService.isPageLoading">
 
   <data-table
-    [general]="data.general"
-    [records]="data.records"
     service="nutrition"
     (editParamsButtonClicked)="editParams()"
     (addRecordClicked)="addRecord()"

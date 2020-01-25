@@ -28,4 +28,4 @@
   TODO:
     Make calculators for weight, blocks, kcal, etc
 
-    Edit workout sheet params in workoutSheet?
+    * Edit workout sheet params in workoutSheet?

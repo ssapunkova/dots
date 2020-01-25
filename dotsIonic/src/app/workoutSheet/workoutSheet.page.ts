@@ -63,7 +63,7 @@ export class WorkoutSheetPage implements OnInit {
 
       console.log("***WorkoutSheetPage ", this)
 
-      this.dataTableService.initializeDataTable(this.data, this.data.WorkoutRecords, "workouts");
+      this.dataTableService.initializeDataTable(this.data, this.data.WorkoutRecords, "workout");
 
     });
   };
@@ -71,7 +71,6 @@ export class WorkoutSheetPage implements OnInit {
 
   // Edit sheet's params (exercises) and set goals for them
   async editParams(){
-    console.log("edit")
 
     // Select configureable data about the sheet
     let updateData = {
@@ -111,8 +110,6 @@ export class WorkoutSheetPage implements OnInit {
 
   async addRecord(){
 
-    console.log("add")
-
     let modalProps = {
       component: NewWorkoutRecordPage,
       componentProps: {
@@ -130,7 +127,7 @@ export class WorkoutSheetPage implements OnInit {
 
 
   async showRecordOptions(record){
-    console.log("a")
+
     const actionSheet = await this.actionSheetController.create({
       header: 'Record',
       buttons: [
