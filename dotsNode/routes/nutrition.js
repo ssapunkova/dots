@@ -39,8 +39,6 @@ app.post("/updateNutritionParams", async (req, res) => {
   let updateObj = await Nutrition.updateOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }, nutritionObj, { upsert: true });
   if(updateObj.err) throw updateObj.err;
 
-  console.log(deletedParams);
-
   if(deletedParams.length > 0){
 
     let recordsOfDeletedParams = await NutritionRecord.find(
@@ -52,10 +50,8 @@ app.post("/updateNutritionParams", async (req, res) => {
     if(recordsOfDeletedParams.err) throw recordsOfDeletedParams.err;
     else{
       for(let i = 0; i < recordsOfDeletedParams.length; i++){
-        console.log(recordsOfDeletedParams[i])
         for(let j = 0; j < deletedParams.length; j++){
           let index = recordsOfDeletedParams[i].Params.indexOf(deletedParams[j]);
-          console.log(index);
           recordsOfDeletedParams[i].Values.splice(index, 1);
           recordsOfDeletedParams[i].Params.splice(index, 1);
           recordsOfDeletedParams[i].save();

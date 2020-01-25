@@ -6,8 +6,51 @@
 
 <ion-content>
 
-  <ion-card *ngFor="">
+  <ion-item color="secondary">
+    Nutrition
+  </ion-item>
 
+  <ion-card *ngFor="let param of paramsService.nutrition">
+    <ion-card-header>
+      <ion-icon name="nutrition" color="tertiary"></ion-icon>
+      {{ param.Title }}
+    </ion-card-header>
+    <ion-card-content>
+
+      <ion-list>
+
+        <ion-item>
+          Default goal: {{ param.Goal }}
+        </ion-item>
+        <ion-item *ngIf="formulas[param.Title]">
+
+          <ion-grid>
+
+            <ion-row>
+
+              <ion-col>
+                <ion-item *ngFor="let field of formulas[param.Title].required; let i = index">
+                  <ion-label> {{ field.Title }} </ion-label>
+                  <ion-input type="number" [(ngModel)]="values.nutrition[i]"></ion-input> {{ field.Unit }}
+                </ion-item>
+              </ion-col>
+
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                {{ formulas[param.Title].formula(values.nutrition) }}
+              </ion-col>
+            </ion-row>
+
+          </ion-grid>
+
+        </ion-item>
+
+      </ion-list>
+
+      {{ param | json }}
+
+    </ion-card-content>
   </ion-card>
 
 </ion-content>
