@@ -5,11 +5,11 @@ import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.ser
 
 @Component({
   selector: 'modal-page',
-  templateUrl: './sheetConfiguration.page.html'
+  templateUrl: './editParams.page.html'
 })
 
 @Injectable()
-export class SheetConfigurationPage implements OnInit {
+export class EditParamsPage implements OnInit {
 
   public MAX_SHEET_EXERCISES = 15;
 

@@ -29,7 +29,7 @@ import { ChartService } from './services/chart.service';
 import { WorkoutService } from './services/workout.service';
 import { StorageService } from './services/storage.service';
 
-import { SheetConfigurationPage } from './workoutSheet/sheetConfiguration/sheetConfiguration.page';
+import { EditParamsPage } from './workoutSheet/editParams/editParams.page';
 import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkoutRecord.page';
 import { NewNutritionRecordPage } from './nutrition/newNutritionRecord/newNutritionRecord.page';
 import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutritionGoals.page';
@@ -37,13 +37,13 @@ import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutri
 @NgModule({
   declarations: [
     AppComponent,
-    SheetConfigurationPage,
+    EditParamsPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,
     EditNutritionGoalsPage
   ],
   entryComponents: [
-    SheetConfigurationPage,
+    EditParamsPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,
     EditNutritionGoalsPage
@@ -76,7 +76,7 @@ import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutri
   ],
   exports: [
     NgxChartsModule,
-    SheetConfigurationPage,
+    EditParamsPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,
     EditNutritionGoalsPage,

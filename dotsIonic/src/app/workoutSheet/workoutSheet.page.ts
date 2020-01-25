@@ -12,7 +12,7 @@ import { WorkoutService } from '../services/workout.service';
 import { ChartService } from '../services/chart.service';
 
 import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
-import { SheetConfigurationPage } from './sheetConfiguration/sheetConfiguration.page';
+import { EditParamsPage } from './editParams/editParams.page';
 
 @Component({
   selector: 'app-workouts',
@@ -81,7 +81,7 @@ export class WorkoutSheetPage implements OnInit {
 
     // Show a configuration modal
     const modal = await this.modalController.create({
-      component: SheetConfigurationPage,
+      component: EditParamsPage,
       componentProps: updateData
     });
     await modal.present();
