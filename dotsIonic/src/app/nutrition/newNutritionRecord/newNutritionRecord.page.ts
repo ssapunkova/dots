@@ -36,7 +36,6 @@ export class NewNutritionRecordPage implements OnInit {
   ngOnInit() {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
 
-    console.log(data);
 
     this.record.RecordId = data.RecordId;
     this.record.Date = data.Date;
@@ -46,8 +45,6 @@ export class NewNutritionRecordPage implements OnInit {
     this.goals = data.Goals;
 
     this.values = data.Values;
-
-    console.log(this.record);
 
     for(var i = 0; i < this.fields.length; i++){
 
@@ -61,12 +58,9 @@ export class NewNutritionRecordPage implements OnInit {
         this.record.Values.push(this.values[i]);
         this.record.PercentageOfGoal.push(this.generalService.calculatePercentage(this.values[i], this.goals[i]))
       }
-      console.log(this.fields[i]);
-      console.log(this.record)
 
     }
 
-    console.log(this);
   }
 
   async saveChanges() {

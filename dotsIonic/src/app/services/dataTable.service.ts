@@ -86,7 +86,6 @@ export class DataTableService{
     if(this.goals == null){
       this.goals = [];
       for(var i = 0; i < this.params.length; i++){
-        console.log(this.params[i])
         this.goals.push(this.params[i].Goal);
       }
     }
@@ -109,8 +108,14 @@ export class DataTableService{
 
   }
 
+  async initializeChart(){
+    this.chartService.formatChartData(this.showingRecords,
+     this.params, this.goals);
+  }
+
   // Sorts data, gets and sets showing period
   async prepareData(){
+
     this.timeAndDateService.sortByDate(this.allRecords, "asc");
 
     this.getShowingMonths();
@@ -122,6 +127,11 @@ export class DataTableService{
     }
     else{
       this.setPeriod(this.showingPeriod, false);
+    }
+
+    // Format data for chart
+    if(this.showingPeriod.length > 0){
+      this.initializeChart();
     }
   }
 
@@ -153,12 +163,6 @@ export class DataTableService{
     // Filter which records to show and sort them by date
     this.showingRecords = this.allRecords.filter((record) => this.showingPeriod.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
 
-    // Format data for chart
-    if(this.showingPeriod.length > 0){
-      this.chartService.formatChartData(this.showingRecords,
-       this.params, this.goals);
-    }
-
   }
 
   // Get array of records months
@@ -183,7 +187,6 @@ export class DataTableService{
     await modal.present();
     let modalData = await modal.onWillDismiss();
 
-    console.log(modalData);
 
     if(modalData.data != null){
       // remove any records with the same date as the new one to avoid duplicates
@@ -207,6 +210,7 @@ export class DataTableService{
 
     await modal.present();
     let modalData = await modal.onWillDismiss();
+
 
     if(modalData.data != null){
       // remove any records with the same date as the record before and after editing to avoid duplicates

@@ -38,8 +38,6 @@ export class NewWorkoutRecordPage implements OnInit {
   ngOnInit() {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
 
-    console.log(data)
-
     this.record.SheetId = data.SheetId;
     this.record.RecordId = data.RecordId;
     this.record.Date = data.Date;
@@ -52,6 +50,7 @@ export class NewWorkoutRecordPage implements OnInit {
       if(this.values == null){
         if(this.fields[i].Type != "Bool") {
           this.record.Values.push(null);
+          this.record.PercentageOfGoal.push(0);
         }
         else{
           this.record.Values.push(false);
@@ -59,10 +58,10 @@ export class NewWorkoutRecordPage implements OnInit {
       }
       else{
         this.record.Values.push(this.values[i]);
+        this.record.PercentageOfGoal.push(this.generalService.calculatePercentage(this.values[i], this.fields[i].Goal))
       }
     }
 
-    console.log(this.fields);
   }
 
   async saveChanges() {
