@@ -99,8 +99,8 @@
                     </ion-label>
 
                     <ng-template #showTick>
-                      <ion-icon name="checkmark-circle" *ngIf="record.Values[j] == true"></ion-icon>
-                      <ion-icon name="close-circle" *ngIf="record.Values[j] == false"></ion-icon>
+                      <ion-icon name="checkmark-circle" color="success" *ngIf="record.Values[j] == true"></ion-icon>
+                      <ion-icon name="close-circle" color="danger" *ngIf="record.Values[j] == false"></ion-icon>
                     </ng-template>
 
                     <percentage-chip

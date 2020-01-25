@@ -10,37 +10,69 @@
 
   <ion-content class="padding">
 
-    <ion-list>
-      <ion-item>
-        <ion-label>Title</ion-label>
-        <ion-input [(ngModel)]='sheet.Title' type="text" placeholder="Name"></ion-input>
-      </ion-item>
-      <ion-item-divider>
-        <ion-toolbar>
-          <ion-label>Exercises</ion-label>
-          <ion-buttons slot="secondary">
-            <ion-button fill="solid" color="primary" (click)="presentActionSheet()" disabled="{{ isButtonDisabled.addParam }}">
-              <ion-icon name="add"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-item-divider>
-      <ion-item *ngFor="let col of sheet.Params; let i = index" [color]="col.NameRepeated ? 'danger' : ''">
-        <ion-input type="text" placeholder="Exercise title" [(ngModel)]='col.Title'></ion-input>
-        <!-- exercise type -->
-        <ion-input *ngIf="col.Type == 'Number'" type="number" placeholder="Goal" [(ngModel)]='col.Goal'>
-        </ion-input>
-        <ion-input *ngIf="col.Type == 'Time'" type="time" placeholder="Goal" [(ngModel)]='col.Goal'>
-        </ion-input>
-        <ion-label *ngIf="col.Type == 'Bool'"><ion-icon name="checkbox"></ion-icon></ion-label>
+    <ion-grid>
 
-        <ion-button color="danger" (click)="deleteExercise(i)" slot="end">
-          <ion-icon name="trash"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </ion-list>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Title</ion-label>
+            <ion-input [(ngModel)]='sheet.Title' type="text" placeholder="Name"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-    <ion-button (click)="closeModal()">Cancel</ion-button>
-    <ion-button (click)="saveChanges()">Save</ion-button>
+      <ion-row>
+        <ion-col style="padding-left: 1.2rem" class="table-header">
+          <ion-label>Exercise</ion-label>
+        </ion-col>
+        <ion-col sizeLg="2" sizeXs="3" class="table-header">
+          Goal
+        </ion-col>
+        <ion-col sizeXs="2" sizeLg="1" class="table-header" style="padding: 0px !important">
+          <ion-button expand="block" fill="clear"
+           (click)="presentActionSheet()" disabled="{{ isButtonDisabled.addParam }}">
+            <ion-icon name="add" color="light" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let col of sheet.Params; let i = index">
+
+        <ion-col style="padding-left: 0.8rem">
+          <ion-input type="text" placeholder="Exercise title" [(ngModel)]='col.Title'></ion-input>
+        </ion-col>
+
+        <ion-col sizeLg="2" sizeXs="3">
+          <ion-input *ngIf="col.Type == 'Number'" type="number" placeholder="Goal" [(ngModel)]='col.Goal'>
+          </ion-input>
+
+          <ion-input *ngIf="col.Type == 'Time'" type="time" placeholder="Goal" [(ngModel)]='col.Goal'>
+          </ion-input>
+
+          <ion-label *ngIf="col.Type == 'Bool'">
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+          </ion-label>
+        </ion-col>
+
+        <ion-col sizeXs="2" sizeLg="1">
+          <ion-button expand="block" fill="clear" (click)="deleteExercise(i)">
+            <ion-icon name="trash" color="danger"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row>
+
+        <ion-col sizeXs="6">
+          <ion-button expand="full" (click)="closeModal()">Cancel</ion-button>
+        </ion-col>
+        <ion-col sizeXs="6">
+          <ion-button expand="full" (click)="saveChanges()">Save</ion-button>
+        </ion-col>
+
+      </ion-row>
+
+    </ion-grid>
 
   </ion-content>
