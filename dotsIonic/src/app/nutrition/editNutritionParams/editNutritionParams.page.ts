@@ -32,17 +32,6 @@ export class EditNutritionParamsPage implements OnInit {
     this.params = data.Params;
     this.goals = data.Goals;
     this.deletedParams = [];
-    console.log(data)
-
-    // Get goal values for all existing params
-    // if there is a custom goal for current param, use it
-    // else, use the default param goal
-    // for(var i = 0; i < this.nutritionService.Params.length; i++){
-    //   let customGoal = this.customGoals[i];
-    //   if(customGoal != null) this.goalValues.push(customGoal);
-    //   else this.goalValues.push(this.nutritionService.Params[i].Goal);
-    // }
-
   }
 
 

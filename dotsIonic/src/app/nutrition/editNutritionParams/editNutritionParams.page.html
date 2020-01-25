@@ -6,32 +6,67 @@
 
   <ion-content class="padding">
 
+    <ion-card>
+      <ion-card-content>
+        <ion-label style="display: block">
+          There are default nutrition goals, but you can set your own.
+        </ion-label>
+        <ion-text
+          color="secondary"
+          [routerDirection]="'root'" routerLink="/calculate#Nutrition"
+          style="cursor: pointer; display: block">
+          Calculate my nutrition goals <ion-icon name="open"></ion-icon>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
 
-    <ion-list>
-      <ion-buttons slot="secondary">
-        <ion-button fill="solid" color="primary" (click)="presentActionSheet()">
-          <ion-icon name="add"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+    <ion-grid>
 
-      <ion-item *ngFor="let param of params; let i = index">
+      <ion-row>
+        <ion-col style="padding-left: 1.2rem" class="table-header">
+          <ion-label>Parameter</ion-label>
+        </ion-col>
+        <ion-col sizeLg="2" sizeXs="3" class="table-header">
+          Goal
+        </ion-col>
+        <ion-col sizeXs="2" sizeLg="1" class="table-header" style="padding: 0px !important">
+          <ion-button expand="block" fill="clear"
+           (click)="presentActionSheet()">
+            <ion-icon name="add" color="light" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
 
-        <ion-chip color="secondary" (click)="showRecommendations()">
-          <ion-icon name="help"></ion-icon>
-        </ion-chip>
+      <ion-row *ngFor="let param of params; let i = index">
 
-        <ion-label> {{ param.Title }} </ion-label>
+        <ion-col>
+          <ion-label> {{ param.Title }} </ion-label>
+        </ion-col>
 
-        <ion-input type="number" placeholder="Goal" [(ngModel)]='goals[i]'>
-        </ion-input>
+        <ion-col sizeLg="2" sizeXs="3">
+          <ion-input type="number" placeholder="Goal" [(ngModel)]='goals[i]'>
+          </ion-input>
+        </ion-col>
 
-        <ion-button color="danger" (click)="deleteParam(i)" slot="end">
-          <ion-icon name="trash"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </ion-list>
+        <ion-col sizeXs="2" sizeLg="1">
+          <ion-button expand="block" fill="clear" (click)="deleteParam(i)">
+            <ion-icon name="trash" color="danger"></ion-icon>
+          </ion-button>
+        </ion-col>
 
-    <ion-button (click)="closeModal()">Cancel</ion-button>
-    <ion-button (click)="saveChanges()">Save</ion-button>
+      </ion-row>
+
+      <ion-row>
+
+        <ion-col sizeXs="6">
+          <ion-button expand="full" (click)="closeModal()">Cancel</ion-button>
+        </ion-col>
+        <ion-col sizeXs="6">
+          <ion-button expand="full" (click)="saveChanges()">Save</ion-button>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
 
   </ion-content>
