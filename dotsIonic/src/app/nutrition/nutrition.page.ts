@@ -11,7 +11,7 @@ import { ChartService } from '../services/chart.service';
 import { NutritionService } from '../services/nutrition.service';
 
 import { NewNutritionRecordPage } from './newNutritionRecord/newNutritionRecord.page';
-import { EditNutritionGoalsPage } from './editNutritionGoals/editNutritionGoals.page';
+import { EditNutritionParamsPage } from './editNutritionParams/editNutritionParams.page';
 
 @Component({
   selector: 'app-nutrition',
@@ -89,7 +89,7 @@ export class NutritionPage implements OnInit {
 
     // Show a configuration modal
     const modal = await this.modalController.create({
-      component: EditNutritionGoalsPage,
+      component: EditNutritionParamsPage,
       componentProps: updateData
     });
     await modal.present();

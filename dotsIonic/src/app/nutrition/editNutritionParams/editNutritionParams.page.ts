@@ -6,11 +6,11 @@ import { NutritionService } from '../../services/nutrition.service';
 
 @Component({
   selector: 'modal-page',
-  templateUrl: './editNutritionGoals.page.html'
+  templateUrl: './editNutritionParams.page.html'
 })
 
 @Injectable()
-export class EditNutritionGoalsPage implements OnInit {
+export class EditNutritionParamsPage implements OnInit {
 
   public params;
   public deletedParams;

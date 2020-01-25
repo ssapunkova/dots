@@ -32,7 +32,7 @@ import { StorageService } from './services/storage.service';
 import { EditWorkoutParamsPage } from './workoutSheet/editWorkoutParams/editWorkoutParams.page';
 import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkoutRecord.page';
 import { NewNutritionRecordPage } from './nutrition/newNutritionRecord/newNutritionRecord.page';
-import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutritionGoals.page';
+import { EditNutritionParamsPage } from './nutrition/editNutritionParams/editNutritionParams.page';
 
 @NgModule({
   declarations: [
@@ -40,13 +40,13 @@ import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutri
     EditWorkoutParamsPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,
-    EditNutritionGoalsPage
+    EditNutritionParamsPage
   ],
   entryComponents: [
     EditWorkoutParamsPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,
-    EditNutritionGoalsPage
+    EditNutritionParamsPage
   ],
   imports: [
     BrowserModule,
@@ -79,7 +79,7 @@ import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutri
     EditWorkoutParamsPage,
     NewWorkoutRecordPage,
     NewNutritionRecordPage,
-    EditNutritionGoalsPage,
+    EditNutritionParamsPage,
     ComponentsModule
   ],
   bootstrap: [AppComponent]
