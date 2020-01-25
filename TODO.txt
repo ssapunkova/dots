@@ -20,7 +20,6 @@
 
   FIX:
     * Adding new/editing row in table doesn't display normally
-    * getSheetData in dataTable.service
 
     * Slide item edit and delete!!!!
 
@@ -29,3 +28,7 @@
     Make calculators for weight, blocks, kcal, etc
 
     * Edit workout sheet params in workoutSheet?
+
+25.01
+  TODO:
+    Style editNutritionParams
