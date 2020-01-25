@@ -74,10 +74,12 @@ export class NutritionPage implements OnInit {
 
       console.log("***NutritionPage ",this);
 
+      this.dataTableService.initializeDataTable(data.general, data.records, "nutrition");
+
     });
   };
 
-  async editGoals(){
+  async editParams(){
 
     console.log("clicked")
 

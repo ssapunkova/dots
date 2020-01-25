@@ -27,9 +27,7 @@ export class DataTableComponent implements OnInit {
   ) { }
 
 
-  ngOnInit(){
-    this.dataTableService.initializeDataTable(this.general, this.records, this.service);
-  }
+  ngOnInit(){   }
 
   async addRecord() {
     // Emit addRecordClicked event to parent (nutrition.page.html)

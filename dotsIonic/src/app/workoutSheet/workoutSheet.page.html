@@ -17,8 +17,8 @@
 <ion-content *ngIf="!loadingService.isPageLoading">
 
   <data-table
-    [general]="data[0]"
-    [records]="data[0].WorkoutRecords"
+    [general]="data"
+    [records]="data.WorkoutRecords"
     service="workout"
     (editParamsButtonClicked)="editParams()"
     (addRecordClicked)="addRecord()"

@@ -94,7 +94,7 @@ export class WorkoutsPage implements OnInit {
 
       }
 
-      console.log(this.chartData)
+      console.log("***WorkoutsPage ", this)
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;

@@ -25,7 +25,11 @@ export class WorkoutSheetPage implements OnInit {
 
   public sheetId = null;
 
-  public data = [];
+  public data = {
+    Title: String,
+    Params: [],
+    WorkoutRecords: []
+  };
 
   constructor(
     public loadingService: LoadingService,
@@ -51,13 +55,15 @@ export class WorkoutSheetPage implements OnInit {
   async getSheetData(){
     this.workoutService.getWorkoutSheetData(this.sheetId).subscribe(async (data: any) => {
 
-      this.data = data;
+      this.data = data[0];
 
       // Dismiss all loading
       this.loadingService.isPageLoading = false;
       await this.loadingService.dismissSmallLoading();
 
       console.log("***WorkoutSheetPage ", this)
+
+      this.dataTableService.initializeDataTable(this.data, this.data.WorkoutRecords, "workouts");
 
     });
   };
