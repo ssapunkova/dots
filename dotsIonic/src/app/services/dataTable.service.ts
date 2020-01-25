@@ -1,4 +1,4 @@
-import { Injectable, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Injectable, Input, Output, EventEmitter } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 
 import { GeneralService } from './general.service';

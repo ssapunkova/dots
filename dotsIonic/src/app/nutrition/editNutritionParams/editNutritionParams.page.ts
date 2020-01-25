@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
-import { ModalController, NavParams, AlertController, ActionSheetController } from '@ionic/angular';
+import { ModalController, NavParams, ActionSheetController } from '@ionic/angular';
 
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
 import { NutritionService } from '../../services/nutrition.service';
+import { ParamsService } from '../../services/params.service';
 
 @Component({
   selector: 'modal-page',
@@ -22,9 +23,9 @@ export class EditNutritionParamsPage implements OnInit {
     private modalController: ModalController,
     private navParams: NavParams,
     private nutritionService: NutritionService,
-    private alertController: AlertController,
     private actionSheetController: ActionSheetController,
-    private errorToastAndAlert: ErrorToastAndAlertService
+    private errorToastAndAlertService: ErrorToastAndAlertService,
+    private paramsService: ParamsService
   ) { }
 
   ngOnInit() {
@@ -37,29 +38,37 @@ export class EditNutritionParamsPage implements OnInit {
 
   async presentActionSheet() {
 
+    console.log(this.paramsService.nutrition);
+
     let usedParamIndexes = this.params.map((param) => param.Index);
-    let notUsedParams = this.nutritionService.Params.filter((param) => usedParamIndexes.indexOf(param.Index) < 0);
-    let possibleParams = notUsedParams.map((param) => {
-      return {
-        text: param.Title,
-        icon: 'refresh-circle',
-        handler: () => {
-          this.addParam(param)
+    let notUsedParams = this.paramsService.nutrition.filter((param) => usedParamIndexes.indexOf(param.Index) < 0);
+
+    if(notUsedParams.length == 0){
+      this.errorToastAndAlertService.showErrorToast("You have already used all possible parameters");
+    }
+    else{
+      let possibleParams = notUsedParams.map((param) => {
+        return {
+          text: param.Title,
+          icon: 'refresh-circle',
+          handler: () => {
+            this.addParam(param)
+          }
         }
-      }
-    })
+      })
 
-    possibleParams.push({
-      text: 'Cancel',
-      icon: 'close',
-      handler: null
-    })
+      possibleParams.push({
+        text: 'Cancel',
+        icon: 'close',
+        handler: null
+      })
 
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Add goal',
-      buttons: possibleParams
-    });
-    await actionSheet.present();
+      const actionSheet = await this.actionSheetController.create({
+        header: 'Add goal',
+        buttons: possibleParams
+      });
+      await actionSheet.present();
+    }
 
   }
 
@@ -68,7 +77,7 @@ export class EditNutritionParamsPage implements OnInit {
   }
 
   async deleteParam(index){
-    this.deletedParams.push(this.params[index]);
+    this.deletedParams.push(this.params[index].Index);
     this.params.splice(index, 1);
   }
 

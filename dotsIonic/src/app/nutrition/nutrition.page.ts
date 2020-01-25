@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertController, ModalController, ActionSheetController } from '@ionic/angular';
+import { ModalController, ActionSheetController } from '@ionic/angular';
 
 // Services
 import { LoadingService } from '../services/loading.service';
@@ -9,6 +9,7 @@ import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.servic
 import { DataTableService } from '../services/dataTable.service';
 import { ChartService } from '../services/chart.service';
 import { NutritionService } from '../services/nutrition.service';
+import { ParamsService } from '../services/params.service';
 
 import { NewNutritionRecordPage } from './newNutritionRecord/newNutritionRecord.page';
 import { EditNutritionParamsPage } from './editNutritionParams/editNutritionParams.page';
@@ -29,16 +30,18 @@ export class NutritionPage implements OnInit {
     public loadingService: LoadingService,
     public generalService: GeneralService,
     public errorToastAndAlertService: ErrorToastAndAlertService,
-    public alertController: AlertController,
     public actionSheetController: ActionSheetController,
     public modalController: ModalController,
     public nutritionService: NutritionService,
     public dataTableService: DataTableService,
-    public chartService: ChartService
+    public chartService: ChartService,
+    public paramsService: ParamsService
   ) { };
 
   ngOnInit() {
     this.loadingService.isPageLoading = true;
+    // Get nutrition params
+    this.nutritionParams = this.paramsService.nutrition;
     // Load nutrition data from database
     this.getNutritionData();
   }
@@ -54,7 +57,7 @@ export class NutritionPage implements OnInit {
       }
       else{
         for(var i = 0; i < data.general.Params.length; i++){
-          data.general.Params[i] = this.nutritionService.Params[data.general.Params[i]];
+          data.general.Params[i] = this.nutritionParams[data.general.Params[i]];
         }
       }
 
@@ -62,7 +65,7 @@ export class NutritionPage implements OnInit {
 
       for(var i = 0; i < data.general.Params.length; i++){
         if(data.general.Goals[i] == null){
-           data.general.Goals[i] = this.nutritionService.Params[data.general.Params[i].Index].Goal;
+           data.general.Goals[i] = this.nutritionParams[data.general.Params[i].Index].Goal;
         }
       }
 

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { ConnectToServerService } from './connectToServer.service';
 import { LoadingService } from '../services/loading.service';
+import { ParamsService } from '../services/params.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,28 +17,30 @@ export class NutritionService {
   };
 
 
-  public Params = [
-    {
-      Index: 0,
-      Title: "kcal",
-      Goal: 2000
-    },
-    {
-      Index: 1,
-      Title: "Blocks",
-      Goal: 12
-    },
-    {
-      Index: 2,
-      Title: "Sugar",
-      Goal: 40
-    },
-    {
-      Index: 3,
-      Title: "Protein (gr)",
-      Goal: 85
-    }
-  ]
+  public Params = [];
+
+  // public Params = [
+  //   {
+  //     Index: 0,
+  //     Title: "kcal",
+  //     Goal: 2000
+  //   },
+  //   {
+  //     Index: 1,
+  //     Title: "Blocks",
+  //     Goal: 12
+  //   },
+  //   {
+  //     Index: 2,
+  //     Title: "Sugar",
+  //     Goal: 40
+  //   },
+  //   {
+  //     Index: 3,
+  //     Title: "Protein (gr)",
+  //     Goal: 85
+  //   }
+  // ]
 
   public DefaultParamIndexes = [0];
 
@@ -47,6 +50,7 @@ export class NutritionService {
       public http: HttpClient,
       public connectToServerService: ConnectToServerService,
       public loadingService: LoadingService,
+      public paramsService: ParamsService
   ) { }
 
   public getNutritionData(){

@@ -13,7 +13,8 @@
         </ion-label>
         <ion-text
           color="secondary"
-          [routerDirection]="'root'" routerLink="/calculate#Nutrition"
+          (click)="closeModal()"
+           routerLink="/calculate/nutrition"
           style="cursor: pointer; display: block">
           Calculate my nutrition goals <ion-icon name="open"></ion-icon>
         </ion-text>
