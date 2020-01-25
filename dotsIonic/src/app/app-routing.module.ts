@@ -30,6 +30,14 @@ const routes: Routes = [
   {
     path: 'nutrition',
     loadChildren: () => import('./nutrition/nutrition.module').then(m => m.NutritionPageModule)
+  },
+  {
+    path: 'calculate',
+    loadChildren: () => import('./calculate/calculate.module').then(m => m.CalculatePageModule)
+  },
+  {
+    path: 'calculate/:topic',
+    loadChildren: () => import('./calculate/calculate.module').then(m => m.CalculatePageModule)
   }
 
 ];
