@@ -13,39 +13,46 @@ export class CalculatePage implements OnInit {
   public params = [
     {
       Title: "age",
-      Unit: "y.o."
+      Unit: "y.o.",
+      Type: "number"
     },
     {
       Title: "gender",
       Options: [
-        { "male": "m" },
-        { "female": "f" }
+        { "Title": "male", "Value": "m" },
+        { "Title": "female", "Value": "f" }
       ],
-      Unit: ""
+      Unit: "",
+      Type: "checkbox"
     },
     {
       Title: "weight",
-      Unit: "kg"
+      Unit: "kg",
+      Type: "number"
     },
     {
       Title: "height",
-      Unit: "cm"
+      Unit: "cm",
+      Type: "number"
     },
     {
       Title: "waist",
-      Unit: "cm"
+      Unit: "cm",
+      Type: "number"
     },
     {
       Title: "hips",
-      Unit: "cm"
+      Unit: "cm",
+      Type: "number"
     },
     {
       Title: "activity factor",
       Options: [
-        { "Seditary": 0.7 },
-        { "Light": 1 },
-        { "Moderate": 1.3 }
-      ]
+        { "Title": "Seditary", "Value": 0.7 },
+        { "Title": "Light", "Value": 1 },
+        { "Title": "Moderate", "Value": 1.3 }
+      ],
+      Type: "select"
     },
   ]
 

@@ -29,10 +29,36 @@
             <ion-row>
 
               <ion-col>
-                <ion-item *ngFor="let field of formulas[param.Title].required; let i = index">
-                  <ion-label> {{ field.Title }} </ion-label>
-                  <ion-input type="number" [(ngModel)]="values.nutrition[i]"></ion-input> {{ field.Unit }}
-                </ion-item>
+                <ion-grid>
+
+                  <ion-row *ngFor="let field of formulas[param.Title].required; let i = index">
+
+                    <ion-col>
+                      <ion-label style="max-width: 50%"> {{ field.Title }} </ion-label>
+                    </ion-col>
+
+                    <ion-col>
+
+                      <ion-item lines="none" *ngIf="field.Type == 'number'" style="display: flex">
+                        <ion-input *ngIf="field.Type == 'number'"
+                          type="number" [(ngModel)]="values.nutrition[i]"></ion-input>
+                        <ion-label style="margin-left: 0.5rem">{{ field.Unit }}</ion-label>
+                      </ion-item>
+
+                      <div *ngIf="field.Type == 'checkbox'">
+                        <ion-item lines="none" *ngFor="let option of field.Options; let j = index" style="display: flex">
+                          <ion-checkbox
+                            [name]="j"
+                            [(ngModel)]="values.nutrition[i]"
+                            [value]="option.Value"></ion-checkbox>
+                            <ion-label style="margin-left: 0.5rem">{{ option.Title}}</ion-label>
+                        </ion-item>
+                      </div>
+
+                    </ion-col>
+
+                  </ion-row>
+                </ion-grid>
               </ion-col>
 
             </ion-row>
