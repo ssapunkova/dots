@@ -31,4 +31,9 @@
 
 25.01
   TODO:
-    Style editNutritionParams
+    * Style editNutritionParams
+
+  FIX:
+    Default value in editNutritionParams
+    Chart update period
+    Table responsible
