@@ -20,6 +20,7 @@
     [general]="data[0]"
     [records]="data[0].WorkoutRecords"
     service="workout"
+    (editParamsButtonClicked)="editParams()"
     (addRecordClicked)="addRecord()"
     (showRecordOptionsClicked)="showRecordOptions($event)"
   ></data-table>

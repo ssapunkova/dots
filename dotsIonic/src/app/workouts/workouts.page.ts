@@ -10,8 +10,6 @@ import { TimeAndDateService } from '../services/timeAndDate.service';
 import { ChartService } from '../services/chart.service';
 import { WorkoutService } from '../services/workout.service';
 
-import { SheetConfigurationPage } from './sheetConfiguration/sheetConfiguration.page';
-
 
 @Component({
   selector: 'app-workouts',
@@ -115,13 +113,8 @@ export class WorkoutsPage implements OnInit {
         handler: () => {
           this.deleteSheet(sheet, index)
         }
-      }, {
-        text: 'Edit layout',
-        icon: 'grid',
-        handler: () => {
-          this.configureSheet(sheet, index)
-        }
-      }, {
+      },
+      {
         text: 'Cancel',
         icon: 'close',
         role: 'cancel'
@@ -130,45 +123,45 @@ export class WorkoutsPage implements OnInit {
     await actionSheet.present();
   }
 
-
-  // Configure sheet's params (exercises) and set goals for them
-  async configureSheet(sheet, index){
-
-    // Select configureable data about the sheet
-    let updateData = {
-      _id: sheet._id,
-      Title: sheet.Title,
-      Params: sheet.Params
-    };
-
-    // Show a configuration modal
-    const modal = await this.modalController.create({
-      component: SheetConfigurationPage,
-      componentProps: updateData
-    });
-    await modal.present();
-
-    // Get modal data and process it if it's not null
-    let modalData = await modal.onWillDismiss();
-    modalData = modalData.data;
-
-    if(modalData != null){
-
-      await this.loadingService.presentSmallLoading("Saving changes");
-
-      // Update sheet data and reloat sheets
-      this.workoutService.updateSheetConfiguration(modalData).subscribe( async (data: [any])=>
-        {
-          this.getSheets();
-          await this.loadingService.dismissSmallLoading();
-        },
-        error => {
-          this.errorToastAndAlertService.showErrorAlert("Oups")
-        }
-      );
-    }
-
-  }
+  //
+  // // Configure sheet's params (exercises) and set goals for them
+  // async configureSheet(sheet, index){
+  //
+  //   // Select configureable data about the sheet
+  //   let updateData = {
+  //     _id: sheet._id,
+  //     Title: sheet.Title,
+  //     Params: sheet.Params
+  //   };
+  //
+  //   // Show a configuration modal
+  //   const modal = await this.modalController.create({
+  //     component: SheetConfigurationPage,
+  //     componentProps: updateData
+  //   });
+  //   await modal.present();
+  //
+  //   // Get modal data and process it if it's not null
+  //   let modalData = await modal.onWillDismiss();
+  //   modalData = modalData.data;
+  //
+  //   if(modalData != null){
+  //
+  //     await this.loadingService.presentSmallLoading("Saving changes");
+  //
+  //     // Update sheet data and reloat sheets
+  //     this.workoutService.updateSheetConfiguration(modalData).subscribe( async (data: [any])=>
+  //       {
+  //         this.getSheets();
+  //         await this.loadingService.dismissSmallLoading();
+  //       },
+  //       error => {
+  //         this.errorToastAndAlertService.showErrorAlert("Oups")
+  //       }
+  //     );
+  //   }
+  //
+  // }
 
 
   async addSheet(){

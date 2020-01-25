@@ -15,11 +15,12 @@ export class ChartLegendComponent implements OnInit {
 
   public showLegend = true;               // Show or hide legend
 
-  @Output() editGoalsButtonClicked = new EventEmitter();
+  @Output() editParamsButtonClicked = new EventEmitter();
 
-  editGoals() {
-    // Emit editGoalsButtonClicked event to parent (nutrition.page.html)
-    this.editGoalsButtonClicked.emit()
+  editParams() {
+    // Emit editParamsButtonClicked event to parent (data-table.component.html)
+      console.log("editp")
+    this.editParamsButtonClicked.emit()
   }
 
   constructor(

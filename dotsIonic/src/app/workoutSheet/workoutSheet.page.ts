@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertController, ActionSheetController } from '@ionic/angular';
+import { AlertController, ActionSheetController, ModalController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
 
 // Services
@@ -12,7 +12,7 @@ import { WorkoutService } from '../services/workout.service';
 import { ChartService } from '../services/chart.service';
 
 import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
-
+import { SheetConfigurationPage } from './sheetConfiguration/sheetConfiguration.page';
 
 @Component({
   selector: 'app-workouts',
@@ -30,6 +30,7 @@ export class WorkoutSheetPage implements OnInit {
   constructor(
     public loadingService: LoadingService,
     public route: ActivatedRoute,
+    public modalController: ModalController,
     public actionSheetController: ActionSheetController,
     public generalService: GeneralService,
     public errorToastAndAlertService: ErrorToastAndAlertService,
@@ -61,7 +62,50 @@ export class WorkoutSheetPage implements OnInit {
     });
   };
 
+
+  // Edit sheet's params (exercises) and set goals for them
+  async editParams(){
+    console.log("edit")
+
+    // Select configureable data about the sheet
+    let updateData = {
+      _id: this.sheetId,
+      Title: this.dataTableService.title,
+      Params: this.dataTableService.params
+    };
+
+    // Show a configuration modal
+    const modal = await this.modalController.create({
+      component: SheetConfigurationPage,
+      componentProps: updateData
+    });
+    await modal.present();
+
+    // Get modal data and process it if it's not null
+    let modalData = await modal.onWillDismiss();
+    modalData = modalData.data;
+
+    if(modalData != null){
+
+      await this.loadingService.presentSmallLoading("Saving changes");
+
+      // Update sheet data and reloat sheets
+      this.workoutService.updateSheetConfiguration(modalData).subscribe( async (data: [any])=>
+        {
+          this.getSheetData();
+          await this.loadingService.dismissSmallLoading();
+        },
+        error => {
+          this.errorToastAndAlertService.showErrorAlert("Oups")
+        }
+      );
+    }
+
+  }
+
   async addRecord(){
+
+    console.log("add")
 
     let modalProps = {
       component: NewWorkoutRecordPage,

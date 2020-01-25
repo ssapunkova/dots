@@ -29,7 +29,7 @@ import { ChartService } from './services/chart.service';
 import { WorkoutService } from './services/workout.service';
 import { StorageService } from './services/storage.service';
 
-import { SheetConfigurationPage } from './workouts/sheetConfiguration/sheetConfiguration.page';
+import { SheetConfigurationPage } from './workoutSheet/sheetConfiguration/sheetConfiguration.page';
 import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkoutRecord.page';
 import { NewNutritionRecordPage } from './nutrition/newNutritionRecord/newNutritionRecord.page';
 import { EditNutritionGoalsPage } from './nutrition/editNutritionGoals/editNutritionGoals.page';
