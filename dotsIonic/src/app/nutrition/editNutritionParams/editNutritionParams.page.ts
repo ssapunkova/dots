@@ -24,8 +24,7 @@ export class EditNutritionParamsPage implements OnInit {
     private navParams: NavParams,
     private nutritionService: NutritionService,
     private actionSheetController: ActionSheetController,
-    private errorToastAndAlertService: ErrorToastAndAlertService,
-    private paramsService: ParamsService
+    private errorToastAndAlertService: ErrorToastAndAlertService
   ) { }
 
   ngOnInit() {
@@ -38,10 +37,10 @@ export class EditNutritionParamsPage implements OnInit {
 
   async presentActionSheet() {
 
-    console.log(this.paramsService.nutrition);
+    console.log(this.nutritionService.Params, this.goals);
 
     let usedParamIndexes = this.params.map((param) => param.Index);
-    let notUsedParams = this.paramsService.nutrition.filter((param) => usedParamIndexes.indexOf(param.Index) < 0);
+    let notUsedParams = this.nutritionService.Params.filter((param) => usedParamIndexes.indexOf(param.Index) < 0);
 
     if(notUsedParams.length == 0){
       this.errorToastAndAlertService.showErrorToast("You have already used all possible parameters");
@@ -74,11 +73,13 @@ export class EditNutritionParamsPage implements OnInit {
 
   async addParam(param){
     this.params.push(param);
+    this.goals.push(param.Goal)
   }
 
   async deleteParam(index){
     this.deletedParams.push(this.params[index].Index);
     this.params.splice(index, 1);
+    this.goals.splice(index, 1);
   }
 
   async saveChanges() {
