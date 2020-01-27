@@ -110,7 +110,7 @@ export class DataTableService{
 
   async initializeChart(){
     this.chartService.formatChartData(this.showingRecords,
-     this.params, this.goals);
+    this.params, this.goals);
   }
 
   // Sorts data, gets and sets showing period
@@ -129,10 +129,6 @@ export class DataTableService{
       this.setPeriod(this.showingPeriod, false);
     }
 
-    // Format data for chart
-    if(this.showingPeriod.length > 0){
-      this.initializeChart();
-    }
   }
 
   async showNoRecordsAlert(){
@@ -163,6 +159,10 @@ export class DataTableService{
     // Filter which records to show and sort them by date
     this.showingRecords = this.allRecords.filter((record) => this.showingPeriod.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
 
+    // Format data for chart
+    if(this.showingPeriod.length > 0){
+      this.initializeChart();
+    }
   }
 
   // Get array of records months
