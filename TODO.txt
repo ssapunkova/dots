@@ -36,4 +36,8 @@
   FIX:
     * Default value in editNutritionParams
     * Chart update period
-    Table responsible
+    * Table responsible
+
+27.01
+  FIX:
+    Add param button - .table-header class causes centering issue
