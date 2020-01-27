@@ -50,9 +50,13 @@ export class NutritionService {
       public connectToServerService: ConnectToServerService,
       public loadingService: LoadingService,
       public paramsService: ParamsService
-  ) { }
+  ) {
 
-  
+    this.Params = this.paramsService.nutrition;
+    this.DefaultParamsIndex = 0;
+    this.DefaultParams = [this.Params[0]];
+
+  }
 
   public getNutritionData(){
     return this.http.get(this.connectToServerService.serverUrl + '/getNutritionData')
