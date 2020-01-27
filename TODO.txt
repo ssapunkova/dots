@@ -35,5 +35,5 @@
 
   FIX:
     * Default value in editNutritionParams
-    Chart update period
+    * Chart update period
     Table responsible

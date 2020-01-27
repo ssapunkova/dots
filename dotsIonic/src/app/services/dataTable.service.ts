@@ -101,7 +101,7 @@ export class DataTableService{
 
     // Calculate table width based on table column number
     for(var i = 0; i < this.params.length; i++){
-      this.tableWidth += 100;
+      this.tableWidth += 160;
     }
 
     console.log("*** DataTableService", this);
