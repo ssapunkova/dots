@@ -42,9 +42,8 @@ export class NutritionService {
   //   }
   // ]
 
-  public DefaultParamIndexes = [0];
-
-  public DefaultParams = [this.Params[0]];
+  public DefaultParams;
+  public DefaultParamsIndex;
 
   constructor(
       public http: HttpClient,
@@ -52,6 +51,8 @@ export class NutritionService {
       public loadingService: LoadingService,
       public paramsService: ParamsService
   ) { }
+
+  
 
   public getNutritionData(){
     return this.http.get(this.connectToServerService.serverUrl + '/getNutritionData')

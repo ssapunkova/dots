@@ -26,6 +26,8 @@ export class NutritionPage implements OnInit {
     records: []
   };
 
+  public nutritionParams;
+
   constructor(
     public loadingService: LoadingService,
     public generalService: GeneralService,
@@ -53,11 +55,11 @@ export class NutritionPage implements OnInit {
 
       // If no custom params - take default
       if(data.general.Params.length == 0){
-        data.general.Params = this.nutritionService.DefaultParams;
+        data.general.Params = this.nutritionParams.DefaultParams;
       }
       else{
         for(var i = 0; i < data.general.Params.length; i++){
-          data.general.Params[i] = this.nutritionParams[data.general.Params[i]];
+          data.general.Params[i] = this.nutritionParams.DefaultParams[data.general.Params[i]];
         }
       }
 
@@ -65,7 +67,8 @@ export class NutritionPage implements OnInit {
 
       for(var i = 0; i < data.general.Params.length; i++){
         if(data.general.Goals[i] == null){
-           data.general.Goals[i] = this.nutritionParams[data.general.Params[i].Index].Goal;
+          console.log(data.general.Params)
+          data.general.Goals[i] = this.nutritionParams[data.general.Params[i].Index].Goal;
         }
       }
 
