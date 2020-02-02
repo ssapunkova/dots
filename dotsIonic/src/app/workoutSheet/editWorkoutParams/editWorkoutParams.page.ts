@@ -108,19 +108,21 @@ export class EditWorkoutParamsPage implements OnInit {
 
     let repeatedNames = false;
 
-    let exerciseTitles = this.sheet.Params.map((col) => col.Title).toString();
+    let exerciseTitles = this.sheet.Params.map((col) => col.Title);
 
-    console.log(repeatedNames);
+    console.log(repeatedNames, exerciseTitles);
 
     // Check for name repetition and Delete empty params
     for(var i = 0; i < this.sheet.Params.length; i++){
       let checking = this.sheet.Params[i];
-      var regex = new RegExp(checking.Title, 'g');
-      if(exerciseTitles.match(regex).length > 1){
+      
+      let haveThisTitle = exerciseTitles.filter((title) => title == checking.Title);
+
+      if(haveThisTitle.length > 1){
         repeatedNames = true;
         checking.NameRepeated = true;
         setTimeout (() => {
-           checking.NameRepeated = false;
+          checking.NameRepeated = false;
         }, 1000);
       }
 
