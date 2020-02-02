@@ -75,7 +75,12 @@ export class DataTableService{
     // If no records yet
     if(records.length == 0){
       this.allRecords = [];
-      this.showNoRecordsAlert();
+      if(this.params.length > 0){
+        this.showNoRecordsAlert();
+      }
+      else{
+        this.showNoParamsAlert();
+      }
     }
     else{
       this.allRecords = records;
@@ -135,6 +140,16 @@ export class DataTableService{
     let message = 'Tap the + button in the right bottom corner to add a record';
     let alert = await this.alertController.create({
       header: 'No records yet',
+      message: message,
+      buttons: [ { text: 'Ok' }]
+    });
+    await alert.present();
+  }
+
+  async showNoParamsAlert(){
+    let message = 'Tap the ✏ icon to set goals' ;
+    let alert = await this.alertController.create({
+      header: 'No goals yet',
       message: message,
       buttons: [ { text: 'Ok' }]
     });

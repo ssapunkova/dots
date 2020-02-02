@@ -110,18 +110,27 @@ export class WorkoutSheetPage implements OnInit {
 
   async addRecord(){
 
-    let modalProps = {
-      component: NewWorkoutRecordPage,
-      componentProps: {
-        SheetId: this.sheetId,
-        RecordId: null,
-        Fields: this.dataTableService.params,
-        Date: null,
-        Values: null
-      }
-    };
+    if(this.dataTableService.params.length > 0){
 
-    this.dataTableService.addRecord(modalProps);
+      let modalProps = {
+        component: NewWorkoutRecordPage,
+        componentProps: {
+          SheetId: this.sheetId,
+          RecordId: null,
+          Fields: this.dataTableService.params,
+          Date: null,
+          Values: null
+        }
+      };
+
+      this.dataTableService.addRecord(modalProps);
+
+    }
+    else{
+
+      this.errorToastAndAlertService.showErrorAlert("First set your goals")
+
+    }
 
   }
 

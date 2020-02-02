@@ -48,7 +48,6 @@
               </ion-grid>
 
               <ion-button
-                *ngIf="sheet.Params.length > 0"
                 [routerDirection]="'root'" routerLink="/workoutSheet/{{sheet._id}}">
                 View records
               </ion-button>
@@ -59,11 +58,11 @@
                 Start workout
               </ion-button>
 
-              <ion-button expand="block"
+              <!-- <ion-button expand="block"
                 *ngIf="sheet.Params.length == 0"
                 (click)="configureSheet(sheet)">
                 Set exercises and goals
-              </ion-button>
+              </ion-button> -->
 
             </ion-card-content>
 
