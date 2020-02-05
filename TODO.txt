@@ -40,4 +40,8 @@
 
 27.01
   FIX:
-    Add param button - .table-header class causes centering issue
+    * Add param button - .table-header class causes centering issue
+
+05.02
+	TODO:
+	Move modal page imports in page modules

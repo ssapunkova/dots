@@ -22,7 +22,11 @@
       <ion-label *ngIf="averageTime != 0">This workout takes {{ averageTime | date:'HH:mm:ss':'UTC'}} in average
       </ion-label>
 
-      <ion-item *ngIf="controls.IsExerciseRunning || controls.IsPaused && !controls.IsABreak">
+      <ion-item *ngIf="controls.IsPaused">
+        <h1 style="width: 100%;" class="ion-text-center">Paused</h1>
+      </ion-item>
+
+      <ion-item *ngIf="controls.IsExerciseRunning && !controls.IsPaused">
 
         <ion-grid class="ion-text-center">
           <ion-row>
@@ -31,11 +35,10 @@
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col size="12" size-sm> Your result: </ion-col>
-            <ion-col size="12" size-sm>
+            <ion-col> Your result: </ion-col>
+            <ion-col>
               <ion-input *ngIf="sheetExercises.Params[current.ExerciseIndex].Type != 'Bool'; else checkbox"
                 [type]="sheetExercises.Params[current.ExerciseIndex].Type"
-                size="12" size-sm
                 [value]="sheetExercises.Params[current.ExerciseIndex].Goal"
                 [(ngModel)]="current.InputValue">
               </ion-input>
@@ -44,11 +47,9 @@
                 <ion-checkbox [(ngModel)]='current.InputValue' style='margin-right: 1rem'></ion-checkbox>
               </ng-template>
             </ion-col>
-            <ion-col size="12" size-sm>
-
+            <ion-col>
               <percentage-chip
                 [percentage]="generalService.calculatePercentage(current.InputValue, sheetExercises.Params[current.ExerciseIndex].Goal)"></percentage-chip>
-
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -159,7 +160,7 @@
 
     <ion-segment-button
       *ngIf="current.ExerciseIndex != null && current.ExerciseIndex < exerciseNumber - 1"
-      [disabled]="controls.IsABreak"
+      [disabled]="controls.IsABreak || controls.IsPaused"
       (click)="markAsCompleted()">
       <ion-icon name="checkmark" color="primary"></ion-icon>
     </ion-segment-button>
