@@ -55,6 +55,13 @@
                         </ion-item>
                       </div>
 
+                      <div *ngIf="field.Type == 'select'">
+                        <ion-select [(ngModel)]="values.nutrition[i]">
+                          <ion-select-option *ngFor="let option of field.Options; let j = index"
+                            [value]="option.Value">{{ option.Title }}</ion-select-option>
+                        </ion-select>
+                      </div>
+
                     </ion-col>
 
                   </ion-row>
