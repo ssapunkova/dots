@@ -68,18 +68,20 @@ export class CalculatePage implements OnInit {
   public formulas = {
     "Blocks": {
       required: [
-        this.params[1],
-        this.params[2],
-        this.params[3],
-        this.params[4],
-        this.params[5],
-        this.params[6]
+        this.params[1],      // 0 - gender
+        this.params[2],      // 1 - weight
+        this.params[3],      // 2 - height
+        this.params[4],      // 3 - waist
+        this.params[5],      // 4 - hips
+        this.params[6]       // 5 - activity
       ],
       formula: (values) => {
-        // let gender = values[0];
+        console.log(values);
+        let gender = values[0];
         let weight = this.convertToLb(values[1]);
-        let physicalActivity = values[6];
-        console.log(weight, physicalActivity);
+        let height = this.convertToInches(values[2]);
+        let physicalActivity = values[5];
+        console.log(weight, physicalActivity, height, gender);
         return weight;
       }
     }
