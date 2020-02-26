@@ -13,12 +13,12 @@ export class CalculatePage implements OnInit {
   // Converting measures
 
   public convertToInches(cm){
-    return parseInt(parseInt(cm) / 2.54);
+    return Math.round(parseInt(cm) / 2.54);
   }
   public convertToLb(kg){
-    return parseInt(parseInt(kg) * 2.204);
+    return Math.round(parseInt(kg) * 2.204);
   }
-
+ 
   public params = [
     {
       Title: "age",
