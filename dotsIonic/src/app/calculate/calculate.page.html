@@ -40,7 +40,8 @@
                     <ion-col>
 
                       <ion-item lines="none" *ngIf="field.Type == 'number'" style="display: flex">
-                        <ion-input *ngIf="field.Type == 'number'"
+                        <ion-input 
+                          *ngIf="field.Type == 'number'"
                           type="number" [(ngModel)]="values.nutrition[i]"></ion-input>
                         <ion-label style="margin-left: 0.5rem">{{ field.Unit }}</ion-label>
                       </ion-item>

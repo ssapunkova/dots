@@ -1,0 +1,155 @@
+{
+    "Gender": "F",
+    "Hips" : NumberInt(30), 
+    "Constant" : 33.48
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(31), 
+    "Constant" : 34.87
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(32), 
+    "Constant" : 36.27
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(33), 
+    "Constant" : 37.67
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(34), 
+    "Constant" : 39.06
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(35), 
+    "Constant" : 40.46
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(36), 
+    "Constant" : 41.86
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(37), 
+    "Constant" : 43.25
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(38), 
+    "Constant" : 44.65
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(39), 
+    "Constant" : 46.05
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(40), 
+    "Constant" : 47.44
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(41), 
+    "Constant" : 48.84
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(42), 
+    "Constant" : 50.24
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(43), 
+    "Constant" : 51.64
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(44), 
+    "Constant" : 53.03
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(45), 
+    "Constant" : 54.53
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(46), 
+    "Constant" : 55.83
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(47), 
+    "Constant" : 57.22
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(48), 
+    "Constant" : 58.62
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(49), 
+    "Constant" : 60.02
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(50), 
+    "Constant" : 61.42
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(51), 
+    "Constant" : 62.81
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(52), 
+    "Constant" : 64.21
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(53), 
+    "Constant" : 65.61
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(54), 
+    "Constant" : NumberInt(67)
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(55), 
+    "Constant" : 68.4
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(56), 
+    "Constant" : 69.8
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(57), 
+    "Constant" : 71.19
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(58), 
+    "Constant" : 72.59
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(59), 
+    "Constant" : 73.99
+}
+{
+    "Gender": "F",
+    "Hips" : NumberInt(60), 
+    "Constant" : 75.39
+}

@@ -47,6 +47,7 @@ require("./routes/login");
 require("./routes/register");
 require("./routes/workouts");
 require("./routes/nutrition");
+require("./routes/calculate");
 
 app.get('/', function(req, res) {
     res.render("login")

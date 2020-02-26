@@ -13,10 +13,14 @@ export class CalculatePage implements OnInit {
   // Converting measures
 
   public convertToInches(cm){
-    return Math.round(parseInt(cm) / 2.54);
+    return (Math.round(parseInt(cm) / 2.54 * 100) / 100);
   }
   public convertToLb(kg){
-    return Math.round(parseInt(kg) * 2.204);
+    return (Math.round(parseInt(kg) * 2.204 * 100) / 100);
+  }
+
+  public userParams = {
+    Gender: "F"
   }
  
   public params = [
@@ -25,63 +29,73 @@ export class CalculatePage implements OnInit {
       Unit: "y.o.",                                   // 0 - age
       Type: "number"
     },
-    {
-      Title: "gender",
-      Options: [
-        { "Title": "male", "Value": "m" },
-        { "Title": "female", "Value": "f" }           // 1 - gender
-      ],
-      Unit: "",
-      Type: "checkbox"
-    },
+    // {
+    //   Title: "gender",
+    //   Options: [
+    //     { "Title": "male", "Value": "m" },
+    //     { "Title": "female", "Value": "f" }           // 1 - gender
+    //   ],
+    //   Unit: "",
+    //   Type: "checkbox"
+    // },
     {
       Title: "weight",
-      Unit: "kg",                                     // 2 - weight
+      Unit: "kg",                                     // 1 - weight
       Type: "number"
     },
     {
       Title: "height",
-      Unit: "cm",                                     // 3 - height
+      Unit: "cm",                                     // 2 - height
       Type: "number"
     },
     {
       Title: "waist",
-      Unit: "cm",                                     // 4 - waist
+      Unit: "cm",                                     // 3 - waist
       Type: "number"
     },
     {
       Title: "hips",
-      Unit: "cm",                                     // 5 - hips
+      Unit: "cm",                                     // 4 - hips
       Type: "number"
     },
     {
       Title: "activity factor",
       Options: [
         { "Title": "Seditary", "Value": 0.7 },
-        { "Title": "Light", "Value": 1 },             // 6 - activity factor
+        { "Title": "Light", "Value": 1 },             // 5 - activity factor
         { "Title": "Moderate", "Value": 1.3 }
       ],
       Type: "select"
     },
   ]
+  
+  async getConstants(){
+    let constants = await this.paramsService.getBodyMassConstants(this.userParams.Gender);
+    console.log(constants);
+  }
 
   public formulas = {
     "Blocks": {
       required: [
-        this.params[1],      // 0 - gender
-        this.params[2],      // 1 - weight
-        this.params[3],      // 2 - height
-        this.params[4],      // 3 - waist
-        this.params[5],      // 4 - hips
-        this.params[6]       // 5 - activity
+        this.params[1],      // 1 - weight
+        this.params[2],      // 2 - height
+        this.params[3],      // 3 - waist
+        this.params[4],      // 4 - hips
+        this.params[5]       // 5 - activity
       ],
-      formula: (values) => {
+      formula: async (values) => {
         console.log(values);
-        let gender = values[0];
-        let weight = this.convertToLb(values[1]);
-        let height = this.convertToInches(values[2]);
+        let gender = this.userParams.Gender;
+        let weight = this.convertToLb(values[0]);
+        let height = this.convertToInches(values[1]);
         let physicalActivity = values[5];
         console.log(weight, physicalActivity, height, gender);
+
+        setTimeout(() => {
+          console.log("calc");
+          this.getConstants();
+        }, 5*1000);
+
         return weight;
       }
     }
