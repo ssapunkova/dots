@@ -46,13 +46,16 @@
                       </ion-item>
 
                       <div *ngIf="field.Type == 'checkbox'">
-                        <ion-item lines="none" *ngFor="let option of field.Options; let j = index" style="display: flex">
-                          <ion-checkbox
-                            [name]="j"
-                            [(ngModel)]="values.nutrition[i]"
-                            [value]="option.Title"></ion-checkbox>
+                        <ion-radio-group value="field.Title">
+                          <ion-item lines="none" *ngFor="let option of field.Options; let j = index">
+                            <ion-radio
+                              [name]="field.Title"
+                              [(ngModel)]="values.nutrition[i]"
+                              [value]="option.Title"></ion-radio>
+                            
                             <ion-label style="margin-left: 0.5rem">{{ option.Title}}</ion-label>
-                        </ion-item>
+                          </ion-item>
+                        </ion-radio-group>
                       </div>
 
                       <div *ngIf="field.Type == 'select'">
