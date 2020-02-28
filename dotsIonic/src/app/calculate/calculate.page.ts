@@ -25,6 +25,8 @@ export class CalculatePage implements OnInit {
 
   public result;
 
+  public userResult = {};
+
   public bodyMassConstants = [];
  
   public params = [
@@ -66,8 +68,7 @@ export class CalculatePage implements OnInit {
       Title: "activity factor",
       Options: [
         { "Title": "Seditary", "Value": 0.5 },
-        { "Title": "Light", "Value": 0.6 },             
-        { "Title": "Moderate", "Value": 0.7 },
+        { "Title": "Light", "Value": 0.6 },    
         { "Title": "Workout3TimesAWeek", "Value": 0.7 },   // 5 - activity factor
         { "Title": "LightWorkoutEveryDay", "Value": 0.8 },
         { "Title": "HeavyWorkoutEveryDay", "Value": 0.9 },
@@ -144,10 +145,12 @@ export class CalculatePage implements OnInit {
           that.result.daylyProteinIntakeInGr = that.result.leanBodyMassInLb * values.physicalActivity;
 
           // Convert gr to protein blocks
-          that.result.blocksPerDay = that.result.daylyProteinIntakeInGr / 7;
+          that.result.blocksPerDay = Math.floor(that.result.daylyProteinIntakeInGr / 7);
 
           if(values.gender == "F" && that.result.blocksPerDay <= 11) that.result.blocksPerDay = 11;
           else if(values.gender == "M" && that.result.blocksPerDay <= 14) that.result.blocksPerDay = 14;
+
+          that.userResult["Blocks"] = that.result.blocksPerDay;
         }
 
         if(this.bodyMassConstants.length == 0){

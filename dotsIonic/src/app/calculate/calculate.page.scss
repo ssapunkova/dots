@@ -1,0 +1,14 @@
+.value-input-div{
+    display: flex;
+    align-items: center;
+    width: 100% !important;
+
+    ion-label{
+        margin-right: 0.5rem;
+        margin-left: 0.5rem;
+    }
+
+    ion-select{
+        min-width: 100% !important;
+    }
+}
