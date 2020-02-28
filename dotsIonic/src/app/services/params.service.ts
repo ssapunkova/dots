@@ -46,13 +46,10 @@ export class ParamsService {
 
   async getConstantsArray(gender){
     console.log("***************");
-    let array = [];
     this.getConstants(gender).subscribe(async (data: any) => {
       console.log(data);
-      array = data;
+      return data;
     });
-    console.log(array);
-    return array;
   }
 
   async getBodyMassConstants(gender, values){

@@ -24,6 +24,8 @@ export class CalculatePage implements OnInit {
   }
 
   public result;
+
+  public bodyMassConstants = [];
  
   public params = [
     {
@@ -70,16 +72,21 @@ export class CalculatePage implements OnInit {
       Type: "select"
     },
   ]
-  
-  async getConstants(values){
-    let constants = await this.paramsService.getBodyMassConstants(this.userParams.Gender, values);
-    console.log("const", constants);
-  }
+
 
   async calculate(param, values){
     console.log(param, values);
     this.formulas[param].formula(values);
   }
+
+  async getConst(gender){
+    if(this.bodyMassConstants.length == 0){
+      this.paramsService.getConstants(gender).subscribe((data: any) => {
+        console.log(data);
+        this.bodyMassConstants = data;
+      });
+    }
+  };
 
   public formulas = {
     "Blocks": {
@@ -101,11 +108,26 @@ export class CalculatePage implements OnInit {
           physicalActivity:  input[4]
         };
 
+        let constants = { A: 0, B: 0, C: 0 };
+
         // console.log("calc");
         // console.log(input);
         // console.log(values);
+
+        // if(this.bodyMassConstants.length == 0){
+          // this.getConst(values.gender).then()
+        // }
         
-        this.getConstants(values);
+        this.getConst(values.gender).then(() => {
+          console.log(values);
+          console.log(this.bodyMassConstants);
+          if(values.gender == "F"){
+            constants.A = this.bodyMassConstants.filter((record) => record.Hips == values.hips)[0].Constant;
+          }
+          
+          console.log("const", constants);
+        
+        });
 
         this.result = values;
       }
