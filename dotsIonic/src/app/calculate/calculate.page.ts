@@ -13,10 +13,10 @@ export class CalculatePage implements OnInit {
   // Converting measures
 
   public convertToInches(cm){
-    return (Math.round(parseInt(cm) / 2.54));
+    return (Math.floor(parseInt(cm) / 2.54));
   }
   public convertToLb(kg){
-    return (Math.round(parseInt(kg) * 2.204));
+    return (Math.floor(parseInt(kg) * 2.204));
   }
 
   public userParams = {
@@ -79,14 +79,9 @@ export class CalculatePage implements OnInit {
     this.formulas[param].formula(values);
   }
 
-  async getConst(gender){
-    if(this.bodyMassConstants.length == 0){
-      this.paramsService.getConstants(gender).subscribe((data: any) => {
-        console.log(data);
-        this.bodyMassConstants = data;
-      });
-    }
-  };
+  // async getConst(gender){
+    
+  // };
 
   public formulas = {
     "Blocks": {
@@ -118,16 +113,26 @@ export class CalculatePage implements OnInit {
           // this.getConst(values.gender).then()
         // }
         
-        this.getConst(values.gender).then(() => {
-          console.log(values);
-          console.log(this.bodyMassConstants);
+        let that = this;
+        function setConstants(){
           if(values.gender == "F"){
-            constants.A = this.bodyMassConstants.filter((record) => record.Hips == values.hips)[0].Constant;
+            constants.A = that.bodyMassConstants.filter((record) => record.Hips == values.hips)[0].Constant;
+            constants.B = parseFloat((values.waist / 1.406).toFixed(2));
+            constants.C = parseFloat((values.height / 1.640).toFixed(2));
           }
-          
-          console.log("const", constants);
-        
-        });
+          console.log(constants);
+        }
+
+        if(this.bodyMassConstants.length == 0){
+          this.paramsService.getConstants(values.gender).subscribe((data: any) => {
+            console.log(data);
+            this.bodyMassConstants = data;
+            setConstants();
+          });
+        }
+        else{
+          setConstants();
+        }
 
         this.result = values;
       }
