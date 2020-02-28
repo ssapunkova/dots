@@ -55,14 +55,13 @@ export class ParamsService {
         console.log(data);
         this.bodyMassConstants = data;
       });
-      
-      return "a";
+    
     }
     else{
       console.log("-")
-      
-      return "a";
     }
+
+    return this.bodyMassConstants;
 
   }
 }

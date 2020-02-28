@@ -71,7 +71,7 @@ export class CalculatePage implements OnInit {
   
   async getConstants(){
     let constants = await this.paramsService.getBodyMassConstants(this.userParams.Gender);
-    console.log(constants);
+    console.log("const", constants);
   }
 
   public formulas = {

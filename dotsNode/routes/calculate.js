@@ -23,5 +23,5 @@ app.get("/getBodyMassConstants/:gender", async (req, res) => {
   // }
   // if(nutritionRecords.err) throw nutritionRecords.err;
   // res.send({ general: nutritionData, records: nutritionRecords});
-  res.send({"a": 5});
+  res.send({ data: [5] });
 })
