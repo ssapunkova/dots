@@ -79,14 +79,11 @@ export class CalculatePage implements OnInit {
   ]
 
 
-  async calculate(param, values){
+  async triggerCalculation(param, values){
     console.log(param, values);
     this.formulas[param].formula(values);
   }
 
-  // async getConst(gender){
-    
-  // };
 
   public formulas = {
     "Blocks": {
@@ -110,14 +107,6 @@ export class CalculatePage implements OnInit {
         };
 
         let constants = { A: 0, B: 0, C: 0 };
-
-        // console.log("calc");
-        // console.log(input);
-        // console.log(values);
-
-        // if(this.bodyMassConstants.length == 0){
-          // this.getConst(values.gender).then()
-        // }
         
         let that = this;
         function setConstants(){
