@@ -10,7 +10,9 @@ const BodyMassConstants = require('../schemas/bodyMassConstantsSchema');
 
 
 app.get("/getBodyMassConstants/:gender", async (req, res) => {
-  console.log("a");
+
+  let gender = req.params.gender;
+  console.log(gender);
 
   // let nutritionData = await Nutrition.findOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") });  // replace with userid later
   // let nutritionRecords = await NutritionRecord.find({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }); // replace with userid later
@@ -23,5 +25,10 @@ app.get("/getBodyMassConstants/:gender", async (req, res) => {
   // }
   // if(nutritionRecords.err) throw nutritionRecords.err;
   // res.send({ general: nutritionData, records: nutritionRecords});
-  res.send({ data: [5] });
+
+  let constants = await BodyMassConstants.find({ Gender: gender});
+
+  console.log(constants);
+
+  res.send(constants);
 })

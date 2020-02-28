@@ -69,13 +69,20 @@
                     </ion-col>
 
                   </ion-row>
+
+                  <ion-row>
+                    <ion-button (click)="calculate(param.Title, values.nutrition)">
+                      Calculate
+                    </ion-button>
+                  </ion-row>
+
                 </ion-grid>
               </ion-col>
 
             </ion-row>
             <ion-row>
               <ion-col>
-                {{ formulas[param.Title].formula(values.nutrition) }}
+                {{ result }}
               </ion-col>
             </ion-row>
 

@@ -10,7 +10,7 @@ var BodyMassConstantsSchema = mongoose.Schema({
     Hips: Number,
     Constant: Number
 },
-{ collection: "bodyMassConstantsF" }
+{ collection: "bodyMassConstants" }
 );
 
 var BodyMassConstants = mongoose.model('BodyMassConstants', BodyMassConstantsSchema);

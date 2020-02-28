@@ -13,15 +13,17 @@ export class CalculatePage implements OnInit {
   // Converting measures
 
   public convertToInches(cm){
-    return (Math.round(parseInt(cm) / 2.54 * 100) / 100);
+    return (Math.round(parseInt(cm) / 2.54));
   }
   public convertToLb(kg){
-    return (Math.round(parseInt(kg) * 2.204 * 100) / 100);
+    return (Math.round(parseInt(kg) * 2.204));
   }
 
   public userParams = {
     Gender: "F"
   }
+
+  public result;
  
   public params = [
     {
@@ -69,9 +71,14 @@ export class CalculatePage implements OnInit {
     },
   ]
   
-  async getConstants(){
-    let constants = await this.paramsService.getBodyMassConstants(this.userParams.Gender);
+  async getConstants(values){
+    let constants = await this.paramsService.getBodyMassConstants(this.userParams.Gender, values);
     console.log("const", constants);
+  }
+
+  async calculate(param, values){
+    console.log(param, values);
+    this.formulas[param].formula(values);
   }
 
   public formulas = {
@@ -83,20 +90,24 @@ export class CalculatePage implements OnInit {
         this.params[4],      // 4 - hips
         this.params[5]       // 5 - activity
       ],
-      formula: async (values) => {
-        console.log(values);
-        let gender = this.userParams.Gender;
-        let weight = this.convertToLb(values[0]);
-        let height = this.convertToInches(values[1]);
-        let physicalActivity = values[5];
-        console.log(weight, physicalActivity, height, gender);
+      formula: async (input) => {
 
-        setTimeout(() => {
-          console.log("calc");
-          this.getConstants();
-        }, 5*1000);
+        let values = {
+          gender: this.userParams.Gender,
+          weight: this.convertToLb(input[0]),
+          height: this.convertToInches(input[1]),
+          waist: this.convertToInches(input[2]),
+          hips: this.convertToInches(input[3]),
+          physicalActivity:  input[4]
+        };
 
-        return weight;
+        // console.log("calc");
+        // console.log(input);
+        // console.log(values);
+        
+        this.getConstants(values);
+
+        this.result = values;
       }
     }
   }

@@ -33,6 +33,7 @@ export class ParamsService {
   ]
 
   public bodyMassConstants = [];
+  public currentValue = [];
 
   constructor(
     public http: HttpClient,
@@ -40,28 +41,34 @@ export class ParamsService {
   ) { }
 
   public getConstants(gender){
-    console.log("get")
     return this.http.get(this.connectToServerService.serverUrl + '/getBodyMassConstants/' + gender)
   }
 
-  async getBodyMassConstants(gender){
+  async getConstantsArray(gender){
+    console.log("***************");
+    let array = [];
+    this.getConstants(gender).subscribe(async (data: any) => {
+      console.log(data);
+      array = data;
+    });
+    console.log(array);
+    return array;
+  }
+
+  async getBodyMassConstants(gender, values){
     
 
-    if(this.bodyMassConstants.length == 0){
-      console.log("***************");
-      this.bodyMassConstants = [5];
-      this.getConstants(gender).subscribe(async (data: any) => {
-        console.log(gender);
-        console.log(data);
-        this.bodyMassConstants = data;
-      });
+    // if(this.bodyMassConstants.length == 0){
+      this.bodyMassConstants = await this.getConstantsArray(gender);
+    // }
     
-    }
-    else{
-      console.log("-")
-    }
-
-    return this.bodyMassConstants;
+    console.log(values);
+      console.log(this.bodyMassConstants);
+      if(gender == "F"){
+        this.currentValue = this.bodyMassConstants.filter((record) => record.Hips == values.hips)[0];
+      }
+      console.log(this.currentValue);
+      return this.currentValue;  
 
   }
 }
