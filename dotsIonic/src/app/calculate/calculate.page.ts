@@ -30,44 +30,48 @@ export class CalculatePage implements OnInit {
   public params = [
     {
       Title: "age",
-      Unit: "y.o.",                                   // 0 - age
+      Unit: "y.o.",                                        // 0 - age
       Type: "number"
     },
     // {
     //   Title: "gender",
     //   Options: [
     //     { "Title": "male", "Value": "m" },
-    //     { "Title": "female", "Value": "f" }           // 1 - gender
+    //     { "Title": "female", "Value": "f" }             // 1 - gender
     //   ],
     //   Unit: "",
     //   Type: "checkbox"
     // },
     {
       Title: "weight",
-      Unit: "kg",                                     // 1 - weight
+      Unit: "kg",                                          // 1 - weight
       Type: "number"
     },
     {
       Title: "height",
-      Unit: "cm",                                     // 2 - height
+      Unit: "cm",                                          // 2 - height
       Type: "number"
     },
     {
       Title: "waist",
-      Unit: "cm",                                     // 3 - waist
+      Unit: "cm",                                          // 3 - waist
       Type: "number"
     },
     {
       Title: "hips",
-      Unit: "cm",                                     // 4 - hips
+      Unit: "cm",                                          // 4 - hips
       Type: "number"
     },
     {
       Title: "activity factor",
       Options: [
-        { "Title": "Seditary", "Value": 0.7 },
-        { "Title": "Light", "Value": 1 },             // 5 - activity factor
-        { "Title": "Moderate", "Value": 1.3 }
+        { "Title": "Seditary", "Value": 0.5 },
+        { "Title": "Light", "Value": 0.6 },             
+        { "Title": "Moderate", "Value": 0.7 },
+        { "Title": "Workout3TimesAWeek", "Value": 0.7 },   // 5 - activity factor
+        { "Title": "LightWorkoutEveryDay", "Value": 0.8 },
+        { "Title": "HeavyWorkoutEveryDay", "Value": 0.9 },
+        { "Title": "Professional", "Value": 1 }
       ],
       Type: "select"
     },
@@ -96,6 +100,7 @@ export class CalculatePage implements OnInit {
 
         let values = {
           gender: this.userParams.Gender,
+          weightInKg: input[0],
           weight: this.convertToLb(input[0]),
           height: this.convertToInches(input[1]),
           waist: this.convertToInches(input[2]),
@@ -121,6 +126,28 @@ export class CalculatePage implements OnInit {
             constants.C = parseFloat((values.height / 1.640).toFixed(2));
           }
           console.log(constants);
+
+          calculateFatAndBodyMass();
+        }
+
+
+        function calculateFatAndBodyMass(){
+
+          // Body fat percentage
+          if(values.gender == "F") that.result.fatPercentage = Math.floor(constants.A + constants.B - constants.C);
+          else that.result.fatPercentage = Math.floor(constants.A);
+
+          // Calculate LeanBodyMass weight in Lb, to use for DaylyProteinIntakeInGr
+          that.result.leanBodyMassInLb = that.convertToLb(values.weightInKg - (values.weightInKg * that.result.fatPercentage / 100));
+
+          // Dayly Protein Intake in grams
+          that.result.daylyProteinIntakeInGr = that.result.leanBodyMassInLb * values.physicalActivity;
+
+          // Convert gr to protein blocks
+          that.result.blocksPerDay = that.result.daylyProteinIntakeInGr / 7;
+
+          if(values.gender == "F" && that.result.blocksPerDay <= 11) that.result.blocksPerDay = 11;
+          else if(values.gender == "M" && that.result.blocksPerDay <= 14) that.result.blocksPerDay = 14;
         }
 
         if(this.bodyMassConstants.length == 0){
