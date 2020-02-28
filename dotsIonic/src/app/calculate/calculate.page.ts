@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 // Services with params
 import { ParamsService } from '../services/params.service';
+import { ValueAccessor } from '@ionic/angular/dist/directives/control-value-accessors/value-accessor';
 
 @Component({
   selector: 'app-calculate',
@@ -20,7 +21,7 @@ export class CalculatePage implements OnInit {
   }
 
   public userParams = {
-    Gender: "F"
+    Gender: "M"
   }
 
   public result;
@@ -60,8 +61,13 @@ export class CalculatePage implements OnInit {
       Type: "number"
     },
     {
+      Title: "wrist",
+      Unit: "cm",                                          // 4 - waist
+      Type: "number"
+    },
+    {
       Title: "hips",
-      Unit: "cm",                                          // 4 - hips
+      Unit: "cm",                                          // 5 - hips
       Type: "number"
     },
     {
@@ -69,7 +75,7 @@ export class CalculatePage implements OnInit {
       Options: [
         { "Title": "Seditary", "Value": 0.5 },
         { "Title": "Light", "Value": 0.6 },    
-        { "Title": "Workout3TimesAWeek", "Value": 0.7 },   // 5 - activity factor
+        { "Title": "Workout3TimesAWeek", "Value": 0.7 },   // 6 - activity factor
         { "Title": "LightWorkoutEveryDay", "Value": 0.8 },
         { "Title": "HeavyWorkoutEveryDay", "Value": 0.9 },
         { "Title": "Professional", "Value": 1 }
@@ -91,8 +97,9 @@ export class CalculatePage implements OnInit {
         this.params[1],      // 1 - weight
         this.params[2],      // 2 - height
         this.params[3],      // 3 - waist
-        this.params[4],      // 4 - hips
-        this.params[5]       // 5 - activity
+        this.params[4],      // 4 - wrist
+        this.params[5],      // 5 - hips
+        this.params[6]       // 6 - activity
       ],
       formula: async (input) => {
 
@@ -102,8 +109,9 @@ export class CalculatePage implements OnInit {
           weight: this.convertToLb(input[0]),
           height: this.convertToInches(input[1]),
           waist: this.convertToInches(input[2]),
-          hips: this.convertToInches(input[3]),
-          physicalActivity:  input[4]
+          wrist: this.convertToInches(input[3]),
+          hips: this.convertToInches(input[4]),
+          physicalActivity: input[5]
         };
 
         let constants = { A: 0, B: 0, C: 0 };
@@ -114,10 +122,23 @@ export class CalculatePage implements OnInit {
             constants.A = that.bodyMassConstants.filter((record) => record.Hips == values.hips)[0].Constant;
             constants.B = parseFloat((values.waist / 1.406).toFixed(2));
             constants.C = parseFloat((values.height / 1.640).toFixed(2));
+            
+            calculateFatAndBodyMass();
+          }
+          else{
+            let ratio = values.waist - values.wrist;
+            let roundedWeight = Math.ceil(values.weight / 5) * 5;
+            let row = that.bodyMassConstants.filter((record) => record.Weight == roundedWeight)[0];
+            console.log(roundedWeight);
+            console.log(row);
+            constants.A = row.Values[0][ratio];
+            console.log(ratio);
+            if(constants.A != null){
+              calculateFatAndBodyMass();
+            }
           }
           console.log(constants);
 
-          calculateFatAndBodyMass();
         }
 
 
@@ -140,6 +161,8 @@ export class CalculatePage implements OnInit {
           else if(values.gender == "M" && that.result.blocksPerDay <= 14) that.result.blocksPerDay = 14;
 
           that.userResult["Blocks"] = that.result.blocksPerDay;
+
+          console.log(that.result);
         }
 
         if(this.bodyMassConstants.length == 0){
