@@ -1,0 +1,132 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>Calculator Page </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-item color="primary">
+    Exercises with no title or goal will not be saved
+  </ion-item>
+
+  <ion-content class="padding">
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label> Default value: {{ param.Goal }} </ion-label>
+        <ion-label *ngIf="userParams[param.Title] != null">Your value: {{ userParams[param.Title] }} </ion-label>
+      </ion-item>
+
+      <div *ngIf="formulas[calculators[param.Title]]">
+        <ion-item 
+          *ngFor="let field of formulas[calculators[param.Title]].required; let i = index"
+          lines="none">
+
+          <div *ngIf="field.Type == 'number'" class="value-input-div">
+            <ion-label style="max-width: 50%"> {{ field.Title }} </ion-label>
+            <ion-input 
+              *ngIf="field.Type == 'number'"
+              type="number" 
+              [(ngModel)]="result[field.Title]"
+              [value]="userParams[field.Title] || 0"
+              ></ion-input>
+            <ion-label style="margin-left: 0.5rem">{{ field.Unit }}</ion-label>
+          </div>
+
+          <div *ngIf="field.Type == 'checkbox'" class="value-input-div">
+            <ion-radio-group value="field.Title">
+              <ion-item lines="none" *ngFor="let option of field.Options; let j = index">
+                <ion-radio
+                  [name]="field.Title"
+                  [(ngModel)]="result[field.Title]"
+                  [value]="option.Title"></ion-radio>
+                
+                <ion-label>{{ option.Title}}</ion-label>
+              </ion-item>
+            </ion-radio-group>
+          </div>
+
+          <div *ngIf="field.Type == 'select'" class="value-input-div">
+            <ion-select [(ngModel)]="result[field.Title]"
+              [placeholder]="field.Title">
+              <ion-select-option *ngFor="let option of field.Options; let j = index"
+                [value]="option.Value">{{ option.Title }}</ion-select-option>
+            </ion-select>
+          </div>
+
+        </ion-item>
+      </div>
+
+    </ion-list>
+
+    
+    <ion-button (click)="triggerCalculation()">
+      Calculate
+    </ion-button>
+
+    <!-- <ion-grid>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Title</ion-label>
+            <ion-input [(ngModel)]='sheet.Title' type="text" placeholder="Name"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="table-header">
+          <ion-label>Exercise</ion-label>
+        </ion-col>
+        <ion-col sizeLg="2" sizeXs="3" class="table-header">
+          Goal
+        </ion-col>
+        <ion-col sizeXs="3" sizeSm="2" class="table-header" style="padding: 0px !important; display: inline;">
+          <ion-button expand="block" fill="clear"
+           (click)="presentActionSheet()" disabled="{{ isButtonDisabled.addParam }}">
+            <ion-icon name="add" color="light"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let col of sheet.Params; let i = index">
+
+        <ion-col style="padding-left: 0.8rem">
+          <ion-input type="text" placeholder="Exercise title" [(ngModel)]='col.Title'></ion-input>
+        </ion-col>
+
+        <ion-col sizeLg="2" sizeXs="3">
+          <ion-input *ngIf="col.Type == 'Number'" type="number" placeholder="Goal" [(ngModel)]='col.Goal'>
+          </ion-input>
+
+          <ion-input *ngIf="col.Type == 'Time'" type="time" placeholder="Goal" [(ngModel)]='col.Goal'>
+          </ion-input>
+
+          <ion-label *ngIf="col.Type == 'Bool'">
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+          </ion-label>
+        </ion-col>
+
+        <ion-col sizeXs="3" sizeSm="2">
+          <ion-button expand="block" fill="clear" (click)="deleteExercise(i)">
+            <ion-icon name="trash" color="danger"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row>
+
+        <ion-col sizeXs="6">
+          <ion-button expand="full" (click)="closeModal()">Cancel</ion-button>
+        </ion-col>
+        <ion-col sizeXs="6">
+          <ion-button expand="full" (click)="saveChanges()">Save</ion-button>
+        </ion-col>
+
+      </ion-row>
+
+    </ion-grid> -->
+
+  </ion-content>

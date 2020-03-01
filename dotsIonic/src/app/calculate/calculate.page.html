@@ -20,18 +20,18 @@
 
         <ion-card>
 
-          <ion-card-header (click)="open = param.Title">
+          <ion-card-header (click)="openModal(param)">
             <ion-icon name="nutrition" color="tertiary"></ion-icon>
             {{ param.Title }}
           </ion-card-header>
 
           <ion-card-content *ngIf="open == param.Title">
 
-            <ion-list>
+            <!-- <ion-list>
 
               <ion-item>
                 <ion-label> Default value: {{ param.Goal }} </ion-label>
-                <ion-label *ngIf="userResult[param.Title] != null">Your value: {{ userResult[param.Title] }} </ion-label>
+                <ion-label *ngIf="userParams[param.Title] != null">Your value: {{ userParams[param.Title] }} </ion-label>
               </ion-item>
 
               <div *ngIf="formulas[calculators[param.Title]]">
@@ -45,7 +45,7 @@
                       *ngIf="field.Type == 'number'"
                       type="number" 
                       [(ngModel)]="currentValues[field.Title]"
-                      [value]="userResult[field.Title] || 0"
+                      [value]="userParams[field.Title] || 0"
                       ></ion-input>
                     <ion-label style="margin-left: 0.5rem">{{ field.Unit }}</ion-label>
                   </div>
@@ -74,11 +74,7 @@
                 </ion-item>
               </div>
 
-            </ion-list>
-
-            <ion-button (click)="triggerCalculation(param.Title, currentValues)">
-              Calculate
-            </ion-button>
+            </ion-list> -->
 
           </ion-card-content>
 
