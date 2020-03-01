@@ -24,7 +24,7 @@ export class CalculatePage implements OnInit {
     Gender: "F"
   }
 
-  public result;
+  public result = {};
 
   public userResult = {};
 
@@ -71,14 +71,23 @@ export class CalculatePage implements OnInit {
       Type: "number"
     },
     {
-      Title: "activity factor",
+      Title: "activity factor (Zone)",
       Options: [
         { "Title": "Seditary", "Value": 0.5 },
         { "Title": "Light", "Value": 0.6 },    
-        { "Title": "Workout3TimesAWeek", "Value": 0.7 },   // 6 - activity factor
+        { "Title": "Workout3TimesAWeek", "Value": 0.7 },   // 6 - activity factor for Zone calculations
         { "Title": "LightWorkoutEveryDay", "Value": 0.8 },
         { "Title": "HeavyWorkoutEveryDay", "Value": 0.9 },
         { "Title": "Professional", "Value": 1 }
+      ],
+      Type: "select"
+    },
+    {
+      Title: "activity factor (kcal)",
+      Options: [
+        { "Title": "Low", "Value": 1.2 },
+        { "Title": "Average", "Value": 1.3 },              // 7 - activity factor for kcal calculations
+        { "Title": "Heavy", "Value": 1.4 },   
       ],
       Type: "select"
     },
@@ -93,7 +102,8 @@ export class CalculatePage implements OnInit {
   public calculators = {
     "Blocks": 0,
     "BodyFatPercentage": 0,
-    "DaylyProteinIntake": 0
+    "DaylyProteinIntake": 0,
+    "kcal": 1
   }
 
 
@@ -184,7 +194,39 @@ export class CalculatePage implements OnInit {
           setConstants();
         }
 
-        this.result = values;
+      }
+    },
+    {
+      required: [
+        this.params[0],      // 0 - age
+        this.params[1],      // 1 - weight
+        this.params[2],      // 2 - height
+        this.params[7]       // 7 - activity
+      ],
+      formula: async (input) => {
+
+        let values = {
+          gender: this.userParams.Gender,
+          age: input[0],
+          weight: input[1],
+          height: input[2],
+          physicalActivity: input[3]
+        };
+
+        // Calculate base calorie intake
+        if(values.gender == "M"){
+          this.result.kcal = 66 + (13.7 * values.weight) + (5 * values.height) - (6.8 * values.age);
+        }
+        else{
+          this.result.kcal = 655 + (9.6 * values.weight) + (1.8 * values.height) - (4.7 * values.age);
+        }
+        
+        // Multiply by physical activity factor
+        this.result.kcal *= values.physicalActivity;
+
+        this.userResult.kcal = Math.floor(this.result.kcal);
+        
+        console.log(this.result);
       }
     }
   ]
