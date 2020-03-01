@@ -115,7 +115,6 @@ export class CalculatePage implements OnInit {
     "Sugar": 2
   }
 
-
   public formulas = [
     {
       required: [
@@ -204,6 +203,8 @@ export class CalculatePage implements OnInit {
         else{
           setConstants();
         }
+
+        this.saveResults();
 
       }
     },

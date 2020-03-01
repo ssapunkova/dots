@@ -10,97 +10,84 @@
     Nutrition
   </ion-item>
 
-  <ion-card *ngFor="let param of paramsService.nutrition">
+  <ion-grid>
 
-    <ion-card-header (click)="open = param.Title">
-      <ion-icon name="nutrition" color="tertiary"></ion-icon>
-      {{ param.Title }}
-    </ion-card-header>
+    <ion-row>
 
-    <ion-card-content *ngIf="open == param.Title">
+      <ion-col 
+        size-md="4" size-sm="6" size-xs="12" 
+        *ngFor="let param of paramsService.nutrition">
 
-      <ion-list>
+        <ion-card>
 
-        <ion-item>
-          <ion-label> Default value: {{ param.Goal }} </ion-label>
-          <ion-label *ngIf="userResult[param.Title] != null">Your value: {{ userResult[param.Title] }} </ion-label>
-        </ion-item>
+          <ion-card-header (click)="open = param.Title">
+            <ion-icon name="nutrition" color="tertiary"></ion-icon>
+            {{ param.Title }}
+          </ion-card-header>
 
-        <ion-item *ngIf="formulas[calculators[param.Title]]">
+          <ion-card-content *ngIf="open == param.Title">
 
-          <ion-grid>
+            <ion-list>
 
-            <ion-row>
+              <ion-item>
+                <ion-label> Default value: {{ param.Goal }} </ion-label>
+                <ion-label *ngIf="userResult[param.Title] != null">Your value: {{ userResult[param.Title] }} </ion-label>
+              </ion-item>
 
-              <ion-col>
-                <ion-grid>
+              <div *ngIf="formulas[calculators[param.Title]]">
+                <ion-item 
+                  *ngFor="let field of formulas[calculators[param.Title]].required; let i = index"
+                  lines="none">
 
-                  <ion-row 
-                    *ngFor="let field of formulas[calculators[param.Title]].required; let i = index">
+                  <div *ngIf="field.Type == 'number'" class="value-input-div">
+                    <ion-label style="max-width: 50%"> {{ field.Title }} </ion-label>
+                    <ion-input 
+                      *ngIf="field.Type == 'number'"
+                      type="number" 
+                      [(ngModel)]="currentValues[field.Title]"
+                      [value]="userResult[field.Title] || 0"
+                      ></ion-input>
+                    <ion-label style="margin-left: 0.5rem">{{ field.Unit }}</ion-label>
+                  </div>
 
-                    <ion-col
-                      size-sm="12" size-md="6">
-                      
-
-                      <ion-item lines="none">
-
-                        <div *ngIf="field.Type == 'number'" class="value-input-div">
-                          <ion-label style="max-width: 50%"> {{ field.Title }} </ion-label>
-                          <ion-input 
-                            *ngIf="field.Type == 'number'"
-                            type="number" 
-                            [(ngModel)]="currentValues[field.Title]"
-                            [value]="userResult[field.Title] || 0"
-                            ></ion-input>
-                          <ion-label style="margin-left: 0.5rem">{{ field.Unit }}</ion-label>
-                        </div>
-
-                        <div *ngIf="field.Type == 'checkbox'" class="value-input-div">
-                          <ion-radio-group value="field.Title">
-                            <ion-item lines="none" *ngFor="let option of field.Options; let j = index">
-                              <ion-radio
-                                [name]="field.Title"
-                                [(ngModel)]="currentValues[field.Title]"
-                                [value]="option.Title"></ion-radio>
-                              
-                              <ion-label>{{ option.Title}}</ion-label>
-                            </ion-item>
-                          </ion-radio-group>
-                        </div>
-
-                        <div *ngIf="field.Type == 'select'" class="value-input-div">
-                          <ion-select [(ngModel)]="currentValues[field.Title]"
-                            [placeholder]="field.Title">
-                            <ion-select-option *ngFor="let option of field.Options; let j = index"
-                              [value]="option.Value">{{ option.Title }}</ion-select-option>
-                          </ion-select>
-                        </div>
-                      
+                  <div *ngIf="field.Type == 'checkbox'" class="value-input-div">
+                    <ion-radio-group value="field.Title">
+                      <ion-item lines="none" *ngFor="let option of field.Options; let j = index">
+                        <ion-radio
+                          [name]="field.Title"
+                          [(ngModel)]="currentValues[field.Title]"
+                          [value]="option.Title"></ion-radio>
+                        
+                        <ion-label>{{ option.Title}}</ion-label>
                       </ion-item>
+                    </ion-radio-group>
+                  </div>
 
-                    </ion-col>
+                  <div *ngIf="field.Type == 'select'" class="value-input-div">
+                    <ion-select [(ngModel)]="currentValues[field.Title]"
+                      [placeholder]="field.Title">
+                      <ion-select-option *ngFor="let option of field.Options; let j = index"
+                        [value]="option.Value">{{ option.Title }}</ion-select-option>
+                    </ion-select>
+                  </div>
 
-                  </ion-row>
+                </ion-item>
+              </div>
 
-                  <ion-row>
-                    <ion-button (click)="triggerCalculation(param.Title, currentValues)">
-                      Calculate
-                    </ion-button>
-                  </ion-row>
+            </ion-list>
 
-                </ion-grid>
-              </ion-col>
+            <ion-button (click)="triggerCalculation(param.Title, currentValues)">
+              Calculate
+            </ion-button>
 
-            </ion-row>
-           
+          </ion-card-content>
 
-          </ion-grid>
+        </ion-card>
 
-        </ion-item>
+      </ion-col>
 
-      </ion-list>
+    </ion-row>
 
-    </ion-card-content>
-  </ion-card>
+  </ion-grid>
 
 </ion-content>
