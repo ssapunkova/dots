@@ -26,7 +26,7 @@
           <ion-label *ngIf="userResult[param.Title] != null">Your value: {{ userResult[param.Title] }} </ion-label>
         </ion-item>
 
-        <ion-item *ngIf="formulas[param.Title]">
+        <ion-item *ngIf="formulas[calculators[param.Title]]">
 
           <ion-grid>
 
@@ -36,7 +36,7 @@
                 <ion-grid>
 
                   <ion-row 
-                    *ngFor="let field of formulas[param.Title].required; let i = index">
+                    *ngFor="let field of formulas[calculators[param.Title]].required; let i = index">
 
                     <ion-col
                       size-sm="12" size-md="6">

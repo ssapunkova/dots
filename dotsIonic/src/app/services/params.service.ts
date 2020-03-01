@@ -16,6 +16,16 @@ export class ParamsService {
       Goal: 2000
     },
     {
+      Index: 3,
+      Title: "BodyFatPercentage",
+      Goal: 20
+    },
+    {
+      Index: 3,
+      Title: "DaylyProteinIntake",
+      Goal: 85
+    },
+    {
       Index: 1,
       Title: "Blocks",
       Goal: 12
@@ -25,11 +35,6 @@ export class ParamsService {
       Title: "Sugar",
       Goal: 40
     },
-    {
-      Index: 3,
-      Title: "Protein (gr)",
-      Goal: 85
-    }
   ]
 
   constructor(

@@ -21,7 +21,7 @@ export class CalculatePage implements OnInit {
   }
 
   public userParams = {
-    Gender: "M"
+    Gender: "F"
   }
 
   public result;
@@ -87,12 +87,18 @@ export class CalculatePage implements OnInit {
 
   async triggerCalculation(param, values){
     console.log(param, values);
-    this.formulas[param].formula(values);
+    this.formulas[this.calculators[param]].formula(values);
+  }
+
+  public calculators = {
+    "Blocks": 0,
+    "BodyFatPercentage": 0,
+    "DaylyProteinIntake": 0
   }
 
 
-  public formulas = {
-    "Blocks": {
+  public formulas = [
+    {
       required: [
         this.params[1],      // 1 - weight
         this.params[2],      // 2 - height
@@ -161,8 +167,10 @@ export class CalculatePage implements OnInit {
           else if(values.gender == "M" && that.result.blocksPerDay <= 14) that.result.blocksPerDay = 14;
 
           that.userResult["Blocks"] = that.result.blocksPerDay;
-
-          console.log(that.result);
+          that.userResult["BodyFatPercentage"] = that.result.fatPercentage;
+          that.userResult["DaylyProteinIntake"] = that.result.daylyProteinIntakeInGr;
+ 
+          console.log(that.result, that.userResult);
         }
 
         if(this.bodyMassConstants.length == 0){
@@ -179,7 +187,7 @@ export class CalculatePage implements OnInit {
         this.result = values;
       }
     }
-  }
+  ]
 
   public values = {
     "nutrition": []
