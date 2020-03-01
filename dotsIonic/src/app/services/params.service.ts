@@ -16,22 +16,22 @@ export class ParamsService {
       Goal: 2000
     },
     {
-      Index: 3,
+      Index: 1,
       Title: "BodyFatPercentage",
       Goal: 20
     },
     {
-      Index: 3,
+      Index: 2,
       Title: "DaylyProteinIntake",
       Goal: 85
     },
     {
-      Index: 1,
+      Index: 3,
       Title: "Blocks",
       Goal: 12
     },
     {
-      Index: 2,
+      Index: 4,
       Title: "Sugar",
       Goal: 40
     },

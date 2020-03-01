@@ -14,7 +14,19 @@ import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.ser
 @Injectable()
 export class CalculatorPage implements OnInit {
 
-  public userParams = {};
+  public userParams = {
+    gender: null,
+    age: null,
+    height: null,
+    weight: null,
+    hips: null,
+    wrist: null,
+    waist: null,
+    kcal: null,
+    sugar: null,
+    activityFactorKcal: null,
+    activityFactorZone: null
+  };
   public param = {
     Title: null
   };  
@@ -24,6 +36,7 @@ export class CalculatorPage implements OnInit {
     fatPercentage: null,
     leanBodyMassInLb: null,
     daylyProteinIntakeInGr: null,
+    daylykcal: null,
     blocksPerDay: null,
     sugar: null
   };
@@ -142,13 +155,13 @@ export class CalculatorPage implements OnInit {
 
         let values = {
           gender: this.userParams.gender,
-          weightInKg: this.result.weight,
-          weight: this.convertToLb(this.result.weight),
-          height: this.convertToInches(this.result.height),
-          waist: this.convertToInches(this.result.waist),
-          wrist: this.convertToInches(this.result.wrist),
-          hips: this.convertToInches(this.result.hips),
-          physicalActivity: this.result.activityFactorZone
+          weightInKg: this.userParams.weight,
+          weight: this.convertToLb(this.userParams.weight),
+          height: this.convertToInches(this.userParams.height),
+          waist: this.convertToInches(this.userParams.waist),
+          wrist: this.convertToInches(this.userParams.wrist),
+          hips: this.convertToInches(this.userParams.hips),
+          physicalActivity: this.userParams.activityFactorZone
         };
 
         console.log(values);
@@ -158,7 +171,13 @@ export class CalculatorPage implements OnInit {
         let that = this;
         function setConstants(){
           if(values.gender == "F"){
-            constants.A = that.bodyMassConstants.filter((record) => record.Hips == values.hips)[0].Constant;
+            let row = that.bodyMassConstants.filter((record) => record.Hips == values.hips)[0];
+            if(row != null){
+              constants.A = row.Constant;
+            } 
+            else{
+              console.log("not standart")
+            }
             constants.B = parseFloat((values.waist / 1.406).toFixed(2));
             constants.C = parseFloat((values.height / 1.640).toFixed(2));
             
@@ -230,10 +249,10 @@ export class CalculatorPage implements OnInit {
 
         let values = {
           gender: this.userParams.gender,
-          age: this.result.age,
-          weight: this.result.weight,
-          height: this.result.height,
-          physicalActivity: this.result.activityFactorKcal
+          age: this.userParams.age,
+          weight: this.userParams.weight,
+          height: this.userParams.height,
+          physicalActivity: this.userParams.activityFactorKcal
         };
 
         // Calculate base calorie intake
@@ -272,12 +291,9 @@ export class CalculatorPage implements OnInit {
     }
   ]
 
-  async presentActionSheet() {
-    await this.modalController.dismiss();
-  }
 
   async closeModal(){
-    await this.modalController.dismiss();
+    await this.modalController.dismiss(this.userParams );
   }
 
 }

@@ -25,57 +25,10 @@
             {{ param.Title }}
           </ion-card-header>
 
-          <ion-card-content *ngIf="open == param.Title">
-
-            <!-- <ion-list>
-
-              <ion-item>
-                <ion-label> Default value: {{ param.Goal }} </ion-label>
-                <ion-label *ngIf="userParams[param.Title] != null">Your value: {{ userParams[param.Title] }} </ion-label>
-              </ion-item>
-
-              <div *ngIf="formulas[calculators[param.Title]]">
-                <ion-item 
-                  *ngFor="let field of formulas[calculators[param.Title]].required; let i = index"
-                  lines="none">
-
-                  <div *ngIf="field.Type == 'number'" class="value-input-div">
-                    <ion-label style="max-width: 50%"> {{ field.Title }} </ion-label>
-                    <ion-input 
-                      *ngIf="field.Type == 'number'"
-                      type="number" 
-                      [(ngModel)]="currentValues[field.Title]"
-                      [value]="userParams[field.Title] || 0"
-                      ></ion-input>
-                    <ion-label style="margin-left: 0.5rem">{{ field.Unit }}</ion-label>
-                  </div>
-
-                  <div *ngIf="field.Type == 'checkbox'" class="value-input-div">
-                    <ion-radio-group value="field.Title">
-                      <ion-item lines="none" *ngFor="let option of field.Options; let j = index">
-                        <ion-radio
-                          [name]="field.Title"
-                          [(ngModel)]="currentValues[field.Title]"
-                          [value]="option.Title"></ion-radio>
-                        
-                        <ion-label>{{ option.Title}}</ion-label>
-                      </ion-item>
-                    </ion-radio-group>
-                  </div>
-
-                  <div *ngIf="field.Type == 'select'" class="value-input-div">
-                    <ion-select [(ngModel)]="currentValues[field.Title]"
-                      [placeholder]="field.Title">
-                      <ion-select-option *ngFor="let option of field.Options; let j = index"
-                        [value]="option.Value">{{ option.Title }}</ion-select-option>
-                    </ion-select>
-                  </div>
-
-                </ion-item>
-              </div>
-
-            </ion-list> -->
-
+          <ion-card-content>
+            <ion-thumbnail>
+              <img width="50" [src]="../../assets/icons/param.Title.jpg">
+            </ion-thumbnail> 
           </ion-card-content>
 
         </ion-card>
