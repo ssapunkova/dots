@@ -48,7 +48,10 @@
                           <ion-label style="max-width: 50%"> {{ field.Title }} </ion-label>
                           <ion-input 
                             *ngIf="field.Type == 'number'"
-                            type="number" [(ngModel)]="values.nutrition[i]"></ion-input>
+                            type="number" 
+                            [(ngModel)]="currentValues[field.Title]"
+                            [value]="userResult[field.Title] || 0"
+                            ></ion-input>
                           <ion-label style="margin-left: 0.5rem">{{ field.Unit }}</ion-label>
                         </div>
 
@@ -57,7 +60,7 @@
                             <ion-item lines="none" *ngFor="let option of field.Options; let j = index">
                               <ion-radio
                                 [name]="field.Title"
-                                [(ngModel)]="values.nutrition[i]"
+                                [(ngModel)]="currentValues[field.Title]"
                                 [value]="option.Title"></ion-radio>
                               
                               <ion-label>{{ option.Title}}</ion-label>
@@ -66,7 +69,7 @@
                         </div>
 
                         <div *ngIf="field.Type == 'select'" class="value-input-div">
-                          <ion-select [(ngModel)]="values.nutrition[i]"
+                          <ion-select [(ngModel)]="currentValues[field.Title]"
                             [placeholder]="field.Title">
                             <ion-select-option *ngFor="let option of field.Options; let j = index"
                               [value]="option.Value">{{ option.Title }}</ion-select-option>
@@ -80,7 +83,7 @@
                   </ion-row>
 
                   <ion-row>
-                    <ion-button (click)="triggerCalculation(param.Title, values.nutrition)">
+                    <ion-button (click)="triggerCalculation(param.Title, currentValues)">
                       Calculate
                     </ion-button>
                   </ion-row>

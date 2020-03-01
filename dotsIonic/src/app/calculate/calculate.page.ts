@@ -21,8 +21,11 @@ export class CalculatePage implements OnInit {
   }
 
   public userParams = {
-    Gender: "F"
+    gender: "F",
+    kcal: 2000
   }
+
+  public currentValues = {};
 
   public result = {};
 
@@ -71,7 +74,7 @@ export class CalculatePage implements OnInit {
       Type: "number"
     },
     {
-      Title: "activity factor (Zone)",
+      Title: "activityFactorZone",
       Options: [
         { "Title": "Seditary", "Value": 0.5 },
         { "Title": "Light", "Value": 0.6 },    
@@ -83,13 +86,18 @@ export class CalculatePage implements OnInit {
       Type: "select"
     },
     {
-      Title: "activity factor (kcal)",
+      Title: "activityFactorKcal",
       Options: [
         { "Title": "Low", "Value": 1.2 },
         { "Title": "Average", "Value": 1.3 },              // 7 - activity factor for kcal calculations
         { "Title": "Heavy", "Value": 1.4 },   
       ],
       Type: "select"
+    },
+    {
+      Title: "daylykcal",
+      Unit: "kcal",                                        // 8 - dayly kcal intake
+      Type: "number"
     },
   ]
 
@@ -103,7 +111,8 @@ export class CalculatePage implements OnInit {
     "Blocks": 0,
     "BodyFatPercentage": 0,
     "DaylyProteinIntake": 0,
-    "kcal": 1
+    "kcal": 1,
+    "Sugar": 2
   }
 
 
@@ -120,15 +129,17 @@ export class CalculatePage implements OnInit {
       formula: async (input) => {
 
         let values = {
-          gender: this.userParams.Gender,
-          weightInKg: input[0],
-          weight: this.convertToLb(input[0]),
-          height: this.convertToInches(input[1]),
-          waist: this.convertToInches(input[2]),
-          wrist: this.convertToInches(input[3]),
-          hips: this.convertToInches(input[4]),
-          physicalActivity: input[5]
+          gender: this.userParams.gender,
+          weightInKg: input.weight,
+          weight: this.convertToLb(input.weight),
+          height: this.convertToInches(input.height),
+          waist: this.convertToInches(input.waist),
+          wrist: this.convertToInches(input.wrist),
+          hips: this.convertToInches(input.hips),
+          physicalActivity: input.activityFactorZone
         };
+
+        console.log(values);
 
         let constants = { A: 0, B: 0, C: 0 };
         
@@ -201,16 +212,16 @@ export class CalculatePage implements OnInit {
         this.params[0],      // 0 - age
         this.params[1],      // 1 - weight
         this.params[2],      // 2 - height
-        this.params[7]       // 7 - activity
+        this.params[7]       // 7 - activityFactorKcal
       ],
       formula: async (input) => {
 
         let values = {
-          gender: this.userParams.Gender,
-          age: input[0],
-          weight: input[1],
-          height: input[2],
-          physicalActivity: input[3]
+          gender: this.userParams.gender,
+          age: input.age,
+          weight: input.weight,
+          height: input.height,
+          physicalActivity: input.activityFactorKcal
         };
 
         // Calculate base calorie intake
@@ -225,6 +236,24 @@ export class CalculatePage implements OnInit {
         this.result.kcal *= values.physicalActivity;
 
         this.userResult.kcal = Math.floor(this.result.kcal);
+        
+        console.log(this.result);
+      }
+    },
+    {
+      required: [
+        this.params[8],      // 8 - kcal
+      ],
+      formula: async (input) => {
+
+        let values = {
+          kcal: input.daylykcal,
+        };
+
+        
+        this.result.sugar = values.kcal / 40;
+
+        this.userResult.Sugar = Math.floor(this.result.sugar);
         
         console.log(this.result);
       }
