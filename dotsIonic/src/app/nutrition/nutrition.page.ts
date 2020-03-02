@@ -39,7 +39,7 @@ export class NutritionPage implements OnInit {
   ) { };
 
   ngOnInit() {
-    this.loadingService.isPageLoading = true;
+    this.loadingService.hideLoading();
     // Load nutrition data from database
     this.getNutritionData();
   }
@@ -71,7 +71,7 @@ export class NutritionPage implements OnInit {
       // Dismiss all loading
 
       this.data = data;
-      this.loadingService.isPageLoading = false;
+      this.loadingService.hideLoading();
       await this.loadingService.dismissSmallLoading();
 
       console.log("***NutritionPage ",this);

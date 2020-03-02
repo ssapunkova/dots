@@ -34,25 +34,6 @@ input{
   color: black;
 }
 
-#SplashScreen{
-  opacity: 1;
-  transition: opacity 0.2s;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--ion-color-primary-shade);
-}
-
-#DotsLogo{
-  text-align: center;
-  font: 3rem "Courier New";
-  font-weight: bold;
-  color: white;
-}
 
 .split-pane-visible >.split-pane-side {
   min-width: 200px !important;

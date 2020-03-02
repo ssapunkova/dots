@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
   ){}
 
   ngOnInit(){
-    this.loadingService.isPageLoading = false;
+    this.loadingService.hideLoading();
   }
 
 }
