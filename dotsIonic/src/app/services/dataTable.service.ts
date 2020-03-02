@@ -64,7 +64,7 @@ export class DataTableService{
     this.showingPeriod = [];                  // Array of months that are the chosen showing period
     this.months = [];                         // Array of all record months
     this.sortedByDate = "asc";                // Which way is the date sorted (asc/desc)
-    this.showMode = "table";                  // Default show mode, can be switched to table
+    this.showMode = "chart";                  // Default show mode, can be switched to table
 
     this.tableWidth = 0;                      // Min table width, calculated on table's column number
 

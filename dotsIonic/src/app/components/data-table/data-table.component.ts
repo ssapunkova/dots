@@ -34,7 +34,6 @@ export class DataTableComponent implements OnInit {
 
   async editParams(){
     // Emit editParamsButtonClicked event to parent (nutrition.page.html)
-    console.log("editpp")
     this.editParamsButtonClicked.emit()
   }
 
