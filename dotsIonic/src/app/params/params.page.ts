@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core';
 
 // Services with params
 import { ParamsService } from '../services/params.service';
@@ -52,16 +53,15 @@ export class ParamsPage implements OnInit {
     await modal.present();
 
     // Get modal data and process it if it's not null
-    let modalData = await modal.onWillDismiss();
-    modalData = modalData.data;
+    await modal.onWillDismiss().then((modalData: OverlayEventDetail) => {
+      // modalData = modalData.data;
 
-    console.log(modalData);
-
-    if(modalData != null){
       console.log(modalData);
 
-      this.userParams = modalData;
-    }
+      if(modalData != null){
+        this.userParams = modalData.data;
+      }
+    });
   }
 
 }
