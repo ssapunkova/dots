@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-      <ion-title>Calculatе </ion-title>
+      <ion-title>Calculatе {{ param.Title }} </ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -8,20 +8,19 @@
 
     <ion-grid>
 
-      <ion-row>
+      <ion-item color="primary">
         <ion-col size-md="6" size-sm="12">
           <ion-label> Default value: {{ param.Goal }} </ion-label>
         </ion-col>
         <ion-col size-md="6" size-sm="12">
           <ion-label *ngIf="userParams[param.Title] != null">Your value: {{ userParams[param.Title] }} </ion-label>
         </ion-col>
-      </ion-row>
+      </ion-item>
 
       <ion-row 
       *ngFor="let field of formulas[calculators[param.Title]].required; let i = index">
         <ion-col>
           
-          <ion-item lines="none">
 
             <div *ngIf="field.Type == 'number'" class="value-input-div">
               <ion-label style="max-width: 50%"> {{ field.Title }} </ion-label>
@@ -55,70 +54,21 @@
               </ion-select>
             </div>
 
-          </ion-item>
-        </ion-col>
-      </ion-row>
-
-    <!-- <ion-grid>
-
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label>Title</ion-label>
-            <ion-input [(ngModel)]='sheet.Title' type="text" placeholder="Name"></ion-input>
-          </ion-item>
         </ion-col>
       </ion-row>
 
       <ion-row>
-        <ion-col class="table-header">
-          <ion-label>Exercise</ion-label>
-        </ion-col>
-        <ion-col sizeLg="2" sizeXs="3" class="table-header">
-          Goal
-        </ion-col>
-        <ion-col sizeXs="3" sizeSm="2" class="table-header" style="padding: 0px !important; display: inline;">
-          <ion-button expand="block" fill="clear"
-           (click)="presentActionSheet()" disabled="{{ isButtonDisabled.addParam }}">
-            <ion-icon name="add" color="light"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
 
-      <ion-row *ngFor="let col of sheet.Params; let i = index">
-
-        <ion-col style="padding-left: 0.8rem">
-          <ion-input type="text" placeholder="Exercise title" [(ngModel)]='col.Title'></ion-input>
-        </ion-col>
-
-        <ion-col sizeLg="2" sizeXs="3">
-          <ion-input *ngIf="col.Type == 'Number'" type="number" placeholder="Goal" [(ngModel)]='col.Goal'>
-          </ion-input>
-
-          <ion-input *ngIf="col.Type == 'Time'" type="time" placeholder="Goal" [(ngModel)]='col.Goal'>
-          </ion-input>
-
-          <ion-label *ngIf="col.Type == 'Bool'">
-            <ion-icon name="checkmark-circle" color="success"></ion-icon>
-          </ion-label>
-        </ion-col>
-
-        <ion-col sizeXs="3" sizeSm="2">
-          <ion-button expand="block" fill="clear" (click)="deleteExercise(i)">
-            <ion-icon name="trash" color="danger"></ion-icon>
-          </ion-button>
-        </ion-col>
-
-      </ion-row> -->
-
-      <ion-row>
-
-        
         <ion-col sizeXs="6">
           <ion-button expand="full" (click)="closeModal()">Cancel</ion-button>
         </ion-col>
         <ion-col sizeXs="6">
-          <ion-button expand="full" (click)="triggerCalculation()">Calculate</ion-button>
+          
+          <ion-button 
+            expand="full" (click)="triggerCalculation()">
+            Calculate
+          </ion-button>
+
         </ion-col>
 
       </ion-row>

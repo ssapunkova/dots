@@ -14,33 +14,10 @@ import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.ser
 @Injectable()
 export class CalculatorPage implements OnInit {
 
-  public userParams = {
-    gender: null,
-    age: null,
-    height: null,
-    weight: null,
-    hips: null,
-    wrist: null,
-    waist: null,
-    kcal: null,
-    sugar: null,
-    activityFactorKcal: null,
-    activityFactorZone: null
-  };
+  public userParams;
   public param = {
     Title: null
   };  
-
-  public result = {
-    kcal: null,
-    fatPercentage: null,
-    leanBodyMassInLb: null,
-    daylyProteinIntakeInGr: null,
-    daylykcal: null,
-    blocksPerDay: null,
-    sugar: null
-  };
-
   
   // Converting measures
 
@@ -67,11 +44,20 @@ export class CalculatorPage implements OnInit {
   }
 
   async triggerCalculation(){
-    console.log(this.param, this.result);
+    console.log(this.param, this.userParams);
     this.formulas[this.calculators[this.param.Title]].formula();
   }
 
   public bodyMassConstants = [];
+
+  
+  public calculators = {
+    "blocks": 0,
+    "bodybodyFatPercentage": 0,
+    "daylyProteinIntake": 0,
+    "kcal": 1,
+    "sugar": 2
+  }
 
 
   public params = [
@@ -108,38 +94,37 @@ export class CalculatorPage implements OnInit {
     {
       Title: "activityFactorZone",
       Options: [
-        { "Title": "Seditary", "Value": 0.5 },
-        { "Title": "Light", "Value": 0.6 },    
-        { "Title": "Workout3TimesAWeek", "Value": 0.7 },   // 6 - activity factor for Zone calculations
-        { "Title": "LightWorkoutEveryDay", "Value": 0.8 },
-        { "Title": "HeavyWorkoutEveryDay", "Value": 0.9 },
-        { "Title": "Professional", "Value": 1 }
+        { "Title": "seditary", "Value": 0.5 },
+        { "Title": "light", "Value": 0.6 },    
+        { "Title": "workout3TimesAWeek", "Value": 0.7 },   // 6 - activity factor for Zone calculations
+        { "Title": "lightWorkoutEveryDay", "Value": 0.8 },
+        { "Title": "heavyWorkoutEveryDay", "Value": 0.9 },
+        { "Title": "professional", "Value": 1 }
       ],
       Type: "select"
     },
     {
       Title: "activityFactorKcal",
       Options: [
-        { "Title": "Low", "Value": 1.2 },
-        { "Title": "Average", "Value": 1.3 },              // 7 - activity factor for kcal calculations
-        { "Title": "Heavy", "Value": 1.4 },   
+        { "Title": "low", "Value": 1.2 },
+        { "Title": "average", "Value": 1.3 },              // 7 - activity factor for kcal calculations
+        { "Title": "heavy", "Value": 1.4 },   
       ],
       Type: "select"
     },
     {
-      Title: "daylykcal",
-      Unit: "kcal",                                        // 8 - dayly kcal intake
+      Title: "kcal",
+      Unit: "kcal",                                        // 8 - kcal intake
       Type: "number"
     },
   ]
 
-  public calculators = {
-    "Blocks": 0,
-    "BodyFatPercentage": 0,
-    "DaylyProteinIntake": 0,
-    "kcal": 1,
-    "Sugar": 2
+  async finishCalculations(){
+    console.log("User params: ", this.userParams);
+    console.log("Saving results");
+    await this.modalController.dismiss(this.userParams);
   }
+
 
   public formulas = [
     {
@@ -203,26 +188,22 @@ export class CalculatorPage implements OnInit {
         function calculateFatAndBodyMass(){
 
           // Body fat percentage
-          if(values.gender == "F") that.result.fatPercentage = Math.floor(constants.A + constants.B - constants.C);
-          else that.result.fatPercentage = Math.floor(constants.A);
+          if(values.gender == "F") that.userParams.bodyFatPercentage = Math.floor(constants.A + constants.B - constants.C);
+          else that.userParams.bodyFatPercentage = Math.floor(constants.A);
 
-          // Calculate LeanBodyMass weight in Lb, to use for DaylyProteinIntakeInGr
-          that.result.leanBodyMassInLb = that.convertToLb(values.weightInKg - (values.weightInKg * that.result.fatPercentage / 100));
+          // Calculate LeanBodyMass weight in Lb, to use for DaylyProteinIntake
+          let leanBodyMassInLb = that.convertToLb(values.weightInKg - (values.weightInKg * that.userParams.bodyFatPercentage / 100));
 
           // Dayly Protein Intake in grams
-          that.result.daylyProteinIntakeInGr = that.result.leanBodyMassInLb * values.physicalActivity;
+          that.userParams.daylyProteinIntake = leanBodyMassInLb * values.physicalActivity;
 
           // Convert gr to protein blocks
-          that.result.blocksPerDay = Math.floor(that.result.daylyProteinIntakeInGr / 7);
+          that.userParams.blocks = Math.floor(that.userParams.daylyProteinIntake / 7);
 
-          if(values.gender == "F" && that.result.blocksPerDay <= 11) that.result.blocksPerDay = 11;
-          else if(values.gender == "M" && that.result.blocksPerDay <= 14) that.result.blocksPerDay = 14;
-
-          that.userParams["Blocks"] = that.result.blocksPerDay;
-          that.userParams["BodyFatPercentage"] = that.result.fatPercentage;
-          that.userParams["DaylyProteinIntake"] = that.result.daylyProteinIntakeInGr;
+          if(values.gender == "F" && that.userParams.blocks <= 11) that.userParams.blocks = 11;
+          else if(values.gender == "M" && that.userParams.blocks <= 14) that.userParams.blocks = 14;
  
-          console.log(that.result, that.userParams);
+          console.log(that.userParams, that.userParams);
         }
 
         if(this.bodyMassConstants.length == 0){
@@ -235,6 +216,8 @@ export class CalculatorPage implements OnInit {
         else{
           setConstants();
         }
+
+        this.finishCalculations();
 
       }
     },
@@ -257,18 +240,18 @@ export class CalculatorPage implements OnInit {
 
         // Calculate base calorie intake
         if(values.gender == "M"){
-          this.result.kcal = 66 + (13.7 * values.weight) + (5 * values.height) - (6.8 * values.age);
+          this.userParams.kcal = 66 + (13.7 * values.weight) + (5 * values.height) - (6.8 * values.age);
         }
         else{
-          this.result.kcal = 655 + (9.6 * values.weight) + (1.8 * values.height) - (4.7 * values.age);
+          this.userParams.kcal = 655 + (9.6 * values.weight) + (1.8 * values.height) - (4.7 * values.age);
         }
         
         // Multiply by physical activity factor
-        this.result.kcal *= values.physicalActivity;
+        this.userParams.kcal *= values.physicalActivity;
 
-        this.userParams.kcal = Math.floor(this.result.kcal);
-        
-        console.log(this.result);
+        this.userParams.kcal = Math.floor(this.userParams.kcal);
+
+        this.finishCalculations();
       }
     },
     {
@@ -278,22 +261,21 @@ export class CalculatorPage implements OnInit {
       formula: async () => {
 
         let values = {
-          kcal: this.result.daylykcal,
+          kcal: this.userParams.kcal,
         };
-
         
-        this.result.sugar = values.kcal / 40;
+        this.userParams.sugar = values.kcal / 40;
 
-        this.userParams.sugar = Math.floor(this.result.sugar);
-        
-        console.log(this.result);
+        this.userParams.sugar = Math.floor(this.userParams.sugar);
+
+        this.finishCalculations();
       }
     }
   ]
 
 
   async closeModal(){
-    await this.modalController.dismiss(this.userParams );
+    await this.modalController.dismiss();
   }
 
 }

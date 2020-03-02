@@ -30,6 +30,11 @@
             <ion-thumbnail style="margin: auto;">
               <img width="50" src="../../assets/icons/{{param.Title}}.jpg">
             </ion-thumbnail> 
+
+            <ion-item *ngIf="userParams[param.Title] != null">
+              Your value: {{ userParams[param.Title] }} 
+            </ion-item>
+
           </ion-card-content>
 
         </ion-card>

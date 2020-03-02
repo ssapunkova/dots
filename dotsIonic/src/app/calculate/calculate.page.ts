@@ -16,18 +16,19 @@ export class CalculatePage implements OnInit {
 
   public userParams = {
     gender: "F",
+    age: null,
+    height: null,
+    weight: null,
+    hips: null,
+    wrist: null,
+    waist: null,
     kcal: null,
-    sugar: null
-  }
-
-
-  public result = {
-    kcal: null,
-    fatPercentage: null,
-    leanBodyMassInLb: null,
-    daylyProteinIntakeInGr: null,
-    blocksPerDay: null,
-    sugar: null
+    sugar: null,
+    activityFactorKcal: null,
+    activityFactorZone: null,
+    bodyFatPercentage: null,
+    daylyProteinIntake: null,
+    blocksPerDay: null
   };
 
   
@@ -58,6 +59,8 @@ export class CalculatePage implements OnInit {
 
     if(modalData != null){
       console.log(modalData);
+
+      this.userParams = modalData;
     }
   }
 

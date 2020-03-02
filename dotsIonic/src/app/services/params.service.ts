@@ -13,28 +13,33 @@ export class ParamsService {
     {
       Index: 0,
       Title: "kcal",
-      Goal: 2000
+      Goal: 2000,
+      Unit: "kcal"
     },
     {
       Index: 1,
-      Title: "BodyFatPercentage",
-      Goal: 20
+      Title: "bodyFatPercentage",
+      Goal: 20,
+      Unit: "%"
     },
     {
       Index: 2,
-      Title: "DaylyProteinIntake",
-      Goal: 85
+      Title: "daylyProteinIntake",
+      Goal: 85,
+      Unit: "g"
     },
     {
       Index: 3,
-      Title: "Blocks",
-      Goal: 12
+      Title: "blocks",
+      Goal: 12,
+      Unit: "blocks"
     },
     {
       Index: 4,
-      Title: "Sugar",
-      Goal: 40
-    },
+      Title: "sugar",
+      Goal: 40,
+      Unit: "gr"
+    }
   ]
 
   constructor(
