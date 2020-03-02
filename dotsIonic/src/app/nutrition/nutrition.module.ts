@@ -8,6 +8,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { NutritionPage } from './nutrition.page';
 
+import { NewNutritionRecordPage } from './newNutritionRecord/newNutritionRecord.page';
+import { EditNutritionParamsPage } from './editNutritionParams/editNutritionParams.page';
+
 import { ComponentsModule  } from '../components/components.module';
 
 const routes: Routes = [
@@ -26,6 +29,14 @@ const routes: Routes = [
     ComponentsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [NutritionPage]
+  entryComponents: [
+    NewNutritionRecordPage,
+    EditNutritionParamsPage
+  ],
+  declarations: [
+    NutritionPage,
+    NewNutritionRecordPage,
+    EditNutritionParamsPage
+  ]
 })
 export class NutritionPageModule {}
