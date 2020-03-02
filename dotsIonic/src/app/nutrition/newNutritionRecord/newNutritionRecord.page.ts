@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 
 import { GeneralService } from '../../services/general.service';
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
-import { NutritionService } from '../../services/nutrition.service';
 
 @Component({
   selector: 'modal-page',
@@ -29,7 +28,6 @@ export class NewNutritionRecordPage implements OnInit {
     private modalController: ModalController,
     private navParams: NavParams,
     private generalService: GeneralService,
-    private nutritionService: NutritionService,
     private errorToastAndAlertService: ErrorToastAndAlertService
   ) { }
 

@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { ModalController, NavParams, ActionSheetController } from '@ionic/angular';
 
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
 import { NutritionService } from '../../services/nutrition.service';
-import { ParamsService } from '../../services/params.service';
 
 @Component({
   selector: 'modal-page',
