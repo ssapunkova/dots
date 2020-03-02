@@ -24,6 +24,15 @@
   --ion-color-tertiary-shade: #e09200;
   --ion-color-tertiary-tint: #ffaf1a;
 
+  .ion-color-red {
+    --ion-color-base: #fe6d40;
+    --ion-color-base-rgb: 254, 109, 64;
+    --ion-color-contrast: #ffffff;
+    --ion-color-contrast-rgb: 255, 255, 255;
+    --ion-color-shade: #e06038;
+    --ion-color-tint: #fe7c53;
+  }
+
   --ion-color-success: #1bc012;
   --ion-color-success-rgb: 27,192,18;
   --ion-color-success-contrast: #ffffff;

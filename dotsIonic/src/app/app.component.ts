@@ -47,7 +47,7 @@ export class AppComponent {
       title: 'Parameters',
       url: '/params',
       icon: 'grid',
-      iconColor: 'tertiary'
+      iconColor: 'red'
     },
   ];
 
