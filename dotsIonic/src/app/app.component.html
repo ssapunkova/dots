@@ -14,7 +14,12 @@
         <ion-list lines="none">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon slot="start" [name]="p.icon" [color]="p.iconColor"></ion-icon>
+              <ion-icon 
+                slot="start" 
+                [name]="p.icon" 
+                src="../assets/icons/svg/{{p.icon}}.svg" 
+                [color]="p.iconColor"
+                ></ion-icon>
               <ion-label>
                 {{p.title}}
               </ion-label>

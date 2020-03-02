@@ -28,19 +28,25 @@ export class AppComponent {
     {
       title: 'Home',
       url: '/home',
-      icon: 'home',
+      icon: 'home-outline',
       iconColor: 'primary'
     },
     {
       title: 'Workouts',
       url: '/workouts',
-      icon: 'play-circle',
+      icon: 'barbell',
       iconColor: 'secondary'
     },
     {
       title: 'Nutrition',
       url: '/nutrition',
-      icon: 'nutrition',
+      icon: 'nutrition-sharp',
+      iconColor: 'tertiary'
+    },
+    {
+      title: 'Parameters',
+      url: '/params',
+      icon: 'grid',
       iconColor: 'tertiary'
     },
   ];

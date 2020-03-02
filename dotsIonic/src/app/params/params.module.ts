@@ -5,13 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CalculatePage } from './calculate.page';
+import { ParamsPage } from './params.page';
 import { CalculatorPage } from './calculator/calculator.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: CalculatePage
+    component: ParamsPage
   }
 ];
 
@@ -26,8 +26,8 @@ const routes: Routes = [
     CalculatorPage
   ],
   declarations: [
-    CalculatePage,
+    ParamsPage,
     CalculatorPage
   ]
 })
-export class CalculatePageModule {}
+export class ParamsPageModule {}

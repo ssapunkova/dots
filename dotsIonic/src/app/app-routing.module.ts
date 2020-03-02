@@ -4,6 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { WorkoutsPage } from './workouts/workouts.page';
 import { WorkoutSheetPage } from './workoutSheet/workoutSheet.page';
 import { WorkoutManagerPage } from './workoutManager/workoutManager.page';
+import { ParamsPage } from './params/params.page';
 
 const routes: Routes = [
   {
@@ -32,12 +33,12 @@ const routes: Routes = [
     loadChildren: () => import('./nutrition/nutrition.module').then(m => m.NutritionPageModule)
   },
   {
-    path: 'calculate',
-    loadChildren: () => import('./calculate/calculate.module').then(m => m.CalculatePageModule)
+    path: 'params',
+    loadChildren: () => import('./params/params.module').then(m => m.ParamsPageModule)
   },
   {
-    path: 'calculate/:topic',
-    loadChildren: () => import('./calculate/calculate.module').then(m => m.CalculatePageModule)
+    path: 'params/:topic',
+    loadChildren: () => import('./params/params.module').then(m => m.ParamsPageModule)
   }
 
 ];

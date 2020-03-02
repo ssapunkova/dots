@@ -7,11 +7,11 @@ import { ParamsService } from '../services/params.service';
 import { CalculatorPage } from './calculator/calculator.page';
 
 @Component({
-  selector: 'app-calculate',
-  templateUrl: './calculate.page.html',
-  styleUrls: ['./calculate.page.scss'],
+  selector: 'app-params',
+  templateUrl: './params.page.html',
+  styleUrls: ['./params.page.scss'],
 })
-export class CalculatePage implements OnInit {
+export class ParamsPage implements OnInit {
 
 
   public userParams = {
