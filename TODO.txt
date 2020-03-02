@@ -45,3 +45,9 @@
 05.02
 	TODO:
 	Move modal page imports in page modules
+
+02.03
+  TODO:
+  Images in calculator
+  Save calculations 
+  Translate

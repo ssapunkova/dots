@@ -15,19 +15,20 @@
     <ion-row>
 
       <ion-col 
-        size-md="4" size-sm="6" size-xs="12" 
+        size-lg="2" size-md="3" size-sm="4" size-xs="6" 
         *ngFor="let param of paramsService.nutrition">
 
-        <ion-card>
+        <ion-card 
+          (click)="openModal(param)">
 
-          <ion-card-header (click)="openModal(param)">
-            <ion-icon name="nutrition" color="tertiary"></ion-icon>
+          <ion-card-header color="tertiary">
+            <ion-icon name="nutrition" color="light"></ion-icon>
             {{ param.Title }}
           </ion-card-header>
 
-          <ion-card-content>
-            <ion-thumbnail>
-              <img width="50" [src]="../../assets/icons/param.Title.jpg">
+          <ion-card-content style="padding: 0.5rem">
+            <ion-thumbnail style="margin: auto;">
+              <img width="50" src="../../assets/icons/{{param.Title}}.jpg">
             </ion-thumbnail> 
           </ion-card-content>
 
