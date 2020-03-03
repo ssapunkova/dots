@@ -67,6 +67,7 @@
 	"PermanentDeleteWarning": "This workout sheet and all its records will be permanently deleted.",
 	"ConfirmSheetName": "Confirm sheet name",
 	"ConfirmSheetNameError": "Confirm the name of the sheet you want to delete"
-	
+	"StartingWorkoutIn": "Starting workout in ",
+	"TerminateWorkoutQuestion": "Terminate workout?"
 	
 }

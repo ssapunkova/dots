@@ -6,6 +6,8 @@ import { ActivatedRoute } from "@angular/router";
 import { interval } from 'rxjs';
 
 // Services
+import { TranslateService } from '@ngx-translate/core';
+
 import { LoadingService } from '../services/loading.service';
 import { GeneralService } from '../services/general.service';
 import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
@@ -35,7 +37,7 @@ export class WorkoutManagerPage implements OnInit {
   public sheetExercises = {
     _id: null,                            // sheetId, comes with url
     Title: "",                            // Sheet title
-    Params: []                         // Params - array of json exercises
+    Params: []                            // Params - array of json exercises
   };
 
   public current = {                      // Save temporary values for current state
@@ -54,6 +56,7 @@ export class WorkoutManagerPage implements OnInit {
   constructor(
     public loadingService: LoadingService,
     public route: ActivatedRoute,
+    public translate: TranslateService,
     public generalService: GeneralService,
     public errorToastAndAlertService: ErrorToastAndAlertService,
     public timerService: TimerService,
@@ -114,12 +117,12 @@ export class WorkoutManagerPage implements OnInit {
     let secondsLeft = 2;
     // Show alert about starting workout
     let alert = await this.alertController.create({
-      header: 'Starting workout in ',
+      header: that.translate.instant("StartingWorkoutIn"),
       message: "" + secondsLeft,
       backdropDismiss: false,
       buttons: [
         {
-          text: 'Cancel workout',
+          text: this.translate.instant("Cancel"),
           handler: () => {
             that.terminateWorkout();
           }
@@ -149,8 +152,10 @@ export class WorkoutManagerPage implements OnInit {
     // Finish break between exercises, resume exercise running
     this.controls.IsABreak = false;
     this.controls.IsExerciseRunning = true;
+
     // Mark the time of starting the exercise
     this.current.ExerciseStartedAt = this.timerService.timePassed();
+
     // If workout has just started, present fist exercise
     if(this.current.ExerciseIndex == null){
       this.current.ExerciseIndex = 0;
@@ -161,6 +166,7 @@ export class WorkoutManagerPage implements OnInit {
         this.current.ExerciseIndex++;
       }
     }
+
     // Set the user's result field to the goal
     this.current.InputValue = this.sheetExercises.Params[this.current.ExerciseIndex].Goal;
   }
@@ -169,17 +175,20 @@ export class WorkoutManagerPage implements OnInit {
     // Pause timer for the break and push user's value to results array
     this.timerService.pauseTimer();
     this.controls.IsExerciseRunning = false;
+
     // Manage bool results
     if(this.current.InputValue.toString() == "true") this.results.push(true);
     else if(this.current.InputValue.toString() == "false") this.results.push(false);
     else this.results.push(this.current.InputValue);
 
     let that = this;
+
     // If there are more exercises to present
     if(!this.controls.IsFinished){
       // Make a break
       this.controls.IsABreak = true;
       this.current.BreakSecondsLeft = 2;
+
       this.timerService.setCountdown(this.current.BreakSecondsLeft,
         function(seconds){
           that.current.BreakSecondsLeft = seconds;
@@ -201,6 +210,7 @@ export class WorkoutManagerPage implements OnInit {
   async pauseWorkout(){
     this.controls.IsExerciseRunning = false;
     this.controls.IsPaused = true;
+
     // Pause the timer if it's not a break
     if(this.controls.IsABreak == false){
       this.timerService.pauseTimer();
@@ -209,6 +219,7 @@ export class WorkoutManagerPage implements OnInit {
 
   async playWorkout(){
     this.controls.IsPaused = false;
+
     // Play timer if it's not a break
     if(this.controls.IsABreak == false){
       this.timerService.playTimer();
@@ -220,7 +231,7 @@ export class WorkoutManagerPage implements OnInit {
     let that = this;
     // Ask user if they want to terminate the workout
     let teminationAlert = await this.alertController.create({
-      header: 'Terminate workout?',
+      header: that.translate.instant("TerminateWorkoutQuestion"),
       buttons: [
         {
           text: 'Ok',
@@ -237,7 +248,7 @@ export class WorkoutManagerPage implements OnInit {
           }
         },
         {
-          text: "Cancel",
+          text: that.translate.instant("Cancel"),
           handler: () => {
             that.presentNextExercise();
           }

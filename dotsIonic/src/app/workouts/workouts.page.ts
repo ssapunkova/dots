@@ -186,46 +186,48 @@ export class WorkoutsPage implements OnInit {
 
   async deleteSheet(sheet, index){
     console.log(sheet)
+    let that = this;
     // Show alert, where the user has to confirm the name of the sheet to be deleted
+
     const alert = await this.alertController.create({
-      header: this.translate.instant("DeleteSheet"),
-      message: this.translate.instant("PermanentDeleteWarning"),
+      header: that.translate.instant("DeleteSheet"),
+      message: that.translate.instant("PermanentDeleteWarning"),
       inputs: [
         {
-          name: this.translate.instant("Title"),
+          name: that.translate.instant("Title"),
           type: "text",
-          placeholder: this.translate.instant("ConfirmSheetName") + " (" + sheet.Title + ")"
+          placeholder: that.translate.instant("ConfirmSheetName") + " (" + sheet.Title + ")"
         }
       ],
       buttons: [
         {
-          text: this.translate.instant("Cancel"),
+          text: that.translate.instant("Cancel"),
           role: 'cancel',
           cssClass: 'secondary'
         }, {
-          text: this.translate.instant("Delete"),
+          text: that.translate.instant("Delete"),
           handler: (data) => {
             console.log(data);
 
             // If the input doesn't match the title
             if(data.Title != sheet.Title){
-              this.errorToastAndAlertService.showErrorToast(this.translate.instant("ConfirmSheetNameError"));
+              that.errorToastAndAlertService.showErrorToast(this.translate.instant("ConfirmSheetNameError"));
               return false;
             }
             else{
 
               // Send request to delete sheet from database
-              this.workoutService.deleteSheet(sheet._id).subscribe((data: [any])=>
+              that.workoutService.deleteSheet(sheet._id).subscribe((data: [any])=>
                 {
                   // Delete sheet from workoutSheets
-                  this.workoutSheets.splice(index, 1);
+                  that.workoutSheets.splice(index, 1);
 
                   // Since sheets are definitely < MAX
-                  this.canAddSheet = true;
+                  that.canAddSheet = true;
 
                 },
                 error => {
-                  this.errorToastAndAlertService.showErrorAlert("Oups")
+                  that.errorToastAndAlertService.showErrorAlert("Oups")
                 }
               );
             }
