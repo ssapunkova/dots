@@ -1,6 +1,9 @@
 <ion-header>
     <ion-toolbar>
-      <ion-title>Calculatе {{ param.Title }} </ion-title>
+      <ion-title>
+        {{ 'Calculate' | translate }}
+        {{ param.Title }} 
+      </ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -10,10 +13,16 @@
 
       <ion-item color="primary">
         <ion-col size-md="6" size-sm="12">
-          <ion-label> Default value: {{ param.Goal }} </ion-label>
+          <ion-label> 
+            {{ 'DefaultValue' | translate }}
+            : {{ param.Goal }} 
+          </ion-label>
         </ion-col>
         <ion-col size-md="6" size-sm="12">
-          <ion-label *ngIf="userParams[param.Title] != null">Your value: {{ userParams[param.Title] }} </ion-label>
+          <ion-label *ngIf="userParams[param.Title] != null">
+            {{ 'YourValue' | translate }}
+            : {{ userParams[param.Title] }} 
+          </ion-label>
         </ion-col>
       </ion-item>
 
@@ -23,14 +32,18 @@
           
 
             <div *ngIf="field.Type == 'number'" class="value-input-div">
-              <ion-label style="max-width: 50%"> {{ field.Title }} </ion-label>
+              <ion-label style="max-width: 50%"> 
+                {{ field.Title }} 
+              </ion-label>
               <ion-input 
                 *ngIf="field.Type == 'number'"
                 type="number" 
                 [(ngModel)]="userParams[field.Title]"
                 [value]="userParams[field.Title] || 0"
                 ></ion-input>
-              <ion-label style="margin-left: 0.5rem">{{ field.Unit }}</ion-label>
+              <ion-label style="margin-left: 0.5rem">
+                {{ field.Unit }}
+              </ion-label>
             </div>
 
             <div *ngIf="field.Type == 'checkbox'" class="value-input-div">
@@ -41,7 +54,9 @@
                     [(ngModel)]="userParams[field.Title]"
                     [value]="option.Title"></ion-radio>
                   
-                  <ion-label>{{ option.Title}}</ion-label>
+                  <ion-label>
+                    {{ option.Title}}
+                  </ion-label>
                 </ion-item>
               </ion-radio-group>
             </div>
@@ -50,7 +65,9 @@
               <ion-select [(ngModel)]="userParams[field.Title]"
                 [placeholder]="field.Title">
                 <ion-select-option *ngFor="let option of field.Options; let j = index"
-                  [value]="option.Value">{{ option.Title }}</ion-select-option>
+                  [value]="option.Value">
+                  {{ option.Title }}
+                </ion-select-option>
               </ion-select>
             </div>
 
@@ -60,13 +77,15 @@
       <ion-row>
 
         <ion-col sizeXs="6">
-          <ion-button expand="full" (click)="closeModal()">Cancel</ion-button>
+          <ion-button expand="full" (click)="closeModal()">
+            {{ 'Cancel' | translate }}
+          </ion-button>
         </ion-col>
         <ion-col sizeXs="6">
           
           <ion-button 
             expand="full" (click)="triggerCalculation()">
-            Calculate
+            {{ 'Calculate' | translate }}
           </ion-button>
 
         </ion-col>

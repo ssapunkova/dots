@@ -2,7 +2,9 @@
   <div id="SplashScreen" *ngIf="loadingService.isPageLoading">
     <div id="DotsLogo">
       <img src="../assets/logo.png">
-      <div id="DotsText">Connect the dots</div>
+      <div id="DotsText">
+        {{ 'ConnectTheDots' | translate }}
+      </div>
     </div>
   </div>
 
@@ -24,9 +26,7 @@
                 [color]="p.iconColor"
                 ></ion-icon>
               <ion-label>
-                {{p.title}}
-
-                {{ 'Sitetitle' | translate }}
+                {{ p.title | translate}}
               </ion-label>
             </ion-item>
           </ion-menu-toggle>

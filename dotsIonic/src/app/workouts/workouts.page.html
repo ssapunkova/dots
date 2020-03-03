@@ -3,7 +3,9 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Workouts</ion-title>
+    <ion-title>
+      {{ 'Workouts' | translate }}
+    </ion-title>
 
   </ion-toolbar>
 </ion-header>
@@ -13,7 +15,9 @@
   <div *ngIf="workoutSheets.length > 0">
 
     <ion-item *ngIf="workoutSheets.length < 1" color="secondary" class="ion-text-center">
-      <ion-label>No workout sheets yet</ion-label>
+      <ion-label>
+        {{ 'NoWorkoutSheetsMessage' | translate }}
+      </ion-label>
     </ion-item>
 
     <ion-grid *ngIf="workoutSheets.length > 0">
@@ -35,27 +39,31 @@
 
               <ion-grid style="color: black; font-size: 1rem" *ngIf="sheet.Params != null && sheet.WorkoutRecords != null">
                 <ion-row><ion-col>
-                  <ion-label>Stats</ion-label>
+                  <ion-label>
+                    {{ 'Stats' | translate }}
+                  </ion-label>
                 </ion-col></ion-row>
                 <ion-row>
                   <ion-col>
-                    <ion-icon name="grid" style="padding-right: 0.5rem"></ion-icon>{{ sheet.Params.length }} exercises
+                    <ion-icon name="grid" style="padding-right: 0.5rem"></ion-icon>
+                    {{ sheet.Params.length }} {{ 'exercises' | translate }}
                   </ion-col>
                   <ion-col>
-                    <ion-icon name="checkmark" style="padding-right: 0.5rem"></ion-icon>{{ sheet.WorkoutRecords.length }} records
+                    <ion-icon name="checkmark" style="padding-right: 0.5rem"></ion-icon>
+                    {{ sheet.WorkoutRecords.length }} {{ 'records' | translate }}
                   </ion-col>
                 </ion-row>
               </ion-grid>
 
               <ion-button
                 [routerDirection]="'root'" routerLink="/workoutSheet/{{sheet._id}}">
-                View records
+                {{ 'ViewRecords' | translate }}
               </ion-button>
 
               <ion-button
                 *ngIf="sheet.Params.length > 0"
                 [routerDirection]="'root'" routerLink="/workoutManager/{{sheet._id}}">
-                Start workout
+                {{ 'StartWorkout' | translate }}
               </ion-button>
 
             </ion-card-content>

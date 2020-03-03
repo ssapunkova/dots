@@ -3,7 +3,9 @@
     <ion-buttons slot="start" *ngIf="controls.IsFinished || current.ExerciseIndex == null">
       <ion-back-button defaultHref="/workouts"></ion-back-button>
     </ion-buttons>
-    <ion-title>Workout manager</ion-title>
+    <ion-title>
+      {{ 'WorkoutManager' | translate}}
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,14 +18,21 @@
         <div id="timer">
           <div id="time-passed"
             [style.width.%]="this.timerService.timePassed() / this.averageTime * 100"></div>
-          <div id="average-time">{{ timerService.timePassed() | date:'HH:mm:ss':'UTC' }}</div>
+          <div id="average-time">
+            {{ timerService.timePassed() | date:'HH:mm:ss':'UTC' }}
+          </div>
         </div>
       </ion-item>
-      <ion-label *ngIf="averageTime != 0">This workout takes {{ averageTime | date:'HH:mm:ss':'UTC'}} in average
+      <ion-label *ngIf="averageTime != 0">
+        {{ 'ThisWorkoutTakes' | translate }}
+        {{ averageTime | date:'HH:mm:ss':'UTC'}} 
+        {{ 'minutes' | translate }}
       </ion-label>
 
       <ion-item *ngIf="controls.IsPaused">
-        <h1 style="width: 100%;" class="ion-text-center">Paused</h1>
+        <h1 style="width: 100%;" class="ion-text-center">
+          {{ 'Paused' | translate }}
+        </h1>
       </ion-item>
 
       <ion-item *ngIf="controls.IsExerciseRunning && !controls.IsPaused">
@@ -31,11 +40,15 @@
         <ion-grid class="ion-text-center">
           <ion-row>
             <ion-col>
-              <h1>{{ sheetExercises.Params[current.ExerciseIndex].Title }}</h1>
+              <h1>
+                {{ sheetExercises.Params[current.ExerciseIndex].Title }}
+              </h1>
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col> Your result: </ion-col>
+            <ion-col> 
+              {{ 'YourResult' | translate }}: 
+            </ion-col>
             <ion-col>
               <ion-input *ngIf="sheetExercises.Params[current.ExerciseIndex].Type != 'Bool'; else checkbox"
                 [type]="sheetExercises.Params[current.ExerciseIndex].Type"
@@ -59,12 +72,16 @@
         <ion-grid class="ion-text-center">
           <ion-row>
             <ion-col>
-              <h1>Take a break </h1>
+              <h1>
+                {{ 'TakeABreak' | translate}}
+              </h1>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              Next exercise: {{ sheetExercises.Params[current.ExerciseIndex + 1].Title }} in
+              {{ 'NextExercise' | translate }}
+              : {{ sheetExercises.Params[current.ExerciseIndex + 1].Title }} 
+              {{ 'in' | translate }}
             </ion-col>
           </ion-row>
           <ion-row>
@@ -78,12 +95,17 @@
       <ion-item *ngIf="this.controls.IsFinished">
         <ion-grid>
           <ion-row>
-            <ion-col><h1 class="ion-text-center"> Well done! </h1></ion-col>
+            <ion-col>
+              <h1 class="ion-text-center"> 
+                {{ 'WellDone' | translate }}
+              </h1>
+            </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
               <h3 class="ion-text-center">
-                Workout duration: {{ timerService.timePassed() | date: "HH:mm:ss": "UTC" }}
+                {{ 'WorkoutDuration' | translate}}
+                : {{ timerService.timePassed() | date: "HH:mm:ss": "UTC" }}
               </h3>
             </ion-col>
           </ion-row>
@@ -96,14 +118,17 @@
 
         <ion-grid>
           <ion-row>
-            <ion-col class="table-header">  Exercises
+            <ion-col class="table-header">
+              {{ 'Exercises' | translate }}
             </ion-col>
             <ion-col
               *ngIf="results.length > 0"
-              style="max-width: 90px;" class="table-header ion-text-center"> Result
+              style="max-width: 90px;" class="table-header ion-text-center"> 
+              {{ 'Result' | translate }}
             </ion-col>
             <ion-col
-              style="max-width: 90px" class="table-header ion-text-center"> Goal
+              style="max-width: 90px" class="table-header ion-text-center"> 
+              {{ 'Goal' | translate }}
             </ion-col>
           </ion-row>
           <ion-row
@@ -188,43 +213,3 @@
   </ion-segment>
 
 </ion-footer>
-
-
-<!-- <ion-toolbar>
-
-  <ion-item
-    width="30%"
-    (click)="terminateWorkout()" slot="start">
-    <ion-icon name="square" color="danger"></ion-icon>
-  </ion-item>
-
-  <ion-item width="30%"
-    (click)="startWorkout()"
-    *ngIf="current.ExerciseIndex == null">
-    <ion-icon name="play" color="primary"></ion-icon>
-  </ion-item>
-
-  <ion-item width="30%"
-    *ngIf="current.ExerciseIndex != null && current.ExerciseIndex < exerciseNumber - 1"
-    [disabled]="controls.IsABreak"
-    (click)="markAsCompleted()">
-    <ion-icon name="checkmark" color="primary"></ion-icon>
-  </ion-item>
-
-  <ion-item width="30%"
-    *ngIf="current.ExerciseIndex == exerciseNumber - 1 && !controls.IsFinished"
-    (click)="finish()">
-    <ion-icon name="checkmark" color="primary"></ion-icon>
-  </ion-item>
-
-  <ion-item width="30%"
-    *ngIf="!controls.IsPaused; else playButton"
-    (click)="pauseWorkout()">
-    <ion-icon name="pause" color="warning"></ion-icon>
-  </ion-item>
-  <ng-template #playButton>
-    <ion-item (click)="playWorkout()"  width="30%">
-      <ion-icon name="play" color="primary" color="warning"></ion-icon>
-    </ion-item>
-  </ng-template>
-</ion-toolbar> -->

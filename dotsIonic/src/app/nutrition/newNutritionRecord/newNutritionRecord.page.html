@@ -2,7 +2,9 @@
     <ion-toolbar>
       <ion-title *ngIf="record.Date == null; else editTitle"> New nutrition record</ion-title>
       <ng-template #editTitle>
-        <ion-title>Edit nutrition record</ion-title>
+        <ion-title>
+          {{ 'EditNutritionRecord' | translate }}
+        </ion-title>
       </ng-template>
     </ion-toolbar>
   </ion-header>
@@ -14,7 +16,7 @@
       <ion-row>
         <ion-col>
           <ion-item>
-            Date
+            {{ 'Date' | translate }}
             <ion-input
               slot="end"
               [(ngModel)]='record.Date'
@@ -39,7 +41,8 @@
             [percentage]="record.PercentageOfGoal[i]"></percentage-chip>
 
           <ion-label>
-            Goal: {{ goals[i] }}
+            {{ 'Goal' | translate }}
+            : {{ goals[i] }}
           </ion-label>
 
           <ion-input type="number" placeholder="%" hidden
@@ -54,10 +57,14 @@
       <ion-row>
 
         <ion-col sizeXs="6">
-          <ion-button expand="full" (click)="closeModal()">Cancel</ion-button>
+          <ion-button expand="full" (click)="closeModal()">
+            {{ 'Cancel' | translate }}
+          </ion-button>
         </ion-col>
         <ion-col sizeXs="6">
-          <ion-button expand="full" (click)="saveChanges()">Save</ion-button>
+          <ion-button expand="full" (click)="saveChanges()">
+            {{ 'Save' | translate }}
+          </ion-button>
         </ion-col>
 
       </ion-row>

@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Home
+      {{ 'Home' | translate }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,10 +15,8 @@
     color="secondary"
      routerLink="/params/nutrition"
     style="cursor: pointer; display: block">
-    Calculate my nutrition goals <ion-icon name="open"></ion-icon>
+    {{ 'CalculatorLink' | translate }}
+    <ion-icon name="open"></ion-icon>
   </ion-text>
-
-  {{ 'Sitetitle' | translate }}
-
 
 </ion-content>
