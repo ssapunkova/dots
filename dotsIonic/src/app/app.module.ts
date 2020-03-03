@@ -17,6 +17,10 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { ComponentsModule } from './components/components.module';
 
+// Pages
+import { NewNutritionRecordPage } from './nutrition/newNutritionRecord/newNutritionRecord.page';
+import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkoutRecord.page';
+
 // Services
 import { ConnectToServerService } from './services/connectToServer.service';
 import { LoadingService } from './services/loading.service';
@@ -31,7 +35,13 @@ import { StorageService } from './services/storage.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NewNutritionRecordPage,
+    NewWorkoutRecordPage
+  ],
+  entryComponents: [
+    NewNutritionRecordPage,
+    NewWorkoutRecordPage
   ],
   imports: [
     BrowserModule,
@@ -61,7 +71,9 @@ import { StorageService } from './services/storage.service';
   ],
   exports: [
     NgxChartsModule,
-    ComponentsModule
+    ComponentsModule,
+    NewNutritionRecordPage,
+    NewWorkoutRecordPage
   ],
   bootstrap: [AppComponent]
 })

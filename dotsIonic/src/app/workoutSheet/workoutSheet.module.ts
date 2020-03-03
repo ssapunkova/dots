@@ -9,9 +9,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { WorkoutSheetPage } from './workoutSheet.page';
 import { ComponentsModule  } from '../components/components.module';
 
-
 import { EditWorkoutParamsPage } from './editWorkoutParams/editWorkoutParams.page';
-import { NewWorkoutRecordPage } from './newWorkoutRecord/newWorkoutRecord.page';
 
 const routes: Routes = [
   {
@@ -30,12 +28,10 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   entryComponents: [
-    NewWorkoutRecordPage,
     EditWorkoutParamsPage
   ],
   declarations: [
     WorkoutSheetPage,
-    NewWorkoutRecordPage,
     EditWorkoutParamsPage
   ]
 })
