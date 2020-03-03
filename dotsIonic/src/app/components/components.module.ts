@@ -5,6 +5,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { FormsModule } from '@angular/forms';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 import { ChartTooltipComponent } from './chart-tooltip/chart-tooltip.component';
 import { ChartLegendComponent } from './chart-legend/chart-legend.component';
 import { DataTableComponent } from './data-table/data-table.component';
@@ -24,7 +26,8 @@ import { PercentageChip } from './percentage-chip/percentage-chip.component';
     CommonModule,
     IonicModule,
     NgxChartsModule,
-    FormsModule
+    FormsModule,
+    TranslateModule
   ],
   exports: [
     ChartTooltipComponent,

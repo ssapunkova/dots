@@ -1,20 +1,16 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { TranslateService } from '@ngx-translate/core';
 
 // Services
-import { ConnectToServerService } from './services/connectToServer.service';
 import { LoadingService } from './services/loading.service';
-import { GeneralService } from './services/general.service';
 import { ErrorToastAndAlertService } from './services/errorToastAndAlert.service';
 import { DataTableService } from './services/dataTable.service';
 import { TimeAndDateService } from './services/timeAndDate.service';
-import { TimerService } from './services/timer.service';
 import { ChartService } from './services/chart.service';
 import { WorkoutService } from './services/workout.service';
-import { StorageService } from './services/storage.service';
 
 
 @Component({

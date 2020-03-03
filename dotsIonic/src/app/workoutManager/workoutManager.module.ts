@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ComponentsModule } from '../components/components.module';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 import { WorkoutManagerPage } from './workoutManager.page';
 
 const routes: Routes = [
@@ -23,6 +25,7 @@ const routes: Routes = [
     IonicModule,
     NgxChartsModule,
     ComponentsModule,
+    TranslateModule,
     RouterModule.forChild(routes)
   ],
   declarations: [WorkoutManagerPage]

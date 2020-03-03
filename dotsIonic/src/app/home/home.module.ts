@@ -13,13 +13,13 @@ import { HomePage } from './home.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    TranslateModule,
     RouterModule.forChild([
       {
         path: '',
         component: HomePage
       }
     ]),
-    TranslateModule
   ],
   declarations: [HomePage]
 })

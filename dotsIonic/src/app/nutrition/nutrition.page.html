@@ -16,6 +16,8 @@
 
 <ion-content *ngIf="!loadingService.isPageLoading">
 
+  {{ 'Sitetitle' | translate }}
+
   <data-table
     service="nutrition"
     (editParamsButtonClicked)="editParams()"

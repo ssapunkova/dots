@@ -9,6 +9,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { WorkoutSheetPage } from './workoutSheet.page';
 import { ComponentsModule  } from '../components/components.module';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 import { EditWorkoutParamsPage } from './editWorkoutParams/editWorkoutParams.page';
 
 const routes: Routes = [
@@ -25,6 +27,7 @@ const routes: Routes = [
     IonicModule,
     NgxChartsModule,
     ComponentsModule,
+    TranslateModule,
     RouterModule.forChild(routes)
   ],
   entryComponents: [
