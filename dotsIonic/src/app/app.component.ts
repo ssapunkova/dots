@@ -2,6 +2,8 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
+import { TranslateService } from '@ngx-translate/core';
+
 // Services
 import { ConnectToServerService } from './services/connectToServer.service';
 import { LoadingService } from './services/loading.service';
@@ -54,6 +56,7 @@ export class AppComponent {
 
   constructor(
     private platform: Platform,
+    private translate: TranslateService,
     private loadingService: LoadingService,
     private errorToastAndAlertService: ErrorToastAndAlertService,
     private dataTableService: DataTableService,
@@ -63,6 +66,8 @@ export class AppComponent {
     private statusBar: StatusBar
   ) {
     this.initializeApp();
+    translate.addLangs(['en', 'bg']);
+    translate.setDefaultLang('bg');
   }
 
   initializeApp() {

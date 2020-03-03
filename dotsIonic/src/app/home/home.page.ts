@@ -1,6 +1,8 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { TranslateService } from '@ngx-translate/core';
+
 // Services
 import { LoadingService } from '../services/loading.service';
 
@@ -14,7 +16,8 @@ import { LoadingService } from '../services/loading.service';
 export class HomePage implements OnInit {
 
   constructor(
-    public loadingService: LoadingService
+    public loadingService: LoadingService,
+    private translate: TranslateService
   ){}
 
   ngOnInit(){
