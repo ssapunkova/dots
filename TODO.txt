@@ -48,6 +48,10 @@
 
 02.03
   TODO:
-    Images in calculator
+    * Images in calculator
     Save calculations 
-    Translate
+    * Translate
+
+03.03
+  TODO:
+    Fix issue with saving calculations
