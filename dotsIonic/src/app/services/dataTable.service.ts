@@ -1,6 +1,8 @@
 import { Injectable, Input, Output, EventEmitter } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { GeneralService } from './general.service';
 import { TimeAndDateService } from './timeAndDate.service';
 import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
@@ -47,7 +49,8 @@ export class DataTableService{
     public errorToastAndAlertService: ErrorToastAndAlertService,
 
     public workoutService: WorkoutService,
-    public nutritionService: NutritionService
+    public nutritionService: NutritionService,
+    public translate: TranslateService
   ) { }
 
 // initializeDataTable is called by data-table component
@@ -137,9 +140,9 @@ export class DataTableService{
   }
 
   async showNoRecordsAlert(){
-    let message = 'Tap the + button in the right bottom corner to add a record';
+    let message = this.translate.instant("AddNewRecordTip");
     let alert = await this.alertController.create({
-      header: 'No records yet',
+      header: this.translate.instant("NoRecordsWarning"),
       message: message,
       buttons: [ { text: 'Ok' }]
     });
@@ -147,9 +150,9 @@ export class DataTableService{
   }
 
   async showNoParamsAlert(){
-    let message = 'Tap the ✏ icon to set goals' ;
+    let message = this.translate.instant("AddGoalsTip");
     let alert = await this.alertController.create({
-      header: 'No goals yet',
+      header: this.translate.instant("NoGoalsYet"),
       message: message,
       buttons: [ { text: 'Ok' }]
     });
@@ -250,15 +253,15 @@ export class DataTableService{
 
     // Show alert about deleting the record
     let alert = await this.alertController.create({
-      header: 'Delete record',
-      message: 'The record for <b>' + record.Date + '</b> will be permanently deleted.',
+      header: this.translate.instant("DeleteRecord"),
+      message: this.translate.instant("DeletingRecordPt1") + record.Date + this.translate.instant("DeleteRecordPt2"),
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translate.instant("Cancel"),
           role: 'cancel',
           cssClass: 'secondary'
         }, {
-          text: 'Delete',
+          text: this.translate.instant("Delete"),
           handler: () => {
             // Remove from allRecords
             this.allRecords.splice(record.index, 1);
