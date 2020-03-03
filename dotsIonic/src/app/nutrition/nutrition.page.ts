@@ -39,7 +39,7 @@ export class NutritionPage implements OnInit {
   ) { };
 
   ngOnInit() {
-    this.loadingService.hideLoading();
+    this.loadingService.showPageLoading();
     // Load nutrition data from database
     this.getNutritionData();
   }
@@ -71,8 +71,7 @@ export class NutritionPage implements OnInit {
       // Dismiss all loading
 
       this.data = data;
-      this.loadingService.hideLoading();
-      await this.loadingService.dismissSmallLoading();
+      this.loadingService.hidePageLoading();
 
       console.log("***NutritionPage ",this);
 
@@ -102,13 +101,13 @@ export class NutritionPage implements OnInit {
 
     if(modalData != null){
 
-      await this.loadingService.presentSmallLoading("Saving changes");
+      await this.loadingService.showProcessLoading("Saving changes");
 
       // Update nutrition params
       this.nutritionService.updateNutritionParams(modalData).subscribe( async (data: [any])=>
         {
           await this.getNutritionData();
-          await this.loadingService.dismissSmallLoading();
+          await this.loadingService.hideProcessLoading();
         },
         error => {
           this.errorToastAndAlertService.showErrorAlert("Oups")

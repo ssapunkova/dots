@@ -7,19 +7,23 @@ import { LoadingController } from '@ionic/angular';
 @Injectable()
 export class LoadingService{
 
-  public isPageLoading = 1;                       // Controlls full-screen loader
+  private isPageLoading = true;                       // Controlls full-screen loader
   public processLoader = null;
 
   constructor(
       public loadingController: LoadingController,
   ) { }
 
-  async hideLoading(){
-    this.isPageLoading = 0;
+  async showPageLoading(){
+    this.isPageLoading = true;
+  }
+
+  async hidePageLoading(){
+    this.isPageLoading = false;
   }
 
   // Show small loading alert with custom message
-  async presentSmallLoading(message){
+  async showProcessLoading(message){
     this.processLoader = await this.loadingController.create({
       message: message
     });
@@ -27,7 +31,7 @@ export class LoadingService{
   }
 
   // Hide small loading
-  async dismissSmallLoading(){
+  async hideProcessLoading(){
     if(this.processLoader) await this.processLoader.dismiss();
   }
 

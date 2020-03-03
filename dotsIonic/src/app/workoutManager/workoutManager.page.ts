@@ -83,7 +83,7 @@ export class WorkoutManagerPage implements OnInit {
       this.exerciseNumber = this.sheetExercises.Params.length;
 
       // Dismiss all loading
-      this.loadingService.isPageLoading = false;
+      this.loadingService.hidePageLoading();
 
     });
 

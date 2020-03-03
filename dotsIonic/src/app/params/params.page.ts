@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
 
-// Services with params
+// Services
 import { ParamsService } from '../services/params.service';
+import { LoadingService } from '../services/loading.service';
 
 import { CalculatorPage } from './calculator/calculator.page';
 
@@ -35,10 +36,16 @@ export class ParamsPage implements OnInit {
   
   constructor(
     public paramsService: ParamsService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public loadingService: LoadingService
   ) { }
 
   ngOnInit() {
+    this.loadingService.showPageLoading();
+
+    // Get user data
+
+    this.loadingService.hidePageLoading();
   }
 
   async openModal(param){

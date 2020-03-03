@@ -45,7 +45,7 @@ export class WorkoutSheetPage implements OnInit {
   ) { };
 
   ngOnInit() {
-    this.loadingService.isPageLoading = true;
+    this.loadingService.showPageLoading();
     // Get sheetId
     this.sheetId = this.route.snapshot.paramMap.get("sheetId");
     // Load sheet data from database
@@ -58,8 +58,7 @@ export class WorkoutSheetPage implements OnInit {
       this.data = data[0];
 
       // Dismiss all loading
-      this.loadingService.isPageLoading = false;
-      await this.loadingService.dismissSmallLoading();
+      this.loadingService.hidePageLoading();
 
       console.log("***WorkoutSheetPage ", this)
 
@@ -92,13 +91,13 @@ export class WorkoutSheetPage implements OnInit {
 
     if(modalData != null){
 
-      await this.loadingService.presentSmallLoading("Saving changes");
+      await this.loadingService.showProcessLoading("Saving changes");
 
       // Update sheet data and reloat sheets
       this.workoutService.updateSheetConfiguration(modalData).subscribe( async (data: [any])=>
         {
           this.getSheetData();
-          await this.loadingService.dismissSmallLoading();
+          await this.loadingService.hideProcessLoading();
         },
         error => {
           this.errorToastAndAlertService.showErrorAlert("Oups")
