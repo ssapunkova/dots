@@ -58,5 +58,15 @@
 	"NoMoreThanPt2": " exercises in one sheet </b>. But you can have ",
 	"MoreSheets": "more sheets!",
 	"RepeatingExerciseNames": "Exercise titles shouldn't repeat",
+	"WorkoutRecords": "Workout records",
+	"NewSheet": "New sheet",
+	"Title": "Title",
+	"EnterAName": "Please enter a name for your new sheet",
+	"ExistingSheetName": "A sheet with that name already exists",
+	"DeleteSheet": "Delete sheet",
+	"PermanentDeleteWarning": "This workout sheet and all its records will be permanently deleted.",
+	"ConfirmSheetName": "Confirm sheet name",
+	"ConfirmSheetNameError": "Confirm the name of the sheet you want to delete"
+	
 	
 }

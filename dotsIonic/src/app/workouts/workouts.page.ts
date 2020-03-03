@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AlertController, ModalController, ActionSheetController } from '@ionic/angular';
 
 // Services
+
+import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '../services/loading.service';
 import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 import { DataTableService } from '../services/dataTable.service';
@@ -36,6 +38,7 @@ export class WorkoutsPage implements OnInit {
     public loadingService: LoadingService,
     public errorToastAndAlertService: ErrorToastAndAlertService,
     public workoutService: WorkoutService,
+    public translate: TranslateService,
     public timeAndDateService: TimeAndDateService,
     public alertController: AlertController,
     public modalController: ModalController,
@@ -79,11 +82,11 @@ export class WorkoutsPage implements OnInit {
           this.chartData[i] = [];
           this.chartData[i].push(
             {
-              "name": "Exercises",
+              "name": this.translate.instant("Exercises"),
               "value": this.workoutSheets[i].Params.length
             },
             {
-              "name": "Workout records",
+              "name": this.translate.instant("WorkoutRecords"),
               "value": this.workoutSheets[i].WorkoutRecords.length
             }
           );
@@ -106,16 +109,16 @@ export class WorkoutsPage implements OnInit {
   async showSheetActions(sheet, index){
     console.log(sheet, index);
     const actionSheet = await this.actionSheetController.create({
-      header: sheet.Title + ' Actions ',
+      header: sheet.Title,
       buttons: [{
-        text: 'Delete',
+        text: this.translate.instant("Delete"),
         icon: 'trash',
         handler: () => {
           this.deleteSheet(sheet, index)
         }
       },
       {
-        text: 'Cancel',
+        text: this.translate.instant("Cancel"),
         icon: 'close',
         role: 'cancel'
       }]
@@ -128,16 +131,16 @@ export class WorkoutsPage implements OnInit {
 
     // Show an alert for the name of the sheet
     const alert = await this.alertController.create({
-      header: 'New sheet',
+      header: this.translate.instant("NewSheet"),
       inputs: [
         {
-          name: 'Title',
+          name: this.translate.instant("Title"),
           type: 'text'
         }
       ],
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translate.instant("Cancel"),
           role: 'cancel',
           cssClass: 'secondary'
         }, {
@@ -145,7 +148,7 @@ export class WorkoutsPage implements OnInit {
           handler: (data) => {
 
             if(data.Title == ""){
-              this.errorToastAndAlertService.showErrorToast("Please enter a name for your new sheet");
+              this.errorToastAndAlertService.showErrorToast(this.translate.instant("EnterAName"));
               return false;
             }
             else {
@@ -153,7 +156,7 @@ export class WorkoutsPage implements OnInit {
               let sheetTitles = this.workoutSheets.map((sheet) => sheet.Title);
               // Show error if a sheet with tis title already exists
               if(sheetTitles.indexOf(data.Title) != -1) {
-                this.errorToastAndAlertService.showErrorToast("A sheet with that name already exists");
+                this.errorToastAndAlertService.showErrorToast(this.translate.instant("ExistingSheetName"));
                 return false;
               }
               else{
@@ -185,28 +188,28 @@ export class WorkoutsPage implements OnInit {
     console.log(sheet)
     // Show alert, where the user has to confirm the name of the sheet to be deleted
     const alert = await this.alertController.create({
-      header: 'Delete sheet',
-      message: 'This workout sheet and all its records with it will be permanently deleted.',
+      header: this.translate.instant("DeleteSheet"),
+      message: this.translate.instant("PermanentDeleteWarning"),
       inputs: [
         {
-          name: "Title",
+          name: this.translate.instant("Title"),
           type: "text",
-          placeholder: "Confirm sheet name (" + sheet.Title + ")"
+          placeholder: this.translate.instant("ConfirmSheetName") + " (" + sheet.Title + ")"
         }
       ],
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translate.instant("Cancel"),
           role: 'cancel',
           cssClass: 'secondary'
         }, {
-          text: 'Delete',
+          text: this.translate.instant("Delete"),
           handler: (data) => {
             console.log(data);
 
             // If the input doesn't match the title
             if(data.Title != sheet.Title){
-              this.errorToastAndAlertService.showErrorToast("Confirm the name of the sheet you want to delete");
+              this.errorToastAndAlertService.showErrorToast(this.translate.instant("ConfirmSheetNameError"));
               return false;
             }
             else{
