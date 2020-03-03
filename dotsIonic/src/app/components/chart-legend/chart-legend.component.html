@@ -3,7 +3,9 @@
   <ion-card-content>
 
     <ion-toolbar>
-      <ion-label slot="start">Legend</ion-label>
+      <ion-label slot="start">
+        {{ 'Legend' | translate }}
+      </ion-label>
       <ion-button slot="end" (click)="editParams()">
         <ion-icon name="create"></ion-icon>
       </ion-button>

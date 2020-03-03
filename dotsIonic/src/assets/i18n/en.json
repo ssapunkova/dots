@@ -40,5 +40,7 @@
 	"EditNutritionGoals": "Edit nutrition goals",
 	"DefaultNutritionGoalsMessage": "There are default nutrition goals, but you can set your own.",
 	"CalculatorLink": "Calculate my nutrition goals",
-	"Parameter": "Parameter"
+	"Parameter": "Parameter",
+	"ShowRecordsForPeriod": "Show records for",
+	"Legend": "Legend"
 }

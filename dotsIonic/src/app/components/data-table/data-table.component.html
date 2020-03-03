@@ -18,7 +18,8 @@
 
           <ion-toolbar>
             <ion-item>
-              <ion-label>Show records for: </ion-label>
+              <ion-label>
+                {{ 'ShowRecordsForPeriod' | translate }}: </ion-label>
               <ion-select
                 placeholder="Select period"
                 multiple
@@ -65,7 +66,7 @@
                 class="table-header"
                 title='Date'
                 (click)="dataTableService.sortByDate()">
-                Date
+                {{ 'Date' | translate }}
                 <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
                 <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
               </ion-col>
