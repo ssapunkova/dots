@@ -66,9 +66,9 @@
 	"DeleteSheet": "Delete sheet",
 	"PermanentDeleteWarning": "This workout sheet and all its records will be permanently deleted.",
 	"ConfirmSheetName": "Confirm sheet name",
-	"ConfirmSheetNameError": "Confirm the name of the sheet you want to delete"
+	"ConfirmSheetNameError": "Confirm the name of the sheet you want to delete",
 	"StartingWorkoutIn": "Starting workout in ",
-	"TerminateWorkoutQuestion": "Terminate workout?"
+	"TerminateWorkoutQuestion": "Terminate workout?",
 	"GeneralErrorMessage": "Something went wrong. Contact admin: ",
 	"AddNewRecordTip": "Tap the + button in the right bottom corner to add a record",
 	"NoRecordsWarning": "No records yet",
@@ -76,6 +76,5 @@
 	"AddGoalsTip": "Tap the ✏ icon to set goals",
 	"DeleteRecord": "Delete record",
 	"DeletingRecordPt1": "The record for <b>",
-	"DeleteRecordPt2": "</b> will be permanently deleted.",
-	
+	"DeleteRecordPt2": "</b> will be permanently deleted."
 }
