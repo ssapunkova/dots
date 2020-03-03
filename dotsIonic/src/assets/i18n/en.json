@@ -42,5 +42,21 @@
 	"CalculatorLink": "Calculate my nutrition goals",
 	"Parameter": "Parameter",
 	"ShowRecordsForPeriod": "Show records for",
-	"Legend": "Legend"
+	"Legend": "Legend",
+	"SavingChanges": "Saving changes",
+	"SetYourGoalsMessage": "First set your goals",
+	"Edit": "Edit",
+	"Delete": "Delete",
+	"FillInDate": "Please fill in date",
+	"FillInResults": "Please fill in your results",
+	"AddExercise": "Add exercise",
+	"CountRepetitionsOption": "Count repetitons / sets",
+	"CheckBoolOption": "Check done / not done",
+	"CountDurationOption": "Count duration",
+	"ReachedExerciseNumberLimit": "Too many exercises",
+	"NoMoreThanPt1": "You can have <b> no more than ",
+	"NoMoreThanPt2": " exercises in one sheet </b>. But you can have ",
+	"MoreSheets": "more sheets!",
+	"RepeatingExerciseNames": "Exercise titles shouldn't repeat",
+	
 }

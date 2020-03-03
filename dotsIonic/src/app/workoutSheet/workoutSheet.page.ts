@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AlertController, ActionSheetController, ModalController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
 
+import { TranslateService } from '@ngx-translate/core';
+
 // Services
 import { LoadingService } from '../services/loading.service';
 import { GeneralService } from '../services/general.service';
@@ -34,6 +36,7 @@ export class WorkoutSheetPage implements OnInit {
   constructor(
     public loadingService: LoadingService,
     public route: ActivatedRoute,
+    private translate: TranslateService,
     public modalController: ModalController,
     public actionSheetController: ActionSheetController,
     public generalService: GeneralService,
@@ -91,7 +94,7 @@ export class WorkoutSheetPage implements OnInit {
 
     if(modalData != null){
 
-      await this.loadingService.showProcessLoading("Saving changes");
+      await this.loadingService.showProcessLoading(this.translate.instant("SavingChanges"));
 
       // Update sheet data and reloat sheets
       this.workoutService.updateSheetConfiguration(modalData).subscribe( async (data: [any])=>
@@ -127,7 +130,7 @@ export class WorkoutSheetPage implements OnInit {
     }
     else{
 
-      this.errorToastAndAlertService.showErrorAlert("First set your goals")
+      this.errorToastAndAlertService.showErrorAlert(this.translate.instant("SetYpurGoalsMessage"))
 
     }
 
@@ -137,24 +140,24 @@ export class WorkoutSheetPage implements OnInit {
   async showRecordOptions(record){
 
     const actionSheet = await this.actionSheetController.create({
-      header: 'Record',
+      header: this.translate.instant("Record"),
       buttons: [
         {
-          text: 'Edit',
+          text: this.translate.instant("Edit"),
           icon: 'checkmark',
           handler: () => {
             this.editRecord(record);
           }
         },
         {
-          text: 'Delete',
+          text: this.translate.instant("Delete"),
           icon: 'trash',
           handler: () => {
             this.deleteRecord(record);
           }
         },
         {
-          text: 'Cancel',
+          text: this.translate.instant("Cancel"),
           icon: 'close',
           role: 'cancel'
         }

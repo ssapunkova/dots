@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { ModalController, NavParams, ActionSheetController } from '@ionic/angular';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { GeneralService } from '../../services/general.service';
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
 
@@ -30,7 +32,8 @@ export class NewWorkoutRecordPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
-    public generalService: GeneralService,
+    private translate: TranslateService,
+    private generalService: GeneralService,
     private actionSheetController: ActionSheetController,
     private errorToastAndAlertService: ErrorToastAndAlertService
   ) { }
@@ -58,7 +61,9 @@ export class NewWorkoutRecordPage implements OnInit {
       }
       else{
         this.record.Values.push(this.values[i]);
-        this.record.PercentageOfGoal.push(this.generalService.calculatePercentage(this.values[i], this.fields[i].Goal))
+        this.record.PercentageOfGoal.push(
+          this.generalService.calculatePercentage(this.values[i], this.fields[i].Goal)
+        )
       }
     }
 
@@ -69,12 +74,12 @@ export class NewWorkoutRecordPage implements OnInit {
     console.log(this.record);
 
     if(this.record.Date == null){
-      this.errorToastAndAlertService.showErrorToast("Please fill in date");
+      this.errorToastAndAlertService.showErrorToast(this.translate.instant("FillInDate"));
       return false;
     }
     else{
       if(this.record.Values.length < 1){
-        this.errorToastAndAlertService.showErrorToast("Please fill your workout results");
+        this.errorToastAndAlertService.showErrorToast(this.translate.instant("FillInResults"));
         return false;
       }
 

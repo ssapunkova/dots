@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { ModalController, NavParams, AlertController, ActionSheetController } from '@ionic/angular';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
 
 @Component({
@@ -23,6 +25,7 @@ export class EditWorkoutParamsPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
+    private translate: TranslateService,
     private alertController: AlertController,
     private actionSheetController: ActionSheetController,
     private errorToastAndAlert: ErrorToastAndAlertService
@@ -41,31 +44,31 @@ export class EditWorkoutParamsPage implements OnInit {
     if(this.sheet.Params.length < this.MAX_SHEET_EXERCISES){
 
       const actionSheet = await this.actionSheetController.create({
-        header: 'Add exercise',
+        header: this.translate.instant("AddExercise"),
         buttons: [
           {
-            text: 'Count repetitons / sets',
+            text: this.translate.instant("CountRepetitionsOption"),
             icon: 'refresh-circle',
             handler: () => {
               this.addParam("Number");
             }
           },
           {
-            text: 'Check Done / Not done',
+            text: this.translate.instant("CheckBoolOption"),
             icon: 'checkmark',
             handler: () => {
               this.addParam("Bool");
             }
           },
           {
-            text: 'Count duration',
+            text: this.translate.instant("CountDurationOption"),
             icon: 'stopwatch',
             handler: () => {
               this.addParam("Time");
             }
           },
           {
-            text: 'Cancel',
+            text: this.translate.instant("Cancel"),
             icon: 'close',
             role: 'cancel'
           }
@@ -75,8 +78,8 @@ export class EditWorkoutParamsPage implements OnInit {
     }
     else{
       let alert = await this.alertController.create({
-        header: 'Too many exercises',
-        message: 'You can have <b> no more than ' + this.MAX_SHEET_EXERCISES + ' exercises in one sheet </b>. But you can have <a href="/workouts">more sheets!</a>',
+        header: this.translate.instant("ReachedExerciseNumberLimit"),
+        message: this.translate.instant("NoMoreThanPt1") + this.MAX_SHEET_EXERCISES + this.translate.instant("NoMoreThanPt2") + '<a href="/workouts">' + this.translate.instant("MoreSheets") + '</a>',
         buttons: [
           {
             text: 'Ok'
@@ -141,7 +144,7 @@ export class EditWorkoutParamsPage implements OnInit {
     console.log(this.sheet);
 
     if(repeatedNames == true){
-      this.errorToastAndAlert.showErrorToast("Exercise titles shouldn't repeat");
+      this.errorToastAndAlert.showErrorToast(this.translate.instant("RepeatingExerciseNames"));
       return false;
     }
     await this.modalController.dismiss(this.sheet);
