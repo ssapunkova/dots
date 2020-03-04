@@ -2,8 +2,6 @@
 
 //Require Mongoose
 const mongoose = require('mongoose');
-const ObjectId = require('mongodb').ObjectID;
-
 
 const ParameterSchema = mongoose.Schema({ Title: String, Goal: String, Type: String});
 

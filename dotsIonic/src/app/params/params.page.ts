@@ -5,6 +5,7 @@ import { OverlayEventDetail } from '@ionic/core';
 // Services
 import { ParamsService } from '../services/params.service';
 import { LoadingService } from '../services/loading.service';
+import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 
 import { CalculatorPage } from './calculator/calculator.page';
 
@@ -16,34 +17,47 @@ import { CalculatorPage } from './calculator/calculator.page';
 export class ParamsPage implements OnInit {
 
 
-  public userParams = {
-    gender: "F",
-    age: null,
-    height: null,
-    weight: null,
-    hips: null,
-    wrist: null,
-    waist: null,
-    kcal: null,
-    sugar: null,
-    activityFactorKcal: null,
-    activityFactorZone: null,
-    bodyFatPercentage: null,
-    daylyProteinIntake: null,
-    blocksPerDay: null
-  };
+  // public userParams = {
+  //   gender: "F",
+  //   age: null,
+  //   height: null,
+  //   weight: null,
+  //   hips: null,
+  //   wrist: null,
+  //   waist: null,
+  //   kcal: null,
+  //   sugar: null,
+  //   activityFactorKcal: null,
+  //   activityFactorZone: null,
+  //   bodyFatPercentage: null,
+  //   daylyProteinIntake: null,
+  //   blocksPerDay: null
+  // };
+
+  public userParams = {};
 
   
   constructor(
     public paramsService: ParamsService,
-    public modalController: ModalController,
-    public loadingService: LoadingService
+    private modalController: ModalController,
+    private loadingService: LoadingService,
+    private errorToastAndAlertService: ErrorToastAndAlertService
   ) { }
 
   ngOnInit() {
     this.loadingService.showPageLoading();
 
     // Get user data
+    this.paramsService.getUserParams().subscribe( async (data: [any])=>
+    {
+      this.userParams = data;
+
+      console.log("User params ", this.userParams)
+    },
+    error => {
+      this.errorToastAndAlertService.showErrorAlert("Oups")
+    }
+  );
 
     this.loadingService.hidePageLoading();
   }

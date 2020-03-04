@@ -33,6 +33,25 @@
     --ion-color-tint: #fe7c53;
   }
 
+
+  $colors: #ff4b2d, #ff772d, #ffb72d, #a5f565, #3fc352, #2de8ba, #2d8ee8, #9292e5, #da92e5;
+
+  @function set-text-color($color) {
+    @if (lightness( $color ) > 60) {
+      @return #000; // lighter color, return black
+    }
+    @else {
+      @return #fff; // darker color, return white
+    }
+  }
+
+  @for $i from 1 through length($colors) {
+    *.param-#{$i} {
+      background-color: nth($colors, $i);
+      color: set-text-color(nth($colors, $i));
+    }
+  }
+
   --ion-color-success: #1bc012;
   --ion-color-success-rgb: 27,192,18;
   --ion-color-success-contrast: #ffffff;

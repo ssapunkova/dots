@@ -11,41 +11,89 @@
 
 <ion-content>
 
-  <ion-item color="secondary">
-    {{ 'Nutrition' | translate }}
-  </ion-item>
-
   <ion-grid>
 
     <ion-row>
 
       <ion-col 
-        size-lg="2" size-md="3" size-sm="4" size-xs="6" 
-        *ngFor="let param of paramsService.nutrition">
+        sizeLg="4" sizeMd="3" sizeSm="12">
 
-        <ion-card 
-          (click)="openModal(param)">
+        <ion-card>
 
           <ion-card-header color="tertiary">
-            <ion-icon name="nutrition" color="light"></ion-icon>
-            {{ param.Title }}
+            {{ 'MyParams' | translate }}
           </ion-card-header>
 
           <ion-card-content style="padding: 0.5rem">
-            <ion-thumbnail style="margin: auto;">
-              <img width="50" src="../../assets/icons/{{param.Title}}.jpg">
-            </ion-thumbnail> 
 
-            <ion-item *ngIf="userParams[param.Title] != null">
-              {{ 'YourValue' | translate }}
-              : {{ userParams[param.Title] }} 
+            <ion-item 
+              *ngIf="userParams == null; else params">
+              {{ 'NoParams' | translate}}
             </ion-item>
 
+            <ng-template #params>
+
+              <ion-item *ngFor="let paramIndex of userParams.Params; let i = index">
+                {{ paramsService.allParams[paramIndex].Title }}: 
+                {{ userParams.Values[i] }}
+              </ion-item>
+
+            </ng-template>
+            
           </ion-card-content>
 
         </ion-card>
 
       </ion-col>
+
+      <ion-col 
+        sizeLg="8" sizeMd="9" sizeSm="12">
+
+        <ion-card>
+
+          <ion-card-header color="tertiary">
+            {{ 'MyCalculations' | translate }}
+          </ion-card-header>
+
+          <ion-card-content style="padding: 0.5rem">
+
+            <ion-item 
+              *ngIf="userParams == null; else params">
+              {{ 'NoCalculations' | translate}}
+            </ion-item>
+
+            <ng-template #params>
+
+              <ion-item *ngFor="let paramIndex of userParams.Params; let i = index">
+                {{ paramsService.allParams[paramIndex].Title }}: 
+                {{ userParams.Values[i] }}
+              </ion-item>
+
+            </ng-template>            
+            
+          </ion-card-content>
+
+        </ion-card>
+
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row>
+
+      <ion-chip 
+        *ngFor="let param of paramsService.allParams; let i = index"
+        class="param-{{i+1}}">
+
+        <ion-avatar>
+          <img src="../assets/icons/{{param.Title}}.jpg">
+        </ion-avatar>
+
+        <ion-label>
+          {{ param.Title }}
+        </ion-label>
+
+      </ion-chip>
 
     </ion-row>
 

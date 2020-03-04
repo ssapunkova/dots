@@ -1,7 +1,5 @@
 //Require Mongoose
 const mongoose = require('mongoose');
-const ObjectId = require('mongodb').ObjectID;
-
 
 const NutritionRecordSchema = mongoose.Schema({
     UserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},

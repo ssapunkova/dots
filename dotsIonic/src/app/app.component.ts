@@ -63,7 +63,7 @@ export class AppComponent {
   ) {
     this.initializeApp();
     translate.addLangs(['en', 'bg']);
-    translate.setDefaultLang('bg');
+    translate.setDefaultLang('en');
   }
 
   initializeApp() {

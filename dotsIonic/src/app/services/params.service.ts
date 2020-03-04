@@ -8,8 +8,7 @@ import { ConnectToServerService } from './connectToServer.service';
 })
 export class ParamsService {
 
-
-  public nutrition = [
+  public allParams = [
     {
       Index: 0,
       Title: "kcal",
@@ -42,6 +41,15 @@ export class ParamsService {
     }
   ]
 
+
+  public nutrition = [
+    this.allParams[0],
+    this.allParams[1],
+    this.allParams[2],
+    this.allParams[3],
+    this.allParams[4]
+  ]
+
   constructor(
     public http: HttpClient,
     public connectToServerService: ConnectToServerService,
@@ -49,6 +57,10 @@ export class ParamsService {
 
   public getConstants(gender){
     return this.http.get(this.connectToServerService.serverUrl + '/getBodyMassConstants/' + gender)
+  }
+
+  public getUserParams(){
+    return this.http.get(this.connectToServerService.serverUrl + '/getUserParams')
   }
 
 }

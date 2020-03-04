@@ -75,5 +75,7 @@
 	"AddGoalsTip": "Tap the ✏ icon to set goals",
 	"DeleteRecord": "Delete record",
 	"DeletingRecordPt1": "The record for <b>",
-	"DeleteRecordPt2": "</b> will be permanently deleted."
+	"DeleteRecordPt2": "</b> will be permanently deleted.",
+	"NoParams": "You haven't entered any params yet",
+	"NoCalculations": "Choose a param you want to calculate"
 }

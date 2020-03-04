@@ -1,6 +1,5 @@
 //Require Mongoose
 var mongoose = require('mongoose');
-var ObjectId = require('mongodb').ObjectID;
 
 //Define a schema
 var BodyMassConstantsSchema = mongoose.Schema({
