@@ -67,78 +67,6 @@
 
       </ion-col>
 
-      <ion-col 
-        sizeMd="6" sizeSm="12">
-
-        <ion-card>
-
-          <ion-card-header color="tertiary">
-            {{ 'MyParams' | translate }}
-          </ion-card-header>
-
-          <ion-card-content style="padding: 0.5rem">
-
-            <ion-item 
-              *ngIf="userParams == null; else params">
-              {{ 'NoParams' | translate}}
-            </ion-item>
-
-            <ng-template #params>
-
-              <ion-item *ngFor="let paramIndex of userParams.Params; let i = index">
-                {{ paramsService.allParams[paramIndex].Title }}: 
-                {{ userParams.Values[i] }}
-              </ion-item>
-
-            </ng-template>
-            
-          </ion-card-content>
-
-        </ion-card>
-
-      </ion-col>
-
-    </ion-row>
-
-    <ion-row>
-
-      <ion-col>
-
-        <ion-card>
-
-          <ion-card-header color="tertiary">
-            {{ 'MyCalculations' | translate }}
-          </ion-card-header>
-
-          <ion-card-content style="padding: 0.5rem">
-
-            <ion-item 
-              *ngIf="userParams == null; else params">
-              {{ 'NoCalculations' | translate}}
-            </ion-item>
-
-            <ng-template #params>
-
-              <!-- <ion-item *ngFor="let paramIndex of userParamsData.Params; let i = index">
-                {{ paramsService.allParams[paramIndex].Title }}: 
-                {{ userParams.Values[i] }}
-              </ion-item> -->
-
-              
-              <div *ngFor="let param of objectKeys(userParams)l let i = index">
-                <ion-item *ngIf="i > 1">
-                  {{ param }}:
-                  {{ userParams[param] }}
-                </ion-item>
-              </div>
-
-            </ng-template>            
-            
-          </ion-card-content>
-
-        </ion-card>
-
-      </ion-col>
 
     </ion-row>
 
@@ -162,6 +90,10 @@
 
           <ion-label>
             {{ param.Title }}
+          </ion-label>
+
+          <ion-label>
+            {{ userParams[param.Title] }}
           </ion-label>
 
         </ion-chip>
