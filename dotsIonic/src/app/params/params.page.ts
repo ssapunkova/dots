@@ -16,9 +16,8 @@ import { CalculatorPage } from './calculator/calculator.page';
 })
 export class ParamsPage implements OnInit {
 
-  public objectKeys = Object.keys
 
-  // public userParams = {
+  // public userParamValues= {
   //   gender: "F",
   //   age: null,
   //   height: null,
@@ -35,7 +34,8 @@ export class ParamsPage implements OnInit {
   //   blocksPerDay: null
   // };
 
-  public userParams = {};
+  public userParamTitles = [];
+  public userParamValues = {};
   public userParamsData = {
     Params: [],
     Values: []
@@ -57,19 +57,20 @@ export class ParamsPage implements OnInit {
     {
       this.userParamsData = data;
 
-      if(this.userParamsData == null) this.userParams = {};
+      if(this.userParamsData == null) this.userParamValues= {};
       else{
         for(let i = 0; i < this.userParamsData.Params.length; i++){
           let paramIndex = this.userParamsData.Params[i];
           let paramTitle = this.paramsService.allParams[paramIndex].Title;
           let paramValue = this.userParamsData.Values[i];
 
-          this.userParams[paramTitle] = paramValue;
+          this.userParamTitles.push(paramTitle);
+          this.userParamValues[paramTitle] = paramValue;
         }
       }
 
       console.log("User params data ", this.userParamsData);
-      console.log("User params ", this.userParams)
+      console.log("User params ", this.userParamValues)
     },
     error => {
       this.errorToastAndAlertService.showErrorAlert("Oups")
@@ -85,7 +86,7 @@ export class ParamsPage implements OnInit {
       component: CalculatorPage,
       componentProps: {
         param: param,
-        userParams: this.userParams
+        userParams: this.userParamValues
       }
     });
     await modal.present();
@@ -97,10 +98,37 @@ export class ParamsPage implements OnInit {
 
       if(modalData != null){
         // Merge current and new user params
-        this.userParams = {
-          ...this.userParams,
+        this.userParamValues= {
+          ...this.userParamValues,
           ...modalData.data
         }
+
+        this.userParamTitles = Object.keys(this.userParamValues);
+
+        console.log("User param titles ", this.userParamTitles);
+
+        this.userParamsData = {
+          Params: [],
+          Values: []
+        }
+
+        for(let i = 0; i < this.userParamTitles.length; i++){
+          let paramTitle = this.userParamTitles[i];
+          let paramIndex = this.paramsService.allParams.filter((param) => param.Title == paramTitle)[0].Index;
+          let paramValue = this.userParamValues[paramTitle];
+
+          this.userParamsData.Params.push(paramIndex);
+          this.userParamsData.Values.push(paramValue);
+        }
+
+        console.log("***")
+        console.log(this.userParamsData);
+
+        console.log("Send ", this.userParamsData)
+        this.paramsService.updateUserParams(this.userParamsData).subscribe(async (data) => {
+          console.log(data);
+        })
+
       }
 
     });

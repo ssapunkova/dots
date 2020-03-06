@@ -34,7 +34,7 @@
   
               <ion-radio-group 
                 style="display: flex;"
-                [(ngModel)]="userParams.gender">
+                [(ngModel)]="userParamValues.gender">
                 <ion-item lines="none" >
                   <ion-radio value="M"></ion-radio>
                   <ion-label>
@@ -57,7 +57,7 @@
               <ion-input 
                 style="text-align: right;"
                 type="number" 
-                [(ngModel)]="userParams.age">
+                [(ngModel)]="userParamValues.age">
               </ion-input>
             </ion-item>
   
@@ -70,33 +70,41 @@
 
     </ion-row>
 
-    <ion-row>
+    <ion-row *ngFor="let category of paramsService.categories">
 
-      <ion-col 
-        *ngFor="let category of paramsService.categories">
+      <h1>
+        {{ category.Title | translate }}
+      </h1>
 
-        <h1>
-          {{ category.Title | translate }}
-        </h1>
+      <ion-col
+        size-lg="3" size-md="3" size-sm="6" size-xs="12"
+        *ngFor="let param of paramsService[category.Id]; let i = index">
 
-        <ion-chip 
-          *ngFor="let param of paramsService[category.Id]; let i = index"
-          (click)="openModal(param)"
-          class="param-{{i+1}}">
+        <ion-card (click)="openModal(param)">
 
-          <ion-avatar>
-            <img src="../assets/icons/{{param.Title}}.jpg">
-          </ion-avatar>
+          <ion-card-header 
+            class="param-header param-{{i+1}}">
+            
 
-          <ion-label>
-            {{ param.Title }}
-          </ion-label>
+            <ion-avatar>
+              <img src="../assets/icons/{{param.Title}}.jpg">
+            </ion-avatar>
+  
+            <ion-label>
+              {{ param.Title }}
+            </ion-label>
 
-          <ion-label>
-            {{ userParams[param.Title] }}
-          </ion-label>
+          </ion-card-header>
 
-        </ion-chip>
+          <ion-card-content>
+
+            <ion-label>
+              {{ userParamValues[param.Title] }}
+            </ion-label>
+
+          </ion-card-content>
+
+        </ion-card>
 
       </ion-col>
 

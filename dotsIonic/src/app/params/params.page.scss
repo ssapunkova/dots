@@ -1,3 +1,14 @@
 .param-label{
     width: 50%;
 }
+
+.param-header{
+    display: flex;
+    align-items: center;
+
+    ion-avatar{
+        height: 1.5rem !important;
+        width: 1.5rem !important;
+        margin-right: 1rem;
+    }
+}

@@ -24,3 +24,22 @@ app.get("/getUserParams", async (req, res) => {
 
   res.send(userParams);
 })
+
+app.post("/updateUserParams", async (req, res) => {
+
+  let params = req.body.data;
+  console.log("Params")
+  console.log(params);
+
+  let userParams = await UserParams.findOneAndUpdate(
+    { UserId: ObjectId("5d98ade96dfda51dc84991d9")},
+    { 
+      Params: params.Params,
+      Values: params.Values
+    },
+    { upsert: true }
+  );
+
+
+  res.send();
+})

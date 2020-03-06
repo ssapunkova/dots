@@ -146,4 +146,12 @@ export class ParamsService {
     return this.http.get(this.connectToServerService.serverUrl + '/getUserParams')
   }
 
+  public updateUserParams(params){
+    console.log("Sendnn", params)
+    return this.http.post(
+      this.connectToServerService.serverUrl + '/updateUserParams',
+      {data: params}
+    );
+  }
+
 }
