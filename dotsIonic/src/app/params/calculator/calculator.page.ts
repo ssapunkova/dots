@@ -191,7 +191,6 @@ export class CalculatorPage implements OnInit {
     },
     {
       required: [
-        this.paramsService.allParams[0],      // 0 - age
         this.paramsService.allParams[2],      // 2 - weight
         this.paramsService.allParams[3],      // 3 - height
         this.paramsService.allParams[8]       // 8 - activityFactorKcal
