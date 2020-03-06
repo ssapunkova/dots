@@ -64,12 +64,29 @@ export class CalculatorPage implements OnInit {
   async finishCalculations(){
     console.log("User params: ", this.userParams);
     console.log("Saving results");
-    await this.modalController.dismiss(this.userParams);
+    
+    let that = this;
 
     const alert = await this.alertController.create({
       message: this.translate.instant("ResultFromCalculations") + 
         this.translate.instant(this.param.Title) + ": " + 
         " <b>" + this.userParams[this.param.Title] + "</b>",
+      buttons: [
+        {  
+          text: this.translate.instant("Cancel"),
+          cssClass: 'secondary',
+          handler: async (data) => {
+            await that.modalController.dismiss();
+          }
+        }, 
+        {
+          text: this.translate.instant("Save results"),
+          cssClass: 'primary',
+          handler: async (data) => {
+            await that.modalController.dismiss(that.userParams);
+          }
+        }
+      ]
     });
     await alert.present();
   }

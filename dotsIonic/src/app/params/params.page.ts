@@ -77,12 +77,15 @@ export class ParamsPage implements OnInit {
 
     // Get modal data and process it if it's not null
     await modal.onWillDismiss().then((modalData: OverlayEventDetail) => {
-      // modalData = modalData.data;
-
+      
       console.log(modalData);
 
       if(modalData != null){
-        this.userParams = modalData.data;
+        // Merge current and new user params
+        this.userParams = {
+          ...this.userParams,
+          ...modalData.data
+        }
       }
     });
   }
