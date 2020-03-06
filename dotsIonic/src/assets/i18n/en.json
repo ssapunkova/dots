@@ -80,5 +80,6 @@
 	"MyParams": "My parameters",
 	"MyCalculations": "My calculations",
 	"NoParams": "You haven't entered any params yet",
-	"NoCalculations": "Choose a param you want to calculate"
+	"NoCalculations": "Choose a param you want to calculate",
+	"ResultFromCalculations": "Recommended "
 }

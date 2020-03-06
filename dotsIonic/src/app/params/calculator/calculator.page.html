@@ -26,6 +26,8 @@
         </ion-col>
       </ion-item>
 
+      {{ param | json }}
+
       <ion-row 
       *ngFor="let field of formulas[calculators[param.Title]].required; let i = index">
         <ion-col>

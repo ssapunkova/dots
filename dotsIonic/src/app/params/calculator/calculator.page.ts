@@ -1,9 +1,10 @@
 import { Component, OnInit, Injectable } from '@angular/core';
-import { ModalController, NavParams, AlertController, ActionSheetController } from '@ionic/angular';
+import { ModalController, NavParams, AlertController, ActionSheetController, ToastController } from '@ionic/angular';
 
 
 import { ParamsService } from '../../services/params.service';
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'modal-page',
@@ -31,8 +32,8 @@ export class CalculatorPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
+    private translate: TranslateService,
     private alertController: AlertController,
-    private actionSheetController: ActionSheetController,
     private errorToastAndAlert: ErrorToastAndAlertService,
     private paramsService: ParamsService
   ) { }
@@ -53,76 +54,24 @@ export class CalculatorPage implements OnInit {
   
   public calculators = {
     "blocks": 0,
-    "bodybodyFatPercentage": 0,
+    "bodyFatPercentage": 0,
     "daylyProteinIntake": 0,
     "kcal": 1,
     "sugar": 2
   }
 
 
-  // public params = [
-  //   {
-  //     Title: "age",
-  //     Unit: "y.o.",                                        // 0 - age
-  //     Type: "number"
-  //   },
-  //   {
-  //     Title: "weight",
-  //     Unit: "kg",                                          // 1 - weight
-  //     Type: "number"
-  //   },
-  //   {
-  //     Title: "height",
-  //     Unit: "cm",                                          // 2 - height
-  //     Type: "number"
-  //   },
-  //   {
-  //     Title: "waist",
-  //     Unit: "cm",                                          // 3 - waist
-  //     Type: "number"
-  //   },
-  //   {
-  //     Title: "wrist",
-  //     Unit: "cm",                                          // 4 - waist
-  //     Type: "number"
-  //   },
-  //   {
-  //     Title: "hips",
-  //     Unit: "cm",                                          // 5 - hips
-  //     Type: "number"
-  //   },
-  //   {
-  //     Title: "activityFactorZone",
-  //     Options: [
-  //       { "Title": "seditary", "Value": 0.5 },
-  //       { "Title": "light", "Value": 0.6 },    
-  //       { "Title": "workout3TimesAWeek", "Value": 0.7 },   // 6 - activity factor for Zone calculations
-  //       { "Title": "lightWorkoutEveryDay", "Value": 0.8 },
-  //       { "Title": "heavyWorkoutEveryDay", "Value": 0.9 },
-  //       { "Title": "professional", "Value": 1 }
-  //     ],
-  //     Type: "select"
-  //   },
-  //   {
-  //     Title: "activityFactorKcal",
-  //     Options: [
-  //       { "Title": "low", "Value": 1.2 },
-  //       { "Title": "average", "Value": 1.3 },              // 7 - activity factor for kcal calculations
-  //       { "Title": "heavy", "Value": 1.4 },   
-  //     ],
-  //     Type: "select"
-  //   },
-  //   {
-  //     Title: "kcal",
-  //     Unit: "kcal",                                        // 8 - kcal intake
-  //     Type: "number"
-  //   },
-  // ]
-
   async finishCalculations(){
     console.log("User params: ", this.userParams);
     console.log("Saving results");
     await this.modalController.dismiss(this.userParams);
+
+    const alert = await this.alertController.create({
+      message: this.translate.instant("ResultFromCalculations") + 
+        this.translate.instant(this.param.Title) + ": " + 
+        " <b>" + this.userParams[this.param.Title] + "</b>",
+    });
+    await alert.present();
   }
 
 
@@ -149,7 +98,7 @@ export class CalculatorPage implements OnInit {
           physicalActivity: this.userParams.activityFactorZone
         };
 
-        console.log(values);
+        console.log("Values: ", values);
 
         let constants = { A: 0, B: 0, C: 0 };
         
@@ -172,8 +121,8 @@ export class CalculatorPage implements OnInit {
             let ratio = values.waist - values.wrist;
             let roundedWeight = Math.ceil(values.weight / 5) * 5;
             let row = that.bodyMassConstants.filter((record) => record.Weight == roundedWeight)[0];
-            console.log(roundedWeight);
-            console.log(row);
+            
+            console.log("Row in constants: ", row);
             if(row != null){
               constants.A = row.Values[0][ratio];
               calculateFatAndBodyMass();
@@ -206,12 +155,11 @@ export class CalculatorPage implements OnInit {
           if(values.gender == "F" && that.userParams.blocks <= 11) that.userParams.blocks = 11;
           else if(values.gender == "M" && that.userParams.blocks <= 14) that.userParams.blocks = 14;
  
-          console.log(that.userParams, that.userParams);
+          console.log("User params: ", that.userParams);
         }
 
         if(this.bodyMassConstants.length == 0){
           this.paramsService.getConstants(values.gender).subscribe((data: any) => {
-            console.log(data);
             this.bodyMassConstants = data;
             setConstants();
           });
