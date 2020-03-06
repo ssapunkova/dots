@@ -76,6 +76,9 @@
 	"DeleteRecord": "Delete record",
 	"DeletingRecordPt1": "The record for <b>",
 	"DeleteRecordPt2": "</b> will be permanently deleted.",
+	"GeneralInfo": "General",
+	"MyParams": "My parameters",
+	"MyCalculations": "My calculations",
 	"NoParams": "You haven't entered any params yet",
 	"NoCalculations": "Choose a param you want to calculate"
 }

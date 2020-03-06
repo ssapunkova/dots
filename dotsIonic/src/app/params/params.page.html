@@ -16,7 +16,59 @@
     <ion-row>
 
       <ion-col 
-        sizeLg="4" sizeMd="3" sizeSm="12">
+        sizeMd="6" sizeSm="12">
+
+        <ion-card>
+
+          <ion-card-header color="secondary">
+            {{ 'GeneralInfo' | translate }}
+          </ion-card-header>
+  
+          <ion-card-content style="padding: 0.5rem">
+  
+            <ion-item>
+              
+              <ion-label class="param-label">
+                {{ 'Gender' | translate }}   
+              </ion-label>
+  
+              <ion-radio-group 
+                style="display: flex;"
+                [(ngModel)]="userParams.gender">
+                <ion-item lines="none" >
+                  <ion-radio value="0"></ion-radio>
+                  <ion-label>
+                    {{ 'Male' | translate }}
+                  </ion-label>
+                </ion-item>
+                <ion-item lines="none" >
+                  <ion-radio value="1"></ion-radio>
+                  <ion-label>
+                    {{ 'Female' | translate }}
+                  </ion-label>
+                </ion-item>
+              </ion-radio-group>
+  
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                {{ 'Age' | translate }}
+              </ion-label>
+              <ion-input 
+                style="text-align: right;"
+                type="number" 
+                [(ngModel)]="userParams.age">
+              </ion-input>
+            </ion-item>
+  
+          </ion-card-content>
+  
+        </ion-card>
+
+      </ion-col>
+
+      <ion-col 
+        sizeMd="6" sizeSm="12">
 
         <ion-card>
 
@@ -46,8 +98,11 @@
 
       </ion-col>
 
-      <ion-col 
-        sizeLg="8" sizeMd="9" sizeSm="12">
+    </ion-row>
+
+    <ion-row>
+
+      <ion-col>
 
         <ion-card>
 
@@ -81,19 +136,29 @@
 
     <ion-row>
 
-      <ion-chip 
-        *ngFor="let param of paramsService.allParams; let i = index"
-        class="param-{{i+1}}">
+      <ion-col 
+        *ngFor="let category of paramsService.categories">
 
-        <ion-avatar>
-          <img src="../assets/icons/{{param.Title}}.jpg">
-        </ion-avatar>
+        <h1>
+          {{ category.Title | translate }}
+        </h1>
 
-        <ion-label>
-          {{ param.Title }}
-        </ion-label>
+        <ion-chip 
+          *ngFor="let param of paramsService[category.Id]; let i = index"
+          (click)="openModal(param)"
+          class="param-{{i+1}}">
 
-      </ion-chip>
+          <ion-avatar>
+            <img src="../assets/icons/{{param.Title}}.jpg">
+          </ion-avatar>
+
+          <ion-label>
+            {{ param.Title }}
+          </ion-label>
+
+        </ion-chip>
+
+      </ion-col>
 
     </ion-row>
 

@@ -52,6 +52,8 @@ export class ParamsPage implements OnInit {
     {
       this.userParams = data;
 
+      if(this.userParams == null) this.userParams = {};
+
       console.log("User params ", this.userParams)
     },
     error => {

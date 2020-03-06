@@ -32,7 +32,7 @@
           
 
             <div *ngIf="field.Type == 'number'" class="value-input-div">
-              <ion-label style="max-width: 50%"> 
+              <ion-label class="param-label"> 
                 {{ field.Title }} 
               </ion-label>
               <ion-input 
@@ -54,7 +54,7 @@
                     [(ngModel)]="userParams[field.Title]"
                     [value]="option.Title"></ion-radio>
                   
-                  <ion-label>
+                  <ion-label class="param-label">
                     {{ option.Title}}
                   </ion-label>
                 </ion-item>
@@ -62,6 +62,11 @@
             </div>
 
             <div *ngIf="field.Type == 'select'" class="value-input-div">
+
+              <ion-label class="param-label">
+                {{ field.Title}}
+              </ion-label>
+
               <ion-select [(ngModel)]="userParams[field.Title]"
                 [placeholder]="field.Title">
                 <ion-select-option *ngFor="let option of field.Options; let j = index"
@@ -69,6 +74,7 @@
                   {{ option.Title }}
                 </ion-select-option>
               </ion-select>
+
             </div>
 
         </ion-col>

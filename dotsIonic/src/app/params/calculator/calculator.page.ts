@@ -40,7 +40,7 @@ export class CalculatorPage implements OnInit {
   ngOnInit() {
     this.param = JSON.parse(JSON.stringify(this.navParams.data)).param;
     this.userParams = JSON.parse(JSON.stringify(this.navParams.data)).userParams;
-    console.log(this.param);
+    console.log(this.param, this.userParams);
   }
 
   async triggerCalculation(){
@@ -60,64 +60,64 @@ export class CalculatorPage implements OnInit {
   }
 
 
-  public params = [
-    {
-      Title: "age",
-      Unit: "y.o.",                                        // 0 - age
-      Type: "number"
-    },
-    {
-      Title: "weight",
-      Unit: "kg",                                          // 1 - weight
-      Type: "number"
-    },
-    {
-      Title: "height",
-      Unit: "cm",                                          // 2 - height
-      Type: "number"
-    },
-    {
-      Title: "waist",
-      Unit: "cm",                                          // 3 - waist
-      Type: "number"
-    },
-    {
-      Title: "wrist",
-      Unit: "cm",                                          // 4 - waist
-      Type: "number"
-    },
-    {
-      Title: "hips",
-      Unit: "cm",                                          // 5 - hips
-      Type: "number"
-    },
-    {
-      Title: "activityFactorZone",
-      Options: [
-        { "Title": "seditary", "Value": 0.5 },
-        { "Title": "light", "Value": 0.6 },    
-        { "Title": "workout3TimesAWeek", "Value": 0.7 },   // 6 - activity factor for Zone calculations
-        { "Title": "lightWorkoutEveryDay", "Value": 0.8 },
-        { "Title": "heavyWorkoutEveryDay", "Value": 0.9 },
-        { "Title": "professional", "Value": 1 }
-      ],
-      Type: "select"
-    },
-    {
-      Title: "activityFactorKcal",
-      Options: [
-        { "Title": "low", "Value": 1.2 },
-        { "Title": "average", "Value": 1.3 },              // 7 - activity factor for kcal calculations
-        { "Title": "heavy", "Value": 1.4 },   
-      ],
-      Type: "select"
-    },
-    {
-      Title: "kcal",
-      Unit: "kcal",                                        // 8 - kcal intake
-      Type: "number"
-    },
-  ]
+  // public params = [
+  //   {
+  //     Title: "age",
+  //     Unit: "y.o.",                                        // 0 - age
+  //     Type: "number"
+  //   },
+  //   {
+  //     Title: "weight",
+  //     Unit: "kg",                                          // 1 - weight
+  //     Type: "number"
+  //   },
+  //   {
+  //     Title: "height",
+  //     Unit: "cm",                                          // 2 - height
+  //     Type: "number"
+  //   },
+  //   {
+  //     Title: "waist",
+  //     Unit: "cm",                                          // 3 - waist
+  //     Type: "number"
+  //   },
+  //   {
+  //     Title: "wrist",
+  //     Unit: "cm",                                          // 4 - waist
+  //     Type: "number"
+  //   },
+  //   {
+  //     Title: "hips",
+  //     Unit: "cm",                                          // 5 - hips
+  //     Type: "number"
+  //   },
+  //   {
+  //     Title: "activityFactorZone",
+  //     Options: [
+  //       { "Title": "seditary", "Value": 0.5 },
+  //       { "Title": "light", "Value": 0.6 },    
+  //       { "Title": "workout3TimesAWeek", "Value": 0.7 },   // 6 - activity factor for Zone calculations
+  //       { "Title": "lightWorkoutEveryDay", "Value": 0.8 },
+  //       { "Title": "heavyWorkoutEveryDay", "Value": 0.9 },
+  //       { "Title": "professional", "Value": 1 }
+  //     ],
+  //     Type: "select"
+  //   },
+  //   {
+  //     Title: "activityFactorKcal",
+  //     Options: [
+  //       { "Title": "low", "Value": 1.2 },
+  //       { "Title": "average", "Value": 1.3 },              // 7 - activity factor for kcal calculations
+  //       { "Title": "heavy", "Value": 1.4 },   
+  //     ],
+  //     Type: "select"
+  //   },
+  //   {
+  //     Title: "kcal",
+  //     Unit: "kcal",                                        // 8 - kcal intake
+  //     Type: "number"
+  //   },
+  // ]
 
   async finishCalculations(){
     console.log("User params: ", this.userParams);
@@ -129,12 +129,12 @@ export class CalculatorPage implements OnInit {
   public formulas = [
     {
       required: [
-        this.params[1],      // 1 - weight
-        this.params[2],      // 2 - height
-        this.params[3],      // 3 - waist
-        this.params[4],      // 4 - wrist
-        this.params[5],      // 5 - hips
-        this.params[6]       // 6 - activity
+        this.paramsService.allParams[2],      // 2 - weight
+        this.paramsService.allParams[3],      // 3 - height
+        this.paramsService.allParams[4],      // 4 - waist
+        this.paramsService.allParams[5],      // 5 - wrist
+        this.paramsService.allParams[6],      // 6 - hips
+        this.paramsService.allParams[7]       // 7 - activity (zone)
       ],
       formula: async () => {
 
@@ -174,11 +174,14 @@ export class CalculatorPage implements OnInit {
             let row = that.bodyMassConstants.filter((record) => record.Weight == roundedWeight)[0];
             console.log(roundedWeight);
             console.log(row);
-            constants.A = row.Values[0][ratio];
-            console.log(ratio);
-            if(constants.A != null){
+            if(row != null){
+              constants.A = row.Values[0][ratio];
               calculateFatAndBodyMass();
+            } 
+            else{
+              console.log("not standart")
             }
+            console.log(ratio);
           }
           console.log(constants);
 
@@ -223,10 +226,10 @@ export class CalculatorPage implements OnInit {
     },
     {
       required: [
-        this.params[0],      // 0 - age
-        this.params[1],      // 1 - weight
-        this.params[2],      // 2 - height
-        this.params[7]       // 7 - activityFactorKcal
+        this.paramsService.allParams[0],      // 0 - age
+        this.paramsService.allParams[2],      // 2 - weight
+        this.paramsService.allParams[3],      // 3 - height
+        this.paramsService.allParams[8]       // 8 - activityFactorKcal
       ],
       formula: async () => {
 
@@ -256,7 +259,7 @@ export class CalculatorPage implements OnInit {
     },
     {
       required: [
-        this.params[8],      // 8 - kcal
+        this.paramsService.allParams[9],      // 9 - kcal
       ],
       formula: async () => {
 
