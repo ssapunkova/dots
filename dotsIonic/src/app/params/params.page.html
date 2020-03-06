@@ -119,10 +119,18 @@
 
             <ng-template #params>
 
-              <ion-item *ngFor="let paramIndex of userParams.Params; let i = index">
+              <!-- <ion-item *ngFor="let paramIndex of userParamsData.Params; let i = index">
                 {{ paramsService.allParams[paramIndex].Title }}: 
                 {{ userParams.Values[i] }}
-              </ion-item>
+              </ion-item> -->
+
+              
+              <div *ngFor="let param of objectKeys(userParams)l let i = index">
+                <ion-item *ngIf="i > 1">
+                  {{ param }}:
+                  {{ userParams[param] }}
+                </ion-item>
+              </div>
 
             </ng-template>            
             

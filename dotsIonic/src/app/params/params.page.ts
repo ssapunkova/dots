@@ -16,6 +16,7 @@ import { CalculatorPage } from './calculator/calculator.page';
 })
 export class ParamsPage implements OnInit {
 
+  public objectKeys = Object.keys
 
   // public userParams = {
   //   gender: "F",
@@ -35,6 +36,10 @@ export class ParamsPage implements OnInit {
   // };
 
   public userParams = {};
+  public userParamsData = {
+    Params: [],
+    Values: []
+  };
 
   
   constructor(
@@ -50,10 +55,20 @@ export class ParamsPage implements OnInit {
     // Get user data
     this.paramsService.getUserParams().subscribe( async (data: [any])=>
     {
-      this.userParams = data;
+      this.userParamsData = data;
 
-      if(this.userParams == null) this.userParams = {};
+      if(this.userParamsData == null) this.userParams = {};
+      else{
+        for(let i = 0; i < this.userParamsData.Params.length; i++){
+          let paramIndex = this.userParamsData.Params[i];
+          let paramTitle = this.paramsService.allParams[paramIndex].Title;
+          let paramValue = this.userParamsData.Values[i];
 
+          this.userParams[paramTitle] = paramValue;
+        }
+      }
+
+      console.log("User params data ", this.userParamsData);
       console.log("User params ", this.userParams)
     },
     error => {
@@ -87,6 +102,7 @@ export class ParamsPage implements OnInit {
           ...modalData.data
         }
       }
+
     });
   }
 
