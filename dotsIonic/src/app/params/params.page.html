@@ -28,6 +28,10 @@
   
           <ion-card-content style="padding: 0.5rem">
   
+            <ion-item color="warning" *ngIf="!generalInfoAvailable">
+              {{ "EnterGeneralInfo" | translate }}
+            </ion-item>
+
             <ion-item>
               
               <ion-label class="param-label">
@@ -67,7 +71,7 @@
 
             <ion-button 
               *ngIf="generalInfoChanged"
-              (click)="SaveChanges"
+              (click)="updateUserParams()"
               expand="block">
               {{ 'SaveChanges' | translate }}
             </ion-button>

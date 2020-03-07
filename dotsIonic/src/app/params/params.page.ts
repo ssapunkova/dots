@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
 
 // Services
@@ -8,6 +8,7 @@ import { LoadingService } from '../services/loading.service';
 import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 
 import { CalculatorPage } from './calculator/calculator.page';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-params',
@@ -16,19 +17,22 @@ import { CalculatorPage } from './calculator/calculator.page';
 })
 export class ParamsPage implements OnInit {
 
-  public generalInfoChanged = false;                          // If gender/age info is changed
-  public userParamsChanged = false;                           // If other params are changed
+  public generalInfoAvailable = false;            // Has user entered general info needed for all calculations
+  public generalInfoChanged = false;              // If gender/age info is changed
+  public userParamsChanged = false;               // If other params are changed
  
-  public userParamTitles = [];                                // Array of user's param titles 
-  public userParamValues = {};                                // Json of user's { param: value }
-  public userParamsData;                                      // Raw data from db:
-                                                              // Params: [array of param indexes]
-                                                              // Values: [array of values]
+  public userParamTitles = [];                    // Array of user's param titles 
+  public userParamValues = {};                    // Json of user's { param: value }
+  public userParamsData;                          // Raw data from db:
+                                                  // Params: [array of param indexes]
+                                                  // Values: [array of values]
   
   constructor(
     public paramsService: ParamsService,
     private modalController: ModalController,
     private loadingService: LoadingService,
+    private translate: TranslateService,
+    private alertController: AlertController,
     private errorToastAndAlertService: ErrorToastAndAlertService
   ) { }
 
@@ -41,7 +45,13 @@ export class ParamsPage implements OnInit {
       this.userParamsData = data;
 
       // If there is user param data in db, process it
-      if(this.userParamsData == null) this.userParamValues= {};
+      if(this.userParamsData == null) {
+        this.userParamsData = {
+          Params: [],
+          Values: []
+        }
+        this.userParamValues= {};
+      }
       else{
         for(let i = 0; i < this.userParamsData.Params.length; i++){
           let paramIndex = this.userParamsData.Params[i];
@@ -50,6 +60,10 @@ export class ParamsPage implements OnInit {
 
           this.userParamTitles.push(paramTitle);
           this.userParamValues[paramTitle] = paramValue;
+        }
+
+        if(this.userParamsData.Values[0] != null && this.userParamsData.Values[1] != null){
+          this.generalInfoAvailable = true;
         }
       }
 
@@ -84,55 +98,95 @@ export class ParamsPage implements OnInit {
   // -- the param to be calculated
   // -- userParams (needed for calculations) 
   async openModal(param){
-    // Show calculator modal
-    const modal = await this.modalController.create({
-      component: CalculatorPage,
-      componentProps: {
-        param: param,
-        userParams: this.userParamValues
-      }
-    });
-    await modal.present();
 
-    // Get modal data and if it's not null, update params and values
-    await modal.onWillDismiss().then((modalData: OverlayEventDetail) => {
-      
-      console.log("Modal data ", modalData);
+    if(this.generalInfoAvailable){
+      const modal = await this.modalController.create({
+        component: CalculatorPage,
+        componentProps: {
+          param: param,
+          userParams: this.userParamValues
+        }
+      });
+      await modal.present();
 
-      if(modalData != null){
-        // Merge current and new user params
-        this.userParamValues= {
-          ...this.userParamValues,
-          ...modalData.data
+      // Get modal data and if it's not null, update params and values
+      await modal.onWillDismiss().then((modalData: OverlayEventDetail) => {
+        
+        console.log("Modal data ", modalData);
+
+        if(modalData != null){
+          // Merge current and new user params
+          this.userParamValues= {
+            ...this.userParamValues,
+            ...modalData.data
+          }
+
+          this.userParamTitles = Object.keys(this.userParamValues);
+
+          this.userParamsChanged = true;
+          
+          // Update param data in db
+          this.updateUserParams();
         }
 
-        this.userParamTitles = Object.keys(this.userParamValues);
+      });
+    }
+    else{
 
-        this.userParamsChanged = true;
-        
-        // Update param data in db
-        this.updateUserParams();
-      }
+      this.errorToastAndAlertService.showErrorToast(this.translate.instant("FirstEnterGeneralParams"))
 
-    });
+    }
   }
 
   // Checks if generalInfo has changed and controlls SaveChanges button
   async changingGeneralInfo(){
-    if(
-      this.userParamValues["gender"] != this.userParamsData.Values[0] ||
-      this.userParamValues["age"] != this.userParamsData.Values[1]
-    ){
-      this.generalInfoChanged = true;
+    if(this.userParamsData.Values != []){
+      if(
+        this.userParamValues["gender"] == this.userParamsData.Values[0] &&
+        this.userParamValues["age"] == this.userParamsData.Values[1]
+      ){
+        this.generalInfoChanged = false;
+      }
+      else{
+        this.generalInfoChanged = true;
+      }
     }
     else{
-      this.generalInfoChanged = false;
+      if(
+        this.userParamValues["gender"] != null &&
+        this.userParamValues["age"] != null
+      ){
+        this.generalInfoChanged = false;
+      }
+      else{
+        this.generalInfoChanged = true;
+      }
     }
   }
 
   // Updates userParamData according to userParamsTitles and values
   // and sends update request to db
   async updateUserParams(){
+
+    console.log(this.userParamsData);
+
+    if(this.userParamsData.Params.length == 0){
+      this.userParamsData.Params = [0, 1];
+      this.userParamTitles = ["gender", "age"];
+      this.generalInfoAvailable = true;
+
+      let alert = await this.alertController.create({
+        header: this.translate.instant("NowYouCanMakeCalculations"),
+        message: this.translate.instant("ChooseFromParamsCalculator"),
+        buttons: [
+          {
+            text: "Ok"
+          }
+        ]
+      });
+
+      await alert.present();
+    }
 
     if(this.userParamsChanged){
 
@@ -158,10 +212,12 @@ export class ParamsPage implements OnInit {
       this.userParamsData.Values[1] = this.userParamValues["age"];
     }
 
+    console.log(this.userParamValues);
     console.log("***Updated userParamsData ", this.userParamsData);
 
-    this.paramsService.updateUserParams(this.userParamsData).subscribe(async (data) => {
-      console.log(data);
+    this.paramsService.updateUserParams(this.userParamsData).subscribe(async (data) => {},
+    error => {
+      this.errorToastAndAlertService.showErrorAlert("Oups")
     })
 
     this.userParamsChanged = false;
