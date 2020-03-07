@@ -67,10 +67,14 @@ export class CalculatorPage implements OnInit {
     
     let that = this;
 
+    console.log(this.param);
+    console.log(this.userParams["daylyProteinIntake"]);
+    console.log(this.userParams[this.param.Title]);
+
     const alert = await this.alertController.create({
-      message: this.translate.instant("ResultFromCalculations") + 
-        this.translate.instant(this.param.Title) + ": " + 
-        " <b>" + this.userParams[this.param.Title] + "</b>",
+      message: that.translate.instant("ResultFromCalculations") + 
+      that.translate.instant(that.param.Title) + ": " + 
+        " <b>" + that.userParams[that.param.Title] + "</b>",
       buttons: [
         {  
           text: this.translate.instant("Cancel"),
@@ -150,6 +154,8 @@ export class CalculatorPage implements OnInit {
             console.log(ratio);
           }
           console.log(constants);
+          
+          that.finishCalculations();
 
         }
 
@@ -164,7 +170,7 @@ export class CalculatorPage implements OnInit {
           let leanBodyMassInLb = that.convertToLb(values.weightInKg - (values.weightInKg * that.userParams.bodyFatPercentage / 100));
 
           // Dayly Protein Intake in grams
-          that.userParams.daylyProteinIntake = leanBodyMassInLb * values.physicalActivity;
+          that.userParams.daylyProteinIntake = Math.floor(leanBodyMassInLb * values.physicalActivity);
 
           // Convert gr to protein blocks
           that.userParams.blocks = Math.floor(that.userParams.daylyProteinIntake / 7);
@@ -185,8 +191,6 @@ export class CalculatorPage implements OnInit {
           setConstants();
         }
 
-        this.finishCalculations();
-
       }
     },
     {
@@ -205,6 +209,8 @@ export class CalculatorPage implements OnInit {
           physicalActivity: this.userParams.activityFactorKcal
         };
 
+        console.log(values);
+
         // Calculate base calorie intake
         if(values.gender == "M"){
           this.userParams.kcal = 66 + (13.7 * values.weight) + (5 * values.height) - (6.8 * values.age);
@@ -215,8 +221,12 @@ export class CalculatorPage implements OnInit {
         
         // Multiply by physical activity factor
         this.userParams.kcal *= values.physicalActivity;
+        
+        console.log(this.userParams.kcal);
 
         this.userParams.kcal = Math.floor(this.userParams.kcal);
+
+        console.log(this.userParams.kcal);
 
         this.finishCalculations();
       }

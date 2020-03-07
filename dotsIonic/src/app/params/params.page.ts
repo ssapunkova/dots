@@ -16,28 +16,14 @@ import { CalculatorPage } from './calculator/calculator.page';
 })
 export class ParamsPage implements OnInit {
 
-
-  // public userParamValues= {
-  //   gender: "F",
-  //   age: null,
-  //   height: null,
-  //   weight: null,
-  //   hips: null,
-  //   wrist: null,
-  //   waist: null,
-  //   kcal: null,
-  //   sugar: null,
-  //   activityFactorKcal: null,
-  //   activityFactorZone: null,
-  //   bodyFatPercentage: null,
-  //   daylyProteinIntake: null,
-  //   blocksPerDay: null
-  // };
-
-  public userParamTitles = [];
-  public userParamValues = {};
-  public userParamsData;
-
+  public generalInfoChanged = false;                          // If gender/age info is changed
+  public userParamsChanged = false;                           // If other params are changed
+ 
+  public userParamTitles = [];                                // Array of user's param titles 
+  public userParamValues = {};                                // Json of user's { param: value }
+  public userParamsData;                                      // Raw data from db:
+                                                              // Params: [array of param indexes]
+                                                              // Values: [array of values]
   
   constructor(
     public paramsService: ParamsService,
@@ -54,6 +40,7 @@ export class ParamsPage implements OnInit {
     {
       this.userParamsData = data;
 
+      // If there is user param data in db, process it
       if(this.userParamsData == null) this.userParamValues= {};
       else{
         for(let i = 0; i < this.userParamsData.Params.length; i++){
@@ -66,6 +53,8 @@ export class ParamsPage implements OnInit {
         }
       }
 
+      this.sortParamsByValue();
+
       console.log("User params data ", this.userParamsData);
       console.log("User params ", this.userParamValues)
     },
@@ -77,6 +66,23 @@ export class ParamsPage implements OnInit {
     this.loadingService.hidePageLoading();
   }
 
+  // Sort each param category, so that 
+  // -- params that the user has calculated appear first
+  // -- calculated params are ordered newer -> older
+  // -- -- this happens because they are added later in userParamTitles, so their index will be greater
+  async sortParamsByValue(){
+   
+    for(let i = 0; i < this.paramsService.categories.length; i++){
+      let category = this.paramsService.categories[i].Id;
+      this.paramsService[category].sort((a, b) => {
+        return this.userParamTitles.indexOf(b.Title) - this.userParamTitles.indexOf(a.Title)
+      })
+    }
+  }
+
+  // Open calculator modal and pass 
+  // -- the param to be calculated
+  // -- userParams (needed for calculations) 
   async openModal(param){
     // Show calculator modal
     const modal = await this.modalController.create({
@@ -88,10 +94,10 @@ export class ParamsPage implements OnInit {
     });
     await modal.present();
 
-    // Get modal data and process it if it's not null
+    // Get modal data and if it's not null, update params and values
     await modal.onWillDismiss().then((modalData: OverlayEventDetail) => {
       
-      console.log(modalData);
+      console.log("Modal data ", modalData);
 
       if(modalData != null){
         // Merge current and new user params
@@ -102,33 +108,64 @@ export class ParamsPage implements OnInit {
 
         this.userParamTitles = Object.keys(this.userParamValues);
 
-        console.log("User param titles ", this.userParamTitles);
-
-        this.userParamsData = {
-          Params: [],
-          Values: []
-        }
-
-        for(let i = 0; i < this.userParamTitles.length; i++){
-          let paramTitle = this.userParamTitles[i];
-          let paramIndex = this.paramsService.allParams.filter((param) => param.Title == paramTitle)[0].Index;
-          let paramValue = this.userParamValues[paramTitle];
-
-          this.userParamsData.Params.push(paramIndex);
-          this.userParamsData.Values.push(paramValue);
-        }
-
-        console.log("***")
-        console.log(this.userParamsData);
-
-        console.log("Send ", this.userParamsData)
-        this.paramsService.updateUserParams(this.userParamsData).subscribe(async (data) => {
-          console.log(data);
-        })
-
+        this.userParamsChanged = true;
+        
+        // Update param data in db
+        this.updateUserParams();
       }
 
     });
+  }
+
+  // Checks if generalInfo has changed and controlls SaveChanges button
+  async changingGeneralInfo(){
+    if(
+      this.userParamValues["gender"] != this.userParamsData.Values[0] ||
+      this.userParamValues["age"] != this.userParamsData.Values[1]
+    ){
+      this.generalInfoChanged = true;
+    }
+    else{
+      this.generalInfoChanged = false;
+    }
+  }
+
+  // Updates userParamData according to userParamsTitles and values
+  // and sends update request to db
+  async updateUserParams(){
+
+    if(this.userParamsChanged){
+
+      this.userParamsData = {
+        Params: [],
+        Values: []
+      }
+
+      for(let i = 0; i < this.userParamTitles.length; i++){
+        let paramTitle = this.userParamTitles[i];
+        let paramIndex = this.paramsService.allParams.filter((param) => param.Title == paramTitle)[0].Index;
+        let paramValue = this.userParamValues[paramTitle];
+
+        this.userParamsData.Params.push(paramIndex);
+        this.userParamsData.Values.push(paramValue);
+      }
+
+      this.sortParamsByValue();
+
+    }
+    else{
+      this.userParamsData.Values[0] = this.userParamValues["gender"];
+      this.userParamsData.Values[1] = this.userParamValues["age"];
+    }
+
+    console.log("***Updated userParamsData ", this.userParamsData);
+
+    this.paramsService.updateUserParams(this.userParamsData).subscribe(async (data) => {
+      console.log(data);
+    })
+
+    this.userParamsChanged = false;
+    this.generalInfoChanged = false;
   }
 
 }
