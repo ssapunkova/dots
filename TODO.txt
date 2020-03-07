@@ -49,9 +49,14 @@
 02.03
   TODO:
     * Images in calculator
-    Save calculations 
+    * Save calculations 
     * Translate
 
 03.03
   TODO:
-    Fix issue with saving calculations
+    * Fix issue with saving calculations
+
+06.03
+  TODO:
+    Styles in calculator
+    Show calculated needs in nutrition goals

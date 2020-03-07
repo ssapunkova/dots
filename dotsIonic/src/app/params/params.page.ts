@@ -36,10 +36,7 @@ export class ParamsPage implements OnInit {
 
   public userParamTitles = [];
   public userParamValues = {};
-  public userParamsData = {
-    Params: [],
-    Values: []
-  };
+  public userParamsData;
 
   
   constructor(
@@ -53,7 +50,7 @@ export class ParamsPage implements OnInit {
     this.loadingService.showPageLoading();
 
     // Get user data
-    this.paramsService.getUserParams().subscribe( async (data: [any])=>
+    this.paramsService.getUserParams().subscribe( async (data)=>
     {
       this.userParamsData = data;
 
