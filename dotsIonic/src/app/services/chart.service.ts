@@ -41,7 +41,6 @@ export class ChartService{
 
     this.chartData = [];
 
-    let formatted = [];
     let registeredParams = [];
 
     // if no user custom goals
