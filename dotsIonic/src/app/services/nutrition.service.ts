@@ -16,31 +16,8 @@ export class NutritionService {
     records: []
   };
 
-
   public Params = [];
-
-  // public Params = [
-  //   {
-  //     Index: 0,
-  //     Title: "kcal",
-  //     Goal: 2000
-  //   },
-  //   {
-  //     Index: 1,
-  //     Title: "Blocks",
-  //     Goal: 12
-  //   },
-  //   {
-  //     Index: 2,
-  //     Title: "Sugar",
-  //     Goal: 40
-  //   },
-  //   {
-  //     Index: 3,
-  //     Title: "Protein (gr)",
-  //     Goal: 85
-  //   }
-  // ]
+  public userCalculatedValues;
 
   public DefaultParams;
   public DefaultParamsIndex;
@@ -55,6 +32,11 @@ export class NutritionService {
     this.Params = this.paramsService.nutrition;
     this.DefaultParamsIndex = 0;
     this.DefaultParams = [this.Params[0]];
+
+    this.paramsService.getUserParams().subscribe(async (data) => {
+      console.log(data);
+      this.userCalculatedValues = data;
+    })
 
   }
 

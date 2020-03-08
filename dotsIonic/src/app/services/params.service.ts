@@ -81,6 +81,7 @@ export class ParamsService {
       Index: 9,
       Title: "kcal",
       Unit: "kcal",                                        // 9 - kcal intake
+      Goal: 2000,
       Type: "number"
     },
     {

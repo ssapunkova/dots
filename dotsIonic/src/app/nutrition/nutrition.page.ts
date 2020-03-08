@@ -12,6 +12,7 @@ import { NutritionService } from '../services/nutrition.service';
 
 import { NewNutritionRecordPage } from './newNutritionRecord/newNutritionRecord.page';
 import { EditNutritionParamsPage } from './editNutritionParams/editNutritionParams.page';
+import { ParamsService } from '../services/params.service';
 
 @Component({
   selector: 'app-nutrition',
@@ -34,6 +35,7 @@ export class NutritionPage implements OnInit {
     public actionSheetController: ActionSheetController,
     public modalController: ModalController,
     public nutritionService: NutritionService,
+    public paramsService: ParamsService,
     public dataTableService: DataTableService,
     public chartService: ChartService
   ) { };
@@ -54,17 +56,20 @@ export class NutritionPage implements OnInit {
         data.general.Params = this.nutritionService.DefaultParams;
       }
       else{
+        // Get each param info by index
         for(var i = 0; i < data.general.Params.length; i++){
-          data.general.Params[i] = this.nutritionService.Params[data.general.Params[i]];
+          let paramIndex = data.general.Params[i];
+          data.general.Params[i] = this.paramsService.allParams[paramIndex];
         }
       }
 
       // Get goals - combine custom and default goals
-
       for(var i = 0; i < data.general.Params.length; i++){
+        // If no custom goal - this col in db will be null
         if(data.general.Goals[i] == null){
-          console.log(data.general.Params)
-          data.general.Goals[i] = this.nutritionService.Params[data.general.Params[i].Index].Goal;
+          // Get default goal by param index
+          let paramIndex = data.general.Params[i].Index;
+          data.general.Goals[i] = this.paramsService.allParams[paramIndex].Goal;
         }
       }
 
@@ -98,6 +103,8 @@ export class NutritionPage implements OnInit {
     // Get modal data and process it if it's not null
     let modalData = await modal.onWillDismiss();
     modalData = modalData.data;
+
+    console.log(modalData);
 
     if(modalData != null){
 
