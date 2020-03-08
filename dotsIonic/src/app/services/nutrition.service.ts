@@ -34,8 +34,8 @@ export class NutritionService {
     this.DefaultParams = [this.Params[0]];
 
     this.paramsService.getUserParams().subscribe(async (data) => {
-      console.log(data);
       this.userCalculatedValues = data;
+      console.log("User calculated values ", this.userCalculatedValues);
     })
 
   }
