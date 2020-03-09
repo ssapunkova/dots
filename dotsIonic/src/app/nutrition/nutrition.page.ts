@@ -64,7 +64,7 @@ export class NutritionPage implements OnInit {
       }
 
       // Get user's calculated values for params
-      let userValues = this.nutritionService.userCalculatedValues;
+      let userParams = this.nutritionService.userCalculatedValues;
 
       // Get goals - combine custom and default goals
       for(var i = 0; i < data.general.Params.length; i++){
@@ -77,11 +77,10 @@ export class NutritionPage implements OnInit {
           // -- can use default goals
 
           // Check if there is a calculated value for this param
-          let indexInUserCalculatedValues = userValues.Params.indexOf(paramIndex);
+          let indexInUserCalculatedValues = userParams.Params.indexOf(paramIndex);
           if(indexInUserCalculatedValues > -1){
-            console.log("Has calculated value for ", data.general.Params[i].Title);
-            console.log("And it is ", userValues.Values[indexInUserCalculatedValues]);
-            data.general.Goals[i] = userValues.Values[indexInUserCalculatedValues];
+            console.log("Has calculated value for ", data.general.Params[i].Title, " and it is ", userParams.Values[indexInUserCalculatedValues]);
+            data.general.Goals[i] = userParams.Values[indexInUserCalculatedValues];
           }
           else{
             // If not, use default value from paramsService
