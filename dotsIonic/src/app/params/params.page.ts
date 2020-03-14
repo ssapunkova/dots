@@ -140,26 +140,28 @@ export class ParamsPage implements OnInit {
 
   // Checks if generalInfo has changed and controlls SaveChanges button
   async changingGeneralInfo(){
-    if(this.userParamsData.Values != []){
-      if(
-        this.userParamValues["gender"] == this.userParamsData.Values[0] &&
-        this.userParamValues["age"] == this.userParamsData.Values[1]
-      ){
-        this.generalInfoChanged = false;
+    if(this.userParamsData != null){
+      if(this.userParamsData.Values != []){
+        if(
+          this.userParamValues["gender"] == this.userParamsData.Values[0] &&
+          this.userParamValues["age"] == this.userParamsData.Values[1]
+        ){
+          this.generalInfoChanged = false;
+        }
+        else{
+          this.generalInfoChanged = true;
+        }
       }
       else{
-        this.generalInfoChanged = true;
-      }
-    }
-    else{
-      if(
-        this.userParamValues["gender"] != null &&
-        this.userParamValues["age"] != null
-      ){
-        this.generalInfoChanged = false;
-      }
-      else{
-        this.generalInfoChanged = true;
+        if(
+          this.userParamValues["gender"] != null &&
+          this.userParamValues["age"] != null
+        ){
+          this.generalInfoChanged = false;
+        }
+        else{
+          this.generalInfoChanged = true;
+        }
       }
     }
   }
