@@ -3,12 +3,12 @@
 const mongoose = require('mongoose');
 
 // Depends on const online
-const online = false;
-// const online = true;
+// const online = false;
+const online = true;
 
 const baseUrl = "mongodb://localhost:27017/dots";
 if(online == true){
-    baseUrl = "";
+    baseUrl = "mongodb+srv://admin:admEleKi_02.20@cluster0-wln1h.mongodb.net/test?retryWrites=true&w=majority";
 }
 
 const connectParams = { dbName: "dots", useNewUrlParser: true };

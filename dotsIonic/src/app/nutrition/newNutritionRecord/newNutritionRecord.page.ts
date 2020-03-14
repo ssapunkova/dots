@@ -27,7 +27,7 @@ export class NewNutritionRecordPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
-    private generalService: GeneralService,
+    public generalService: GeneralService,
     private errorToastAndAlertService: ErrorToastAndAlertService
   ) { }
 

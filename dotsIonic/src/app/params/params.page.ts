@@ -22,7 +22,7 @@ export class ParamsPage implements OnInit {
   public userParamsChanged = false;               // If other params are changed
  
   public userParamTitles = [];                    // Array of user's param titles 
-  public userParamValues = {};                    // Json of user's { param: value }
+  public userParamValues;                    // Json of user's { param: value }
   public userParamsData;                          // Raw data from db:
                                                   // Params: [array of param indexes]
                                                   // Values: [array of values]

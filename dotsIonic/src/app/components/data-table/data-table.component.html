@@ -24,7 +24,7 @@
                 placeholder="Select period"
                 multiple
                 [(ngModel)]="dataTableService.showingPeriod"
-                (ionChange)="dataTableService.setPeriod($event)">
+                (ionChange)="dataTableService.setPeriod($event, false)">
                 <ion-select-option
                   *ngFor="let month of dataTableService.months"
                   [value]="month">

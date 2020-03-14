@@ -53,7 +53,7 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private translate: TranslateService,
-    private loadingService: LoadingService,
+    public loadingService: LoadingService,
     private errorToastAndAlertService: ErrorToastAndAlertService,
     private dataTableService: DataTableService,
     private timeAndDateService: TimeAndDateService,

@@ -1,0 +1,81 @@
+{ 
+    "_id" : ObjectId("5e37031ad0a9cc34e995e6ef"), 
+    "Date" : "2020-02-02", 
+    "Params" : [
+        "5e36fbb75a5f7c1454ed1ca5", 
+        "5e36fbb75a5f7c1454ed1ca4", 
+        "5e36fbb75a5f7c1454ed1ca3", 
+        "5e36fbb75a5f7c1454ed1ca2", 
+        "5e36fbb75a5f7c1454ed1ca1", 
+        "5e36fbb75a5f7c1454ed1ca0", 
+        "5e36fbb75a5f7c1454ed1c9f", 
+        "5e36fbb75a5f7c1454ed1c9e"
+    ], 
+    "SheetId" : ObjectId("5e36f98d5a5f7c1454ed1c9d"), 
+    "Time" : NumberInt(914), 
+    "Values" : [
+        "150", 
+        "50", 
+        "100", 
+        "100", 
+        "100", 
+        "30", 
+        "30", 
+        "200"
+    ], 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5e386c176de05e5d968bb6b3"), 
+    "Date" : "2020-02-03", 
+    "Params" : [
+        "5e3865f3a046b51cd4797158", 
+        "5e3865f3a046b51cd4797157", 
+        "5e3865f3a046b51cd4797156", 
+        "5e3865f3a046b51cd4797155", 
+        "5e3865f3a046b51cd4797154", 
+        "5e3865f3a046b51cd4797153", 
+        "5e3865f3a046b51cd4797152", 
+        "5e3865f3a046b51cd4797151"
+    ], 
+    "SheetId" : ObjectId("5e386511a046b51cd4797150"), 
+    "Time" : NumberInt(1048), 
+    "Values" : [
+        "150", 
+        "50", 
+        "80", 
+        "20", 
+        "20", 
+        "150", 
+        "30", 
+        "200"
+    ], 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5e3af17d2661e6b32cb36735"), 
+    "Date" : "2020-02-05", 
+    "Params" : [
+        "5e36fbb75a5f7c1454ed1ca5", 
+        "5e36fbb75a5f7c1454ed1ca4", 
+        "5e36fbb75a5f7c1454ed1ca3", 
+        "5e36fbb75a5f7c1454ed1ca2", 
+        "5e36fbb75a5f7c1454ed1ca1", 
+        "5e36fbb75a5f7c1454ed1ca0", 
+        "5e36fbb75a5f7c1454ed1c9f", 
+        "5e36fbb75a5f7c1454ed1c9e"
+    ], 
+    "SheetId" : ObjectId("5e36f98d5a5f7c1454ed1c9d"), 
+    "Time" : NumberInt(932), 
+    "Values" : [
+        "150", 
+        "50", 
+        "100", 
+        "100", 
+        "100", 
+        "30", 
+        "30", 
+        "200"
+    ], 
+    "__v" : NumberInt(0)
+}

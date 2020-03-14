@@ -16,9 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class CalculatorPage implements OnInit {
 
   public userParams;
-  public param = {
-    Title: null
-  };  
+  public param;  
   
   // Converting measures
 

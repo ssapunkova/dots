@@ -1,0 +1,110 @@
+{ 
+    "_id" : ObjectId("5e36f98d5a5f7c1454ed1c9d"), 
+    "Title" : "1", 
+    "Params" : [
+        {
+            "_id" : ObjectId("5e36fbb75a5f7c1454ed1ca5"), 
+            "Title" : "Бедра задна част", 
+            "Goal" : "150", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e36fbb75a5f7c1454ed1ca4"), 
+            "Title" : "Крака встрани", 
+            "Goal" : "50", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e36fbb75a5f7c1454ed1ca3"), 
+            "Title" : "Напади реверанс", 
+            "Goal" : "100", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e36fbb75a5f7c1454ed1ca2"), 
+            "Title" : "Прасци", 
+            "Goal" : "100", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e36fbb75a5f7c1454ed1ca1"), 
+            "Title" : "Прасци плие", 
+            "Goal" : "100", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e36fbb75a5f7c1454ed1ca0"), 
+            "Title" : "Клекове", 
+            "Goal" : "30", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e36fbb75a5f7c1454ed1c9f"), 
+            "Title" : "Клекове плие", 
+            "Goal" : "30", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e36fbb75a5f7c1454ed1c9e"), 
+            "Title" : "Яг", 
+            "Goal" : "200", 
+            "Type" : "Number"
+        }
+    ], 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5e386511a046b51cd4797150"), 
+    "Title" : "2", 
+    "Params" : [
+        {
+            "_id" : ObjectId("5e3865f3a046b51cd4797158"), 
+            "Title" : "Бедра задна част", 
+            "Goal" : "150", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e3865f3a046b51cd4797157"), 
+            "Title" : "Гири под", 
+            "Goal" : "50", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e3865f3a046b51cd4797156"), 
+            "Title" : "Гири встрани", 
+            "Goal" : "40", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e3865f3a046b51cd4797155"), 
+            "Title" : "Лицеви ", 
+            "Goal" : "20", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e3865f3a046b51cd4797154"), 
+            "Title" : "Лицеви широки", 
+            "Goal" : "20", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e3865f3a046b51cd4797153"), 
+            "Title" : "Велосипед", 
+            "Goal" : "100", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e3865f3a046b51cd4797152"), 
+            "Title" : "Клекове плие", 
+            "Goal" : "30", 
+            "Type" : "Number"
+        }, 
+        {
+            "_id" : ObjectId("5e3865f3a046b51cd4797151"), 
+            "Title" : "Ягод", 
+            "Goal" : "200", 
+            "Type" : "Number"
+        }
+    ], 
+    "__v" : NumberInt(0)
+}

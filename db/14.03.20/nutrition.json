@@ -1,0 +1,13 @@
+{ 
+    "_id" : ObjectId("5e273ea51b9bb728745690ff"), 
+    "Params" : [
+        NumberInt(10), 
+        NumberInt(9)
+    ], 
+    "Goals" : [
+        NumberInt(21), 
+        NumberInt(1779)
+    ], 
+    "UserId" : ObjectId("5d98ade96dfda51dc84991d9"), 
+    "__v" : NumberInt(0)
+}

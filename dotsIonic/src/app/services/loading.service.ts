@@ -7,7 +7,7 @@ import { LoadingController } from '@ionic/angular';
 @Injectable()
 export class LoadingService{
 
-  private isPageLoading = true;                       // Controlls full-screen loader
+  public isPageLoading = true;                       // Controlls full-screen loader
   public processLoader = null;
 
   constructor(

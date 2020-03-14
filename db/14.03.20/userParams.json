@@ -1,0 +1,21 @@
+{ 
+    "_id" : ObjectId("5e63ce25b4983ab35e8ef2ce"), 
+    "UserId" : ObjectId("5d98ade96dfda51dc84991d9"), 
+    "Params" : [
+        NumberInt(0), 
+        NumberInt(1), 
+        NumberInt(2), 
+        NumberInt(3), 
+        NumberInt(8), 
+        NumberInt(9)
+    ], 
+    "Values" : [
+        "F", 
+        NumberInt(17), 
+        NumberInt(51), 
+        NumberInt(169), 
+        1.3, 
+        NumberInt(1779)
+    ], 
+    "__v" : NumberInt(0)
+}

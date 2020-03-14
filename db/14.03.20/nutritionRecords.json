@@ -1,0 +1,60 @@
+{ 
+    "_id" : ObjectId("5e666b06154a4e77edd68bd9"), 
+    "Date" : "2020-03-09", 
+    "UserId" : ObjectId("5d98ade96dfda51dc84991d9"), 
+    "Params" : [
+        NumberInt(10)
+    ], 
+    "Values" : [
+        NumberInt(21)
+    ], 
+    "__v" : NumberInt(1)
+}
+{ 
+    "_id" : ObjectId("5e666b12154a4e77edd68bde"), 
+    "Date" : "2020-03-06", 
+    "UserId" : ObjectId("5d98ade96dfda51dc84991d9"), 
+    "Params" : [
+        NumberInt(10)
+    ], 
+    "Values" : [
+        NumberInt(19)
+    ], 
+    "__v" : NumberInt(1)
+}
+{ 
+    "_id" : ObjectId("5e666b24154a4e77edd68be9"), 
+    "Date" : "2020-03-03", 
+    "UserId" : ObjectId("5d98ade96dfda51dc84991d9"), 
+    "Params" : [
+        NumberInt(10)
+    ], 
+    "Values" : [
+        NumberInt(20)
+    ], 
+    "__v" : NumberInt(2)
+}
+{ 
+    "_id" : ObjectId("5e666b30154a4e77edd68bee"), 
+    "Date" : "2020-03-11", 
+    "UserId" : ObjectId("5d98ade96dfda51dc84991d9"), 
+    "Params" : [
+        NumberInt(10)
+    ], 
+    "Values" : [
+        NumberInt(21)
+    ], 
+    "__v" : NumberInt(2)
+}
+{ 
+    "_id" : ObjectId("5e666b5b154a4e77edd68bfd"), 
+    "Date" : "2020-03-13", 
+    "UserId" : ObjectId("5d98ade96dfda51dc84991d9"), 
+    "Params" : [
+        NumberInt(10)
+    ], 
+    "Values" : [
+        NumberInt(18)
+    ], 
+    "__v" : NumberInt(2)
+}

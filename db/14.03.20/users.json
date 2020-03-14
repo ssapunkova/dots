@@ -1,0 +1,8 @@
+{ 
+    "_id" : ObjectId("5d98ade96dfda51dc84991d9"), 
+    "Username" : "Elena", 
+    "Email" : "elenakikiova@mail.ru", 
+    "Password" : "$2b$10$AZH6IbFe6xjOsDKMdSPktugVpeaVfXYMCLrjXA.QFWZP4xuSLetTO", 
+    "Status" : "user", 
+    "__v" : NumberInt(0)
+}

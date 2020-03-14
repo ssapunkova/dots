@@ -33,7 +33,7 @@ export class NewWorkoutRecordPage implements OnInit {
     private modalController: ModalController,
     private navParams: NavParams,
     private translate: TranslateService,
-    private generalService: GeneralService,
+    public generalService: GeneralService,
     private actionSheetController: ActionSheetController,
     private errorToastAndAlertService: ErrorToastAndAlertService
   ) { }
