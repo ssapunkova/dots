@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 // const online = false;
 const online = true;
 
-const baseUrl = "mongodb://localhost:27017/dots";
+let baseUrl = "mongodb://localhost:27017/dots";
 if(online == true){
     baseUrl = "mongodb+srv://admin:admEleKi_02.20@cluster0-wln1h.mongodb.net/test?retryWrites=true&w=majority";
 }

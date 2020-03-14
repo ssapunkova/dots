@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dotsIonic/www",
+    "public": "www/",
     "ignore": [
       "firebase.json",
       "**/.*",

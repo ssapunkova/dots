@@ -4,7 +4,8 @@ const app = module.exports = express();
 const cookieParser = require('cookie-parser');
 
 const port = process.env.PORT || 8080;
-const appUrl = 'http://localhost:8100';
+// const appUrl = 'http://localhost:8100';
+const appUrl = "https://dotsapp-58afb.firebaseapp.com";
 
 app.use(express.static('public'));
 app.use(express.json());
