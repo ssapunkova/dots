@@ -1,8 +1,16 @@
-// REQUIRE APP AND GENERAL FUNCTIONS
-const app = require('../index');
+// SET ROUTER AND GENERAL FUNCTIONS
+let express = require('express');
+let router = express.Router();
 const ObjectId = require('mongodb').ObjectID;
 
 const User = require('../schemas/userSchema');
+
+router.use(function timeLog(req, res, next) {
+    console.log('Time: ', Date.now());
+    next();
+  });
+  
+
 //
 // app.get("/register", function(req, res){
 //     res.render("register");
@@ -48,3 +56,6 @@ const User = require('../schemas/userSchema');
 //   });
 //
 // })
+
+
+module.exports = router;

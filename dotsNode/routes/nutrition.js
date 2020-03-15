@@ -1,5 +1,6 @@
-// REQUIRE APP AND GENERAL FUNCTIONS
-const app = require('../index');
+// SET ROUTER AND GENERAL FUNCTIONS
+let express = require('express');
+let router = express.Router();
 const ObjectId = require('mongodb').ObjectID;
 
 // Require checkUser for authentication check
@@ -9,8 +10,14 @@ const User = require('../schemas/userSchema');
 const Nutrition = require('../schemas/nutritionSchema');
 const NutritionRecord = require('../schemas/nutritionRecordSchema');
 
+router.use(function timeLog(req, res, next) {
+  console.log('Time: ', Date.now());
+  next();
+});
 
-app.get("/getNutritionData", async (req, res) => {
+
+
+router.get("/getNutritionData", async (req, res) => {
 
   let nutritionData = await Nutrition.findOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") });  // replace with userid later
   let nutritionRecords = await NutritionRecord.find({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }); // replace with userid later
@@ -25,7 +32,7 @@ app.get("/getNutritionData", async (req, res) => {
   res.send({ general: nutritionData, records: nutritionRecords});
 })
 
-app.post("/updateNutritionParams", async (req, res) => {
+router.post("/updateNutritionParams", async (req, res) => {
   let data = req.body.data;
   let params = data.params;
   let customGoals = data.customGoals;
@@ -63,7 +70,7 @@ app.post("/updateNutritionParams", async (req, res) => {
   res.send();
 })
 
-app.post("/addNutritionRecord", async (req, res) => {
+router.post("/addNutritionRecord", async (req, res) => {
   let record = req.body.data;
 
   console.log("adding record", record);
@@ -87,7 +94,7 @@ app.post("/addNutritionRecord", async (req, res) => {
 })
 
 
-app.post("/editNutritionRecord", async (req, res) => {
+router.post("/editNutritionRecord", async (req, res) => {
   let record = req.body.data;
 
   // delete existing record with the same date
@@ -111,10 +118,12 @@ app.post("/editNutritionRecord", async (req, res) => {
 })
 
 
-app.post("/deleteNutritionRecord", async (req, res) => {
+router.post("/deleteNutritionRecord", async (req, res) => {
   let recordId = req.body.recordId;
 
   let deleteRecord = await NutritionRecord.findOneAndDelete({_id: ObjectId(recordId)})
   if(deleteRecord != null && deleteRecord.err) throw deleteRecord.err;
   else res.send();
 })
+
+module.exports = router;

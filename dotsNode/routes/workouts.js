@@ -1,5 +1,6 @@
-// REQUIRE APP AND GENERAL FUNCTIONS
-const app = require('../index');
+// SET ROUTER AND GENERAL FUNCTIONS
+let express = require('express');
+let router = express.Router();
 const ObjectId = require('mongodb').ObjectID;
 
 // Require checkUser for authentication check
@@ -9,8 +10,14 @@ const User = require('../schemas/userSchema');
 const WorkoutSheet = require('../schemas/workoutSheetSchema');
 const WorkoutRecord = require('../schemas/workoutRecordSchema');
 
+router.use(function timeLog(req, res, next) {
+  console.log('Time: ', Date.now());
+  next();
+});
 
-app.get("/getSheetData/:sheetId", async (req, res) => {
+
+
+router.get("/getSheetData/:sheetId", async (req, res) => {
   let sheetId = req.params.sheetId;
   let query = {};
   if(sheetId != "all")  query = { _id: ObjectId(sheetId) };
@@ -20,7 +27,7 @@ app.get("/getSheetData/:sheetId", async (req, res) => {
   res.send(sheetData);
 })
 
-app.get("/getSheetExercises/:sheetId", async (req, res) => {
+router.get("/getSheetExercises/:sheetId", async (req, res) => {
   let sheetId = req.params.sheetId;
 
   let exercises = await WorkoutSheet.find({ _id: sheetId}).select("Title, Params").exec();
@@ -28,7 +35,7 @@ app.get("/getSheetExercises/:sheetId", async (req, res) => {
   res.send(exercises);
 })
 
-app.get("/getExerciseTimes/:sheetId", async (req, res) => {
+router.get("/getExerciseTimes/:sheetId", async (req, res) => {
   let sheetId = req.params.sheetId;
 
   let exerciseTimes = await WorkoutRecord.find(
@@ -41,7 +48,7 @@ app.get("/getExerciseTimes/:sheetId", async (req, res) => {
   res.send(exerciseTimes);
 })
 
-app.post("/createSheet", async (req, res) => {
+router.post("/createSheet", async (req, res) => {
   let data = req.body.data;
   let sheet = new WorkoutSheet(data);
 
@@ -50,7 +57,7 @@ app.post("/createSheet", async (req, res) => {
   else res.send(sheet);
 })
 
-app.post("/deleteSheet", async (req, res) => {
+router.post("/deleteSheet", async (req, res) => {
   let sheetId = req.body.sheetId;
 
   console.log(sheetId)
@@ -63,7 +70,7 @@ app.post("/deleteSheet", async (req, res) => {
 
 })
 
-app.post("/updateSheetConfiguration", async (req, res) => {
+router.post("/updateSheetConfiguration", async (req, res) => {
   let sheet = req.body.data;
   let deletedExerciseIds = sheet.DeletedExercisesId;
 
@@ -89,7 +96,7 @@ app.post("/updateSheetConfiguration", async (req, res) => {
   res.send();
 })
 
-app.post("/addWorkoutRecord", async (req, res) => {
+router.post("/addWorkoutRecord", async (req, res) => {
   let record = req.body.data;
 
   let upsertRecord = await WorkoutRecord.updateOne({ Date: record.Date }, {
@@ -113,7 +120,7 @@ app.post("/addWorkoutRecord", async (req, res) => {
 })
 
 
-app.post("/editWorkoutRecord", async (req, res) => {
+router.post("/editWorkoutRecord", async (req, res) => {
   let record = req.body.data;
 
   // delete existing record with the same date
@@ -137,7 +144,7 @@ app.post("/editWorkoutRecord", async (req, res) => {
 })
 
 
-app.post("/deleteWorkoutRecord", async (req, res) => {
+router.post("/deleteWorkoutRecord", async (req, res) => {
   let recordId = req.body.recordId;
 
   console.log(recordId)
@@ -146,3 +153,5 @@ app.post("/deleteWorkoutRecord", async (req, res) => {
   if(deleteRecord != null && deleteRecord.err) throw deleteRecord.err;
   else res.send();
 })
+
+module.exports = router;

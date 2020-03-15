@@ -1,6 +1,8 @@
-// REQUIRE APP AND GENERAL FUNCTIONS
-const app = require('../index');
+// SET ROUTER AND GENERAL FUNCTIONS
+let express = require('express');
+let router = express.Router();
 const ObjectId = require('mongodb').ObjectID;
+const cors = require('cors');
 
 // Require checkUser for authentication check
 const checkUser = include('routes/functions/checkUser');
@@ -9,8 +11,13 @@ const User = require('../schemas/userSchema');
 const BodyMassConstants = require('../schemas/bodyMassConstantsSchema');
 const UserParams = require('../schemas/userParamsSchema');
 
+router.use(function timeLog(req, res, next) {
+  console.log('Time: ', Date.now());
+  next();
+});
 
-app.get("/getBodyMassConstants/:gender", async (req, res) => {
+
+router.get("/getBodyMassConstants/:gender", async (req, res) => {
 
   let gender = req.params.gender;
   let constants = await BodyMassConstants.find({ Gender: gender});
@@ -18,14 +25,14 @@ app.get("/getBodyMassConstants/:gender", async (req, res) => {
   res.send(constants);
 })
 
-app.get("/getUserParams", async (req, res) => {
+router.get("/getUserParams", cors(), async (req, res) => {
 
   let userParams = await UserParams.findOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9")});
 
   res.send(userParams);
 })
 
-app.post("/updateUserParams", async (req, res) => {
+router.post("/updateUserParams", async (req, res) => {
 
   let params = req.body.data;
   console.log("Params")
@@ -43,3 +50,5 @@ app.post("/updateUserParams", async (req, res) => {
 
   res.send();
 })
+
+module.exports = router;

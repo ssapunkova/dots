@@ -1,5 +1,6 @@
-// REQUIRE APP AND GENERAL FUNCTIONS
-const app = require('../index');
+// SET ROUTER AND GENERAL FUNCTIONS
+let express = require('express');
+let router = express.Router();
 const ObjectId = require('mongodb').ObjectID;
 
 // Require bcrypt for hashing passwords
@@ -7,6 +8,24 @@ const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 const User = require('../schemas/userSchema');
+
+router.use(function timeLog(req, res, next) {
+    console.log('Time: ', Date.now());
+    next();
+  });
+  
+
+router.get('/', function(req, res) {
+    res.render("login")
+})
+
+router.get('/logout', function(req, res){
+    console.log("a");
+    res.clearCookie("DotsUserId");
+    res.clearCookie("DotsUsername");
+    res.redirect('/login');
+})
+
 //
 // app.get("/login", function(req, res){
 //   if(req.cookies.DotsUserId != null){
@@ -52,3 +71,5 @@ const User = require('../schemas/userSchema');
 //   });
 //
 // })
+
+module.exports = router;
