@@ -2,10 +2,6 @@
 let express = require('express');
 let router = express.Router();
 const ObjectId = require('mongodb').ObjectID;
-const cors = require('cors');
-
-// Require checkUser for authentication check
-const checkUser = include('routes/functions/checkUser');
 
 const User = require('../schemas/userSchema');
 const BodyMassConstants = require('../schemas/bodyMassConstantsSchema');
@@ -25,12 +21,17 @@ router.get("/getBodyMassConstants/:gender", async (req, res) => {
   res.send(constants);
 })
 
-router.get("/getUserParams", cors(), async (req, res) => {
+router.get("/getUserParams", async (req, res) => {
 
   let userParams = await UserParams.findOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9")});
 
   res.send(userParams);
 })
+
+
+// router.get("/getUserParams", async (req, res) => {
+//   res.send({"ag": 66});
+// })
 
 router.post("/updateUserParams", async (req, res) => {
 

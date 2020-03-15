@@ -3,9 +3,6 @@ let express = require('express');
 let router = express.Router();
 const ObjectId = require('mongodb').ObjectID;
 
-// Require checkUser for authentication check
-const checkUser = include('routes/functions/checkUser');
-
 const User = require('../schemas/userSchema');
 const WorkoutSheet = require('../schemas/workoutSheetSchema');
 const WorkoutRecord = require('../schemas/workoutRecordSchema');

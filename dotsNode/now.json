@@ -1,8 +1,14 @@
 {
   "routes": [
-    { "src": "/", "dest": "/" },
-	{ "src": "/nutrition", "dest": "/nutition" },
-	{ "src": "/workouts", "dest": "/workouts" },
-	{ "src": "/getUserParams", "dest": "/getUserParams" }
+    { "src": "/", "dest": "/index.js" },
+	{ "src": "/nutrition", "dest": "/index.js" },
+	{ "src": "/workouts", "dest": "/index.js" },
+	{ "src": "/getUserParams", "dest": "/index.js" }
+  ],
+  "builds": [
+    {
+      "src": "./index.js",
+      "use": "@now/node-server"
+    }
   ]
 }

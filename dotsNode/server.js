@@ -6,7 +6,8 @@ const cors = require('cors');
 
 const port = process.env.PORT || 8080;
 // const appUrl = 'http://localhost:8100';
-const appUrl = "https://dots-ionic.now.sh";
+// const appUrl = "https://dots-ionic.now.sh";
+// const appUrl = "https://dotsapp-58afb.firebaseapp.com";
 
 
 app.use(express.static('public'));
@@ -16,16 +17,26 @@ app.use(cookieParser());
 
 app.use(cors());
 
-// Function for requiring files from root folder
-global.base_dir = __dirname;
-global.abs_path = function(path) {
-  return base_dir + path;
-}
-global.include = function(file) {
-  return require(abs_path('/' + file));
-}
 
-const dbConnection = include('dbConnection');
+app.get("/", async (req, res) => {
+  res.send("a");
+})
+
+
+// app.get("/getUserParams", async (req, res) => {
+//   res.send({"a": 6});
+// })
+
+// // Function for requiring files from root folder
+// global.base_dir = __dirname;
+// global.abs_path = function(path) {
+//   return base_dir + path;
+// }
+// global.include = function(file) {
+//   return require(abs_path('/' + file));
+// }
+
+// const dbConnection = require('./dbConnection');
 
 // // Add headers
 // app.use(function (req, res, next) {

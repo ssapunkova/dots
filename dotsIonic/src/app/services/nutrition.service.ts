@@ -41,6 +41,7 @@ export class NutritionService {
   }
 
   public getNutritionData(){
+    console.log("about to get nutr data from " + this.connectToServerService.serverUrl);
     return this.http.get(this.connectToServerService.serverUrl + '/getNutritionData')
   }
 
