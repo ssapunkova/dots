@@ -2,15 +2,18 @@ const http = require('http');
 const express = require('express');
 const app = module.exports = express();
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const port = process.env.PORT || 8080;
 // const appUrl = 'http://localhost:8100';
 const appUrl = "https://dots-node.now.sh";
 
+
 app.use(express.static('public'));
 app.use(express.json());
 app.set('view engine', 'ejs');
 app.use(cookieParser());
+app.use(cors());
 
 // Function for requiring files from root folder
 global.base_dir = __dirname;
