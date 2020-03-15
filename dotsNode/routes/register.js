@@ -1,5 +1,5 @@
 // REQUIRE APP AND GENERAL FUNCTIONS
-const app = require('../server');
+const app = require('../index');
 const ObjectId = require('mongodb').ObjectID;
 
 const User = require('../schemas/userSchema');
