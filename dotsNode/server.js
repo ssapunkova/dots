@@ -22,11 +22,6 @@ app.get("/", async (req, res) => {
   res.send("a");
 })
 
-
-// app.get("/getUserParams", async (req, res) => {
-//   res.send({"a": 6});
-// })
-
 // // Function for requiring files from root folder
 // global.base_dir = __dirname;
 // global.abs_path = function(path) {
@@ -36,7 +31,7 @@ app.get("/", async (req, res) => {
 //   return require(abs_path('/' + file));
 // }
 
-// const dbConnection = require('./dbConnection');
+const dbConnection = require('./dbConnection');
 
 // // Add headers
 // app.use(function (req, res, next) {
