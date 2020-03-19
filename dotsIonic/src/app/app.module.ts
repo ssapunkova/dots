@@ -35,6 +35,7 @@ import { TimerService } from './services/timer.service';
 import { ChartService } from './services/chart.service';
 import { WorkoutService } from './services/workout.service';
 import { StorageService } from './services/storage.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { StorageService } from './services/storage.service';
     ChartService,
     WorkoutService,
     StorageService,
+    AuthService,
     ComponentsModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

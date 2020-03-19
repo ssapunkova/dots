@@ -86,5 +86,11 @@
 	"FirstEnterGeneralParams": "For any calculations, you need to enter your general information, such as gender and age",
 	"EnterGeneralInfo": "Please enter your general information",
 	"NowYouCanMakeCalculations": "Now you can calculate!",
-	"ChooseFromParamsCalculator": "Find out what your params are using the calculators below"
+	"ChooseFromParamsCalculator": "Find out what your params are using the calculators below",
+	"Register": "Register",
+	"RegisterText": "An email will be sent to you to confirm your registration",
+	"Email": "Email",
+	"Name": "Name",
+	"registerEmailContent.subject": "Your registration at Dots",
+	"registerEmailContent.text": "Follow this link to confirm your registration and start using Dots: "
 }

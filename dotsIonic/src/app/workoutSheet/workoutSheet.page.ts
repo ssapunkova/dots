@@ -97,7 +97,7 @@ export class WorkoutSheetPage implements OnInit {
       await this.loadingService.showProcessLoading(this.translate.instant("SavingChanges"));
 
       // Update sheet data and reloat sheets
-      this.workoutService.updateSheetConfiguration(modalData).subscribe( async (data: [any])=>
+      this.workoutService.updateSheetConfiguration(modalData).subscribe( async (data: [any]) =>
         {
           this.getSheetData();
           await this.loadingService.hideProcessLoading();

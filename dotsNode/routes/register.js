@@ -2,14 +2,34 @@
 let express = require('express');
 let router = express.Router();
 const ObjectId = require('mongodb').ObjectID;
+let nodemailer = require('nodemailer');
+
+var mail = require('./functions/mail');
 
 const User = require('../schemas/userSchema');
 
-router.use(function timeLog(req, res, next) {
-    console.log('Time: ', Date.now());
-    next();
+router.post('/sendRegistrationEmail', async (req, res) => {
+  let email = req.body.email;
+  let name = req.body.name;
+  let emailContent = req.body.emailContent;
+  console.log("sending email to " + email + "; " + name);
+  console.log(emailContent);
+
+  let transporter = mail.getMailTransporter();
+
+  let mailOptions = {
+      from: mail.sender.address,
+      to: email,
+      subject: emailContent.subject,
+      html: emailContent.html
+  };
+
+  transporter.sendMail(mailOptions, function(err, info){
+      if (err) throw err;
+      else res.send();
   });
-  
+})
+
 
 //
 // app.get("/register", function(req, res){
