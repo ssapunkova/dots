@@ -41,7 +41,6 @@ export class NutritionPage implements OnInit {
   ) { };
 
   ngOnInit() {
-    this.loadingService.showPageLoading();
     // Load nutrition data from database
 
     console.log("about to get nutr data");

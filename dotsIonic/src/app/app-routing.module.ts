@@ -9,7 +9,7 @@ import { ParamsPage } from './params/params.page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'register',
     pathMatch: 'full',
   },
   {
@@ -39,7 +39,9 @@ const routes: Routes = [
   {
     path: 'params/:topic',
     loadChildren: () => import('./params/params.module').then(m => m.ParamsPageModule)
-  }
+  },
+  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' }
+
 
 ];
 
