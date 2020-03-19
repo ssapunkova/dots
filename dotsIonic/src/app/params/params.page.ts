@@ -22,7 +22,7 @@ export class ParamsPage implements OnInit {
   public userParamsChanged = false;               // If other params are changed
  
   public userParamTitles = [];                    // Array of user's param titles 
-  public userParamValues;                    // Json of user's { param: value }
+  public userParamValues;                         // Json of user's { param: value }
   public userParamsData;                          // Raw data from db:
                                                   // Params: [array of param indexes]
                                                   // Values: [array of values]
@@ -43,8 +43,9 @@ export class ParamsPage implements OnInit {
     this.paramsService.getUserParams().subscribe( async (data)=>
     {
       this.userParamsData = data;
+      console.log(this.userParamsData)
 
-      // If there is user param data in db, process it
+      // If there is no user param data in db, create empty userParamsData and userParamValues
       if(this.userParamsData == null) {
         this.userParamsData = {
           Params: [],
@@ -53,6 +54,8 @@ export class ParamsPage implements OnInit {
         this.userParamValues= {};
       }
       else{
+        // If there is data, process it
+        this.userParamValues = {};
         for(let i = 0; i < this.userParamsData.Params.length; i++){
           let paramIndex = this.userParamsData.Params[i];
           let paramTitle = this.paramsService.allParams[paramIndex].Title;
@@ -65,6 +68,7 @@ export class ParamsPage implements OnInit {
         if(this.userParamsData.Values[0] != null && this.userParamsData.Values[1] != null){
           this.generalInfoAvailable = true;
         }
+        
       }
 
       this.sortParamsByValue();
