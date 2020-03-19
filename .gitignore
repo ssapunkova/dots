@@ -1,1 +1,3 @@
 dotsNode/node_modules
+dotsIonic/src/app/services/connectToServer.service.ts
+dotsIonic/.firebase
