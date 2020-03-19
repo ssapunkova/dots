@@ -92,5 +92,6 @@
 	"Email": "Email",
 	"Name": "Name",
 	"registerEmailContent.subject": "Your registration at Dots",
-	"registerEmailContent.text": "Follow this link to confirm your registration and start using Dots: "
+	"registerEmailContent.text": "Follow this link to confirm your registration and start using Dots: ",
+	"Login": "Login"
 }

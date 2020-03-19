@@ -11,6 +11,7 @@ import { ChartTooltipComponent } from './chart-tooltip/chart-tooltip.component';
 import { ChartLegendComponent } from './chart-legend/chart-legend.component';
 import { DataTableComponent } from './data-table/data-table.component';
 import { ToggleShowingMode } from './toggle-showing-mode/toggle-showing-mode.component';
+import { ToggleRegisterLogin } from './toggle-register-login/toggle-register-login.component';
 import { PercentageChip } from './percentage-chip/percentage-chip.component';
 
 
@@ -20,7 +21,8 @@ import { PercentageChip } from './percentage-chip/percentage-chip.component';
     ChartLegendComponent,
     DataTableComponent,
     ToggleShowingMode,
-    PercentageChip
+    PercentageChip,
+    ToggleRegisterLogin
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { PercentageChip } from './percentage-chip/percentage-chip.component';
     ChartLegendComponent,
     DataTableComponent,
     ToggleShowingMode,
-    PercentageChip
+    PercentageChip,
+    ToggleRegisterLogin
   ]
 })
 export class ComponentsModule { }

@@ -5,7 +5,6 @@ import { ConnectToServerService } from './connectToServer.service';
 import { LoadingController } from '@ionic/angular';
 
 import { TranslateService } from '@ngx-translate/core';
-import { userInfo } from 'os';
 
 // Auth Service
 // Implements authorisation and registration functions

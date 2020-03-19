@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { ComponentsModule  } from '../components/components.module';
+
 import { IonicModule } from '@ionic/angular';
 
 import { RegisterPage } from './register.page';
@@ -22,6 +24,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     IonicModule,
     TranslateModule,
+    ComponentsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [RegisterPage]
