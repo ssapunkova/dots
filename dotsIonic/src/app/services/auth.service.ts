@@ -21,14 +21,15 @@ export class AuthService{
 
   public sendRegistrationEmail(email, name){
     console.log(email, name)
+
     return this.http.post(this.connectToServerService.serverUrl + '/sendRegistrationEmail',
       { 
         email: email,
         name: name,
         emailContent: {
           subject: this.translate.instant("registerEmailContent.subject"),
-          html: "<a href='" + this.connectToServerService.appUrl + "/confirmRegistration?" + encodeURI(email) + "'>" + 
-          this.translate.instant("registerEmailContent.text") + "</a>"
+          appUrl: this.connectToServerService.appUrl,
+          linkText: this.translate.instant("registerEmailContent.text")
         }
       } 
     )

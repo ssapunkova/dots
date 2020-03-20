@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ConnectToServerService{
 
-    serverUrl: string = "http://localhost:8080";
-    // serverUrl: string = "https://dots-node.herokuapp.com";
+    public serverUrl = "http://localhost:8080";
+    // public serverUrl = "https://dots-node.herokuapp.com";
 
-    appUrl: "http://localhost:8101";
+    public appUrl = "http://localhost:8100";
 
 }

@@ -15,13 +15,17 @@ router.post('/sendRegistrationEmail', async (req, res) => {
   console.log("sending email to " + email + "; " + name);
   console.log(emailContent);
 
+  let newVerificationToken = new newVerificationToken({
+    
+  })
+
   let transporter = mail.getMailTransporter();
 
   let mailOptions = {
       from: mail.sender.address,
       to: email,
       subject: emailContent.subject,
-      html: emailContent.html
+      html: "<a href='" + emailContent.appUrl + "/confirmRegistration?" + encodeURI(email) + "'>" + emailContent.linkText + "</a>"
   };
 
   transporter.sendMail(mailOptions, function(err, info){
