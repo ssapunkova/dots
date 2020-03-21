@@ -16,6 +16,8 @@ import { AuthService } from '../services/auth.service';
 export class RegisterPage implements OnInit {
 
   public finishRegistrationMode = false;
+
+  public tokenId = this.route.snapshot.paramMap.get("tokenId");
   
   public email = new FormControl('', Validators.compose([
     Validators.required,
@@ -40,6 +42,9 @@ export class RegisterPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    if(this.tokenId != null) this.finishRegistrationMode = true;
+    
     this.loadingService.hidePageLoading();
   }
 

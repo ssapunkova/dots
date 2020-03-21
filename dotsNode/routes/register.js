@@ -29,7 +29,7 @@ router.post('/sendRegistrationEmail', async (req, res) => {
     from: mail.sender.address,
     to: email,
     subject: emailContent.subject,
-    html: "<a href='" + emailContent.appUrl + "/confirmRegistration/" + tokenId + "'>" + emailContent.linkText + "</a>"
+    html: "<a href='" + emailContent.appUrl + "/register/" + tokenId + "'>" + emailContent.linkText + "</a>"
   };
 
   transporter.sendMail(mailOptions, function(err, info){

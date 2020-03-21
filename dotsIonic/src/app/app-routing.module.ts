@@ -45,8 +45,8 @@ const routes: Routes = [
     loadChildren: './register/register.module#RegisterPageModule' 
   },
   { 
-    path: 'confirmRegistration/:tokenId', 
-    loadChildren: './confirmRegistration/confirmRegistration.module#ConfirmRegistrationPageModule' 
+    path: 'register/:tokenId', 
+    loadChildren: './register/register.module#RegisterPageModule' 
   },
 
 
