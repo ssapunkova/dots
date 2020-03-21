@@ -28,10 +28,15 @@ export class RegisterPage implements OnInit {
 
   public finishForm = new FormGroup({
     username: new FormControl('', Validators.compose([
-      Validators.required
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(15),
+      Validators.pattern(/^([a-zA-Z0-9_-])+$/)
     ])),
     password: new FormControl('', Validators.compose([
-      Validators.required
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(15)
     ]))
  });
 

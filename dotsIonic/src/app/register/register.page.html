@@ -1,75 +1,100 @@
 <ion-content>
 
 
-    <ion-card>
-      
-      <ion-card-header>
-
-        <toggle-register-login value="register"> </toggle-register-login>
-
-      </ion-card-header>
-
-      <ion-card-content>
-
-        <ion-item id="registerNote" lines="none">
-          {{ 'RegisterText' | translate }}
-        </ion-item>
-        
-        <ion-item *ngIf="!finishRegistrationMode; else finishRegistrationForm">
-          <ion-label position="floating">
-            {{ 'Email' | translate }}
-          </ion-label>
-          <ion-input 
-            [disabled]="finishRegistrationMode"
-            type="email" 
-            [formControl]="email"
-            ></ion-input>
-        </ion-item>
-        
-        <ng-template #finishRegistrationForm>
-          <form [formGroup]="finishForm">
-            <ion-item>
-              <ion-label position="floating">
-                {{ 'Username' | translate }}
-              </ion-label>          
-              <ion-input 
-                type="text"
-                formControlName="username"></ion-input>
-            </ion-item>
+  <ion-card>
     
-            <ion-item>
-              <ion-label position="floating">
-                {{ 'Password' | translate }}
-              </ion-label>          
-              <ion-input 
-              type="password"
-              formControlName="password"></ion-input>
-            </ion-item>
+    <ion-card-header>
 
-          </form>
+      <toggle-register-login value="register"> </toggle-register-login>
+
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-item class="registerNote" lines="none">
+        <ion-label *ngIf="!finishRegistrationMode; else finishNote">
+          {{ 'RegisterNote' | translate }}
+        </ion-label>
+        <ng-template #finishNote>
+          <ion-label>
+            {{ 'FinishNote' | translate }}
+          </ion-label>
         </ng-template>
+      </ion-item>
 
-      </ion-card-content>
+      
+      <ion-item *ngIf="!finishRegistrationMode; else finishRegistrationForm">
+        <ion-label position="floating">
+          {{ 'Email' | translate }}
+        </ion-label>
+        <ion-input 
+          [disabled]="finishRegistrationMode"
+          type="email" 
+          [formControl]="email"
+          ></ion-input>
+      </ion-item>
 
-      <ion-button 
-        *ngIf="!finishRegistrationMode; else finishRegistrationButton"
-        size="large"
-        expand="full" 
-        [disabled]="!email.valid"
-        (click)="sendEmail()">
-        {{ 'Register' | translate }}
-      </ion-button>
+      <div *ngIf="email.invalid && email.touched"
+        class="alert alert-danger">
+        <div *ngIf="email.errors.pattern">
+          {{ "EmailError.DoesntMatchPattern" | translate}}
+        </div>
+      </div>
+      
+      <ng-template #finishRegistrationForm>
+        <form [formGroup]="finishForm">
+          <ion-item>
+            <ion-label position="floating">
+              {{ 'Username' | translate }}
+            </ion-label>          
+            <ion-input 
+              type="text"
+              formControlName="username"></ion-input>
+          </ion-item>
 
-      <ng-template #finishRegistrationButton>
-        <ion-button 
-          size="large"
-          expand="full" 
-          [disabled]="!finishForm.valid"
-          (click)="finishRegistration()">
-          {{ 'FinishRegistration' | translate }}
-        </ion-button>
+          <div *ngIf="finishForm.username.invalid && finishForm.username.touched"
+            class="alert alert-danger">
+            <div *ngIf="finishForm.username.errors.pattern">
+              {{ "UsernameError.ForbiddenSymbols" | translate}}
+            </div>
+            <div *ngIf="finishForm.username.errors.minlength || finishForm.username.errors.maxLength">
+              {{ "UsernameError.Length" | translate}}
+            </div>
+          </div>
+  
+          <ion-item>
+            <ion-label position="floating">
+              {{ 'Password' | translate }}
+            </ion-label>          
+            <ion-input 
+            type="password"
+            formControlName="password"></ion-input>
+          </ion-item>
+
+        </form>
       </ng-template>
 
-    </ion-card>
+    </ion-card-content>
+
+    <ion-button 
+      *ngIf="!finishRegistrationMode; else finishRegistrationButton"
+      size="large"
+      expand="full" 
+      [disabled]="!email.valid"
+      (click)="sendEmail()">
+      {{ 'Register' | translate }}
+    </ion-button>
+
+    <ng-template #finishRegistrationButton>
+      <ion-button 
+        size="large"
+        expand="full" 
+        [disabled]="!finishForm.valid"
+        (click)="finishRegistration()">
+        {{ 'FinishRegistration' | translate }}
+      </ion-button>
+    </ng-template>
+
+  </ion-card>
 
 </ion-content>
