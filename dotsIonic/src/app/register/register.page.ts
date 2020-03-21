@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController} from '@ionic/angular';
 import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { ActivatedRoute } from "@angular/router";
 
 // Services
 import { LoadingService } from '../services/loading.service';
@@ -14,14 +15,24 @@ import { AuthService } from '../services/auth.service';
 })
 export class RegisterPage implements OnInit {
 
-  public userForm = new FormGroup({
-    email: new FormControl('', Validators.compose([
-      Validators.required,
-      Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+  public finishRegistrationMode = false;
+  
+  public email = new FormControl('', Validators.compose([
+    Validators.required,
+    Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+  ]));
+
+  public finishForm = new FormGroup({
+    username: new FormControl('', Validators.compose([
+      Validators.required
+    ])),
+    password: new FormControl('', Validators.compose([
+      Validators.required
     ]))
  });
 
   constructor(
+    private route: ActivatedRoute,
     private menuController: MenuController,
     public loadingService: LoadingService,
     public alertController: AlertController,
@@ -38,7 +49,7 @@ export class RegisterPage implements OnInit {
 
   async sendEmail(){
 
-    let email = this.userForm.value.email;
+    let email = this.email.value;
 
     let alert = await this.alertController.create({
       'message': "Sent an email to " + email,
@@ -50,12 +61,27 @@ export class RegisterPage implements OnInit {
     })
     await alert.present();
 
-    console.log(this.userForm.value);
+    console.log(this.email);
     console.log("***Sending email to " + email);
 
     this.authService.sendRegistrationEmail(email).subscribe( async (data: [any]) => {
       console.log(data);
     })
+  }
+
+  async finishRegistration(){
+
+    let data = {
+      tokenId: this.route.snapshot.paramMap.get("tokenId"),
+      username: this.finishForm.value.username,
+      password: this.finishForm.value.password
+    }
+    console.log("User data: ", data);
+
+    this.authService.finishRegistration(data).subscribe( async (data: [any]) => {
+      console.log(data);
+    })
+
   }
 
 }

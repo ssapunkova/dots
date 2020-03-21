@@ -15,12 +15,34 @@
           {{ 'RegisterText' | translate }}
         </ion-item>
         
-        <form [formGroup]="userForm">
+        <ion-item>
+          <ion-label position="floating">
+            {{ 'Email' | translate }}
+          </ion-label>
+          <ion-input 
+            [disabled]="finishRegistrationMode"
+            type="email" 
+            [formControl]="email"
+            ></ion-input>
+        </ion-item>
+        
+        <form [formGroup]="finishForm" *ngIf="finishRegistrationMode">
           <ion-item>
             <ion-label position="floating">
-              {{ 'Email' | translate }}
-            </ion-label>
-            <ion-input type="email"  formControlName="email"></ion-input>
+              {{ 'Username' | translate }}
+            </ion-label>          
+            <ion-input 
+              type="text"
+              formControlName="username"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="floating">
+              {{ 'Password' | translate }}
+            </ion-label>          
+            <ion-input 
+            type="password"
+            formControlName="password"></ion-input>
           </ion-item>
 
         </form>
@@ -28,12 +50,23 @@
       </ion-card-content>
 
       <ion-button 
+        *ngIf="!finishRegistrationMode; else finishRegistrationButton"
         size="large"
         expand="full" 
-        [disabled]="!userForm.valid"
+        [disabled]="!email.valid"
         (click)="sendEmail()">
         {{ 'Register' | translate }}
       </ion-button>
+
+      <ng-template #finishRegistrationButton>
+        <ion-button 
+          size="large"
+          expand="full" 
+          [disabled]="!finishForm.valid"
+          (click)="finishRegistration()">
+          {{ 'FinishRegistration' | translate }}
+        </ion-button>
+      </ng-template>
 
     </ion-card>
 
