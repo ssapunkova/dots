@@ -40,17 +40,20 @@ router.post('/sendRegistrationEmail', async (req, res) => {
 
 router.post('/finishRegistration', async(req, res) => {
   let tokenId = req.body.data.tokenId;
+  let username = req.body.data.username;
   let password = req.body.data.password;
 
   let token = await VerificationToken.findOne({ _id: ObjectId(tokenId)});
   let email = token.Email;
 
-  console.log(email);
+  console.log(email, password, username);
   console.log("Deleted token: ", tokenId);
 
   let newUser = new User({
+    Username: username,
     Email: email,
-    Password: password
+    Password: password,
+    Status: "user"
   })
 
   newUser.save();
