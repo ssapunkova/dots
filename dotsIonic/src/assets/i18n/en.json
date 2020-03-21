@@ -95,6 +95,7 @@
 	"EmailError.DoesntMatchPattern": "This email is not valid",
 	"UsernameError.ForbiddenSymbols": "Only latin letters, numbers and underscore (_) are allowed in a username",
 	"UsernameError.Length": "Username should be 4-15 symbols long",
+	"PasswordError.Length": "Username should be 4-15 symbols long",
 	"SentEmail": "Confirmation email sent to ",
 	"registerEmailContent.subject": "Your registration at Dots",
 	"registerEmailContent.text": "Follow this link to confirm your registration and start using Dots: ",

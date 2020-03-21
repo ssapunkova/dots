@@ -26,18 +26,34 @@ export class RegisterPage implements OnInit {
     Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
   ]));
 
+  public username = new FormControl('', Validators.compose([
+    Validators.required,
+    Validators.minLength(4),
+    Validators.maxLength(15),
+    Validators.pattern(/^([a-zA-Z0-9_-])+$/)
+  ]));
+
+  checkPasswordsMatch(group: FormGroup) { // here we have the 'passwords' group
+    let pass = group.get('password').value;
+    let confirmPass = group.get('repeatPassword').value;
+
+    return pass === confirmPass ? null : { notSame: true }     
+  }
+
+  public password = new FormControl('', Validators.compose([
+    Validators.required,
+    Validators.minLength(4),
+    Validators.maxLength(15)
+  ]));
+
+  public repeatPassword = new FormControl('', Validators.compose([
+    Validators.required
+  ]));
+
   public finishForm = new FormGroup({
-    username: new FormControl('', Validators.compose([
-      Validators.required,
-      Validators.minLength(4),
-      Validators.maxLength(15),
-      Validators.pattern(/^([a-zA-Z0-9_-])+$/)
-    ])),
-    password: new FormControl('', Validators.compose([
-      Validators.required,
-      Validators.minLength(4),
-      Validators.maxLength(15)
-    ]))
+    username: this.username,
+    password: this.password,
+    repeatPassword: this.repeatPassword
  });
 
   constructor(
