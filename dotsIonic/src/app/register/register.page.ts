@@ -15,11 +15,6 @@ import { AuthService } from '../services/auth.service';
 export class RegisterPage implements OnInit {
 
   public userForm = new FormGroup({
-    name: new FormControl('', Validators.compose([
-      Validators.required,
-      Validators.maxLength(25),
-      Validators.minLength(5),
-    ])),
     email: new FormControl('', Validators.compose([
       Validators.required,
       Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
@@ -44,7 +39,6 @@ export class RegisterPage implements OnInit {
   async sendEmail(){
 
     let email = this.userForm.value.email;
-    let name = this.userForm.value.name;
 
     let alert = await this.alertController.create({
       'message': "Sent an email to " + email,
@@ -59,7 +53,7 @@ export class RegisterPage implements OnInit {
     console.log(this.userForm.value);
     console.log("***Sending email to " + email);
 
-    this.authService.sendRegistrationEmail(email, name).subscribe( async (data: [any]) => {
+    this.authService.sendRegistrationEmail(email).subscribe( async (data: [any]) => {
       console.log(data);
     })
   }

@@ -40,7 +40,14 @@ const routes: Routes = [
     path: 'params/:topic',
     loadChildren: () => import('./params/params.module').then(m => m.ParamsPageModule)
   },
-  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' }
+  { 
+    path: 'register', 
+    loadChildren: './register/register.module#RegisterPageModule' 
+  },
+  { 
+    path: 'confirmRegistration/:tokenId', 
+    loadChildren: './confirmRegistration/confirmRegistration.module#ConfirmRegistrationPageModule' 
+  },
 
 
 ];

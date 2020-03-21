@@ -7,13 +7,6 @@ const User = require('../schemas/userSchema');
 const Nutrition = require('../schemas/nutritionSchema');
 const NutritionRecord = require('../schemas/nutritionRecordSchema');
 
-router.use(function timeLog(req, res, next) {
-  console.log('Time: ', Date.now());
-  next();
-});
-
-
-
 router.get("/getNutritionData", async (req, res) => {
 
   let nutritionData = await Nutrition.findOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") });  // replace with userid later

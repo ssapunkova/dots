@@ -7,79 +7,57 @@ let nodemailer = require('nodemailer');
 var mail = require('./functions/mail');
 
 const User = require('../schemas/userSchema');
+const VerificationToken = require('../schemas/verificationTokenSchema');
 
 router.post('/sendRegistrationEmail', async (req, res) => {
   let email = req.body.email;
-  let name = req.body.name;
   let emailContent = req.body.emailContent;
-  console.log("sending email to " + email + "; " + name);
+  console.log("sending email to " + email + "; ");
   console.log(emailContent);
 
-  let newVerificationToken = new newVerificationToken({
-    
-  })
+  let newVerificationToken = new VerificationToken({
+    Email: email
+  });
+  newVerificationToken.save();
+  let tokenId = newVerificationToken._id;
+
+  console.log("Verification token id: " + tokenId)
 
   let transporter = mail.getMailTransporter();
 
   let mailOptions = {
-      from: mail.sender.address,
-      to: email,
-      subject: emailContent.subject,
-      html: "<a href='" + emailContent.appUrl + "/confirmRegistration?" + encodeURI(email) + "'>" + emailContent.linkText + "</a>"
+    from: mail.sender.address,
+    to: email,
+    subject: emailContent.subject,
+    html: "<a href='" + emailContent.appUrl + "/confirmRegistration/" + tokenId + "'>" + emailContent.linkText + "</a>"
   };
 
   transporter.sendMail(mailOptions, function(err, info){
-      if (err) throw err;
-      else res.send();
+    if (err) throw err;
+    else res.send();
   });
 })
 
+router.post('/finishRegistration', async(req, res) => {
+  let tokenId = req.body.data.tokenId;
+  let password = req.body.data.password;
 
-//
-// app.get("/register", function(req, res){
-//     res.render("register");
-// })
-//
-// app.post("/register", function(req, res){
-//   let userData = req.body;
-//   console.log(userData);
-//
-//   mongoose.connect(baseUrl, connectParams, function (err) {
-//     if(err) throw err;
-//
-//     let newUser = new User(userData);
-//     newUser.Status = "user";
-//
-//     User.findOne( { $or: [{ Username: newUser.Username}, { Email: newUser.Email }] })
-//     .exec(function(err, existingUser){
-//       if(err) throw err;
-//       console.log(existingUser);
-//
-//       if(existingUser == null){
-//         newUser.save(function(err){
-//          if(err) throw err;
-//          else{
-//            res.send("RegisteredSuccessfully");
-//          }
-//        });
-//       }
-//       else{
-//         let error = "";
-//         if(existingUser.Username == newUser.Username){
-//           error = "SameUsername";
-//         }
-//         else if(existingUser.Email == newUser.Email){
-//           error = "SameEmail";
-//         }
-//
-//         res.send(error);
-//       }
-//
-//
-//     })
-//   });
-//
-// })
+  let token = await VerificationToken.findOne({ _id: ObjectId(tokenId)});
+  let email = token.Email;
 
+  console.log(email);
+  console.log("Deleted token: ", tokenId);
+
+  let newUser = new User({
+    Email: email,
+    Password: password
+  })
+
+  newUser.save();
+  
+  token.remove();
+
+  res.send()
+})
 
 module.exports = router;

@@ -9,12 +9,6 @@ const saltRounds = 10;
 
 const User = require('../schemas/userSchema');
 
-router.use(function timeLog(req, res, next) {
-    console.log('Time: ', Date.now());
-    next();
-  });
-  
-
 router.get('/', function(req, res) {
     res.render("login")
 })

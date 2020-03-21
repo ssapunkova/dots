@@ -30,3 +30,5 @@ const routes: Routes = [
   declarations: [RegisterPage]
 })
 export class RegisterPageModule {}
+
+export class ConfirmRegistrationModule {}

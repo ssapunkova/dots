@@ -7,13 +7,6 @@ const User = require('../schemas/userSchema');
 const WorkoutSheet = require('../schemas/workoutSheetSchema');
 const WorkoutRecord = require('../schemas/workoutRecordSchema');
 
-router.use(function timeLog(req, res, next) {
-  console.log('Time: ', Date.now());
-  next();
-});
-
-
-
 router.get("/getSheetData/:sheetId", async (req, res) => {
   let sheetId = req.params.sheetId;
   let query = {};

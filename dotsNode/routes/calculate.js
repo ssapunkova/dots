@@ -7,12 +7,6 @@ const User = require('../schemas/userSchema');
 const BodyMassConstants = require('../schemas/bodyMassConstantsSchema');
 const UserParams = require('../schemas/userParamsSchema');
 
-router.use(function timeLog(req, res, next) {
-  console.log('Time: ', Date.now());
-  next();
-});
-
-
 router.get("/getBodyMassConstants/:gender", async (req, res) => {
 
   let gender = req.params.gender;

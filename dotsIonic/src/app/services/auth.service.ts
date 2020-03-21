@@ -19,19 +19,26 @@ export class AuthService{
     private translate: TranslateService
   ) { }
 
-  public sendRegistrationEmail(email, name){
-    console.log(email, name)
+  public sendRegistrationEmail(email){
+    console.log(email)
 
     return this.http.post(this.connectToServerService.serverUrl + '/sendRegistrationEmail',
       { 
         email: email,
-        name: name,
         emailContent: {
           subject: this.translate.instant("registerEmailContent.subject"),
           appUrl: this.connectToServerService.appUrl,
           linkText: this.translate.instant("registerEmailContent.text")
         }
       } 
+    )
+  }
+
+  public finishRegistration(data){
+    console.log("Activating Token id: " + data.tokenId);
+
+    return this.http.post(this.connectToServerService.serverUrl + '/finishRegistration',
+      { data } 
     )
   }
 
