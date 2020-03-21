@@ -60,3 +60,11 @@
   TODO:
     Styles in calculator
     Show calculated needs in nutrition goals
+
+/// some todos got deleted
+
+21.03
+  TODO:
+    Invalid input messages in register
+    Refure registration when token has expired/been deleted
+    Login
