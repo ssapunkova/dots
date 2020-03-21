@@ -91,6 +91,7 @@
 	"RegisterText": "An email will be sent to you to confirm your registration",
 	"Email": "Email",
 	"Name": "Name",
+	"SentEmail": "Confirmation email sent to ",
 	"registerEmailContent.subject": "Your registration at Dots",
 	"registerEmailContent.text": "Follow this link to confirm your registration and start using Dots: ",
 	"Login": "Login",

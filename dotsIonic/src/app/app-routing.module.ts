@@ -47,7 +47,8 @@ const routes: Routes = [
   { 
     path: 'register/:tokenId', 
     loadChildren: './register/register.module#RegisterPageModule' 
-  },
+  },  { path: 'welcome', loadChildren: './welcome/welcome.module#WelcomePageModule' },
+
 
 
 ];

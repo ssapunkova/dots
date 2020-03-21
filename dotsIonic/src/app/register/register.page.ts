@@ -5,8 +5,10 @@ import { AlertController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
 
 // Services
+import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '../services/loading.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -34,9 +36,11 @@ export class RegisterPage implements OnInit {
  });
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private menuController: MenuController,
     public loadingService: LoadingService,
+    private translate: TranslateService,
     public alertController: AlertController,
     private authService: AuthService
   ) { }
@@ -57,7 +61,7 @@ export class RegisterPage implements OnInit {
     let email = this.email.value;
 
     let alert = await this.alertController.create({
-      'message': "Sent an email to " + email,
+      'message': this.translate.instant("SentEmail") + email,
       'buttons': [
         {
           'text': "Ok"
@@ -86,6 +90,8 @@ export class RegisterPage implements OnInit {
     this.authService.finishRegistration(data).subscribe( async (data: [any]) => {
       console.log(data);
     })
+
+    this.router.navigate(['/welcome'])
 
   }
 
