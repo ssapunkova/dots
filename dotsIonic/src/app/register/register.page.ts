@@ -51,25 +51,23 @@ export class RegisterPage implements OnInit {
     Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
   ]));
 
-  public username = ['', Validators.compose([
+  public username = new FormControl('', Validators.compose([
     Validators.required,
     Validators.minLength(4),
     Validators.maxLength(15),
     Validators.pattern(/^([a-zA-Z0-9_-])+$/)
-  ])];
+  ]));
 
 
-  public password = ['', Validators.compose([
+  public password = new FormControl('', Validators.compose([
     Validators.required,
     Validators.minLength(4),
-    Validators.maxLength(15),
-    // this.checkPasswordsMatch()
-  ])];
+    Validators.maxLength(15)
+  ]));
 
-  public repeatPassword = ['', Validators.compose([
-    Validators.required,
-    // this.checkPasswordsMatch()
-  ])];
+  public repeatPassword = new FormControl('', Validators.compose([
+    Validators.required
+  ]));
 
   public finishForm = this.formBuilder.group({
     username: this.username,
