@@ -33,21 +33,16 @@ export class RegisterPage implements OnInit {
     Validators.pattern(/^([a-zA-Z0-9_-])+$/)
   ]));
 
-  checkPasswordsMatch(group: FormGroup) { // here we have the 'passwords' group
-    let pass = group.get('password').value;
-    let confirmPass = group.get('repeatPassword').value;
-
-    return pass === confirmPass ? null : { notSame: true }     
-  }
-
   public password = new FormControl('', Validators.compose([
     Validators.required,
     Validators.minLength(4),
-    Validators.maxLength(15)
+    Validators.maxLength(15),
+    // this.checkPasswordsMatch()
   ]));
 
   public repeatPassword = new FormControl('', Validators.compose([
-    Validators.required
+    Validators.required,
+    // this.checkPasswordsMatch()
   ]));
 
   public finishForm = new FormGroup({
@@ -55,6 +50,18 @@ export class RegisterPage implements OnInit {
     password: this.password,
     repeatPassword: this.repeatPassword
  });
+
+  public checkPasswordsMatch(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      if(this.password != undefined && this.repeatPassword != undefined){
+        let pass1 = this.password.value;
+        let pass2 = this.repeatPassword.value;
+        console.log(pass1, pass2);
+        console.log(pass1 == pass2);
+        return (pass1 == pass2) ? null : {'passwordMatch': false};
+      }
+    };
+  }
 
   constructor(
     private router: Router,
