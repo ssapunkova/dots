@@ -28,16 +28,24 @@
           {{ 'Email' | translate }}
         </ion-label>
         <ion-input 
+          (ionChange)="checkEmail()"
           [disabled]="finishRegistrationMode"
           type="email" 
           [formControl]="email"
-          ></ion-input>
+        ></ion-input>
       </ion-item>
 
       <div *ngIf="email.invalid && email.touched"
         class="alert alert-danger">
         <div *ngIf="email.errors.pattern">
           {{ "EmailError.DoesntMatchPattern" | translate}}
+        </div>
+      </div>
+
+      <div *ngIf="usedEmailError"
+        class="alert alert-danger">
+        <div *ngIf="usedEmailError">
+          {{ "EmailError.UsedEmail" | translate }}
         </div>
       </div>
       
@@ -102,9 +110,10 @@
       *ngIf="!finishRegistrationMode; else finishRegistrationButton"
       size="large"
       expand="full" 
-      [disabled]="!email.valid"
+      [disabled]="!email.valid || usedEmailError"
       (click)="sendEmail()">
-      {{ 'Register' | translate }}
+      <ion-label *ngIf="checkingEmail">Checking email</ion-label>
+      <ion-label *ngIf="!checkingEmail">{{ 'Register' | translate }}</ion-label>
     </ion-button>
 
     <ng-template #finishRegistrationButton>

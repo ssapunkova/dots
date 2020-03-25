@@ -23,7 +23,6 @@ export class RegisterPage implements OnInit {
 
   public tokenId = this.route.snapshot.paramMap.get("tokenId");
   
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -73,19 +72,38 @@ export class RegisterPage implements OnInit {
     username: this.username,
     password: this.password,
     repeatPassword: this.repeatPassword
- },
- {
-   validator: this.checkPasswordsMatch
- });
+  },
+  {
+    validator: this.checkPasswordsMatch
+  });
 
+  public usedEmailError = false;
+  public checkingEmail = false;
  
- public checkPasswordsMatch(group: FormGroup) {
-  let pass1 = group.controls.password.value;
-  let pass2 = group.controls.repeatPassword.value;
-  console.log(pass1, pass2);
-  console.log(pass1 == pass2);
-  return (pass1 == pass2) ? null : {'passwordMatch': false};
-}
+  public checkPasswordsMatch(group: FormGroup) {
+    let pass1 = group.controls.password.value;
+    let pass2 = group.controls.repeatPassword.value;
+    console.log(pass1, pass2);
+    console.log(pass1 == pass2);
+    return (pass1 == pass2) ? null : {'passwordMatch': false};
+  }
+
+  async checkEmail(){
+    if(this.checkingEmail == false){
+      this.checkingEmail = true;
+
+      setTimeout(() => {
+        this.authService.checkEmail(this.email.value).subscribe( async (data: [any]) => {
+          console.log(data);
+
+          if(data.matchingEmails == 1) this.usedEmailError = true;
+          else this.usedEmailError = false;
+          
+          this.checkingEmail = false;
+        })
+      }, 2000);
+    }
+  }
 
   async sendEmail(){
 

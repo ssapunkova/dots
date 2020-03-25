@@ -93,6 +93,7 @@
 	"Email": "Email",
 	"Name": "Name",
 	"EmailError.DoesntMatchPattern": "This email is not valid",
+	"EmailError.UsedEmail": "This email is already used",
 	"UsernameError.ForbiddenSymbols": "Only latin letters, numbers and underscore (_) are allowed in a username",
 	"UsernameError.Length": "Username should be 4-15 symbols long",
 	"PasswordError.Length": "Username should be 4-15 symbols long",

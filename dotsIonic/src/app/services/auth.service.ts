@@ -19,6 +19,12 @@ export class AuthService{
     private translate: TranslateService
   ) { }
 
+  public checkEmail(email){
+    return this.http.post(this.connectToServerService.serverUrl + '/checkEmail',
+      { email: email } 
+    )
+  }
+
   public sendRegistrationEmail(email){
     console.log(email)
 

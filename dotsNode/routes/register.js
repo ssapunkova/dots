@@ -9,6 +9,21 @@ var mail = require('./functions/mail');
 const User = require('../schemas/userSchema');
 const VerificationToken = require('../schemas/verificationTokenSchema');
 
+router.post('/checkEmail', async (req, res) => {
+  let email = req.body.email;
+
+  console.log(email);
+
+  let findEmail = await User.findOne({ Email: email });
+  let result = 0;
+
+  if(findEmail != null){
+    result = 1;
+  }
+  
+  res.send({ matchingEmails: result });
+})
+
 router.post('/sendRegistrationEmail', async (req, res) => {
   let email = req.body.email;
   let emailContent = req.body.emailContent;
