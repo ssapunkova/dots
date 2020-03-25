@@ -87,8 +87,10 @@
             </div>
           </div>
 
-          <div *ngIf="password.touched && password.value != repeatPassword.value">
-            not eq
+          <div 
+            *ngIf="finishForm.controls.password.value != finishForm.controls.repeatPassword.value"
+            class="alert alert-danger">
+            {{ "PasswordError.NotMatching" | translate }}
           </div>
 
         </form>

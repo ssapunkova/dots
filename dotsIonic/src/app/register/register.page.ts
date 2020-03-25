@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController} from '@ionic/angular';
-import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormControl, FormGroupDirective, FormBuilder, FormGroup } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { AlertController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
 
@@ -9,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '../services/loading.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-register',
@@ -21,47 +23,6 @@ export class RegisterPage implements OnInit {
 
   public tokenId = this.route.snapshot.paramMap.get("tokenId");
   
-  public email = new FormControl('', Validators.compose([
-    Validators.required,
-    Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-  ]));
-
-  public username = new FormControl('', Validators.compose([
-    Validators.required,
-    Validators.minLength(4),
-    Validators.maxLength(15),
-    Validators.pattern(/^([a-zA-Z0-9_-])+$/)
-  ]));
-
-  public password = new FormControl('', Validators.compose([
-    Validators.required,
-    Validators.minLength(4),
-    Validators.maxLength(15),
-    // this.checkPasswordsMatch()
-  ]));
-
-  public repeatPassword = new FormControl('', Validators.compose([
-    Validators.required,
-    // this.checkPasswordsMatch()
-  ]));
-
-  public finishForm = new FormGroup({
-    username: this.username,
-    password: this.password,
-    repeatPassword: this.repeatPassword
- });
-
-  public checkPasswordsMatch(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      if(this.password != undefined && this.repeatPassword != undefined){
-        let pass1 = this.password.value;
-        let pass2 = this.repeatPassword.value;
-        console.log(pass1, pass2);
-        console.log(pass1 == pass2);
-        return (pass1 == pass2) ? null : {'passwordMatch': false};
-      }
-    };
-  }
 
   constructor(
     private router: Router,
@@ -70,7 +31,8 @@ export class RegisterPage implements OnInit {
     public loadingService: LoadingService,
     private translate: TranslateService,
     public alertController: AlertController,
-    private authService: AuthService
+    private authService: AuthService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -83,6 +45,49 @@ export class RegisterPage implements OnInit {
   ionViewWillEnter() {
     this.menuController.enable(false);
   }
+
+  public email = new FormControl('', Validators.compose([
+    Validators.required,
+    Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+  ]));
+
+  public username = ['', Validators.compose([
+    Validators.required,
+    Validators.minLength(4),
+    Validators.maxLength(15),
+    Validators.pattern(/^([a-zA-Z0-9_-])+$/)
+  ])];
+
+
+  public password = ['', Validators.compose([
+    Validators.required,
+    Validators.minLength(4),
+    Validators.maxLength(15),
+    // this.checkPasswordsMatch()
+  ])];
+
+  public repeatPassword = ['', Validators.compose([
+    Validators.required,
+    // this.checkPasswordsMatch()
+  ])];
+
+  public finishForm = this.formBuilder.group({
+    username: this.username,
+    password: this.password,
+    repeatPassword: this.repeatPassword
+ },
+ {
+   validator: this.checkPasswordsMatch
+ });
+
+ 
+ public checkPasswordsMatch(group: FormGroup) {
+  let pass1 = group.controls.password.value;
+  let pass2 = group.controls.repeatPassword.value;
+  console.log(pass1, pass2);
+  console.log(pass1 == pass2);
+  return (pass1 == pass2) ? null : {'passwordMatch': false};
+}
 
   async sendEmail(){
 
