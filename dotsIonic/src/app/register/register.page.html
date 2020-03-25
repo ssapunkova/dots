@@ -52,9 +52,7 @@
 
       <div *ngIf="usedEmailError"
         class="alert alert-danger">
-        <div *ngIf="usedEmailError">
-          {{ "EmailError.UsedEmail" | translate }}
-        </div>
+        {{ "EmailError.UsedEmail" | translate }}
       </div>
       
       <ng-template #finishRegistrationForm>
@@ -118,9 +116,9 @@
       *ngIf="!finishRegistrationMode; else finishRegistrationButton"
       size="large"
       expand="full" 
-      [disabled]="!email.valid || usedEmailError"
+      [disabled]="!email.valid || usedEmailError || checkingEmail"
       (click)="sendEmail()">
-      <ion-label *ngIf="checkingEmail">Checking email</ion-label>
+      <ion-label *ngIf="checkingEmail">{{ 'CheckingEmail' | translate }}</ion-label>
       <ion-label *ngIf="!checkingEmail">{{ 'Register' | translate }}</ion-label>
     </ion-button>
 
