@@ -25,6 +25,12 @@ export class AuthService{
     )
   }
 
+  public checkToken(tokenId){
+    return this.http.post(this.connectToServerService.serverUrl + '/checkToken',
+      { tokenId: tokenId } 
+    )
+  }
+
   public sendRegistrationEmail(email){
     console.log(email)
 

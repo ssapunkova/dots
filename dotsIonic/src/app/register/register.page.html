@@ -9,7 +9,15 @@
 
     </ion-card-header>
 
-    <ion-card-content>
+    
+    <ion-item 
+      *ngIf="tokenExpiredError"
+      color="danger">
+      {{ "ExpiredVerificationToken" | translate }}
+    </ion-item>
+
+    <ion-card-content *ngIf="!tokenExpiredError">
+
 
       <ion-item class="registerNote" lines="none">
         <ion-label *ngIf="!finishRegistrationMode; else finishNote">

@@ -24,6 +24,21 @@ router.post('/checkEmail', async (req, res) => {
   res.send({ matchingEmails: result });
 })
 
+router.post('/checkToken', async (req, res) => {
+  let tokenId = req.body.tokenId;
+
+  console.log(tokenId);
+
+  let findToken = await VerificationToken.findOne({ _id: ObjectId(tokenId) });
+  let result = false;
+
+  if(findToken != null){
+    result = true;
+  }
+  
+  res.send({ tokenExists: result });
+})
+
 router.post('/sendRegistrationEmail', async (req, res) => {
   let email = req.body.email;
   let emailContent = req.body.emailContent;

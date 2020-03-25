@@ -103,5 +103,6 @@
 	"registerEmailContent.text": "Follow this link to confirm your registration and start using Dots: ",
 	"Login": "Login",
 	"Password": "Password",
+	"ExpiredVerificationToken": "This registration link has expired",
 	"FinishRegistration": "Finish registration"
 }

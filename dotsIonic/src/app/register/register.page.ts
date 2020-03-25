@@ -36,7 +36,10 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {
 
-    if(this.tokenId != null) this.finishRegistrationMode = true;
+    if(this.tokenId != null) {
+      this.finishRegistrationMode = true;
+      this.checkToken(this.tokenId);
+    }
     
     this.loadingService.hidePageLoading();
   }
@@ -78,6 +81,7 @@ export class RegisterPage implements OnInit {
   });
 
   public usedEmailError = false;
+  public tokenExpiredError = false;
   public checkingEmail = false;
  
   public checkPasswordsMatch(group: FormGroup) {
@@ -103,6 +107,16 @@ export class RegisterPage implements OnInit {
         })
       }, 2000);
     }
+  }
+
+  async checkToken(tokenId){
+    this.authService.checkToken(tokenId).subscribe( async (data: [any]) => {
+      console.log(data);
+
+      if(data.tokenExists) this.tokenExpiredError = false;
+      else this.tokenExpiredError = true;
+    
+    })
   }
 
   async sendEmail(){
