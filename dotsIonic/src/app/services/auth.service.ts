@@ -54,4 +54,10 @@ export class AuthService{
     )
   }
 
+  public login(data){
+    return this.http.post(this.connectToServerService.serverUrl + '/login',
+      { userData: data } 
+    )
+  }
+
 }

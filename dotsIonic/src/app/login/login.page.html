@@ -35,13 +35,20 @@
         {{ "EmailError.EmailDoesntExist" | translate }}
       </ion-text>
       
-      <ion-item>
+      <ion-item style="align-items: flex-end !important;">
         <ion-label position="floating">
           {{ 'Password' | translate }}
         </ion-label>          
         <ion-input 
-        type="password"
-        [formControl]="password"></ion-input>
+          [type]="passwordVisible ? 'text' : 'password'"
+          [formControl]="password"
+        ></ion-input>
+
+        <div style="cursor: pointer" slot="end"
+          (click)="passwordVisible ? passwordVisible = false : passwordVisible = true">
+          <ion-icon name="eye" color="medium"></ion-icon>
+        </div>
+
       </ion-item>
 
     </ion-card-content>
@@ -52,7 +59,7 @@
       [disabled]="!email.valid || emailNotExistingError || checkingEmail"
       (click)="login()">
       <ion-label *ngIf="checkingEmail">{{ 'CheckingEmail' | translate }}</ion-label>
-      <ion-label *ngIf="!checkingEmail">{{ 'Register' | translate }}</ion-label>
+      <ion-label *ngIf="!checkingEmail">{{ 'Login' | translate }}</ion-label>
     </ion-button>
 
 

@@ -156,7 +156,7 @@ export class RegisterPage implements OnInit {
       console.log(data);
     })
 
-    this.router.navigate(['/welcome'])
+    this.router.navigate(['/welcome']);
 
   }
 

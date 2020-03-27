@@ -4,13 +4,13 @@ import { Validators, FormControl, FormGroupDirective, FormBuilder, FormGroup } f
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AlertController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
+import { Router } from '@angular/router';
 
 // Services
 import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '../services/loading.service';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
-
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +18,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+
+  public passwordVisible = false;
   
   constructor(
     private router: Router,
@@ -27,7 +29,8 @@ export class LoginPage implements OnInit {
     private translate: TranslateService,
     public alertController: AlertController,
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public storageService: StorageService
   ) { }
 
   ngOnInit() {    
@@ -37,6 +40,7 @@ export class LoginPage implements OnInit {
   ionViewWillEnter() {
     this.menuController.enable(false);
   }
+
 
   public email = new FormControl('', Validators.compose([
     Validators.required,
@@ -70,7 +74,25 @@ export class LoginPage implements OnInit {
   }
 
   async login(){
-    console.log("login");
+
+    let data = {
+      email: this.email.value,
+      password: this.password.value
+    }
+
+    this.authService.login(data).subscribe( async (data: [any]) => {
+      console.log(data);
+
+      if(data["userData"] != null){
+        let user = data["userData"];
+        console.log("***Logged in as ", user);
+
+        this.storageService.set("DotsUserData", user);
+
+        this.router.navigate(['/home']);
+
+      }
+    })
   }
 
 }

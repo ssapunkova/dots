@@ -4,6 +4,10 @@ let router = express.Router();
 const ObjectId = require('mongodb').ObjectID;
 let nodemailer = require('nodemailer');
 
+// Require bcrypt for hashing passwords
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
+
 var mail = require('./functions/mail');
 
 const User = require('../schemas/userSchema');
@@ -40,7 +44,6 @@ router.post('/checkToken', async (req, res) => {
   catch{
     result = false;
   }
-
 
   res.send({ tokenExists: result });
 })
@@ -97,6 +100,38 @@ router.post('/finishRegistration', async(req, res) => {
   token.remove();
 
   res.send()
+})
+
+router.get("/logout", async (req, res) => {
+  console.log("a");
+  res.clearCookie("DotsUserId");
+  res.clearCookie("DotsUsername");
+  res.redirect('/login');
+})
+
+
+router.post("/login", async (req, res) => {
+  let userData = req.body.userData;
+  console.log(userData);
+
+  let user = await User.findOne({ Email: userData.email });
+  
+  console.log(user);
+
+  if(user == null){
+    res.send({ error: "EmailNotFound"});
+  }
+  else{
+    bcrypt.compare(userData.password, user.Password, function (err, result) {
+      if (result === true) {
+        res.send({ userData: { Username: user.Username, Status: user.Status, Email: user.Email } });
+      }
+      else{
+        res.send({ error: "WrongPasswordError"});
+      }
+    });
+  }
+
 })
 
 module.exports = router;

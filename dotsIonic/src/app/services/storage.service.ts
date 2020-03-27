@@ -18,7 +18,8 @@ export class StorageService{
 
   // Getter for IonicStorage
   async get(title){
-    return this.storage.get(title);
+    const result = await this.storage.get(title);
+    return result;
   }
 
 }
