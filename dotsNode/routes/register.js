@@ -24,14 +24,24 @@ router.post('/checkEmail', async (req, res) => {
 
 router.post('/checkToken', async (req, res) => {
   let tokenId = req.body.tokenId;
+  let ObjId;
 
-  let findToken = await VerificationToken.findOne({ _id: ObjectId(tokenId) });
-  let result = false;
+  // Try converting tokenId to ObjectId, if it fails it means tokenId is not a valid id
+  try{
+    ObjId = ObjectId(tokenId);
 
-  if(findToken != null){
-    result = true;
+    let findToken = await VerificationToken.findOne({ _id: ObjId });
+    let result = false;
+
+    if(findToken != null){
+      result = true;
+    }
   }
-  
+  catch{
+    result = false;
+  }
+
+
   res.send({ tokenExists: result });
 })
 

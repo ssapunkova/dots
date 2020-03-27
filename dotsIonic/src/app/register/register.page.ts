@@ -111,10 +111,11 @@ export class RegisterPage implements OnInit {
   }
 
   async checkToken(tokenId){
-    this.authService.checkToken(tokenId).subscribe( async (tokenExists) => {
-      console.log(tokenExists);
+    console.log("checking token")
+    this.authService.checkToken(tokenId).subscribe( async (data) => {
+      console.log(data);
 
-      if(tokenExists) this.tokenExpiredError = false;
+      if(data["tokenExists"]) this.tokenExpiredError = false;
       else this.tokenExpiredError = true;
     
     })
