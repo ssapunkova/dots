@@ -43,17 +43,15 @@
         ></ion-input>
       </ion-item>
 
-      <div *ngIf="email.invalid && email.touched"
-        class="alert alert-danger">
+      <ion-text color="danger" *ngIf="email.invalid && email.touched">
         <div *ngIf="email.errors.pattern">
           {{ "EmailError.DoesntMatchPattern" | translate}}
         </div>
-      </div>
+      </ion-text>
 
-      <div *ngIf="usedEmailError"
-        class="alert alert-danger">
+      <ion-text color="danger" *ngIf="usedEmailError">
         {{ "EmailError.UsedEmail" | translate }}
-      </div>
+      </ion-text>
       
       <ng-template #finishRegistrationForm>
         <form [formGroup]="finishForm">
@@ -66,7 +64,7 @@
               formControlName="username"></ion-input>
           </ion-item>
 
-          <div *ngIf="username.invalid && username.touched"
+          <ion-text color="danger" *ngIf="username.invalid && username.touched"
             class="alert alert-danger">
             <div *ngIf="username.errors.pattern">
               {{ "UsernameError.ForbiddenSymbols" | translate}}
@@ -74,7 +72,7 @@
             <div *ngIf="username.errors.minlength || username.errors.maxlength">
               {{ "UsernameError.Length" | translate}}
             </div>
-          </div>
+          </ion-text>
   
           <ion-item>
             <ion-label position="floating">
@@ -94,12 +92,12 @@
             formControlName="repeatPassword"></ion-input>
           </ion-item>
 
-          <div *ngIf="password.invalid && password.touched"
+          <ion-text color="danger" *ngIf="password.invalid && password.touched"
             class="alert alert-danger">
             <div *ngIf="password.errors.minlength || password.errors.maxlength">
               {{ "PasswordError.Length" | translate}}
             </div>
-          </div>
+          </ion-text>
 
           <div 
             *ngIf="password.value != repeatPassword.value"

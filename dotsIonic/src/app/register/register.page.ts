@@ -95,12 +95,13 @@ export class RegisterPage implements OnInit {
   async checkEmail(){
     if(this.checkingEmail == false){
       this.checkingEmail = true;
+      this.usedEmailError = false;
 
       setTimeout(() => {
         this.authService.checkEmail(this.email.value).subscribe( async (data: [any]) => {
           console.log(data);
 
-          if(data.matchingEmails == 1) this.usedEmailError = true;
+          if(data["matchingEmails"] == 1) this.usedEmailError = true;
           else this.usedEmailError = false;
           
           this.checkingEmail = false;
@@ -110,10 +111,10 @@ export class RegisterPage implements OnInit {
   }
 
   async checkToken(tokenId){
-    this.authService.checkToken(tokenId).subscribe( async (data: [any]) => {
-      console.log(data);
+    this.authService.checkToken(tokenId).subscribe( async (tokenExists) => {
+      console.log(tokenExists);
 
-      if(data.tokenExists) this.tokenExpiredError = false;
+      if(tokenExists) this.tokenExpiredError = false;
       else this.tokenExpiredError = true;
     
     })

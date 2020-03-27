@@ -58,25 +58,15 @@ export class LoginPage implements OnInit {
 
       setTimeout(() => {
         this.authService.checkEmail(this.email.value).subscribe( async (data: [any]) => {
-          console.log(data);
+          console.log(data["matchingEmails"]);
 
-          if(data.matchingEmails == 1) this.emailNotExistingError = false;
+          if(data["matchingEmails"] == 1) this.emailNotExistingError = false;
           else this.emailNotExistingError = true;
           
           this.checkingEmail = false;
         })
       }, 2000);
     }
-  }
-
-  async checkToken(tokenId){
-    this.authService.checkToken(tokenId).subscribe( async (data: [any]) => {
-      console.log(data);
-
-      if(data.tokenExists) this.tokenExpiredError = false;
-      else this.tokenExpiredError = true;
-    
-    })
   }
 
   async login(){

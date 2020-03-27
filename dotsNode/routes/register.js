@@ -12,8 +12,6 @@ const VerificationToken = require('../schemas/verificationTokenSchema');
 router.post('/checkEmail', async (req, res) => {
   let email = req.body.email;
 
-  console.log(email);
-
   let findEmail = await User.findOne({ Email: email });
   let result = 0;
 
@@ -26,8 +24,6 @@ router.post('/checkEmail', async (req, res) => {
 
 router.post('/checkToken', async (req, res) => {
   let tokenId = req.body.tokenId;
-
-  console.log(tokenId);
 
   let findToken = await VerificationToken.findOne({ _id: ObjectId(tokenId) });
   let result = false;
