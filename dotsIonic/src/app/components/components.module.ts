@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { RouterModule } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
 
@@ -29,7 +30,8 @@ import { PercentageChip } from './percentage-chip/percentage-chip.component';
     IonicModule,
     NgxChartsModule,
     FormsModule,
-    TranslateModule
+    TranslateModule,
+    RouterModule
   ],
   exports: [
     ChartTooltipComponent,
