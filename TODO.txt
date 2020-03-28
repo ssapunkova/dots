@@ -68,10 +68,11 @@
     * Invalid input messages in register
     * Refuse registration when email is already used
     * Refuse registration when token has expired/been deleted
-    Login
+    * Login
     
 25.03
   TODO:
+    * Store user data in a service
     Logout
     Login with fb
     Welcome with slides
