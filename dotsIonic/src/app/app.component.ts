@@ -69,17 +69,6 @@ export class AppComponent {
     public userService: UserService
   ) {
 
-    this.initializeApp();
-    translate.addLangs(['en', 'bg']);
-    translate.setDefaultLang('en');
-
-  }
-
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-    });
-
     this.storageService.get("DotsUserData").then((data) => {
       if(data != null){
         this.userService.data = data;
@@ -90,6 +79,24 @@ export class AppComponent {
       }
     });
 
+    this.initializeApp();
+    translate.addLangs(['en', 'bg']);
+    translate.setDefaultLang('en');
+
+  }
+
+  public initializeApp() {
+    this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+    });
   };
+
+  public logout(){
+    console.log("***Logout");
+    
+    this.storageService.set("DotsUserData", null);
+    
+    this.router.navigate(['/login']);
+  }
 
 }

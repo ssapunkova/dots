@@ -17,6 +17,13 @@
           <ion-item>
             {{ userService.data.Username }}
           </ion-item>
+
+          <ion-button 
+            fill="clear" 
+            (click)="logout()">
+            <ion-icon name="exit"></ion-icon>
+          </ion-button>
+
         </ion-toolbar>
       </ion-header>
       <ion-content>
