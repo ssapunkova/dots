@@ -7,4 +7,7 @@ export class UserService {
 
   public data;
 
+  public id = 0;
+
+
 }

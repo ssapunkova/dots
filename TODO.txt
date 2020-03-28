@@ -73,6 +73,6 @@
 25.03
   TODO:
     * Store user data in a service
-    Logout
+    * Logout
     Login with fb
     Welcome with slides

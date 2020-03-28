@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '../services/loading.service';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,8 @@ export class LoginPage implements OnInit {
     public alertController: AlertController,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    public storageService: StorageService
+    public storageService: StorageService,
+    public userService: UserService
   ) { }
 
   ngOnInit() {    
@@ -85,9 +87,11 @@ export class LoginPage implements OnInit {
 
       if(data["userData"] != null){
         let user = data["userData"];
-        console.log("***Logged in as ", user);
+        console.log("***Logged in as ", user.Username);
 
         this.storageService.set("DotsUserData", user);
+
+        this.userService.data = user;
 
         this.router.navigate(['/home']);
 

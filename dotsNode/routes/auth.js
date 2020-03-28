@@ -124,7 +124,12 @@ router.post("/login", async (req, res) => {
   else{
     bcrypt.compare(userData.password, user.Password, function (err, result) {
       if (result === true) {
-        res.send({ userData: { Username: user.Username, Status: user.Status, Email: user.Email } });
+        res.send({ userData: { 
+          _id: user._id,
+          Username: user.Username, 
+          Status: user.Status, 
+          Email: user.Email 
+        } });
       }
       else{
         res.send({ error: "WrongPasswordError"});

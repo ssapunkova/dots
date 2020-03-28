@@ -52,7 +52,7 @@ export class AppComponent {
     },
   ];
 
-  public userData;
+  public userId;
 
   constructor(
     public router: Router,
@@ -69,15 +69,26 @@ export class AppComponent {
     public userService: UserService
   ) {
 
-    this.storageService.get("DotsUserData").then((data) => {
-      if(data != null){
-        this.userService.data = data;
-        console.log("***UserData ", this.userService.data);
-      }
-      else{
-        this.router.navigate(['/login']);
-      }
-    });
+    // If no user data in UserService
+    if(this.userService.data == null){
+      console.log("No user data in userService")
+      // Check if user has logged in
+      this.storageService.get("DotsUserData").then((data) => {
+        console.log(data);
+        if(data == null){  
+          // If not logged, navigate to login
+          this.router.navigate(['/login']);
+        }
+        else{
+          // Set user data in userService
+          console.log("setting ", data)
+          this.userService.data = data;
+        }
+      })
+    }
+    else{
+      console.log("User data ", this.userService.data)
+    }
 
     this.initializeApp();
     translate.addLangs(['en', 'bg']);

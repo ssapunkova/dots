@@ -56,6 +56,8 @@ export class WorkoutsPage implements OnInit {
 
   async getSheets(){
 
+    console.log(this.userService.data);
+
     this.workoutService.getWorkoutSheetsData().subscribe( async (data: [any])=> {
 
       // Get data about all sheets

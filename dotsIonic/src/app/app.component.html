@@ -14,14 +14,15 @@
         <ion-toolbar>
           <!-- <ion-img src="assets/logo.png" style="height: 30px"></ion-img> -->
 
-          <ion-item>
+          <ion-item lines="none">
             {{ userService.data.Username }}
           </ion-item>
 
-          <ion-button 
+          <ion-button
+            slot="end" 
             fill="clear" 
             (click)="logout()">
-            <ion-icon name="exit"></ion-icon>
+            <ion-icon name="exit-outline"></ion-icon>
           </ion-button>
 
         </ion-toolbar>
