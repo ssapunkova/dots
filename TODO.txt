@@ -73,4 +73,5 @@
 25.03
   TODO:
     Logout
+    Login with fb
     Welcome with slides

@@ -1,12 +1,11 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
 
 // Services
 import { LoadingService } from '../services/loading.service';
-import { StorageService } from '../services/storage.service';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -22,26 +21,19 @@ export class HomePage implements OnInit {
   constructor(
     public loadingService: LoadingService,
     private translate: TranslateService,
-    private router: Router,
-    public storageService: StorageService
+    private menuController: MenuController
   ){}
+
+  ionViewWillEnter() {
+    this.menuController.enable(true);
+  }
 
   ngOnInit(){
     this.loadingService.showPageLoading();
 
     // Do something
 
-    this.storageService.get("DotsUserData").then((data) => {
-      if(data != null){
-        this.userData = data;
-        console.log(data);
-      }
-      else{
-        this.router.navigate(['/home']);
-      }
-
-      this.loadingService.hidePageLoading();
-    });
+    this.loadingService.hidePageLoading();
 
   }
 

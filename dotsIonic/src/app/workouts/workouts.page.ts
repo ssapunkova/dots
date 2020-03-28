@@ -11,7 +11,7 @@ import { DataTableService } from '../services/dataTable.service';
 import { TimeAndDateService } from '../services/timeAndDate.service';
 import { ChartService } from '../services/chart.service';
 import { WorkoutService } from '../services/workout.service';
-
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-workouts',
@@ -44,7 +44,8 @@ export class WorkoutsPage implements OnInit {
     public modalController: ModalController,
     public actionSheetController: ActionSheetController,
     public dataTableService: DataTableService,
-    public chartService: ChartService
+    public chartService: ChartService,
+    public userService: UserService
   ) { };
 
   ngOnInit() {

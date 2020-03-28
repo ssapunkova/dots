@@ -2,6 +2,7 @@ import { Component, Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 // Services
@@ -11,6 +12,8 @@ import { DataTableService } from './services/dataTable.service';
 import { TimeAndDateService } from './services/timeAndDate.service';
 import { ChartService } from './services/chart.service';
 import { WorkoutService } from './services/workout.service';
+import { StorageService } from './services/storage.service';
+import { UserService } from './services/user.service';
 
 
 @Component({
@@ -49,8 +52,10 @@ export class AppComponent {
     },
   ];
 
+  public userData;
 
   constructor(
+    public router: Router,
     private platform: Platform,
     private translate: TranslateService,
     public loadingService: LoadingService,
@@ -59,17 +64,32 @@ export class AppComponent {
     private timeAndDateService: TimeAndDateService,
     private chartService: ChartService,
     private workoutService: WorkoutService,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private storageService: StorageService,
+    public userService: UserService
   ) {
+
     this.initializeApp();
     translate.addLangs(['en', 'bg']);
     translate.setDefaultLang('en');
+
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
     });
+
+    this.storageService.get("DotsUserData").then((data) => {
+      if(data != null){
+        this.userService.data = data;
+        console.log("***UserData ", this.userService.data);
+      }
+      else{
+        this.router.navigate(['/login']);
+      }
+    });
+
   };
 
 }

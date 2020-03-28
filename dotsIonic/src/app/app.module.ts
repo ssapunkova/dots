@@ -36,6 +36,7 @@ import { ChartService } from './services/chart.service';
 import { WorkoutService } from './services/workout.service';
 import { StorageService } from './services/storage.service';
 import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { AuthService } from './services/auth.service';
     WorkoutService,
     StorageService,
     AuthService,
+    UserService,
     ComponentsModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

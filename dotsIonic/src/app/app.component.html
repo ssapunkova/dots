@@ -9,10 +9,14 @@
   </div>
 
   <ion-split-pane contentId="my-content">
-    <ion-menu type="overlay" contentId="my-content">
+    <ion-menu type="overlay" contentId="my-content" *ngIf="userService.data">
       <ion-header>
         <ion-toolbar>
-          <ion-img src="assets/logo.png" style="height: 30px"></ion-img>
+          <!-- <ion-img src="assets/logo.png" style="height: 30px"></ion-img> -->
+
+          <ion-item>
+            {{ userService.data.Username }}
+          </ion-item>
         </ion-toolbar>
       </ion-header>
       <ion-content>
