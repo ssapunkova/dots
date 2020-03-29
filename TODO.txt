@@ -74,5 +74,15 @@
   TODO:
     * Store user data in a service
     * Logout
-    Login with fb
-    Welcome with slides
+    * Login with fb
+    * Register fb
+
+29.03
+  FIX:
+    Requests using userId
+  
+  TODO:
+    Reorder exercises in workout manager
+    Save exercise order/use once
+    Stats on all sheets in workouts
+
