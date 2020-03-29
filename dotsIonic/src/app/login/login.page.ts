@@ -48,7 +48,9 @@ export class LoginPage implements OnInit {
       console.log("***Signed in with fb ", this.fbUser);
 
       this.localAuthService.handleFbUser(this.fbUser).subscribe(async (data: [any]) => {
-        console.log(data);
+        console.log(data["userData"]);
+        
+        this.setStorageData(data["userData"]);
       })
     });
 
@@ -98,6 +100,16 @@ export class LoginPage implements OnInit {
     }
   }
 
+  async setStorageData(user){
+    console.log("***Logged in as ", user.Username);
+
+    this.storageService.set("DotsUserData", user);
+
+    this.userService.data = user;
+
+    this.router.navigate(['/home']);
+  }
+
   async login(){
 
     let data = {
@@ -109,15 +121,7 @@ export class LoginPage implements OnInit {
       console.log(data);
 
       if(data["userData"] != null){
-        let user = data["userData"];
-        console.log("***Logged in as ", user.Username);
-
-        this.storageService.set("DotsUserData", user);
-
-        this.userService.data = user;
-
-        this.router.navigate(['/home']);
-
+        this.setStorageData(data["userData"]);
       }
     })
   }

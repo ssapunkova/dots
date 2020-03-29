@@ -120,12 +120,14 @@ router.post("/login", async (req, res) => {
 
   bcrypt.compare(userData.password, user.Password, function (err, result) {
     if (result === true) {
+
       res.send({ userData: { 
         _id: user._id,
         Username: user.Username, 
         Status: user.Status, 
         Email: user.Email 
       } });
+
     }
     else{
       res.send({ error: "WrongPasswordError"});
@@ -139,7 +141,7 @@ router.post("/handleFbUser", async(req, res) => {
   console.log(userData);
   console.log("handle");
 
-  let user = await User.findOne({ FbToken: userData.authToken });
+  let user = await User.findOne({ Email: userData.email, FbToken: {$ne: null} });
 
 
   if(user == null){
@@ -153,6 +155,17 @@ router.post("/handleFbUser", async(req, res) => {
 
     user.save();
     console.log("new user ", user)
+  }
+  else{
+    console.log("loggin in via fb")
+    res.send({ userData: { 
+      _id: user._id,
+      Username: user.Username, 
+      Status: user.Status, 
+      Email: user.Email,
+      FbToken: user.FbToken 
+    } });
+
   }
   
 })
