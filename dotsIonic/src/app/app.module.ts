@@ -35,7 +35,7 @@ import { TimerService } from './services/timer.service';
 import { ChartService } from './services/chart.service';
 import { WorkoutService } from './services/workout.service';
 import { StorageService } from './services/storage.service';
-import { AuthService } from './services/auth.service';
+import { LocalAuthService } from './services/localAuth.service';
 import { UserService } from './services/user.service';
 
 @NgModule({
@@ -78,7 +78,7 @@ import { UserService } from './services/user.service';
     ChartService,
     WorkoutService,
     StorageService,
-    AuthService,
+    LocalAuthService,
     UserService,
     ComponentsModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

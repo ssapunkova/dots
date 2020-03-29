@@ -118,25 +118,43 @@ router.post("/login", async (req, res) => {
   
   console.log(user);
 
-  if(user == null){
-    res.send({ error: "EmailNotFound"});
-  }
-  else{
-    bcrypt.compare(userData.password, user.Password, function (err, result) {
-      if (result === true) {
-        res.send({ userData: { 
-          _id: user._id,
-          Username: user.Username, 
-          Status: user.Status, 
-          Email: user.Email 
-        } });
-      }
-      else{
-        res.send({ error: "WrongPasswordError"});
-      }
-    });
-  }
+  bcrypt.compare(userData.password, user.Password, function (err, result) {
+    if (result === true) {
+      res.send({ userData: { 
+        _id: user._id,
+        Username: user.Username, 
+        Status: user.Status, 
+        Email: user.Email 
+      } });
+    }
+    else{
+      res.send({ error: "WrongPasswordError"});
+    }
+  });
 
+})
+
+router.post("/handleFbUser", async(req, res) => {
+  let userData = req.body.userData;
+  console.log(userData);
+  console.log("handle");
+
+  let user = await User.findOne({ FbToken: userData.authToken });
+
+
+  if(user == null){
+
+    let user = new User({
+      Username: userData.name,
+      Email: userData.email,
+      FbToken: userData.authToken,
+      Status: "user"
+    })
+
+    user.save();
+    console.log("new user ", user)
+  }
+  
 })
 
 module.exports = router;

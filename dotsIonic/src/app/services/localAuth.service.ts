@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 // Implements authorisation and registration functions
 
 @Injectable()
-export class AuthService{
+export class LocalAuthService{
 
   constructor(
     public http: HttpClient,
@@ -56,6 +56,12 @@ export class AuthService{
 
   public login(data){
     return this.http.post(this.connectToServerService.serverUrl + '/login',
+      { userData: data } 
+    )
+  }
+
+  public handleFbUser(data){
+    return this.http.post(this.connectToServerService.serverUrl + '/handleFbUser',
       { userData: data } 
     )
   }

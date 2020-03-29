@@ -5,11 +5,12 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { AlertController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
 import { Router } from '@angular/router';
+import { AuthService, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
 
 // Services
 import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '../services/loading.service';
-import { AuthService } from '../services/auth.service';
+import { LocalAuthService } from '../services/localAuth.service';
 import { StorageService } from '../services/storage.service';
 import { UserService } from '../services/user.service';
 
@@ -21,6 +22,9 @@ import { UserService } from '../services/user.service';
 export class LoginPage implements OnInit {
 
   public passwordVisible = false;
+
+  public fbUser: SocialUser;
+  public fbLoggedIn: boolean;
   
   constructor(
     private router: Router,
@@ -29,20 +33,39 @@ export class LoginPage implements OnInit {
     public loadingService: LoadingService,
     private translate: TranslateService,
     public alertController: AlertController,
-    private authService: AuthService,
+    private localAuthService: LocalAuthService,
     private formBuilder: FormBuilder,
     public storageService: StorageService,
-    public userService: UserService
+    public userService: UserService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {    
+
+    this.authService.authState.subscribe((user) => {
+      this.fbUser = user;
+      this.fbLoggedIn = (user != null);
+      console.log("***Signed in with fb ", this.fbUser);
+
+      this.localAuthService.handleFbUser(this.fbUser).subscribe(async (data: [any]) => {
+        console.log(data);
+      })
+    });
+
     this.loadingService.hidePageLoading();
   }
 
   ionViewWillEnter() {
     this.menuController.enable(false);
   }
-
+  
+  public signInWithFB() {
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+  
+  public signOut() {
+    this.authService.signOut();
+  }
 
   public email = new FormControl('', Validators.compose([
     Validators.required,
@@ -63,7 +86,7 @@ export class LoginPage implements OnInit {
       this.checkingEmail = true;
 
       setTimeout(() => {
-        this.authService.checkEmail(this.email.value).subscribe( async (data: [any]) => {
+        this.localAuthService.checkEmail(this.email.value).subscribe( async (data: [any]) => {
           console.log(data["matchingEmails"]);
 
           if(data["matchingEmails"] == 1) this.emailNotExistingError = false;
@@ -82,7 +105,7 @@ export class LoginPage implements OnInit {
       password: this.password.value
     }
 
-    this.authService.login(data).subscribe( async (data: [any]) => {
+    this.localAuthService.login(data).subscribe( async (data: [any]) => {
       console.log(data);
 
       if(data["userData"] != null){

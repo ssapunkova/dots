@@ -8,7 +8,7 @@ import { ActivatedRoute } from "@angular/router";
 // Services
 import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '../services/loading.service';
-import { AuthService } from '../services/auth.service';
+import { LocalAuthService } from '../services/localAuth.service';
 import { Router } from '@angular/router';
 
 
@@ -30,7 +30,7 @@ export class RegisterPage implements OnInit {
     public loadingService: LoadingService,
     private translate: TranslateService,
     public alertController: AlertController,
-    private authService: AuthService,
+    private localAuthService: LocalAuthService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -98,7 +98,7 @@ export class RegisterPage implements OnInit {
       this.usedEmailError = false;
 
       setTimeout(() => {
-        this.authService.checkEmail(this.email.value).subscribe( async (data: [any]) => {
+        this.localAuthService.checkEmail(this.email.value).subscribe( async (data: [any]) => {
           console.log(data);
 
           if(data["matchingEmails"] == 1) this.usedEmailError = true;
@@ -112,7 +112,7 @@ export class RegisterPage implements OnInit {
 
   async checkToken(tokenId){
     console.log("checking token")
-    this.authService.checkToken(tokenId).subscribe( async (data) => {
+    this.localAuthService.checkToken(tokenId).subscribe( async (data) => {
       console.log(data);
 
       if(data["tokenExists"]) this.tokenExpiredError = false;
@@ -138,7 +138,7 @@ export class RegisterPage implements OnInit {
     console.log(this.email);
     console.log("***Sending email to " + email);
 
-    this.authService.sendRegistrationEmail(email).subscribe( async (data: [any]) => {
+    this.localAuthService.sendRegistrationEmail(email).subscribe( async (data: [any]) => {
       console.log(data);
     })
   }
@@ -152,7 +152,7 @@ export class RegisterPage implements OnInit {
     }
     console.log("User data: ", data);
 
-    this.authService.finishRegistration(data).subscribe( async (data: [any]) => {
+    this.localAuthService.finishRegistration(data).subscribe( async (data: [any]) => {
       console.log(data);
     })
 

@@ -62,6 +62,12 @@
       <ion-label *ngIf="!checkingEmail">{{ 'Login' | translate }}</ion-label>
     </ion-button>
 
+    <ion-button 
+      (click)="signInWithFB()" 
+      *ngIf="fbLoggedIn===false" 
+      color="primary"
+    >Sign In With Facebook</ion-button>
+
 
   </ion-card>
 

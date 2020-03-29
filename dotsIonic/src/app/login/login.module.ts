@@ -10,12 +10,25 @@ import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from './login.page';
 
+import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider } from 'angularx-social-login';
+
 const routes: Routes = [
   {
     path: '',
     component: LoginPage
   }
 ];
+
+const config = new AuthServiceConfig([
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('256531972024477')
+  }
+]);
+
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   imports: [
@@ -25,9 +38,16 @@ const routes: Routes = [
     IonicModule,
     TranslateModule,
     ComponentsModule,
+    SocialLoginModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [LoginPage]
+  declarations: [LoginPage],
+  providers:[
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }
+  ]
 })
 export class LoginPageModule {}
 

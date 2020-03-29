@@ -9,7 +9,7 @@ import { ParamsPage } from './params/params.page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'register',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
