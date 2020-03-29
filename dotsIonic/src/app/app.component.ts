@@ -70,27 +70,27 @@ export class AppComponent {
   ) {
 
     // If no user data in UserService
-    if(this.userService.data == null){
-      console.log("No user data in userService")
-      // Check if user has logged in
-      this.storageService.get("DotsUserData").then((data) => {
-        console.log(data);
-        if(data == null){  
-          // If not logged, navigate to login
-          this.router.navigate(['/login']);
-        }
-        else{
-          // Set user data in userService
-          console.log("setting ", data)
-          this.userService.data = data;
-          this.initializeApp();
-        }
-      })
-    }
-    else{
-      console.log("User data ", this.userService.data)
-      this.initializeApp();
-    }
+    // if(this.userService.data == null){
+    //   console.log("No user data in userService")
+    //   // Check if user has logged in
+    //   this.storageService.get("DotsUserData").then((data) => {
+    //     console.log(data);
+    //     if(data == null){  
+    //       // If not logged, navigate to login
+    //       this.router.navigate(['/login']);
+    //     }
+    //     else{
+    //       // Set user data in userService
+    //       console.log("setting ", data)
+    //       this.userService.data = data;
+    //       this.initializeApp();
+    //     }
+    //   })
+    // }
+    // else{
+    //   console.log("User data ", this.userService.data)
+    //   this.initializeApp();
+    // }
 
 
   }

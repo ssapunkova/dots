@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 // Services
 import { LoadingService } from '../services/loading.service';
 import { MenuController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,8 @@ export class HomePage implements OnInit {
   constructor(
     public loadingService: LoadingService,
     private translate: TranslateService,
-    private menuController: MenuController
+    private menuController: MenuController,
+    private route: ActivatedRoute
   ){}
 
   ionViewWillEnter() {
@@ -32,6 +34,8 @@ export class HomePage implements OnInit {
     this.loadingService.showPageLoading();
 
     // Do something
+
+    this.userData = this.route.snapshot.data.userData;
 
     this.loadingService.hidePageLoading();
 

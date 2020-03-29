@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+import { UserService } from './services/user.service';
+
 import { WorkoutsPage } from './workouts/workouts.page';
 import { WorkoutSheetPage } from './workoutSheet/workoutSheet.page';
 import { WorkoutManagerPage } from './workoutManager/workoutManager.page';
@@ -11,6 +13,7 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+    resolve: { userData: UserService }
   },
   {
     path: 'home',
