@@ -107,8 +107,8 @@ export class WorkoutManagerPage implements OnInit {
       }
     },
     error => {
-      this.errorToastAndAlertService.showErrorAlert("Oups")
-    }
+      this.errorToastAndAlertService.showErrorAlert("Oups");
+    });
   }
 
 

@@ -109,7 +109,7 @@ export class WorkoutsPage implements OnInit {
     },
     error => {
       this.errorToastAndAlertService.showErrorAlert("Oups")
-    }
+    });
   };
 
   async showSheetActions(sheet, index){
