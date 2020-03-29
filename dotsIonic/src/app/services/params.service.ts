@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ConnectToServerService } from './connectToServer.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -136,6 +137,7 @@ export class ParamsService {
 
   constructor(
     public http: HttpClient,
+    public userService: UserService,
     public connectToServerService: ConnectToServerService,
   ) { }
 
@@ -144,14 +146,19 @@ export class ParamsService {
   }
 
   public getUserParams(){
-    return this.http.get(this.connectToServerService.serverUrl + '/getUserParams')
+    let userId = this.userService.data._id;
+    return this.http.get(this.connectToServerService.serverUrl + '/getUserParams/' + userId)
   }
 
-  public updateUserParams(params){
-    console.log("Sendnn", params)
+  public updateUserParams(data){
+    let userId = this.userService.data._id;
+    console.log(userId);
     return this.http.post(
       this.connectToServerService.serverUrl + '/updateUserParams',
-      {data: params}
+      { 
+        userId: userId,
+        data: data
+      }
     );
   }
 

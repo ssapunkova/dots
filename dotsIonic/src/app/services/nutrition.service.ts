@@ -33,11 +33,13 @@ export class NutritionService {
     this.DefaultParamsIndex = 0;
     this.DefaultParams = [this.Params[0]];
 
+  }
+
+  ngInit(){
     this.paramsService.getUserParams().subscribe(async (data) => {
       this.userCalculatedValues = data;
       console.log("User calculated values ", this.userCalculatedValues);
     })
-
   }
 
   public getNutritionData(){

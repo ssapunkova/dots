@@ -83,20 +83,21 @@ export class AppComponent {
           // Set user data in userService
           console.log("setting ", data)
           this.userService.data = data;
+          this.initializeApp();
         }
       })
     }
     else{
       console.log("User data ", this.userService.data)
+      this.initializeApp();
     }
 
-    this.initializeApp();
-    translate.addLangs(['en', 'bg']);
-    translate.setDefaultLang('en');
 
   }
 
   public initializeApp() {
+    this.translate.addLangs(['en', 'bg']);
+    this.translate.setDefaultLang('en');
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
     });

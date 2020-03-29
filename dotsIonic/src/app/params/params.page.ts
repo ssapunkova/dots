@@ -4,6 +4,7 @@ import { OverlayEventDetail } from '@ionic/core';
 
 // Services
 import { ParamsService } from '../services/params.service';
+import { UserService } from '../services/user.service';
 import { LoadingService } from '../services/loading.service';
 import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 
@@ -26,9 +27,11 @@ export class ParamsPage implements OnInit {
   public userParamsData;                          // Raw data from db:
                                                   // Params: [array of param indexes]
                                                   // Values: [array of values]
+
   
   constructor(
     public paramsService: ParamsService,
+    public userService: UserService,
     private modalController: ModalController,
     private loadingService: LoadingService,
     private translate: TranslateService,

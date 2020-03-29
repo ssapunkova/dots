@@ -15,29 +15,30 @@ router.get("/getBodyMassConstants/:gender", async (req, res) => {
   res.send(constants);
 })
 
-router.get("/getUserParams", async (req, res) => {
+router.get("/getUserParams/:userId", async (req, res) => {
 
-  let userParams = await UserParams.findOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9")});
+  let userId = req.params.userId;
+
+  console.log("Userid", userId)
+
+  let userParams = await UserParams.findOne({ UserId: ObjectId(userId)});
 
   res.send(userParams);
 })
 
-
-// router.get("/getUserParams", async (req, res) => {
-//   res.send({"ag": 66});
-// })
-
 router.post("/updateUserParams", async (req, res) => {
 
-  let params = req.body.data;
-  console.log("Params")
-  console.log(params);
+  let userId = req.body.userId;
+  let data = req.body.data;
+
+  console.log("Params, userId ", userId)
+  console.log(data);
 
   let userParams = await UserParams.findOneAndUpdate(
-    { UserId: ObjectId("5d98ade96dfda51dc84991d9")},
+    { UserId: ObjectId(userId)},
     { 
-      Params: params.Params,
-      Values: params.Values
+      Params: data.Params,
+      Values: data.Values
     },
     { upsert: true }
   );
