@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '../services/loading.service';
 import { LocalAuthService } from '../services/localAuth.service';
 import { StorageService } from '../services/storage.service';
+import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -37,7 +38,8 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     public storageService: StorageService,
     public userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    public errorToastAndAlertService: ErrorToastAndAlertService
   ) { }
 
   ngOnInit() {    
@@ -48,10 +50,11 @@ export class LoginPage implements OnInit {
       console.log("***Signed in with fb ", this.fbUser);
 
       this.localAuthService.handleFbUser(this.fbUser).subscribe(async (data: [any]) => {
-        console.log(data["userData"]);
-        
         this.setStorageData(data["userData"]);
-      })
+      },
+      error => {
+        this.errorToastAndAlertService.showErrorAlert("Oups")
+      });
     });
 
     this.loadingService.hidePageLoading();
@@ -95,7 +98,10 @@ export class LoginPage implements OnInit {
           else this.emailNotExistingError = true;
           
           this.checkingEmail = false;
-        })
+        },
+        error => {
+          this.errorToastAndAlertService.showErrorAlert("Oups")
+        });
       }, 2000);
     }
   }
@@ -104,7 +110,6 @@ export class LoginPage implements OnInit {
     console.log("***Logged in as ", user.Username);
 
     this.storageService.set("DotsUserData", user);
-
     this.userService.data = user;
 
     this.router.navigate(['/home']);
@@ -123,7 +128,10 @@ export class LoginPage implements OnInit {
       if(data["userData"] != null){
         this.setStorageData(data["userData"]);
       }
-    })
+    },
+    error => {
+      this.errorToastAndAlertService.showErrorAlert("Oups")
+    });
   }
 
 }

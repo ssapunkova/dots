@@ -4,12 +4,13 @@ import { Validators, FormControl, FormGroupDirective, FormBuilder, FormGroup } f
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AlertController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 // Services
-import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '../services/loading.service';
 import { LocalAuthService } from '../services/localAuth.service';
-import { Router } from '@angular/router';
+import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class RegisterPage implements OnInit {
     private route: ActivatedRoute,
     private menuController: MenuController,
     public loadingService: LoadingService,
+    public errorToastAndAlertService: ErrorToastAndAlertService,
     private translate: TranslateService,
     public alertController: AlertController,
     private localAuthService: LocalAuthService,
@@ -87,8 +89,6 @@ export class RegisterPage implements OnInit {
   public checkPasswordsMatch(group: FormGroup) {
     let pass1 = group.controls.password.value;
     let pass2 = group.controls.repeatPassword.value;
-    console.log(pass1, pass2);
-    console.log(pass1 == pass2);
     return (pass1 == pass2) ? null : {'passwordMatch': false};
   }
 
@@ -117,8 +117,10 @@ export class RegisterPage implements OnInit {
 
       if(data["tokenExists"]) this.tokenExpiredError = false;
       else this.tokenExpiredError = true;
-    
-    })
+    },
+    error => {
+      this.errorToastAndAlertService.showErrorAlert("Oups")
+    });
   }
 
   async sendEmail(){
@@ -140,7 +142,10 @@ export class RegisterPage implements OnInit {
 
     this.localAuthService.sendRegistrationEmail(email).subscribe( async (data: [any]) => {
       console.log(data);
-    })
+    },
+    error => {
+      this.errorToastAndAlertService.showErrorAlert("Oups")
+    });
   }
 
   async finishRegistration(){
@@ -154,7 +159,10 @@ export class RegisterPage implements OnInit {
 
     this.localAuthService.finishRegistration(data).subscribe( async (data: [any]) => {
       console.log(data);
-    })
+    },
+    error => {
+      this.errorToastAndAlertService.showErrorAlert("Oups")
+    });
 
     this.router.navigate(['/welcome']);
 

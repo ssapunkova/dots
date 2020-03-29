@@ -106,7 +106,10 @@ export class WorkoutsPage implements OnInit {
       // Dismiss all loading
       this.loadingService.hidePageLoading();
 
-    });
+    },
+    error => {
+      this.errorToastAndAlertService.showErrorAlert("Oups")
+    }
   };
 
   async showSheetActions(sheet, index){

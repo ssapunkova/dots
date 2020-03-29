@@ -80,6 +80,7 @@
 29.03
   FIX:
     Requests using userId
+    Some bug with editing/saving workout records
   
   TODO:
     Reorder exercises in workout manager

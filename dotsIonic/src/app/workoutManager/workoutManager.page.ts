@@ -105,7 +105,10 @@ export class WorkoutManagerPage implements OnInit {
 
         console.log(this.averageTime);
       }
-    });
+    },
+    error => {
+      this.errorToastAndAlertService.showErrorAlert("Oups")
+    }
   }
 
 

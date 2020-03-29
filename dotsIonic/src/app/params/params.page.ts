@@ -136,9 +136,7 @@ export class ParamsPage implements OnInit {
       });
     }
     else{
-
       this.errorToastAndAlertService.showErrorToast(this.translate.instant("FirstEnterGeneralParams"))
-
     }
   }
 

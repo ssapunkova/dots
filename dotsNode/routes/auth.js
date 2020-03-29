@@ -138,8 +138,6 @@ router.post("/login", async (req, res) => {
 
 router.post("/handleFbUser", async(req, res) => {
   let userData = req.body.userData;
-  console.log(userData);
-  console.log("handle");
 
   let user = await User.findOne({ Email: userData.email, FbToken: {$ne: null} });
 
