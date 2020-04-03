@@ -89,7 +89,11 @@ router.post("/updateSheetConfiguration", async (req, res) => {
 router.post("/addWorkoutRecord", async (req, res) => {
   let record = req.body.data;
 
-  let upsertRecord = await WorkoutRecord.updateOne({ Date: record.Date }, {
+  let upsertRecord = await WorkoutRecord.updateOne(
+    { 
+      SheetId: record.SheetId, 
+      Date: record.Date 
+    }, {
     $set: {
       SheetId: record.SheetId,
       Values: record.Values,
