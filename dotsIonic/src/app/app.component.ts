@@ -98,9 +98,11 @@ export class AppComponent {
   public initializeApp() {
     this.translate.addLangs(['en', 'bg']);
     this.translate.setDefaultLang('en');
+
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
     });
+    
   };
 
   public logout(){

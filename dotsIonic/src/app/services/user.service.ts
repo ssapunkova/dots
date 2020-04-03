@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
+
 import { Resolve } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/delay';
 
 import { StorageService } from './storage.service';
 
@@ -11,8 +14,7 @@ export class UserService implements Resolve<Observable<string>> {
   public data;
 
   constructor(
-    private storageService: StorageService,
-    private router: Router,
+    private storageService: StorageService
   ) { }
 
   resolve() {
@@ -29,8 +31,32 @@ export class UserService implements Resolve<Observable<string>> {
         this.data = data;
       }
     })
-    
-    return this.data;
 
+    return this.data;
+  
   }
+
+  // resolve() {
+  //       return Observable.of('Hello Alligator!').delay(2000);
+  //     }
+
+
+
 }
+
+// import { Injectable } from '@angular/core';
+
+// import { Resolve } from '@angular/router';
+
+// import { Observable } from 'rxjs/Observable';
+// import 'rxjs/add/observable/of';
+// import 'rxjs/add/operator/delay';
+
+// @Injectable()
+// export class UserService implements Resolve<Observable<string>> {
+//   constructor() {}
+
+//   resolve() {
+//     return Observable.of('Hello Alligator!').delay(2000);
+//   }
+// }

@@ -58,7 +58,6 @@ export class ChartService{
       // Go through every param of current record, get it's value and percentageOfGoal
       for(var i = 0; i < record.Values.length; i++){
         let currentParam = params[i];
-        console.log(currentParam);
         let date = await this.timeAndDateService.formatDate(record.Date);
 
         // if it's a new, unregistered yet param

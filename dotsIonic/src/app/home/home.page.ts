@@ -37,8 +37,34 @@ export class HomePage implements OnInit {
 
     this.userData = this.route.snapshot.data.userData;
 
+    console.log(this.userData);
+
+    console.log(this.route.snapshot)
+
     this.loadingService.hidePageLoading();
 
   }
 
 }
+
+// import { Component, OnInit } from '@angular/core';
+
+// import { ActivatedRoute } from '@angular/router';
+
+// @Component({
+//   selector: 'app-home',
+//   templateUrl: 'home.page.html',
+//   styleUrls: ['home.page.scss']
+// })
+
+// export class HomePage implements OnInit {
+//   data: any;
+
+//   constructor(private route: ActivatedRoute) {}
+
+//   ngOnInit() {
+//     this.data = this.route.snapshot.data;
+
+//     console.log(this.data);
+//   }
+// }

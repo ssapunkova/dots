@@ -1,3 +1,23 @@
+
+// import { NgModule } from '@angular/core';
+// import { Routes, PreloadAllModules, RouterModule } from '@angular/router';
+
+
+// import { UserService } from './services/user.service';
+
+// const routes: Routes = [
+//   {
+//     path: '',
+//     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
+//     resolve: { message: UserService }
+//   },
+//   {
+//         path: 'home',
+//         loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+//       },
+// ];
+
+
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
@@ -13,11 +33,11 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
-    resolve: { userData: UserService }
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
+    resolve: { userData: UserService }
   },
   {
     path: 'workouts',
@@ -68,6 +88,16 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [UserService]
 })
 export class AppRoutingModule {}
+
+// @NgModule({
+//   imports: [RouterModule.forRoot(routes)],
+//   exports: [RouterModule],
+//   providers: [
+//     UserService
+//   ]
+// })
+// export class AppRoutingModule {}
