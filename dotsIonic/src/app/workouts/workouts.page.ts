@@ -173,6 +173,8 @@ export class WorkoutsPage implements OnInit {
               else{
                 // If sheet title is fine, add sheet to database
 
+                data.UserId = this.userData._id;
+
                 this.workoutService.createSheet(data).subscribe( async (data: [any])=>
                   {
                     console.log(data)
