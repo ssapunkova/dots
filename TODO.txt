@@ -79,7 +79,7 @@
 
 29.03
   FIX:
-    Requests using userId
+    * Requests using userId in workouts
     * Some bug with editing/saving workout records
   
   TODO:
@@ -90,3 +90,6 @@
 03.04
   REDO:
     Workout manager design
+  TODO:
+    Router snapshot everywhere
+    Request with user id everywhere
