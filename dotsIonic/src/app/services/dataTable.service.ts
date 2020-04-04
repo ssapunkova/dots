@@ -78,12 +78,12 @@ export class DataTableService{
     // If no records yet
     if(records.length == 0){
       this.allRecords = [];
-      if(this.params.length > 0){
-        this.showNoRecordsAlert();
-      }
-      else{
-        this.showNoParamsAlert();
-      }
+      // if(this.params.length > 0){
+      //   this.showNoRecordsAlert();
+      // }
+      // else{
+      //   this.showNoParamsAlert();
+      // }
     }
     else{
       this.allRecords = records;
@@ -149,15 +149,15 @@ export class DataTableService{
     await alert.present();
   }
 
-  async showNoParamsAlert(){
-    let message = this.translate.instant("AddGoalsTip");
-    let alert = await this.alertController.create({
-      header: this.translate.instant("NoGoalsYet"),
-      message: message,
-      buttons: [ { text: 'Ok' }]
-    });
-    await alert.present();
-  }
+  // async showNoParamsAlert(){
+  //   let message = this.translate.instant("AddGoalsTip");
+  //   let alert = await this.alertController.create({
+  //     header: this.translate.instant("NoGoalsYet"),
+  //     message: message,
+  //     buttons: [ { text: 'Ok' }]
+  //   });
+  //   await alert.present();
+  // }
 
   // Switch from table/chart view mode
   async changeShowMode(){

@@ -14,6 +14,7 @@ import { DataTableComponent } from './data-table/data-table.component';
 import { ToggleShowingMode } from './toggle-showing-mode/toggle-showing-mode.component';
 import { ToggleRegisterLogin } from './toggle-register-login/toggle-register-login.component';
 import { PercentageChip } from './percentage-chip/percentage-chip.component';
+import { NoItemsMessage } from './no-items-message/no-items-message.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { PercentageChip } from './percentage-chip/percentage-chip.component';
     DataTableComponent,
     ToggleShowingMode,
     PercentageChip,
-    ToggleRegisterLogin
+    ToggleRegisterLogin,
+    NoItemsMessage
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { PercentageChip } from './percentage-chip/percentage-chip.component';
     DataTableComponent,
     ToggleShowingMode,
     PercentageChip,
-    ToggleRegisterLogin
+    ToggleRegisterLogin,
+    NoItemsMessage
   ]
 })
 export class ComponentsModule { }

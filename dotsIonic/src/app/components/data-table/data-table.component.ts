@@ -25,7 +25,13 @@ export class DataTableComponent implements OnInit {
   ) { }
 
 
-  ngOnInit(){   }
+  ngOnInit(){ 
+
+    // if(this.dataTableService.params.length == 0){
+    //   this.editParams();
+    // }
+
+  }
 
   async addRecord() {
     // Emit addRecordClicked event to parent (nutrition.page.html)

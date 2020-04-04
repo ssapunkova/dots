@@ -14,7 +14,6 @@ import { ChartService } from './services/chart.service';
 import { WorkoutService } from './services/workout.service';
 import { StorageService } from './services/storage.service';
 import { UserService } from './services/user.service';
-import { userInfo } from 'os';
 
 
 @Component({

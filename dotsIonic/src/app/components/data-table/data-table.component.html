@@ -1,4 +1,9 @@
-<div >
+<no-items-message 
+*ngIf="dataTableService.params.length == 0">
+
+</no-items-message>
+
+<div *ngIf="dataTableService.allRecords.length > 0">
 
   <ion-grid>
 

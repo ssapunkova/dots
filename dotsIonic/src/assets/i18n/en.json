@@ -12,6 +12,8 @@
 	"Cancel": "Cancel",
 	"Save": "Save",
 	"EditSheet": "Edit sheet",
+	"NoExercisesMessage": "No exercises here yet",
+	"AddExercises": "Add exercises",
 	"NoTitleOrGoalExercisesWarning": "Exercises with no title or goal will not be saved",
 	"Exercise": "Exercise",
 	"Exercises": "Exercises",
