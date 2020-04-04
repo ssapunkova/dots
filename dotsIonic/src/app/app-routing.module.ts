@@ -33,6 +33,7 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+    resolve: { userData: UserService }
   },
   {
     path: 'home',
@@ -41,7 +42,8 @@ const routes: Routes = [
   },
   {
     path: 'workouts',
-    loadChildren: () => import('./workouts/workouts.module').then(m => m.WorkoutsPageModule)
+    loadChildren: () => import('./workouts/workouts.module').then(m => m.WorkoutsPageModule),
+    resolve: { userData: UserService }
   },
   {
     path: 'workoutSheet/:sheetId',

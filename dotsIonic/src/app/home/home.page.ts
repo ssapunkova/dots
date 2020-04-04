@@ -37,10 +37,6 @@ export class HomePage implements OnInit {
 
     this.userData = this.route.snapshot.data.userData;
 
-    console.log(this.userData);
-
-    console.log(this.route.snapshot)
-
     this.loadingService.hidePageLoading();
 
   }

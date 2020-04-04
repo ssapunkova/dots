@@ -2,7 +2,7 @@ import { Component, Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 // Services
@@ -14,6 +14,7 @@ import { ChartService } from './services/chart.service';
 import { WorkoutService } from './services/workout.service';
 import { StorageService } from './services/storage.service';
 import { UserService } from './services/user.service';
+import { userInfo } from 'os';
 
 
 @Component({
@@ -52,7 +53,7 @@ export class AppComponent {
     },
   ];
 
-  public userId;
+  public userData;
 
   constructor(
     public router: Router,
@@ -66,32 +67,32 @@ export class AppComponent {
     private workoutService: WorkoutService,
     private statusBar: StatusBar,
     private storageService: StorageService,
-    public userService: UserService
+    public userService: UserService,
+    private route: ActivatedRoute
   ) {
 
-    // If no user data in UserService
-    // if(this.userService.data == null){
-    //   console.log("No user data in userService")
-    //   // Check if user has logged in
-    //   this.storageService.get("DotsUserData").then((data) => {
-    //     console.log(data);
-    //     if(data == null){  
-    //       // If not logged, navigate to login
-    //       this.router.navigate(['/login']);
-    //     }
-    //     else{
-    //       // Set user data in userService
-    //       console.log("setting ", data)
-    //       this.userService.data = data;
-    //       this.initializeApp();
-    //     }
-    //   })
-    // }
-    // else{
-    //   console.log("User data ", this.userService.data)
-    //   this.initializeApp();
-    // }
-
+    
+    if(this.userData == null){
+      console.log("No user data")
+      // Check if user has logged in
+      this.storageService.get("DotsUserData").then((data) => {
+        console.log(data);
+        if(data == null){  
+          // If not logged, navigate to login
+          this.router.navigate(['/login']);
+        }
+        else{
+          // Set user data in userService
+          console.log("setting ", data)
+          this.userData = data;
+          this.initializeApp();
+        }
+      })
+    }
+    else{
+      console.log("User data ", this.userData)
+      this.initializeApp();
+    }
 
   }
 
