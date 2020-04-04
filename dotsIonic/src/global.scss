@@ -34,7 +34,6 @@ input{
   color: black;
 }
 
-
 .split-pane-visible >.split-pane-side {
   min-width: 200px !important;
   max-width: 200px !important;
@@ -82,6 +81,15 @@ g.line-chart > g:last-of-type > g g.line-series > path {
 ion-label{
   font-size: 1rem !important;
   color: var(--ion-color-light-primary-contrast) !important;
+}
+
+// No items screen
+
+.no-items-message{
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  color: grey;
 }
 
 // g.line-chart > g:last-of-type > g:nth-child(3) g.line-series > path {

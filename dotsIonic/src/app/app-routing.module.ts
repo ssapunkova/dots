@@ -1,23 +1,3 @@
-
-// import { NgModule } from '@angular/core';
-// import { Routes, PreloadAllModules, RouterModule } from '@angular/router';
-
-
-// import { UserService } from './services/user.service';
-
-// const routes: Routes = [
-//   {
-//     path: '',
-//     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
-//     resolve: { message: UserService }
-//   },
-//   {
-//         path: 'home',
-//         loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
-//       },
-// ];
-
-
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ConnectToServerService } from './connectToServer.service';
@@ -9,6 +9,8 @@ import { UserService } from './user.service';
 })
 export class WorkoutService {
 
+  public userId;
+
   constructor(
     public http: HttpClient,
     public connectToServerService: ConnectToServerService,
@@ -17,13 +19,13 @@ export class WorkoutService {
 
 
   public getWorkoutSheetData(sheetId){
-    return this.http.get(this.connectToServerService.serverUrl + '/getSheetData/' + sheetId)
+    return this.http.get(this.connectToServerService.serverUrl + '/getSheetData/one/' + sheetId)
   }
 
-  public getWorkoutSheetsData(){
-    let userId = this.userService.data;
-    console.log(this.userService.data);
-    return this.http.get(this.connectToServerService.serverUrl + '/getSheetData/all')
+  public getWorkoutSheetsData(userId){
+    
+    console.log(userId);
+    return this.http.get(this.connectToServerService.serverUrl + '/getSheetData/all/' + userId)
   }
 
   public getSheetExercises(sheetId){

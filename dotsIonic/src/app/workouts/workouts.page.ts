@@ -1,5 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { AlertController, ModalController, ActionSheetController } from '@ionic/angular';
 
 // Services
@@ -11,7 +12,6 @@ import { DataTableService } from '../services/dataTable.service';
 import { TimeAndDateService } from '../services/timeAndDate.service';
 import { ChartService } from '../services/chart.service';
 import { WorkoutService } from '../services/workout.service';
-import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-workouts',
@@ -34,6 +34,8 @@ export class WorkoutsPage implements OnInit {
 
   public chartData = [];
 
+  public userData;
+
   constructor(
     public loadingService: LoadingService,
     public errorToastAndAlertService: ErrorToastAndAlertService,
@@ -45,20 +47,23 @@ export class WorkoutsPage implements OnInit {
     public actionSheetController: ActionSheetController,
     public dataTableService: DataTableService,
     public chartService: ChartService,
-    public userService: UserService
+    private route: ActivatedRoute
   ) { };
 
   ngOnInit() {
     this.loadingService.showPageLoading();
+    
+    this.userData = this.route.snapshot.data.userData;
+
     // Load sheets data from database
     this.getSheets();
   }
 
   async getSheets(){
 
-    console.log(this.userService.data);
+    console.log(this.userData);
 
-    this.workoutService.getWorkoutSheetsData().subscribe( async (data: [any])=> {
+    this.workoutService.getWorkoutSheetsData(this.userData._id).subscribe( async (data: [any])=> {
 
       // Get data about all sheets
       this.workoutSheets = data;

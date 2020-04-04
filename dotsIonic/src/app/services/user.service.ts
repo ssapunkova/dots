@@ -20,7 +20,8 @@ export class UserService implements Resolve<Observable<string>> {
 
   resolve() {
 
-    return this.storageService.get("DotsUserData");
+    this.data = this.storageService.get("DotsUserData");
+    return this.data;
   
   }
 

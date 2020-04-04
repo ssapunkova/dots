@@ -130,7 +130,7 @@ export class WorkoutSheetPage implements OnInit {
     }
     else{
 
-      this.errorToastAndAlertService.showErrorAlert(this.translate.instant("SetYpurGoalsMessage"))
+      this.errorToastAndAlertService.showErrorAlert(this.translate.instant("SetYourGoalsMessage"))
 
     }
 

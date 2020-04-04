@@ -7,10 +7,19 @@ const User = require('../schemas/userSchema');
 const WorkoutSheet = require('../schemas/workoutSheetSchema');
 const WorkoutRecord = require('../schemas/workoutRecordSchema');
 
-router.get("/getSheetData/:sheetId", async (req, res) => {
-  let sheetId = req.params.sheetId;
+router.get("/getSheetData/:which/:id", async (req, res) => {
+  let which = req.params.which;
+  let id = req.params.id;
   let query = {};
-  if(sheetId != "all")  query = { _id: ObjectId(sheetId) };
+  
+  // If which == all -> get all sheets by user with id = id
+  // else if which == one -> get the sheet with id = id
+  if(which == "all") {
+    query = { UserId: ObjectId(id) };
+  }
+  else{
+    query = { _id: ObjectId(id) };
+  }
 
   let sheetData = await WorkoutSheet.find(query).populate("WorkoutRecords").exec();
   if(sheetData.err) throw sheetData.err;
