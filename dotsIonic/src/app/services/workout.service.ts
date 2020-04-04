@@ -23,8 +23,6 @@ export class WorkoutService {
   }
 
   public getWorkoutSheetsData(userId){
-    
-    console.log(userId);
     return this.http.get(this.connectToServerService.serverUrl + '/getSheetData/all/' + userId)
   }
 
