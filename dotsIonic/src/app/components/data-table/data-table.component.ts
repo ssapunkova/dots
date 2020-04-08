@@ -9,7 +9,7 @@ import { DataTableService } from '../../services/dataTable.service';
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss']
 })
-export class DataTableComponent implements OnInit {
+export class DataTableComponent  {
 
   @Input() service: String;
 
@@ -24,28 +24,19 @@ export class DataTableComponent implements OnInit {
     public dataTableService: DataTableService
   ) { }
 
-
-  ngOnInit(){ 
-
-    // if(this.dataTableService.params.length == 0){
-    //   this.editParams();
-    // }
-
-  }
-
   async addRecord() {
     // Emit addRecordClicked event to parent (nutrition.page.html)
-    this.addRecordClicked.emit()
+    this.addRecordClicked.emit();
   }
 
   async editParams(){
     // Emit editParamsButtonClicked event to parent (nutrition.page.html)
-    this.editParamsButtonClicked.emit()
+    this.editParamsButtonClicked.emit();
   }
 
   async showRecordOptions($event){
     // Emit showRecordOptionsClicked event to parent (nutrition.page.html)
-    this.showRecordOptionsClicked.emit($event)
+    this.showRecordOptionsClicked.emit($event);
   }
 
 

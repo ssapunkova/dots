@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'no-items-message',
@@ -7,10 +9,19 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class NoItemsMessage implements OnInit {
 
-  @Input() percentage: Number;
+  @Input() headerMessage;
+  @Input() buttonLabel;
+  @Output() buttonClicked = new EventEmitter();
 
-  constructor() {}
+  constructor(
+    public translate: TranslateService
+  ) {}
 
-  ngOnInit(){}
+  ngOnInit(){
+  }
+
+  async buttonFunction(){
+    this.buttonClicked.emit();
+  }
 
 }

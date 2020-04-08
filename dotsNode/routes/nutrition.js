@@ -47,11 +47,21 @@ router.post("/updateNutritionParams", async (req, res) => {
     if(recordsOfDeletedParams.err) throw recordsOfDeletedParams.err;
     else{
       for(let i = 0; i < recordsOfDeletedParams.length; i++){
-        for(let j = 0; j < deletedParams.length; j++){
-          let index = recordsOfDeletedParams[i].Params.indexOf(deletedParams[j]);
-          recordsOfDeletedParams[i].Values.splice(index, 1);
-          recordsOfDeletedParams[i].Params.splice(index, 1);
-          recordsOfDeletedParams[i].save();
+        
+        // If the deleting param is not the last
+        if(recordsOfDeletedParams[i].Params.length > 1){
+          for(let j = 0; j < deletedParams.length; j++){
+
+            let index = recordsOfDeletedParams[i].Params.indexOf(deletedParams[j]);
+            recordsOfDeletedParams[i].Values.splice(index, 1);
+            recordsOfDeletedParams[i].Params.splice(index, 1);
+            recordsOfDeletedParams[i].save();
+            
+          }
+        }
+        else{
+          // If all params are deleted, just delete the record
+          recordsOfDeletedParams[i].remove();
         }
       }
     }

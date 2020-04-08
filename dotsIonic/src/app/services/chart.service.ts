@@ -83,7 +83,9 @@ export class ChartService{
     }
 
     // Calculate chart's width based on the number of dates shown
-    this.chartWidth = this.chartData[0].series.length * this.RECORD_WIDTH;
+    if(this.chartData[0] != null){
+      this.chartWidth = this.chartData[0].series.length * this.RECORD_WIDTH;
+    }
 
     this.generateColorScheme(params.length);
 

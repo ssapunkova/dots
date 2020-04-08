@@ -37,6 +37,8 @@
 	"WorkoutDuration": "Workout duration",
 	"YourValue": "Your value",
 	"Calculate": "Calculatе",
+	"NoNutritionParamsSet": "You haven't set any nutrition goals yet",
+	"SetNutritionParams": "Set nutrition goals",
 	"DefaultValue": "Default value",
 	"EditNutritionRecord": "Edit nutrition record",
 	"EditNutritionGoals": "Edit nutrition goals",
