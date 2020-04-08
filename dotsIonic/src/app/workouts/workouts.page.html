@@ -12,21 +12,12 @@
 
 <ion-content>
 
-  <div 
-    class="no-items-message"
+  <no-items-message
+    headerMessage="NoWorkoutSheets"
+    buttonLabel="AddYourFirstSheet"
+    (buttonClicked)="addSheet()"
     *ngIf="workoutSheets.length < 1" >
-
-    <h1
-      color="secondary" >
-      {{ 'NoWorkoutSheetsMessage' | translate }}
-    </h1>
-
-    <ion-button (click)="addSheet()">
-      <ion-icon name="add"></ion-icon>
-      {{ 'AddYourFirstSheet' | translate }}
-    </ion-button>
-
-  </div>
+  </no-items-message>
 
 
   <ion-grid *ngIf="workoutSheets.length > 0">

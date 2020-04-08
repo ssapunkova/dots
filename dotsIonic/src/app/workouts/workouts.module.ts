@@ -10,6 +10,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { WorkoutsPage } from './workouts.page';
 
+import { ComponentsModule  } from '../components/components.module';
+
 const routes: Routes = [
   {
     path: '',
@@ -24,6 +26,7 @@ const routes: Routes = [
     IonicModule,
     NgxChartsModule,
     TranslateModule,
+    ComponentsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [WorkoutsPage]
