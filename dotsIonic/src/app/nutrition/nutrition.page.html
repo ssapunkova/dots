@@ -18,7 +18,15 @@
 
 <ion-content *ngIf="!loadingService.isPageLoading">
 
+  <no-items-message 
+    headerMessage="NoNutritionParamsSet"
+    buttonLabel="SetNutritionParams"
+    (buttonClicked)="editParams()"
+    *ngIf="dataTableService.params.length == 0">
+  </no-items-message>
+
   <data-table
+    *ngIf="dataTableService.params"
     service="nutrition"
     (editParamsButtonClicked)="editParams()"
     (addRecordClicked)="addRecord()"

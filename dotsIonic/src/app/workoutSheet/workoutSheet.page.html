@@ -18,7 +18,15 @@
 
 <ion-content *ngIf="!loadingService.isPageLoading">
 
+  <no-items-message 
+    headerMessage="NoExercisesSet"
+    buttonLabel="AddExercises"
+    (buttonClicked)="editParams()"
+    *ngIf="dataTableService.params.length == 0">
+  </no-items-message>
+
   <data-table
+    *ngIf="dataTableService.params"
     service="workout"
     (editParamsButtonClicked)="editParams()"
     (addRecordClicked)="addRecord()"
