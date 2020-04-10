@@ -22,14 +22,14 @@
           sizeSm="6"
           sizeXs="12">
 
-          <ion-label class="chart-legend-item" >
+          <ion-item lines="none">
+
             <div class="chart-legend-color" [style.backgroundColor]="colorScheme[i]"></div>
 
-            <ion-label *ngIf="param.Title.length > 20; else fullTitle"> {{ param.Title | slice:0:20 }}...  </ion-label>
-            <ng-template #fullTitle> {{ param.Title }} </ng-template> :
+            <ion-label *ngIf="param.Title.length > 20; else fullTitle"> {{ param.Title | translate | slice:0:20 }}...</ion-label>
+            <ng-template #fullTitle> {{ param.Title | translate  }}</ng-template>:
 
-
-            <ion-label>
+            <ion-label style="margin-left: 5px">
 
               <div *ngIf="generalService.getType(goals[i]) != 'boolean'">
                 {{ goals[i] }}
@@ -42,7 +42,8 @@
               </div>
 
             </ion-label>
-          </ion-label>
+
+          </ion-item>
 
         </ion-col>
 

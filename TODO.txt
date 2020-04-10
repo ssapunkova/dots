@@ -99,4 +99,4 @@
     * bug in param data loading in nutrition
   TODO:
     * No items message
-    * 
+    * Translate nutrition params
