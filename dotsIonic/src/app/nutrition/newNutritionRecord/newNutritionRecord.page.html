@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-      <ion-title *ngIf="record.Date == null; else editTitle"> New nutrition record</ion-title>
+      <ion-title *ngIf="record.RecordId == null; else editTitle"> New nutrition record</ion-title>
       <ng-template #editTitle>
         <ion-title>
           {{ 'EditNutritionRecord' | translate }}
@@ -20,7 +20,7 @@
             <ion-input
               slot="end"
               [(ngModel)]='record.Date'
-              type="date" placeholder="Date"></ion-input>
+              type="date"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -32,25 +32,24 @@
         </ion-col>
 
         <ion-col>
-          <ion-input type="number" placeholder="Result" [(ngModel)]='record.Values[i]'>
-          </ion-input>
+          <ion-item>
+
+            <ion-input type="number" [(ngModel)]='record.Values[i]'>
+            </ion-input>
+             / 
+            <ion-label>{{ goals[i] }} </ion-label>
+
+            <ion-input type="number" placeholder="%" hidden
+              [(ngModel)]='record.PercentageOfGoal[i]'
+              [value]="generalService.calculatePercentage(this.record.Values[i], this.goals[i])">
+            </ion-input>
+          </ion-item>
         </ion-col>
 
-        <ion-col>
+        <ion-col style="max-width: 100px"> 
           <percentage-chip
-            [percentage]="record.PercentageOfGoal[i]"></percentage-chip>
-
-          <ion-label>
-            {{ 'Goal' | translate }}
-            : {{ goals[i] }}
-          </ion-label>
-
-          <ion-input type="number" placeholder="%" hidden
-            [(ngModel)]='record.PercentageOfGoal[i]'
-            [value]="generalService.calculatePercentage(this.record.Values[i], this.goals[i])">
-          </ion-input>
+              [percentage]="record.PercentageOfGoal[i]"></percentage-chip>
         </ion-col>
-
 
       </ion-row>
 

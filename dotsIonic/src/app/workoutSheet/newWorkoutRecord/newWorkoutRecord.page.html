@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-      <ion-title *ngIf="record.Date == null; else editTitle">
+      <ion-title *ngIf="record.RecordId == null; else editTitle">
         {{ 'NewWorkoutRecord' | translate }}
       </ion-title>
       <ng-template #editTitle>
@@ -29,34 +29,42 @@
 
       <ion-row *ngFor="let field of fields; let i = index">
 
-        <ion-col style="padding-left: 1.2rem">
-          {{ field.Title }}
+        <ion-col>
+          <ion-item lines="none">
+            {{ field.Title }}
+          </ion-item>
         </ion-col>
 
         <ion-col>
 
-          <ion-checkbox *ngIf="field.Type == 'Bool'" [(ngModel)]='record.Values[i]' style='margin-right: 1rem'></ion-checkbox>
+          <ion-item>
 
-          <ion-input *ngIf="field.Type == 'Number'" type="number" placeholder="Result" [(ngModel)]='record.Values[i]'>
-          </ion-input>
+            <ion-checkbox *ngIf="field.Type == 'Bool'" [(ngModel)]='record.Values[i]' style='margin-right: 1rem'></ion-checkbox>
 
-          <ion-input *ngIf="field.Type == 'Time'" type="time" placeholder="Result" [(ngModel)]='record.Values[i]'>
-          </ion-input>
+            <ion-input *ngIf="field.Type == 'Number'" type="number" [(ngModel)]='record.Values[i]'>
+            </ion-input>
+
+            <ion-input *ngIf="field.Type == 'Time'" type="time" [(ngModel)]='record.Values[i]'>
+            </ion-input>
+
+            <div *ngIf="field.Type != 'Bool'">
+            
+              <ion-label>
+                / {{ field.Goal }}
+              </ion-label>
+
+              <ion-input type="number" placeholder="%" hidden
+                [(ngModel)]='record.PercentageOfGoal[i]'
+                [value]="generalService.calculatePercentage(record.Values[i], field.Goal)">
+              </ion-input>
+            </div>
+          </ion-item>
 
         </ion-col>
 
-        <ion-col *ngIf="field.Type != 'Bool'">
+        <ion-col style="max-width: 100px">
           <percentage-chip
-            [percentage]="record.PercentageOfGoal[i]"></percentage-chip>
-
-          <ion-label>
-            {{ 'Goal' | translate }}: {{ field.Goal }}
-          </ion-label>
-
-          <ion-input type="number" placeholder="%" hidden
-            [(ngModel)]='record.PercentageOfGoal[i]'
-            [value]="generalService.calculatePercentage(record.Values[i], field.Goal)">
-          </ion-input>
+          [percentage]="record.PercentageOfGoal[i]"></percentage-chip>
         </ion-col>
 
       </ion-row>

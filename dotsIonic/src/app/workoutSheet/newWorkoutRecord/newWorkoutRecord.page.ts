@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { GeneralService } from '../../services/general.service';
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
+import { TimeAndDateService } from 'src/app/services/timeAndDate.service';
 
 @Component({
   selector: 'modal-page',
@@ -35,10 +36,11 @@ export class NewWorkoutRecordPage implements OnInit {
     private translate: TranslateService,
     public generalService: GeneralService,
     private actionSheetController: ActionSheetController,
-    private errorToastAndAlertService: ErrorToastAndAlertService
+    private errorToastAndAlertService: ErrorToastAndAlertService,
+    private timeAndDateService: TimeAndDateService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
 
     this.record.SheetId = data.SheetId;
@@ -46,6 +48,10 @@ export class NewWorkoutRecordPage implements OnInit {
     this.record.Date = data.Date;
     this.fields = data.Fields;
     this.values = data.Values;
+
+    if(data.Date == null){
+      this.record.Date = await this.timeAndDateService.getDate("today");
+    }
 
     for(var i = 0; i < this.fields.length; i++){
       this.record.Params.push(this.fields[i]._id);

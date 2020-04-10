@@ -1,4 +1,6 @@
-<ion-chip style="padding: 5px" class="ion-hide-sm-down"
+<ion-chip 
+  style="padding: 5px" class="ion-hide-xs"
+  *ngIf="percentage < 999"
   [color]="percentage < 90 ? percentage < 60 ? 'danger' : 'warning' : 'success'">
   <ion-icon name="checkmark-circle" style="margin: 0px"></ion-icon>
   <ion-label style="margin-right: 5px">

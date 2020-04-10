@@ -3,6 +3,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 
 import { GeneralService } from '../../services/general.service';
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
+import { TimeAndDateService } from 'src/app/services/timeAndDate.service';
 
 @Component({
   selector: 'modal-page',
@@ -18,7 +19,7 @@ export class NewNutritionRecordPage implements OnInit {
 
   public record = {
     RecordId: null,
-    Date: "",
+    Date: null,
     Values: [],
     Params: [],
     PercentageOfGoal: []
@@ -28,12 +29,12 @@ export class NewNutritionRecordPage implements OnInit {
     private modalController: ModalController,
     private navParams: NavParams,
     public generalService: GeneralService,
-    private errorToastAndAlertService: ErrorToastAndAlertService
+    private errorToastAndAlertService: ErrorToastAndAlertService,
+    private timeAndDateService: TimeAndDateService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
-
 
     this.record.RecordId = data.RecordId;
     this.record.Date = data.Date;
@@ -43,6 +44,10 @@ export class NewNutritionRecordPage implements OnInit {
     this.goals = data.Goals;
 
     this.values = data.Values;
+  
+    if(data.Date == null){
+      this.record.Date = await this.timeAndDateService.getDate("today");
+    }
 
     for(var i = 0; i < this.fields.length; i++){
 
