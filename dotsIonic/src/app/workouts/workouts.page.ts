@@ -1,5 +1,4 @@
 import { Component, OnInit, Injectable } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, ModalController, ActionSheetController } from '@ionic/angular';
 

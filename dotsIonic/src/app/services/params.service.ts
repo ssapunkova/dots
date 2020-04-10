@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ConnectToServerService } from './connectToServer.service';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -137,7 +136,6 @@ export class ParamsService {
 
   constructor(
     public http: HttpClient,
-    public userService: UserService,
     public connectToServerService: ConnectToServerService,
   ) { }
 
@@ -145,13 +143,11 @@ export class ParamsService {
     return this.http.get(this.connectToServerService.serverUrl + '/getBodyMassConstants/' + gender)
   }
 
-  public getUserParams(){
-    let userId = this.userService.data._id;
+  public getUserParams(userId){
     return this.http.get(this.connectToServerService.serverUrl + '/getUserParams/' + userId)
   }
 
-  public updateUserParams(data){
-    let userId = this.userService.data._id;
+  public updateUserParams(data, userId){
     console.log(userId);
     return this.http.post(
       this.connectToServerService.serverUrl + '/updateUserParams',

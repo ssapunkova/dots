@@ -35,7 +35,8 @@ const routes: Routes = [
   },
   {
     path: 'nutrition',
-    loadChildren: () => import('./nutrition/nutrition.module').then(m => m.NutritionPageModule)
+    loadChildren: () => import('./nutrition/nutrition.module').then(m => m.NutritionPageModule),
+    resolve: { userData: UserService }
   },
   {
     path: 'params',

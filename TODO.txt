@@ -93,3 +93,10 @@
   TODO:
     Router snapshot everywhere
     Request with user id everywhere
+
+08.04
+  FIX:
+    * bug in param data loading in nutrition
+  TODO:
+    * No items message
+    * 
