@@ -102,7 +102,7 @@ export class ParamsService {
       Index: 12,
       Title: "Blocks",
       Goal: 12,                                            // 12 - zone blocks
-      Unit: "blocks",
+      Unit: "bl",
       Type: "number"
     },
     {

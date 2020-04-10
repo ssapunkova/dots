@@ -16,7 +16,7 @@ export class ErrorToastAndAlertService{
 
   async showErrorToast(message){
     const errorToast = await this.toastController.create({
-      message: message,
+      message: this.translate.instant("" + message),
       duration: 2000,
       color: "danger"
     });
@@ -28,7 +28,7 @@ export class ErrorToastAndAlertService{
 
     await this.loadingService.hideProcessLoading();
     let alert = await this.alertController.create({
-      header: message,
+      header: this.translate.instant("" + message),
       message: this.translate.instant("GeneralErrorMessage") + "<a href='mailto:elenakikiova@mail.ru'>elenakikiova@mail.ru</a>",
       buttons: [
         {

@@ -4,7 +4,7 @@
 
     <ion-toolbar>
       <ion-label slot="start">
-        {{ 'Legend' | translate }}
+        {{ 'Params' | translate }}
       </ion-label>
       <ion-button slot="end" (click)="editParams()">
         <ion-icon name="create"></ion-icon>
@@ -29,7 +29,7 @@
             <ion-label *ngIf="param.Title.length > 20; else fullTitle"> {{ param.Title | translate | slice:0:20 }}...</ion-label>
             <ng-template #fullTitle> {{ param.Title | translate  }}</ng-template>:
 
-            <ion-label style="margin-left: 5px">
+            <ion-label style="margin-left: 5px; display: flex;">
 
               <div *ngIf="generalService.getType(goals[i]) != 'boolean'">
                 {{ goals[i] }}
@@ -39,6 +39,12 @@
               </div>
               <div *ngIf="goals[i] == 'false'">
                 <ion-icon name="close-circle" color="danger"></ion-icon>
+              </div>
+
+              <div
+                *ngIf="param.Unit"
+                style="margin-left: 2px">
+                {{ param.Unit | translate }}
               </div>
 
             </ion-label>

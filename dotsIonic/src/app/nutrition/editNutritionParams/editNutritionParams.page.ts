@@ -3,6 +3,7 @@ import { ModalController, NavParams, ActionSheetController } from '@ionic/angula
 
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
 import { NutritionService } from '../../services/nutrition.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'modal-page',
@@ -23,7 +24,8 @@ export class EditNutritionParamsPage implements OnInit {
     private navParams: NavParams,
     private nutritionService: NutritionService,
     private actionSheetController: ActionSheetController,
-    private errorToastAndAlertService: ErrorToastAndAlertService
+    private errorToastAndAlertService: ErrorToastAndAlertService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -42,12 +44,12 @@ export class EditNutritionParamsPage implements OnInit {
     let notUsedParams = this.nutritionService.Params.filter((param) => usedParamIndexes.indexOf(param.Index) < 0);
 
     if(notUsedParams.length == 0){
-      this.errorToastAndAlertService.showErrorToast("You have already used all possible parameters");
+      this.errorToastAndAlertService.showErrorToast("AllParamsUsed");
     }
     else{
       let possibleParams = notUsedParams.map((param) => {
         return {
-          text: param.Title,
+          text: this.translate.instant(param.Title),
           icon: 'refresh-circle',
           handler: () => {
             this.addParam(param)

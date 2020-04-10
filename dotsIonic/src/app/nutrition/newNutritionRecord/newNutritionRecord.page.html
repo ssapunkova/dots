@@ -41,6 +41,10 @@
              / 
             <ion-label>{{ goals[i] }} </ion-label>
 
+            <ion-label style="margin-left: 2px">
+              {{ field.Unit | translate }}
+            </ion-label>
+
             <ion-input type="number" placeholder="%" hidden
               [(ngModel)]='record.PercentageOfGoal[i]'
               [value]="generalService.calculatePercentage(this.record.Values[i], this.goals[i])">

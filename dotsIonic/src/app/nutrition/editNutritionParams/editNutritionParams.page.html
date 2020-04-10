@@ -46,12 +46,27 @@
       <ion-row *ngFor="let param of params; let i = index">
 
         <ion-col>
-          <ion-label> {{ param.Title }} </ion-label>
+          <ion-item> 
+            {{ param.Title | translate }} 
+          </ion-item>
         </ion-col>
 
         <ion-col sizeLg="2" sizeXs="3">
-          <ion-input type="number" placeholder="Goal" [(ngModel)]='goals[i]' value="goals[i]">
-          </ion-input>
+
+          <ion-item lines="none">
+
+            <ion-input 
+              style="text-align: right;"
+              type="number" placeholder="Goal" [(ngModel)]='goals[i]' value="goals[i]">
+            </ion-input>
+
+            <div
+              *ngIf="param.Unit"
+              style="margin-left: 2px">
+              {{ param.Unit | translate }}
+            </div>
+          </ion-item>
+
         </ion-col>
 
         <ion-col sizeXs="3" sizeSm="2">

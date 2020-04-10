@@ -19,7 +19,6 @@ export class ChartLegendComponent implements OnInit {
 
   editParams() {
     // Emit editParamsButtonClicked event to parent (data-table.component.html)
-      console.log("editp")
     this.editParamsButtonClicked.emit()
   }
 
@@ -27,6 +26,10 @@ export class ChartLegendComponent implements OnInit {
     public generalService: GeneralService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    if(this.data.length > 6){
+      this.showLegend = false;
+    }
+  }
 
 }

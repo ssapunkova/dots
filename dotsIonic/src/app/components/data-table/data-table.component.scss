@@ -1,6 +1,20 @@
 .showRecordOptionsButton{
   --padding-start: 0px;
-  --padding-end: 0px;
+  --padding-end: 5px;
 }
 
+ion-col :not(.table-header){
+  padding: 0px;
   
+  ion-item{
+    padding: 0px;
+  }
+    
+}
+
+@media screen and (max-width: 400px){
+  percentage-chip{
+    display: none;
+  }
+}
+
