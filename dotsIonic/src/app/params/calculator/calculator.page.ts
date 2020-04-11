@@ -51,11 +51,11 @@ export class CalculatorPage implements OnInit {
 
   
   public calculators = {
-    "blocks": 0,
-    "bodyFatPercentage": 0,
-    "daylyProteinIntake": 0,
+    "Blocks": 0,
+    "BodyFatPercentage": 0,
+    "DaylyProteinIntake": 0,
     "kcal": 1,
-    "sugar": 2
+    "Sugar": 2
   }
 
 

@@ -21,7 +21,8 @@ export class ParamsPage implements OnInit {
 
   public generalInfoAvailable = false;            // Has user entered general info needed for all calculations
   public generalInfoChanged = false;              // If gender/age info is changed
-  public userParamsChanged = false;               // If other params are changed
+
+  public changedUserValues = [];
  
   public userData;
   public userParamTitles = [];                    // Array of user's param titles 
@@ -133,8 +134,6 @@ export class ParamsPage implements OnInit {
           }
 
           this.userParamTitles = Object.keys(this.userParamValues);
-
-          this.userParamsChanged = true;
           
           // Update param data in db
           this.updateUserParams();
@@ -148,31 +147,27 @@ export class ParamsPage implements OnInit {
   }
 
   // Checks if generalInfo has changed and controlls SaveChanges button
-  async changingGeneralInfo(){
-    if(this.userParamsData != null){
-      if(this.userParamsData.Values != []){
-        if(
-          this.userParamValues["gender"] == this.userParamsData.Values[0] &&
-          this.userParamValues["age"] == this.userParamsData.Values[1]
-        ){
-          this.generalInfoChanged = false;
-        }
-        else{
-          this.generalInfoChanged = true;
-        }
-      }
-      else{
-        if(
-          this.userParamValues["gender"] != null &&
-          this.userParamValues["age"] != null
-        ){
-          this.generalInfoChanged = false;
-        }
-        else{
-          this.generalInfoChanged = true;
-        }
+  async changingUserValues(param, i){
+
+    // Index of param in the array of params which have new values
+    let indexOfChangedParam = this.changedUserValues.indexOf(i);
+
+    console.log(this.changedUserValues);
+
+    console.log(this.userParamValues[param], this.userParamsData.Values[i])
+
+    // If new and old value are different
+    if(this.userParamValues[param] != this.userParamsData.Values[i]){
+      // If the changed param isn't in the changedUserValues, push it
+      if(indexOfChangedParam < 0){
+        this.changedUserValues.push(i);
       }
     }
+    else{
+      // If the param has it's old value back, remove it from changedUserValues
+      this.changedUserValues.splice(indexOfChangedParam, 1);
+    }
+
   }
 
   // Updates userParamData according to userParamsTitles and values
@@ -183,7 +178,7 @@ export class ParamsPage implements OnInit {
 
     if(this.userParamsData.Params.length == 0){
       this.userParamsData.Params = [0, 1];
-      this.userParamTitles = ["gender", "age"];
+      this.userParamTitles = ["Gender", "Age"];
       this.generalInfoAvailable = true;
 
       let alert = await this.alertController.create({
@@ -199,7 +194,7 @@ export class ParamsPage implements OnInit {
       await alert.present();
     }
 
-    if(this.userParamsChanged){
+    if(this.changedUserValues){
 
       this.userParamsData = {
         Params: [],
@@ -218,10 +213,6 @@ export class ParamsPage implements OnInit {
       this.sortParamsByValue();
 
     }
-    else{
-      this.userParamsData.Values[0] = this.userParamValues["gender"];
-      this.userParamsData.Values[1] = this.userParamValues["age"];
-    }
 
     console.log(this.userParamValues);
     console.log("***Updated userParamsData ", this.userParamsData);
@@ -231,7 +222,7 @@ export class ParamsPage implements OnInit {
       this.errorToastAndAlertService.showErrorAlert("Oups")
     })
 
-    this.userParamsChanged = false;
+    this.changedUserValues = [];
     this.generalInfoChanged = false;
   }
 
