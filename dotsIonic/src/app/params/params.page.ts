@@ -10,6 +10,7 @@ import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.servic
 
 import { CalculatorPage } from './calculator/calculator.page';
 import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-params',
@@ -22,6 +23,7 @@ export class ParamsPage implements OnInit {
   public generalInfoChanged = false;              // If gender/age info is changed
   public userParamsChanged = false;               // If other params are changed
  
+  public userData;
   public userParamTitles = [];                    // Array of user's param titles 
   public userParamValues;                         // Json of user's { param: value }
   public userParamsData;                          // Raw data from db:
@@ -36,14 +38,17 @@ export class ParamsPage implements OnInit {
     private loadingService: LoadingService,
     private translate: TranslateService,
     private alertController: AlertController,
-    private errorToastAndAlertService: ErrorToastAndAlertService
+    private errorToastAndAlertService: ErrorToastAndAlertService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.loadingService.showPageLoading();
 
+    this.userData = this.route.snapshot.data.userData;
+
     // Get user data
-    this.paramsService.getUserParams().subscribe( async (data)=>
+    this.paramsService.getUserParams(this.userData._id).subscribe( async (data)=>
     {
       this.userParamsData = data;
       console.log(this.userParamsData)
@@ -222,7 +227,7 @@ export class ParamsPage implements OnInit {
     console.log(this.userParamValues);
     console.log("***Updated userParamsData ", this.userParamsData);
 
-    this.paramsService.updateUserParams(this.userParamsData).subscribe(async (data) => {},
+    this.paramsService.updateUserParams(this.userData._id, this.userParamsData).subscribe(async (data) => {},
     error => {
       this.errorToastAndAlertService.showErrorAlert("Oups")
     })

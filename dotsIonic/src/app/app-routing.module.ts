@@ -40,11 +40,13 @@ const routes: Routes = [
   },
   {
     path: 'params',
-    loadChildren: () => import('./params/params.module').then(m => m.ParamsPageModule)
+    loadChildren: () => import('./params/params.module').then(m => m.ParamsPageModule),
+    resolve: { userData: UserService }
   },
   {
     path: 'params/:topic',
-    loadChildren: () => import('./params/params.module').then(m => m.ParamsPageModule)
+    loadChildren: () => import('./params/params.module').then(m => m.ParamsPageModule),
+    resolve: { userData: UserService }
   },
   { 
     path: 'register', 

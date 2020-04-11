@@ -147,7 +147,7 @@ export class ParamsService {
     return this.http.get(this.connectToServerService.serverUrl + '/getUserParams/' + userId)
   }
 
-  public updateUserParams(data, userId){
+  public updateUserParams(userId, data){
     console.log(userId);
     return this.http.post(
       this.connectToServerService.serverUrl + '/updateUserParams',
