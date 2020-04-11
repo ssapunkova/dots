@@ -26,8 +26,6 @@
         </ion-col>
       </ion-item>
 
-      {{ param | json }}
-
       <ion-row 
       *ngFor="let field of formulas[calculators[param.Title]].required; let i = index">
         <ion-col>
@@ -57,7 +55,7 @@
                     [value]="option.Title"></ion-radio>
                   
                   <ion-label class="param-label">
-                    {{ option.Title}}
+                    {{ option.Title | translate }}
                   </ion-label>
                 </ion-item>
               </ion-radio-group>

@@ -66,7 +66,6 @@ export class CalculatorPage implements OnInit {
     let that = this;
 
     console.log(this.param);
-    console.log(this.userParams["daylyProteinIntake"]);
     console.log(this.userParams[this.param.Title]);
 
     const alert = await this.alertController.create({
@@ -97,24 +96,24 @@ export class CalculatorPage implements OnInit {
   public formulas = [
     {
       required: [
-        this.paramsService.allParams[2],      // 2 - weight
-        this.paramsService.allParams[3],      // 3 - height
-        this.paramsService.allParams[4],      // 4 - waist
-        this.paramsService.allParams[5],      // 5 - wrist
-        this.paramsService.allParams[6],      // 6 - hips
+        this.paramsService.allParams[2],      // 2 - Weight
+        this.paramsService.allParams[3],      // 3 - Height
+        this.paramsService.allParams[4],      // 4 - Waist
+        this.paramsService.allParams[5],      // 5 - Wrist
+        this.paramsService.allParams[6],      // 6 - Hips
         this.paramsService.allParams[7]       // 7 - activity (zone)
       ],
       formula: async () => {
 
         let values = {
-          gender: this.userParams.gender,
-          weightInKg: this.userParams.weight,
-          weight: this.convertToLb(this.userParams.weight),
-          height: this.convertToInches(this.userParams.height),
-          waist: this.convertToInches(this.userParams.waist),
-          wrist: this.convertToInches(this.userParams.wrist),
-          hips: this.convertToInches(this.userParams.hips),
-          physicalActivity: this.userParams.activityFactorZone
+          Gender: this.userParams.Gender,
+          WeightInKg: this.userParams.Weight,
+          Weight: this.convertToLb(this.userParams.Weight),
+          Height: this.convertToInches(this.userParams.Height),
+          Waist: this.convertToInches(this.userParams.Waist),
+          Wrist: this.convertToInches(this.userParams.Wrist),
+          Hips: this.convertToInches(this.userParams.Hips),
+          PhysicalActivity: this.userParams.ActivityFactorZone
         };
 
         console.log("Values: ", values);
@@ -123,22 +122,22 @@ export class CalculatorPage implements OnInit {
         
         let that = this;
         function setConstants(){
-          if(values.gender == "F"){
-            let row = that.bodyMassConstants.filter((record) => record.Hips == values.hips)[0];
+          if(values.Gender == "F"){
+            let row = that.bodyMassConstants.filter((record) => record.Hips == values.Hips)[0];
             if(row != null){
               constants.A = row.Constant;
             } 
             else{
               console.log("not standart")
             }
-            constants.B = parseFloat((values.waist / 1.406).toFixed(2));
-            constants.C = parseFloat((values.height / 1.640).toFixed(2));
+            constants.B = parseFloat((values.Waist / 1.406).toFixed(2));
+            constants.C = parseFloat((values.Height / 1.640).toFixed(2));
             
             calculateFatAndBodyMass();
           }
           else{
-            let ratio = values.waist - values.wrist;
-            let roundedWeight = Math.ceil(values.weight / 5) * 5;
+            let ratio = values.Waist - values.Wrist;
+            let roundedWeight = Math.ceil(values.Weight / 5) * 5;
             let row = that.bodyMassConstants.filter((record) => record.Weight == roundedWeight)[0];
             
             console.log("Row in constants: ", row);
@@ -161,26 +160,26 @@ export class CalculatorPage implements OnInit {
         function calculateFatAndBodyMass(){
 
           // Body fat percentage
-          if(values.gender == "F") that.userParams.bodyFatPercentage = Math.floor(constants.A + constants.B - constants.C);
-          else that.userParams.bodyFatPercentage = Math.floor(constants.A);
+          if(values.Gender == "F") that.userParams.BodyFatPercentage = Math.floor(constants.A + constants.B - constants.C);
+          else that.userParams.BodyFatPercentage = Math.floor(constants.A);
 
-          // Calculate LeanBodyMass weight in Lb, to use for DaylyProteinIntake
-          let leanBodyMassInLb = that.convertToLb(values.weightInKg - (values.weightInKg * that.userParams.bodyFatPercentage / 100));
+          // Calculate LeanBodyMass Weight in Lb, to use for DaylyProteinIntake
+          let leanBodyMassInLb = that.convertToLb(values.WeightInKg - (values.WeightInKg * that.userParams.BodyFatPercentage / 100));
 
           // Dayly Protein Intake in grams
-          that.userParams.daylyProteinIntake = Math.floor(leanBodyMassInLb * values.physicalActivity);
+          that.userParams.DaylyProteinIntake = Math.floor(leanBodyMassInLb * values.PhysicalActivity);
 
-          // Convert gr to protein blocks
-          that.userParams.blocks = Math.floor(that.userParams.daylyProteinIntake / 7);
+          // Convert gr to protein Blocks
+          that.userParams.Blocks = Math.floor(that.userParams.DaylyProteinIntake / 7);
 
-          if(values.gender == "F" && that.userParams.blocks <= 11) that.userParams.blocks = 11;
-          else if(values.gender == "M" && that.userParams.blocks <= 14) that.userParams.blocks = 14;
+          if(values.Gender == "F" && that.userParams.Blocks <= 11) that.userParams.Blocks = 11;
+          else if(values.Gender == "M" && that.userParams.Blocks <= 14) that.userParams.Blocks = 14;
  
           console.log("User params: ", that.userParams);
         }
 
         if(this.bodyMassConstants.length == 0){
-          this.paramsService.getConstants(values.gender).subscribe((data: any) => {
+          this.paramsService.getConstants(values.Gender).subscribe((data: any) => {
             this.bodyMassConstants = data;
             setConstants();
           });
@@ -193,32 +192,32 @@ export class CalculatorPage implements OnInit {
     },
     {
       required: [
-        this.paramsService.allParams[2],      // 2 - weight
-        this.paramsService.allParams[3],      // 3 - height
-        this.paramsService.allParams[8]       // 8 - activityFactorKcal
+        this.paramsService.allParams[2],      // 2 - Weight
+        this.paramsService.allParams[3],      // 3 - Height
+        this.paramsService.allParams[8]       // 8 - ActivityFactorKcal
       ],
       formula: async () => {
 
         let values = {
-          gender: this.userParams.gender,
-          age: this.userParams.age,
-          weight: this.userParams.weight,
-          height: this.userParams.height,
-          physicalActivity: this.userParams.activityFactorKcal
+          Gender: this.userParams.Gender,
+          Age: this.userParams.Age,
+          Weight: this.userParams.Weight,
+          Height: this.userParams.Height,
+          PhysicalActivity: this.userParams.ActivityFactorKcal
         };
 
         console.log(values);
 
         // Calculate base calorie intake
-        if(values.gender == "M"){
-          this.userParams.kcal = 66 + (13.7 * values.weight) + (5 * values.height) - (6.8 * values.age);
+        if(values.Gender == "M"){
+          this.userParams.kcal = 66 + (13.7 * values.Weight) + (5 * values.Height) - (6.8 * values.Age);
         }
         else{
-          this.userParams.kcal = 655 + (9.6 * values.weight) + (1.8 * values.height) - (4.7 * values.age);
+          this.userParams.kcal = 655 + (9.6 * values.Weight) + (1.8 * values.Height) - (4.7 * values.Age);
         }
         
         // Multiply by physical activity factor
-        this.userParams.kcal *= values.physicalActivity;
+        this.userParams.kcal *= values.PhysicalActivity;
         
         console.log(this.userParams.kcal);
 
@@ -239,9 +238,9 @@ export class CalculatorPage implements OnInit {
           kcal: this.userParams.kcal,
         };
         
-        this.userParams.sugar = values.kcal / 40;
+        this.userParams.Sugar = values.kcal / 40;
 
-        this.userParams.sugar = Math.floor(this.userParams.sugar);
+        this.userParams.Sugar = Math.floor(this.userParams.Sugar);
 
         this.finishCalculations();
       }
