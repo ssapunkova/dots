@@ -16,43 +16,50 @@ export class ParamsService {
         { "Title": "Male", "Value": 0 },
         { "Title": "Female", "Value": 1 },                 // 0 - gender  
       ],
-      Type: "select"
+      Type: "select",
+      ManuallyEditable: false
     },
     {
       Index: 1,
       Title: "Age",
       Unit: "y.o.",                                        // 1 - age
-      Type: "number"
+      Type: "number",
+      ManuallyEditable: true
     },
     {
       Index: 2,
       Title: "Weight",
       Unit: "kg",                                          // 2 - weight
-      Type: "number"
+      Type: "number",
+      ManuallyEditable: true
     },
     {
       Index: 3,
       Title: "Height",
       Unit: "cm",                                          // 3 - height
-      Type: "number"
+      Type: "number",
+      ManuallyEditable: true
     },
     {
       Index: 4,
       Title: "Waist",
       Unit: "cm",                                          // 4 - waist
-      Type: "number"
+      Type: "number",
+      ManuallyEditable: true
     },
     {
       Index: 5,
       Title: "Wrist",
       Unit: "cm",                                          // 5 - waist
-      Type: "number"
+      Type: "number",
+      ManuallyEditable: true
     },
     {
       Index: 6,
       Title: "Hips",
       Unit: "cm",                                          // 6 - hips
-      Type: "number"
+      Type: "number",
+      ManuallyEditable: true
     },
     {
       Index: 7,
@@ -65,7 +72,8 @@ export class ParamsService {
         { "Title": "heavyWorkoutEveryDay", "Value": 0.9 },
         { "Title": "professional", "Value": 1 }
       ],
-      Type: "select"
+      Type: "select",
+      ManuallyEditable: false
     },
     {
       Index: 8,
@@ -75,42 +83,48 @@ export class ParamsService {
         { "Title": "average", "Value": 1.3 },              // 8 - activity factor for kcal calculations
         { "Title": "heavy", "Value": 1.4 },   
       ],
-      Type: "select"
+      Type: "select",
+      ManuallyEditable: false
     },
     {
       Index: 9,
       Title: "kcal",
       Unit: "kcal",                                        // 9 - kcal intake
       Goal: 2000,
-      Type: "number"
+      Type: "number",
+      ManuallyEditable: true
     },
     {
       Index: 10,
       Title: "BodyFatPercentage",                          
       Goal: 20,                                            // 10 - body fat percentage
       Unit: "%",
-      Type: "number"
+      Type: "number",
+      ManuallyEditable: false
     },
     {
       Index: 11,
       Title: "DaylyProteinIntake",
       Goal: 85,                                            // 11 - dayly protein intake in gr
       Unit: "g",
-      Type: "number"
+      Type: "number",
+      ManuallyEditable: true
     },
     {
       Index: 12,
       Title: "Blocks",
       Goal: 12,                                            // 12 - zone blocks
       Unit: "bl",
-      Type: "number"
+      Type: "number",
+      ManuallyEditable: true
     },
     {
       Index: 13,
       Title: "Sugar",
       Goal: 40,                                            // 13 - dayly sugar intake in gr
       Unit: "gr",
-      Type: "number"
+      Type: "number",
+      ManuallyEditable: true
     }
   ]
 

@@ -31,10 +31,10 @@
               {{ "EnterGeneralInfo" | translate }}
             </ion-item>
 
-            <ion-item 
-              *ngFor="let param of userParamTitles; let i = index">
+            <div
+              *ngFor="let param of userParamsData.Params; let i = index">
 
-              <div *ngIf="param == 'Gender'; else measureableParam">
+              <ion-item *ngIf="userParamTitles[param] == 'Gender'">
 
                 <ion-segment (ionChange)="changingUserValues('Gender', 0)"
                 [(ngModel)]="userParamValues.Gender">
@@ -49,21 +49,29 @@
                     </ion-label>
                   </ion-segment-button>
                 </ion-segment>
-              </div>
 
-              <ng-template #measureableParam>
+              </ion-item>
+
+              {{ paramsService.allParams[param] | json}}
+              {{ paramsService.allParams[param].ManuallyEditable }}
+
+              <ion-item
+                *ngIf="paramsService.allParams[param].ManuallyEditable == true">
+  
+                {{ param }}
+
                 <ion-label>
-                  {{ param | translate }}
+                  {{ userParamTitles[param] | translate }}
                 </ion-label>
                 <ion-input 
                   style="text-align: right;"
                   type="number" 
-                  (ionChange)="changingUserValues(param, i)"
-                  [(ngModel)]="userParamValues[param]">
+                  (ionChange)="changingUserValues(userParamTitles[param], i)"
+                  [(ngModel)]="userParamValues[userParamTitles[param]]">
                 </ion-input>
-              </ng-template>
+              </ion-item>
               
-            </ion-item>
+            </div>
 
             <ion-button 
               *ngIf="changedUserValues.length > 0"

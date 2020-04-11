@@ -33,7 +33,7 @@
 
             <div *ngIf="field.Type == 'number'" class="value-input-div">
               <ion-label class="param-label"> 
-                {{ field.Title }} 
+                {{ field.Title | translate }} 
               </ion-label>
               <ion-input 
                 *ngIf="field.Type == 'number'"
@@ -42,7 +42,7 @@
                 [value]="userParams[field.Title] || 0"
                 ></ion-input>
               <ion-label style="margin-left: 0.5rem">
-                {{ field.Unit }}
+                {{ field.Unit | translate }}
               </ion-label>
             </div>
 
@@ -64,14 +64,14 @@
             <div *ngIf="field.Type == 'select'" class="value-input-div">
 
               <ion-label class="param-label">
-                {{ field.Title}}
+                {{ field.Title | translate }}
               </ion-label>
 
               <ion-select [(ngModel)]="userParams[field.Title]"
                 [placeholder]="field.Title">
                 <ion-select-option *ngFor="let option of field.Options; let j = index"
                   [value]="option.Value">
-                  {{ option.Title }}
+                  {{ option.Title | translate }}
                 </ion-select-option>
               </ion-select>
 
