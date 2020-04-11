@@ -43,11 +43,6 @@ const routes: Routes = [
     loadChildren: () => import('./params/params.module').then(m => m.ParamsPageModule),
     resolve: { userData: UserService }
   },
-  {
-    path: 'params/:topic',
-    loadChildren: () => import('./params/params.module').then(m => m.ParamsPageModule),
-    resolve: { userData: UserService }
-  },
   { 
     path: 'register', 
     loadChildren: './register/register.module#RegisterPageModule' 

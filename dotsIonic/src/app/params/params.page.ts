@@ -11,6 +11,7 @@ import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.servic
 import { CalculatorPage } from './calculator/calculator.page';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
+import { Agent } from 'http';
 
 @Component({
   selector: 'app-params',
@@ -19,17 +20,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ParamsPage implements OnInit {
 
-  public generalInfoAvailable = false;            // Has user entered general info needed for all calculations
-  public generalInfoChanged = false;              // If gender/age info is changed
-
-  public changedUserValues = [];
  
   public userData;
-  public userParamTitles = [];                    // Array of user's param titles 
-  public userParamValues;                         // Json of user's { param: value }
-  public userParamsData;                          // Raw data from db:
-                                                  // Params: [array of param indexes]
-                                                  // Values: [array of values]
+
+  public dbData;
 
   
   constructor(
@@ -43,187 +37,24 @@ export class ParamsPage implements OnInit {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loadingService.showPageLoading();
 
     this.userData = this.route.snapshot.data.userData;
 
-    // Get user data
-    this.paramsService.getUserParams(this.userData._id).subscribe( async (data)=>
-    {
-      this.userParamsData = data;
+    // Get user data from db
 
-      // If there is no user param data in db, create empty userParamsData and userParamValues
-      if(this.userParamsData == null) {
-        this.userParamsData = {
-          Params: [],
-          Values: []
-        }
-        this.userParamValues= {};
-      }
-      else{
-        // If there is data, process it
-        this.userParamValues = {};
-        for(let i = 0; i < this.userParamsData.Params.length; i++){
-          let paramIndex = this.userParamsData.Params[i];
-          let paramTitle = this.paramsService.allParams[paramIndex].Title;
-          let paramValue = this.userParamsData.Values[i];
+    this.paramsService.getUserParams(this.userData._id).subscribe( async (userParams) => {
 
-          this.userParamTitles.push(paramTitle);
-          this.userParamValues[paramTitle] = paramValue;
-        }
+      this.dbData = userParams;
 
-        if(this.userParamsData.Values[0] != null && this.userParamsData.Values[1] != null){
-          this.generalInfoAvailable = true;
-        }
-        
-      }
+      
 
-      this.sortParamsByValue();
-
-      console.log("User params data ", this.userParamsData);
-      console.log("User params ", this.userParamValues)
-    },
-    error => {
-      this.errorToastAndAlertService.showErrorAlert("Oups")
-    }
-  );
-
-    this.loadingService.hidePageLoading();
-  }
-
-  // Sort each param category, so that 
-  // -- params that the user has calculated appear first
-  // -- calculated params are ordered newer -> older
-  // -- -- this happens because they are added later in userParamTitles, so their index will be greater
-  async sortParamsByValue(){
-   
-    for(let i = 0; i < this.paramsService.categories.length; i++){
-      let category = this.paramsService.categories[i].Id;
-      this.paramsService[category].sort((a, b) => {
-        return this.userParamTitles.indexOf(b.Title) - this.userParamTitles.indexOf(a.Title)
-      })
-    }
-  }
-
-  // Open calculator modal and pass 
-  // -- the param to be calculated
-  // -- userParams (needed for calculations) 
-  async openModal(param){
-
-    if(this.generalInfoAvailable){
-      const modal = await this.modalController.create({
-        component: CalculatorPage,
-        componentProps: {
-          param: param,
-          userParams: this.userParamValues
-        }
-      });
-      await modal.present();
-
-      // Get modal data and if it's not null, update params and values
-      await modal.onWillDismiss().then((modalData: OverlayEventDetail) => {
-        
-        console.log("Modal data ", modalData);
-
-        if(modalData != null){
-          // Merge current and new user params
-          this.userParamValues= {
-            ...this.userParamValues,
-            ...modalData.data
-          }
-
-          this.userParamTitles = Object.keys(this.userParamValues);
-          
-          // Update param data in db
-          this.updateUserParams();
-        }
-
-      });
-    }
-    else{
-      this.errorToastAndAlertService.showErrorToast(this.translate.instant("FirstEnterGeneralParams"))
-    }
-  }
-
-  // Checks if generalInfo has changed and controlls SaveChanges button
-  async changingUserValues(param, i){
-
-    // Index of param in the array of params which have new values
-    let indexOfChangedParam = this.changedUserValues.indexOf(i);
-
-    console.log(this.changedUserValues);
-
-    console.log(this.userParamValues[param], this.userParamsData.Values[i])
-
-    // If new and old value are different
-    if(this.userParamValues[param] != this.userParamsData.Values[i]){
-      // If the changed param isn't in the changedUserValues, push it
-      if(indexOfChangedParam < 0){
-        this.changedUserValues.push(i);
-      }
-    }
-    else{
-      // If the param has it's old value back, remove it from changedUserValues
-      this.changedUserValues.splice(indexOfChangedParam, 1);
-    }
-
-  }
-
-  // Updates userParamData according to userParamsTitles and values
-  // and sends update request to db
-  async updateUserParams(){
-
-    console.log(this.userParamsData);
-
-    if(this.userParamsData.Params.length == 0){
-      this.userParamsData.Params = [0, 1];
-      this.userParamTitles = ["Gender", "Age"];
-      this.generalInfoAvailable = true;
-
-      let alert = await this.alertController.create({
-        header: this.translate.instant("NowYouCanMakeCalculations"),
-        message: this.translate.instant("ChooseFromParamsCalculator"),
-        buttons: [
-          {
-            text: "Ok"
-          }
-        ]
-      });
-
-      await alert.present();
-    }
-
-    if(this.changedUserValues){
-
-      this.userParamsData = {
-        Params: [],
-        Values: []
-      }
-
-      for(let i = 0; i < this.userParamTitles.length; i++){
-        let paramTitle = this.userParamTitles[i];
-        let paramIndex = this.paramsService.allParams.filter((param) => param.Title == paramTitle)[0].Index;
-        let paramValue = this.userParamValues[paramTitle];
-
-        this.userParamsData.Params.push(paramIndex);
-        this.userParamsData.Values.push(paramValue);
-      }
-
-      this.sortParamsByValue();
-
-    }
-
-    console.log(this.userParamValues);
-    console.log("***Updated userParamsData ", this.userParamsData);
-
-    this.paramsService.updateUserParams(this.userData._id, this.userParamsData).subscribe(async (data) => {},
-    error => {
-      this.errorToastAndAlertService.showErrorAlert("Oups")
     })
 
-    this.changedUserValues = [];
-    this.generalInfoChanged = false;
+    this.loadingService.hidePageLoading();
+
   }
+
 
 }

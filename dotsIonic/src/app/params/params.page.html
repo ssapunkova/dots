@@ -26,10 +26,6 @@
           </ion-card-header>
   
           <ion-card-content style="padding: 0.5rem">
-  
-            <ion-item color="warning" *ngIf="!generalInfoAvailable">
-              {{ "EnterGeneralInfo" | translate }}
-            </ion-item>
 
             <div
               *ngFor="let param of userParamsData.Params; let i = index">
@@ -52,13 +48,13 @@
 
               </ion-item>
 
-              {{ paramsService.allParams[param] | json}}
-              {{ paramsService.allParams[param].ManuallyEditable }}
 
               <ion-item
                 *ngIf="paramsService.allParams[param].ManuallyEditable == true">
   
                 {{ param }}
+                
+              {{ paramsService.allParams[param] | json}}
 
                 <ion-label>
                   {{ userParamTitles[param] | translate }}
