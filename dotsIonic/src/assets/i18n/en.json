@@ -89,6 +89,7 @@
 	"AllParamsUsed": "You have already used all possible parameters",
 	"FirstEnterGeneralParams": "For any calculations, you need to enter your general information, such as gender and age",
 	"EnterGeneralInfo": "Please enter your general information",
+	"SelectGender": "Select gender",
 	"NowYouCanMakeCalculations": "Now you can calculate!",
 	"ChooseFromParamsCalculator": "Find out what your params are using the calculators below",
 	"ActivityFactorZone": "Activity factor",

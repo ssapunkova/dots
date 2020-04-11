@@ -11,7 +11,8 @@
 
 <ion-content>
 
-  <ion-grid *ngIf="userParamValues != null">
+
+  <ion-grid>
 
     <ion-row>
 
@@ -25,15 +26,16 @@
 
           </ion-card-header>
   
-          <ion-card-content style="padding: 0.5rem">
+          <ion-card-content 
+            style="padding: 0.5rem">
 
             <div
-              *ngFor="let param of userParamsData.Params; let i = index">
+              *ngFor="let param of userParams.ParamData; let i = index">
 
-              <ion-item *ngIf="userParamTitles[param] == 'Gender'">
+              <ion-item *ngIf="param.Title == 'Gender'">
 
                 <ion-segment (ionChange)="changingUserValues('Gender', 0)"
-                [(ngModel)]="userParamValues.Gender">
+                [(ngModel)]="userParams.Values.Gender">
                   <ion-segment-button value="M">
                     <ion-label>
                       {{ 'Male' | translate }}
@@ -50,20 +52,16 @@
 
 
               <ion-item
-                *ngIf="paramsService.allParams[param].ManuallyEditable == true">
-  
-                {{ param }}
-                
-              {{ paramsService.allParams[param] | json}}
+                *ngIf="param.ManuallyEditable == true">          
 
                 <ion-label>
-                  {{ userParamTitles[param] | translate }}
+                  {{ param.Title | translate }}
                 </ion-label>
                 <ion-input 
                   style="text-align: right;"
                   type="number" 
-                  (ionChange)="changingUserValues(userParamTitles[param], i)"
-                  [(ngModel)]="userParamValues[userParamTitles[param]]">
+                  (ionChange)="changingUserValues(param.Title, i)"
+                  [(ngModel)]="userParams.Values[param.Title]">
                 </ion-input>
               </ion-item>
               
@@ -109,7 +107,7 @@
 
                 <ion-card-content>
 
-                  <ion-label>
+                  <ion-label *ngIf="userParamValues != null">
                     {{ userParamValues[param.Title] }}
                   </ion-label>
 
