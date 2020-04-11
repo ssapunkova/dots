@@ -51,7 +51,6 @@ export class ParamsPage implements OnInit {
     this.paramsService.getUserParams(this.userData._id).subscribe( async (data)=>
     {
       this.userParamsData = data;
-      console.log(this.userParamsData)
 
       // If there is no user param data in db, create empty userParamsData and userParamValues
       if(this.userParamsData == null) {
