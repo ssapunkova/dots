@@ -11,7 +11,6 @@ import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.servic
 import { CalculatorPage } from './calculator/calculator.page';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
-import { Agent } from 'http';
 
 @Component({
   selector: 'app-params',
