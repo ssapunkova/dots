@@ -26,7 +26,7 @@ export class ParamsPage implements OnInit {
 
   public userParams = {
     Titles: [],
-    Values: [],
+    Values: {},
     ParamData: []
   }
 
@@ -79,6 +79,8 @@ export class ParamsPage implements OnInit {
 
     })
 
+    console.log("***UserParams: ", this.userParams);
+
     this.loadingService.hidePageLoading();
 
   }
@@ -88,12 +90,14 @@ export class ParamsPage implements OnInit {
   // -- userParams (needed for calculations) 
   async openModal(param){
 
+    console.log(this.userParams);
+
     if(this.userParams.Values["Gender"] != null && this.userParams.Values["Age"] != null){
       const modal = await this.modalController.create({
         component: CalculatorPage,
         componentProps: {
           param: param,
-          userParams: this.userParams
+          userValues: this.userParams.Values
         }
       });
       await modal.present();
@@ -103,7 +107,7 @@ export class ParamsPage implements OnInit {
 
         console.log("Modal data ", modalData);
 
-        if(modalData != null){
+        if(modalData.data != null){
           // Merge current and new user params
           this.userParams.Values = {
             ...this.userParams.Values,
@@ -155,7 +159,7 @@ export class ParamsPage implements OnInit {
 
     console.log(this.dbData);
 
-    if(this.userParams.Values.length == 0){
+    if(this.userParams.Values["Age"] != null && this.userParams.Values["Gender"] != null){
 
       let alert = await this.alertController.create({
         header: this.translate.instant("NowYouCanMakeCalculations"),
@@ -179,10 +183,13 @@ export class ParamsPage implements OnInit {
 
       for(let i = 0; i < this.userParams.Titles.length; i++){
         let paramTitle = this.userParams.Titles[i];
+        if(this.userParams.ParamData[i] == null){
+          this.userParams.ParamData[i] = this.paramsService.allParams.filter((param) => param.Title == paramTitle)[0];
+        }
         let paramIndex = this.userParams.ParamData[i].Index;
         let paramValue = this.userParams.Values[paramTitle];
 
-        console.log(paramTitle, paramIndex, paramValue)
+        console.log(paramTitle, this.userParams.ParamData[i], paramIndex, paramValue)
 
         this.dbData.Params.push(paramIndex);
         this.dbData.Values.push(paramValue);

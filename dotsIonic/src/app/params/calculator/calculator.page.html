@@ -19,9 +19,9 @@
           </ion-label>
         </ion-col>
         <ion-col size-md="6" size-sm="12">
-          <ion-label *ngIf="userParams[param.Title] != null">
+          <ion-label *ngIf="userValues[param.Title] != null">
             {{ 'YourValue' | translate }}
-            : {{ userParams[param.Title] }} 
+            : {{ userValues[param.Title] }} 
           </ion-label>
         </ion-col>
       </ion-item>
@@ -38,8 +38,8 @@
               <ion-input 
                 *ngIf="field.Type == 'number'"
                 type="number" 
-                [(ngModel)]="userParams[field.Title]"
-                [value]="userParams[field.Title] || 0"
+                [(ngModel)]="userValues[field.Title]"
+                [value]="userValues[field.Title] || 0"
                 ></ion-input>
               <ion-label style="margin-left: 0.5rem">
                 {{ field.Unit | translate }}
@@ -51,7 +51,7 @@
                 <ion-item lines="none" *ngFor="let option of field.Options; let j = index">
                   <ion-radio
                     [name]="field.Title"
-                    [(ngModel)]="userParams[field.Title]"
+                    [(ngModel)]="userValues[field.Title]"
                     [value]="option.Title"></ion-radio>
                   
                   <ion-label class="param-label">
@@ -67,7 +67,7 @@
                 {{ field.Title | translate }}
               </ion-label>
 
-              <ion-select [(ngModel)]="userParams[field.Title]"
+              <ion-select [(ngModel)]="userValues[field.Title]"
                 [placeholder]="field.Title">
                 <ion-select-option *ngFor="let option of field.Options; let j = index"
                   [value]="option.Value">

@@ -48,7 +48,14 @@
   @for $i from 1 through length($colors) {
     *.param-#{$i} {
       background-color: nth($colors, $i);
+      color: set-text-color(nth($colors, $i)) !important;
+      --background: nth($colors, $i) !important;   // for ion-item
+    }
+
+    *.param-#{$i}-light {
+      background-color: lighten(nth($colors, $i), 10%);
       color: set-text-color(nth($colors, $i));
+      --background: lighten(nth($colors, $i), 10%) !important;   // for ion-item
     }
   }
 

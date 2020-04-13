@@ -105,6 +105,7 @@
 	"heavy": "Heavy",
 	"BodyFatPercentage": "Body fat",
 	"DaylyProteinIntake": "Dayly protein intake",
+	"DaylyKcalIntake": "Dayly kcal intake",
 	"Blocks": "Zone blocks",
 	"RegisterNote": "An email will be sent to you to confirm your registration",
 	"FinishNote": "Almost done - choose a username and set a password",

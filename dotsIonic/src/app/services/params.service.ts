@@ -80,7 +80,7 @@ export class ParamsService {
       Title: "ActivityFactorKcal",
       Options: [
         { "Title": "low", "Value": 1.2 },
-        { "Title": "average", "Value": 1.3 },              // 8 - activity factor for kcal calculations
+        { "Title": "average", "Value": 1.3 },              // 8 - activity factor for DaylyKcalIntake calculations
         { "Title": "heavy", "Value": 1.4 },   
       ],
       Type: "select",
@@ -88,8 +88,8 @@ export class ParamsService {
     },
     {
       Index: 9,
-      Title: "kcal",
-      Unit: "kcal",                                        // 9 - kcal intake
+      Title: "DaylyKcalIntake",
+      Unit: "DaylyKcalIntake",                                        // 9 - DaylyKcalIntake intake
       Goal: 2000,
       Type: "number",
       ManuallyEditable: true
@@ -120,7 +120,7 @@ export class ParamsService {
     },
     {
       Index: 13,
-      Title: "Sugar",
+      Title: "DaylySugarIntake",
       Goal: 40,                                            // 13 - dayly sugar intake in gr
       Unit: "gr",
       Type: "number",
