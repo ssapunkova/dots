@@ -91,8 +91,8 @@
   REDO:
     Workout manager design
   TODO:
-    Router snapshot everywhere
-    Request with user id everywhere
+    * Router snapshot params
+    * Request with user id params
 
 08.04
   FIX:
@@ -112,3 +112,5 @@
       l water a day
       preferred weight
       sleep
+    * Router snapshot nutrition
+    * Request with user id nutrition
