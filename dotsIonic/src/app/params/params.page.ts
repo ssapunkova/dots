@@ -107,14 +107,27 @@ export class ParamsPage implements OnInit {
 
         console.log("Modal data ", modalData);
 
-        if(modalData.data != null){
-          // Merge current and new user params
+        modalData = modalData.data;
+
+        if(modalData != null){
+
+          // Merge current and new user values
           this.userParams.Values = {
             ...this.userParams.Values,
-            ...modalData.data
+            ...modalData
           }
-
+          
+          // Update param titles
           this.userParams.Titles = Object.keys(this.userParams.Values);
+
+          // Update ParamData
+          for(let i = 0; i < this.userParams.Titles.length; i++){
+            if(this.userParams.ParamData[i] == null){
+              this.userParams.ParamData[i] = this.paramsService.allParams.filter((param) => {
+                param.Title == this.userParams.Titles[i]
+              })[0];
+            }
+          }
 
           // Update param data in db
           this.updateUserParams();
@@ -159,7 +172,7 @@ export class ParamsPage implements OnInit {
 
     console.log(this.dbData);
 
-    if(this.userParams.Values["Age"] != null && this.userParams.Values["Gender"] != null){
+    if(this.userParams.Titles == ["Gender", "Age"]){
 
       let alert = await this.alertController.create({
         header: this.translate.instant("NowYouCanMakeCalculations"),

@@ -34,7 +34,10 @@
   }
 
 
-  $colors: #ff4b2d, #ff772d, #ffb72d, #a5f565, #3fc352, #2de8ba, #2d8ee8, #9292e5, #da92e5;
+  $colors:
+  #ff4b2d, #ff8181, #ff5900, #ffb72d, #a5f565,
+  #3fc352, #57fcd2, #2d8ee8, #9292e5, #da92e5, 
+  #2d0081;
 
   @function set-text-color($color) {
     @if (lightness( $color ) > 60) {

@@ -93,7 +93,7 @@
               <ion-card (click)="openModal(param)">
 
                 <ion-card-header 
-                  class="param-header param-{{i+1}}">
+                  class="param-header param-{{param.Color}}">
                   
                   <ion-icon 
                     src="../assets/icons/params/{{param.Title}}.svg">
@@ -103,7 +103,7 @@
 
                 <ion-card-content>
 
-                  <ion-item class="param-{{i+1}}-light">
+                  <ion-item class="param-{{param.Color}}-light">
                     {{ param.Title | translate }}
                   </ion-item>
 

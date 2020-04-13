@@ -89,10 +89,11 @@ export class ParamsService {
     {
       Index: 9,
       Title: "DaylyKcalIntake",
-      Unit: "DaylyKcalIntake",                                        // 9 - DaylyKcalIntake intake
+      Unit: "kcal",                                        // 9 - DaylyKcalIntake intake
       Goal: 2000,
       Type: "number",
-      ManuallyEditable: true
+      ManuallyEditable: true,
+      Color: 1
     },
     {
       Index: 10,
@@ -100,7 +101,8 @@ export class ParamsService {
       Goal: 20,                                            // 10 - body fat percentage
       Unit: "%",
       Type: "number",
-      ManuallyEditable: false
+      ManuallyEditable: false,
+      Color: 7
     },
     {
       Index: 11,
@@ -108,7 +110,8 @@ export class ParamsService {
       Goal: 85,                                            // 11 - dayly protein intake in gr
       Unit: "g",
       Type: "number",
-      ManuallyEditable: true
+      ManuallyEditable: true,
+      Color: 3
     },
     {
       Index: 12,
@@ -116,7 +119,8 @@ export class ParamsService {
       Goal: 12,                                            // 12 - zone blocks
       Unit: "bl",
       Type: "number",
-      ManuallyEditable: true
+      ManuallyEditable: true,
+      Color: 5
     },
     {
       Index: 13,
@@ -124,7 +128,8 @@ export class ParamsService {
       Goal: 40,                                            // 13 - dayly sugar intake in gr
       Unit: "gr",
       Type: "number",
-      ManuallyEditable: true
+      ManuallyEditable: true,
+      Color: 2
     }
   ]
 
