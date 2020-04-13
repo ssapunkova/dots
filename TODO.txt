@@ -100,3 +100,15 @@
   TODO:
     * No items message
     * Translate nutrition params
+
+11.04
+  TODO:
+    * update params page
+    * fix params page design
+    * make more calculators:
+      blood pressure
+      pulse
+      km a day
+      l water a day
+      preferred weight
+      sleep
