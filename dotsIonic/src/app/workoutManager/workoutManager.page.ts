@@ -112,6 +112,9 @@ export class WorkoutManagerPage implements OnInit {
     error => {
       this.errorToastAndAlertService.showErrorAlert("Oups");
     });
+
+    this.startWorkout();
+
   }
 
 
@@ -120,7 +123,7 @@ export class WorkoutManagerPage implements OnInit {
     // IsNotCancelled means the user hasn't clicked Terminate Workout button
     this.controls.IsNotCancelled = true;
     let that = this;
-    let secondsLeft = 2;
+    let secondsLeft = 0;
     // Show alert about starting workout
     let alert = await this.alertController.create({
       header: that.translate.instant("StartingWorkoutIn"),
@@ -193,7 +196,7 @@ export class WorkoutManagerPage implements OnInit {
     if(!this.controls.IsFinished){
       // Make a break
       this.controls.IsABreak = true;
-      this.current.BreakSecondsLeft = 2;
+      this.current.BreakSecondsLeft = 10;
 
       this.timerService.setCountdown(this.current.BreakSecondsLeft,
         function(seconds){

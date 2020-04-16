@@ -32,7 +32,9 @@
 
       </ion-list>
       
-      <ion-button class="button-1-light" expand="full" size="large">
+      <ion-button 
+        (click)="startWorkout()"
+        class="button-1-light" expand="full" size="large">
         <ion-icon name="play"></ion-icon>
       </ion-button>
 
@@ -46,4 +48,155 @@
 
   </div>
 
+  <ion-grid id="workout" *ngIf="current.ExerciseIndex != null">
+
+    <ion-row>
+
+      <ion-col
+        sizeLg="4" sizeMd="5" sizeSm="12">
+        
+        <ion-card id="current">
+
+          <div style="width: 100px; height: 50px; position: relative" >
+
+            <div id="c1" style="position: absolute; bottom: 0px; width: 100px; height: 40px; background-color: red;"
+            [style.height.%]="100 - (timerService.timePassed() / averageTime * 100)"></div>
+
+          </div>
+
+          <div style="width: 100px; height: 50px; position: relative">
+            <div id="cf" style="width: 5px; height: 50px; background-color: red; z-index: 5"></div>
+            <div id="c2" style="width: 100px; height: 0px; background-color: red; position: absolute; bottom: 0px"
+            [style.height.%]="timerService.timePassed() / averageTime * 100"></div>
+          </div>
+
+          <ion-item>
+            <div id="timer">
+              <div id="time-passed"
+                [style.width.%]="timerService.timePassed() / averageTime * 100"></div>
+              <div id="time">
+                {{ timerService.timePassed() | date:'HH:mm:ss':'UTC' }}
+              </div>
+            </div>
+          </ion-item>
+          <ion-item *ngIf="averageTime != 0" class="ion-text-center">
+            <ion-label>
+              {{ 'AverageWorkoutDuration' | translate }}
+              {{ averageTime | date:'HH:mm:ss':'UTC'}} 
+            </ion-label>
+          </ion-item>
+
+          <ion-item *ngIf="controls.IsPaused">
+            <h1 style="width: 100%;" class="ion-text-center">
+              {{ 'Paused' | translate }}
+            </h1>
+          </ion-item>
+
+        </ion-card>
+
+      </ion-col>
+
+      <ion-col id="exercises-list"
+        sizeLg="8" sizeMd="7" sizeSm="12">
+
+        <ion-grid>
+          <ion-row>
+            <ion-col class="table-header">
+              {{ 'Exercises' | translate }}
+            </ion-col>
+            <ion-col
+              *ngIf="results.length > 0"
+              style="max-width: 90px;" class="table-header ion-text-center"> 
+              {{ 'Result' | translate }}
+            </ion-col>
+            <ion-col
+              style="max-width: 90px" class="table-header ion-text-center"> 
+              {{ 'Goal' | translate }}
+            </ion-col>
+          </ion-row>
+          <ion-row
+            *ngFor="let exercise of sheetData.Params; let i = index">
+            <ion-col>
+              <ion-icon *ngIf="i == current.ExerciseIndex && !controls.IsFinished" name="play"></ion-icon>
+              {{ exercise.Title }}
+            </ion-col>
+            <ion-col
+              *ngIf="results[i] != null"
+              style="max-width: 80px; text-align: center">
+              <ion-label *ngIf="exercise.Type != 'Bool'; else showBool">
+                {{ results[i] }}
+              </ion-label>
+              <ng-template #showBool>
+                <ion-icon name="checkbox" *ngIf="results[i] == 'true'"></ion-icon>
+                <ion-icon name="close" *ngIf="results[i] != 'true'"></ion-icon>
+              </ng-template>
+            </ion-col>
+            <ion-col
+              style="max-width: 80px"
+              class="ion-text-center">
+              <ion-label *ngIf="exercise.Type != 'Bool'; else showBool">
+                {{ exercise.Goal }}
+              </ion-label>
+              <ng-template #showBool>
+                <ion-icon name="checkbox" *ngIf="exercise.Goal == 'true'"></ion-icon>
+                <ion-icon name="close" *ngIf="exercise.Goal != 'true'"></ion-icon>
+              </ng-template>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+
+
 </ion-content>
+
+<ion-footer style="padding: 0.5rem">
+
+  <ion-segment *ngIf="!controls.IsFinished">
+
+    <ion-segment-button
+      *ngIf="current.ExerciseIndex != null"
+      (click)="terminateWorkout()">
+      <ion-icon name="square"></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button
+      (click)="startWorkout()"
+      *ngIf="current.ExerciseIndex == null">
+      <ion-icon name="play" color="primary"></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button
+      *ngIf="current.ExerciseIndex != null && current.ExerciseIndex < exerciseNumber - 1"
+      [disabled]="controls.IsABreak || controls.IsPaused"
+      (click)="markAsCompleted()">
+      <ion-icon name="checkmark" color="primary"></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button
+      *ngIf="current.ExerciseIndex == exerciseNumber - 1 && !controls.IsFinished"
+      (click)="finish()">
+      <ion-icon name="checkmark" color="primary"></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button
+      *ngIf="!controls.IsPaused && current.ExerciseIndex != null; else playButton"
+      (click)="pauseWorkout()">
+      <ion-icon name="pause"></ion-icon>
+    </ion-segment-button>
+
+    <ng-template #playButton>
+      <ion-segment-button
+        *ngIf="current.ExerciseIndex != null"
+        (click)="playWorkout()">
+        <ion-icon name="play" color="warning"></ion-icon>
+      </ion-segment-button>
+    </ng-template>
+
+  </ion-segment>
+
+</ion-footer>
