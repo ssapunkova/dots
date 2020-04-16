@@ -81,15 +81,8 @@
   FIX:
     * Requests using userId in workouts
     * Some bug with editing/saving workout records
-  
-  TODO:
-    Reorder exercises in workout manager
-    Save exercise order/use once
-    Stats on all sheets in workouts
 
 03.04
-  REDO:
-    Workout manager design
   TODO:
     * Router snapshot params
     * Request with user id params
@@ -108,6 +101,16 @@
     * Router snapshot nutrition
     * Request with user id nutrition
     * fix cell width issues in editNutritionParams
+
+16.04
+  TODO:
+    Update Workout manager design
+    Update workouts and workoutsheet pages
+    Reorder exercises in workout manager
+    Save exercise order/use once
+    Stats on all sheets in workouts
+
+    fix issue with chart component header
     
     make more calculators:
       blood pressure
