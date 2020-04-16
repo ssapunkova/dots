@@ -48,7 +48,7 @@ export class EditWorkoutParamsPage implements OnInit {
         buttons: [
           {
             text: this.translate.instant("CountRepetitionsOption"),
-            icon: 'refresh-circle',
+            icon: 'refresh',
             handler: () => {
               this.addParam("Number");
             }

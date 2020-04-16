@@ -6,22 +6,18 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-item color="primary">
-    {{ 'NoTitleOrGoalExercisesWarning' | translate }}
-  </ion-item>
-
   <ion-content class="padding">
 
     <ion-grid>
 
-      <ion-row>
+      <!-- <ion-row>
         <ion-col>
           <ion-item>
-            <ion-label>Title</ion-label>
-            <ion-input [(ngModel)]='sheet.Title' type="text" placeholder="Name"></ion-input>
+            <ion-label position="floating">Title</ion-label>
+            <ion-input [(ngModel)]='sheet.Title' type="text"></ion-input>
           </ion-item>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
 
       <ion-row>
         <ion-col class="table-header">
@@ -29,54 +25,58 @@
             {{ 'Exercise' | translate }}
           </ion-label>
         </ion-col>
-        <ion-col sizeLg="2" sizeXs="3" class="table-header">
+        <ion-col style="max-width: 150px" class="table-header">
           {{ 'Goal' | translate }}
-        </ion-col>
-        <ion-col sizeXs="3" sizeSm="2" class="table-header" style="padding: 0px !important; display: inline;">
-          <ion-button expand="block" fill="clear"
-           (click)="presentActionSheet()" disabled="{{ isButtonDisabled.addParam }}">
-            <ion-icon name="add" color="light"></ion-icon>
-          </ion-button>
         </ion-col>
       </ion-row>
 
       <ion-row *ngFor="let col of sheet.Params; let i = index">
 
-        <ion-col style="padding-left: 0.8rem">
-          <ion-input type="text" placeholder="Exercise title" [(ngModel)]='col.Title'></ion-input>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-input 
+              type="text" placeholder="Exercise title" 
+              [(ngModel)]='col.Title'>
+            </ion-input>
+          </ion-item>
         </ion-col>
 
-        <ion-col sizeLg="2" sizeXs="3">
-          <ion-input *ngIf="col.Type == 'Number'" type="number" placeholder="Goal" [(ngModel)]='col.Goal'>
-          </ion-input>
+        <ion-col style="max-width: 150px; text-align: center;">
 
-          <ion-input *ngIf="col.Type == 'Time'" type="time" placeholder="Goal" [(ngModel)]='col.Goal'>
-          </ion-input>
+          <ion-item lines="none">
 
-          <ion-label *ngIf="col.Type == 'Bool'">
-            <ion-icon name="checkmark-circle" color="success"></ion-icon>
-          </ion-label>
-        </ion-col>
+            <ion-icon 
+              style="font-size: 1rem; margin-right: 5px"
+              *ngIf="col.Type == 'Time'"
+              src="../../../assets/icons/svg/stopwatch-outline.svg"
+              name="stopwatch-outline"></ion-icon>
 
-        <ion-col sizeXs="3" sizeSm="2">
-          <ion-button expand="block" fill="clear" (click)="deleteExercise(i)">
-            <ion-icon name="trash" color="danger"></ion-icon>
-          </ion-button>
-        </ion-col>
+            <ion-icon 
+              style="font-size: 1rem; margin-right: 5px"
+              *ngIf="col.Type == 'Number'"
+              src="../../../assets/icons/svg/refresh-outline.svg"
+              name="refresh-outline"></ion-icon>
 
-      </ion-row>
+            <ion-input 
+              *ngIf="col.Type == 'Number'" type="number" 
+              placeholder="Goal" [(ngModel)]='col.Goal'>
+            </ion-input>
 
-      <ion-row>
+            <ion-input *ngIf="col.Type == 'Time'" 
+              type="time" placeholder="Goal" 
+              [(ngModel)]='col.Goal'>
+            </ion-input>
 
-        <ion-col sizeXs="6">
-          <ion-button expand="full" (click)="closeModal()">
-            {{ 'Cancel' | translate }}
-          </ion-button>
-        </ion-col>
-        <ion-col sizeXs="6">
-          <ion-button expand="full" (click)="saveChanges()">
-            {{ 'Save' | translate }}
-          </ion-button>
+            <ion-label *ngIf="col.Type == 'Bool'">
+              <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            </ion-label>
+
+            <ion-button expand="block" fill="clear" (click)="deleteExercise(i)">
+              <ion-icon name="trash" color="danger"></ion-icon>
+            </ion-button>
+
+          </ion-item>
+
         </ion-col>
 
       </ion-row>
@@ -84,3 +84,26 @@
     </ion-grid>
 
   </ion-content>
+
+  <ion-toolbar>
+
+    <ion-button style="width: 25%" slot="start" 
+      fill="clear" color="danger"
+      (click)="closeModal()">
+      {{ 'Cancel' | translate }}
+    </ion-button>
+
+    <ion-button style="width: 50%" slot="secondary" 
+      fill="clear"
+      (click)="presentActionSheet()" disabled="{{ isButtonDisabled.addParam }}">
+      <ion-icon name="add" color="primary"></ion-icon>
+    </ion-button>
+
+    <ion-button style="width: 25%" slot="end" 
+      fill="clear" color="secondary"
+      (click)="saveChanges()">
+      {{ 'Save' | translate }}
+    </ion-button>
+
+
+  </ion-toolbar>

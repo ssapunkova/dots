@@ -21,7 +21,7 @@ router.get("/getSheetData/:which/:id", async (req, res) => {
     query = { _id: ObjectId(id) };
   }
 
-  let sheetData = await WorkoutSheet.find(query).populate("WorkoutRecords").exec();
+  let sheetData = await WorkoutSheet.find(query).populate("WorkoutRecords");
   if(sheetData.err) throw sheetData.err;
   res.send(sheetData);
 })
@@ -29,7 +29,7 @@ router.get("/getSheetData/:which/:id", async (req, res) => {
 router.get("/getSheetExercises/:sheetId", async (req, res) => {
   let sheetId = req.params.sheetId;
 
-  let exercises = await WorkoutSheet.find({ _id: sheetId}).select("Title, Params").exec();
+  let exercises = await WorkoutSheet.find({ _id: sheetId}).select("Title, Params");
   if(exercises.err) throw exercises.err;
   res.send(exercises);
 })
@@ -42,7 +42,7 @@ router.get("/getExerciseTimes/:sheetId", async (req, res) => {
       SheetId: sheetId,
       Time: { $ne: null }
     }
-  ).select("Time").exec();
+  ).select("Time");
   if(exerciseTimes.err) throw exerciseTimes.err;
   res.send(exerciseTimes);
 })
@@ -54,6 +54,16 @@ router.post("/createSheet", async (req, res) => {
   let saveSheet = await sheet.save();
   if(saveSheet.err) throw saveSheet.err;
   else res.send(sheet);
+})
+
+router.post("/renameSheet", async (req, res) => {
+  let data = req.body.data;
+
+  console.log(data);
+
+  let renameSheet = await WorkoutSheet.updateOne({ _id: data._id }, { Title: data.Title });
+  if(renameSheet.err) throw renameSheet.err;
+  else res.send();
 })
 
 router.post("/deleteSheet", async (req, res) => {
@@ -73,12 +83,12 @@ router.post("/updateSheetConfiguration", async (req, res) => {
   let sheet = req.body.data;
   let deletedExerciseIds = sheet.DeletedExercisesId;
 
-  let updateSheet = await WorkoutSheet.updateOne({ _id: sheet._id }, sheet).exec();
+  let updateSheet = await WorkoutSheet.updateOne({ _id: sheet._id }, sheet);
   if(updateSheet.err) throw updateSheet.err;
 
   if(deletedExerciseIds.length > 0){
 
-    let recordsOfDeletedExercises = await WorkoutRecord.find({ Params: { $in: deletedExerciseIds }}).exec();
+    let recordsOfDeletedExercises = await WorkoutRecord.find({ Params: { $in: deletedExerciseIds }});
     if(recordsOfDeletedExercises.err) throw recordsOfDeletedExercises.err;
     else{
       for(let i = 0; i < recordsOfDeletedExercises.length; i++){

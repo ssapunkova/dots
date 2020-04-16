@@ -105,12 +105,14 @@
   TODO:
     * update params page
     * fix params page design
-    * make more calculators:
+    * Router snapshot nutrition
+    * Request with user id nutrition
+    * fix cell width issues in editNutritionParams
+    
+    make more calculators:
       blood pressure
       pulse
       km a day
       l water a day
       preferred weight
       sleep
-    * Router snapshot nutrition
-    * Request with user id nutrition

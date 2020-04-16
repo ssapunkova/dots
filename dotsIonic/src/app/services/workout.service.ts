@@ -41,6 +41,13 @@ export class WorkoutService {
     );
   }
 
+  public renameSheet(sheetData){
+    return this.http.post(
+      this.connectToServerService.serverUrl + '/renameSheet',
+      {data: sheetData}
+    );
+  }
+
   public deleteSheet(sheetId){
     return this.http.post(
       this.connectToServerService.serverUrl + '/deleteSheet',

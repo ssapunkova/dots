@@ -120,7 +120,15 @@ export class WorkoutsPage implements OnInit {
     console.log(sheet, index);
     const actionSheet = await this.actionSheetController.create({
       header: sheet.Title,
-      buttons: [{
+      buttons: [
+      {
+        text: this.translate.instant("Rename"),
+        icon: 'create',
+        handler: () => {
+          this.renameSheet(sheet, index)
+        }
+      },
+      {
         text: this.translate.instant("Delete"),
         icon: 'trash',
         handler: () => {
@@ -181,6 +189,62 @@ export class WorkoutsPage implements OnInit {
                     // If reached MAX_SHEETS_NUMBER, disable adding new sheets
                     if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.canAddSheet = false;
                   },
+                  error => {
+                    this.errorToastAndAlertService.showErrorAlert("Oups")
+                  }
+                );
+
+              }
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async renameSheet(sheet, index){
+    console.log(sheet);
+
+    const alert = await this.alertController.create({
+      header: this.translate.instant("RenameSheet"),
+      inputs: [
+        {
+          name: this.translate.instant("Title"),
+          value: sheet.Title,
+          type: 'text'
+        }
+      ],
+      buttons: [
+        {
+          text: this.translate.instant("Cancel"),
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+
+            if(data.Title == ""){
+              this.errorToastAndAlertService.showErrorToast(this.translate.instant("EnterAName"));
+              return false;
+            }
+            else {
+              // Get all sheet names in order to check for repeating names
+              let sheetTitles = this.workoutSheets.map((sheet) => sheet.Title);
+
+              // Show error if a sheet with tis title already exists
+              if(sheetTitles.indexOf(data.Title) != -1) {
+                this.errorToastAndAlertService.showErrorToast(this.translate.instant("ExistingSheetName"));
+                return false;
+              }
+              else{
+                // If sheet title is fine, add sheet to database
+
+                sheet.Title = data.Title;
+                this.workoutSheets[index].Title = sheet.Title;
+
+                this.workoutService.renameSheet(sheet).subscribe((data: [any])=>
                   error => {
                     this.errorToastAndAlertService.showErrorAlert("Oups")
                   }
