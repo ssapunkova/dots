@@ -29,7 +29,7 @@ router.get("/getSheetData/:which/:id", async (req, res) => {
 router.get("/getSheetExercises/:sheetId", async (req, res) => {
   let sheetId = req.params.sheetId;
 
-  let exercises = await WorkoutSheet.find({ _id: sheetId}).select("Title, Params");
+  let exercises = await WorkoutSheet.find({ _id: sheetId});
   if(exercises.err) throw exercises.err;
   res.send(exercises);
 })

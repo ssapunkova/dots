@@ -34,10 +34,11 @@ export class WorkoutManagerPage implements OnInit {
     IsFinished: false                     // Has the workout finished
   }
 
-  public sheetExercises = {
+  public sheetData = {
     _id: null,                            // sheetId, comes with url
     Title: "",                            // Sheet title
-    Params: []                            // Params - array of json exercises
+    Params: [],                           // Params - array of json exercises
+    RecordsNum: 0                         // Number of records
   };
 
   public current = {                      // Save temporary values for current state
@@ -70,20 +71,22 @@ export class WorkoutManagerPage implements OnInit {
 
   ngOnInit() {
     // Get sheetId
-    this.sheetExercises._id = this.route.snapshot.paramMap.get("sheetId");
+    this.sheetData._id = this.route.snapshot.paramMap.get("sheetId");
     // Load sheet data from database
-    this.getsheetExercises();
+    this.getSheetExercises();
   }
 
-  async getsheetExercises(){
+  async getSheetExercises(){
 
-    this.workoutService.getSheetExercises(this.sheetExercises._id).subscribe( async (data: [any])=> {
+    this.workoutService.getSheetExercises(this.sheetData._id).subscribe( async (data: [any])=> {
 
-      // Get data about all sheets
-      this.sheetExercises = data[0];
-      console.log(this.sheetExercises);
+      console.log(this.sheetData, data[0])
+      // Get data about this sheet
+      this.sheetData.Title = data[0].Title;
+      this.sheetData = data[0];
+      console.log(this.sheetData);
 
-      this.exerciseNumber = this.sheetExercises.Params.length;
+      this.exerciseNumber = this.sheetData.Params.length;
 
       // Dismiss all loading
       this.loadingService.hidePageLoading();
@@ -91,17 +94,17 @@ export class WorkoutManagerPage implements OnInit {
     });
 
     // Get average time for exercises
-    this.workoutService.getExerciseTimes(this.sheetExercises._id).subscribe( async (records: any) => {
+    this.workoutService.getExerciseTimes(this.sheetData._id).subscribe( async (records: any) => {
       if(records.length > 0){
         // Find sum of all records
         let sum = 0;
 
-        let recordsNum = records.length;
-        for(var i = 0; i < recordsNum; i++){
+        this.sheetData.RecordsNum = records.length;
+        for(var i = 0; i < this.sheetData.RecordsNum; i++){
           sum += records[i].Time * 1000;
         }
         // Divide value by current records number
-        this.averageTime = sum / recordsNum;
+        this.averageTime = sum / this.sheetData.RecordsNum;
 
         console.log(this.averageTime);
       }
@@ -171,7 +174,7 @@ export class WorkoutManagerPage implements OnInit {
     }
 
     // Set the user's result field to the goal
-    this.current.InputValue = this.sheetExercises.Params[this.current.ExerciseIndex].Goal;
+    this.current.InputValue = this.sheetData.Params[this.current.ExerciseIndex].Goal;
   }
 
   async markAsCompleted(){
@@ -279,11 +282,11 @@ export class WorkoutManagerPage implements OnInit {
 
     // Add record to database
     let record = {
-      SheetId: this.sheetExercises._id,
+      SheetId: this.sheetData._id,
       RecordId: null,
       Date: await this.timeAndDateService.getDate("today"),
       Values: this.results,
-      Params: this.sheetExercises.Params.map((col) => col._id),
+      Params: this.sheetData.Params.map((col) => col._id),
       Time: this.time
     }
 

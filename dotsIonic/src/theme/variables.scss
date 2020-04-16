@@ -60,6 +60,25 @@
       color: set-text-color(nth($colors, $i));
       --background: lighten(nth($colors, $i), 10%) !important;   // for ion-item
     }
+
+    *.button-#{$i}-light{
+      background-color: lighten(nth($colors, $i), 10%);
+      color: set-text-color(nth($colors, $i));
+      --background: lighten(nth($colors, $i), 10%) !important;   // for ion-item
+      --background-activated: lighten(nth($colors, $i), 20%) !important;   // for ion-item
+      --background-focused: lighten(nth($colors, $i), 20%) !important;   // for ion-item
+      --background-hover: lighten(nth($colors, $i), 20%) !important;   // for ion-item
+    }
+    
+    *.gradient-#{$i} {
+      background-color: nth($colors, $i) !important;
+      color: set-text-color(nth($colors, $i)) !important;
+      --background: nth($colors, $i) !important;
+
+      *{        
+        color: set-text-color(nth($colors, $i)) !important;
+      }
+    }
   }
 
   --ion-color-success: #1bc012;
