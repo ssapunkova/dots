@@ -3,6 +3,24 @@ ion-col{
   padding: 0px !important
 }
 
+
+ion-card-header{
+  display: flex;
+  justify-content: baseline;
+  color: white;
+
+  
+  ion-button{
+    margin-left: auto;
+    margin: 0px !important
+  }
+}
+
+
+  ion-label{
+    font-size: 1rem;
+  }
+
 .chart-legend-color{
   width: 1.3rem;
   height: 1.3rem;

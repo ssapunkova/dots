@@ -1,15 +1,18 @@
 <ion-card>
 
-  <ion-card-content>
+  <ion-card-header color="primary">
+  
+    <ion-label>
+      {{ legendTitle | translate }}
+    </ion-label>
+    
+    <ion-button fill="clear" color="light" (click)="editParams()" size="small">
+      <ion-icon name="create"></ion-icon>
+    </ion-button>
 
-    <ion-toolbar>
-      <ion-label slot="start">
-        {{ 'Params' | translate }}
-      </ion-label>
-      <ion-button slot="end" (click)="editParams()">
-        <ion-icon name="create"></ion-icon>
-      </ion-button>
-    </ion-toolbar>
+  </ion-card-header>
+
+  <ion-card-content>
 
     <ion-grid *ngIf="showLegend">
 
@@ -57,11 +60,24 @@
 
     </ion-grid>
 
-    <ion-button expand="block" fill="clear" title="Hide legend"
-      (click)="(showLegend == true) ? showLegend = false : showLegend = true">
+    <ion-button expand="block" fill="clear" title="Show legend"
+      *ngIf="!showLegend"
+      (click)="showLegend = true">
 
-      <ion-icon *ngIf="showLegend" name="arrow-dropup-circle" color="primary"></ion-icon>
-      <ion-icon *ngIf="!showLegend" name="arrow-dropdown-circle" color="primary"></ion-icon>
+      <ion-icon name="arrow-dropdown-circle" color="primary"></ion-icon>
+      <ion-label style="padding-left: 5px; font-size: 0.9rem !important">
+        {{ 'ShowMore' | translate }}
+      </ion-label>
+    </ion-button>
+
+    <ion-button expand="block" fill="clear" title="Hide legend"
+      *ngIf="showLegend"
+      (click)="showLegend = false">
+
+      <ion-icon name="arrow-dropup-circle" color="primary"></ion-icon>
+      <ion-label style="padding-left: 5px; font-size: 0.9rem !important">
+        {{ 'ShowLess' | translate }}
+      </ion-label>
     </ion-button>
 
   </ion-card-content>

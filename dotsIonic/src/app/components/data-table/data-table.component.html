@@ -13,6 +13,7 @@
       <ion-row>
         <ion-col sizeMd="12" sizeLg="4" pushLg="8">
           <chart-legend
+            [legendTitle]="legendTitle"
             [data]="dataTableService.params"
             [goals]="dataTableService.goals"
             [colorScheme]="chartService.colorScheme.domain"

@@ -9,6 +9,7 @@ import { GeneralService } from '../../services/general.service';
 })
 export class ChartLegendComponent implements OnInit {
 
+  @Input() legendTitle: String;
   @Input() data: any[];
   @Input() goals: any[];
   @Input() colorScheme: any[];
