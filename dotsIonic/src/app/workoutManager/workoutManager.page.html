@@ -57,17 +57,29 @@
         
         <ion-card id="current">
 
-          <div style="width: 100px; height: 50px; position: relative" >
+          <!-- <div id="hourglass">
 
-            <div id="c1" style="position: absolute; bottom: 0px; width: 100px; height: 40px; background-color: red;"
-            [style.height.%]="100 - (timerService.timePassed() / averageTime * 100)"></div>
+            <div class="cup" id="upper">
 
-          </div>
+              <div id="c1" style="position: absolute; bottom: 0px; width: 100%; height: 100%; background-color: red;"
+              style.borderRadius="50%"
+              [style.height.%]="100 - (timerService.timePassed() / averageTime * 100)"></div>
 
-          <div style="width: 100px; height: 50px; position: relative">
-            <div id="cf" style="width: 5px; height: 50px; background-color: red; z-index: 5"></div>
-            <div id="c2" style="width: 100px; height: 0px; background-color: red; position: absolute; bottom: 0px"
-            [style.height.%]="timerService.timePassed() / averageTime * 100"></div>
+            </div>
+
+            <div class="cup" id="lower">
+              <div id="falling-sand"></div>
+              <!-- <div id="c2" 
+              style="width: 100px; height: 0px; background-color: red; position: absolute; 
+              bottom: 0px;"
+              
+              [style.height.%]="timerService.timePassed() / averageTime * 100"></div>
+            </div>
+
+          </div>  -->
+
+          <div id="hourglass">
+            <img src="../../assets/icons/hourglass.svg">
           </div>
 
           <ion-item>
