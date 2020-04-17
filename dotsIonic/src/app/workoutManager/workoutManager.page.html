@@ -88,26 +88,42 @@
               viewBox="0 0 150 240.57" style="enable-background:new 0 0 150 240.57;" xml:space="preserve">
             
                 <defs>
-                  <linearGradient id="left-to-right">
-                    <stop offset="0" stop-color="#4DAF4C">
-                      <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="0" to="1" />
-                    </stop>
+
+                  <linearGradient id="upper-cup" gradientTransform="rotate(90)">
+                   
                     <stop offset="0" stop-color="#fff">
+                      <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="0" to="1" />
+                    </stop> 
+                    <stop offset="0" stop-color="#4DAF4C">
                       <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="0" to="1" />
                     </stop>
                     
                   </linearGradient>
+
+                  <linearGradient id="lower-cup" gradientTransform="rotate(90)">
+                   
+                    <stop offset="0" stop-color="#fff">
+                      <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="1" to="0" />
+                    </stop>
+                    <stop offset="0" stop-color="#4DAF4C">
+                      <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="1" to="0" />
+                    </stop>
+
+                  </linearGradient>
+
                 </defs>
 
                 <g id="updder-cup">
-                  <path class="st0" fill="url(#left-to-right)" d="M6.15,15.33C0,78,48,120.2,75.25,120.2c26.03,0,74.75-42.2,69.63-104.28L6.15,15.33z"/>
-                </g>
-                <g id="lower-cup">
-                  <path class="st0" d="M144.85,225.67C151,163,103,120.8,75.75,120.8C49.71,120.8,1,163,6.11,225.08L144.85,225.67z"/>
+                  <path class="st0" fill="url(#upper-cup)" d="M6.15,15.33C0,78,48,120.2,75.25,120.2c26.03,0,74.75-42.2,69.63-104.28L6.15,15.33z"/>
                 </g>
                 <g id="lids">
                   <rect x="5.61" y="8.29" class="st0" width="139.78" height="3.71"/>
                   <rect x="5.54" y="229.43" class="st0" width="139.78" height="3.71"/>
+                </g>
+                <g id="lower-cup">
+                  <path class="st0" fill="url(#lower-cup)" d="M144.85,225.67C151,163,103,120.8,75.75,120.8C49.71,120.8,1,163,6.11,225.08L144.85,225.67z"/>
+                  
+                  <rect x="50%" y="50%" width="3" height="43%" fill="#4DAF4C"></rect>
                 </g>
               </svg>
           </div>

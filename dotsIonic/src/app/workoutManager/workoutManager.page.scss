@@ -44,7 +44,7 @@ ion-content{
 }
 
 #current{
-  // background-color: white !important;
+  background-color: white !important;
   color: black !important;
 
   *{
@@ -52,9 +52,9 @@ ion-content{
   }
 
   
-  // .st0{
-  //   fill:#FFFFFF;
-  // }
+  .st0{
+    stroke:rgb(99, 99, 99);
+  }
 
   #hourglass{
     height: 120px;
