@@ -53,6 +53,7 @@ export class WorkoutManagerPage implements OnInit {
   public time = 0;                        // Duration of current workout
 
   public averageTime = 0;
+  public hourglassAnimationTime;
 
   constructor(
     public loadingService: LoadingService,
@@ -105,6 +106,8 @@ export class WorkoutManagerPage implements OnInit {
         }
         // Divide value by current records number
         this.averageTime = sum / this.sheetData.RecordsNum;
+
+        this.hourglassAnimationTime = this.averageTime / 1000 + "s";
 
         console.log(this.averageTime);
       }
