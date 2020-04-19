@@ -1,8 +1,9 @@
 <ion-content class="gradient-1">
 
-  <div id="workout-preview" *ngIf="current.ExerciseIndex == null">
+  <div id="workout-summary" *ngIf="current.ExerciseIndex == null || controls.IsFinished">
 
-    <div id="workout-summary">
+    <div *ngIf="current.ExerciseIndex == null"
+      id="workout-preview" class="set-text-color">
       <h1>{{ sheetData.Title }} </h1>
 
       <ion-list>
@@ -46,118 +47,164 @@
 
     </div>
 
+    <div *ngIf="controls.IsFinished"
+      id="workout-totals" class="set-text-color">
+      <h1>{{ sheetData.Title }} </h1>
+
+      <ion-list>
+
+        <ion-item color="none">
+          <ion-icon name="grid" style="padding-right: 0.5rem"></ion-icon>
+          {{ sheetData.Params.length }} {{ 'exercises' | translate }}
+        </ion-item>
+
+        <ion-item color="none">
+          <ion-icon name="checkmark" style="padding-right: 0.5rem"></ion-icon>
+          {{ sheetData.RecordsNum }} {{ 'records' | translate }}
+        </ion-item>
+
+        <ion-item color="none">
+
+          <ion-icon name="timer" style="padding-right: 0.5rem"></ion-icon>
+          <ion-label>
+            {{ time | date:'mm':'UTC'}}
+          </ion-label>
+
+        </ion-item>
+
+      </ion-list>
+      
+      <ion-button 
+        (click)="startWorkout()"
+        class="button-1-light" expand="full" size="large">
+        <ion-icon name="play"></ion-icon>
+      </ion-button>
+
+    </div>
+
   </div>
 
-  <ion-grid id="workout" *ngIf="current.ExerciseIndex != null">
+  <ion-grid id="workout" *ngIf="current.ExerciseIndex != null && !controls.IsFinished">
 
     <ion-row>
 
       <ion-col
-        sizeLg="4" sizeMd="5" sizeSm="12">
+        sizeLg="4" sizeMd="5" sizeXs="12">
         
         <ion-card id="current">
 
-          <!-- <div id="hourglass">
-
-            <div class="cup" id="upper">
-
-              <div id="c1" style="position: absolute; bottom: 0px; width: 100%; height: 100%; background-color: red;"
-              style.borderRadius="50%"
-              [style.height.%]="100 - (timerService.timePassed() / averageTime * 100)"></div>
-
-            </div>
-
-            <div class="cup" id="lower">
-              <div id="falling-sand"></div>
-              <!-- <div id="c2" 
-              style="width: 100px; height: 0px; background-color: red; position: absolute; 
-              bottom: 0px;"
-              
-              [style.height.%]="timerService.timePassed() / averageTime * 100"></div>
-            </div>
-
-          </div>  -->
-
           <div id="hourglass">
-            <!-- <img src="../../assets/icons/hourglass.svg"> -->
 
-            
             <!-- Generator: Adobe Illustrator 23.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
             
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-              viewBox="0 0 150 240.57" style="enable-background:new 0 0 150 240.57;" xml:space="preserve">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            viewBox="0 0 150 240.57" style="enable-background:new 0 0 150 240.57;" xml:space="preserve">
             
-                <defs>
+              <defs>
 
-                  <linearGradient id="upper-cup" gradientTransform="rotate(90)">
-                   
-                    <stop offset="0" stop-color="#fff">
-                      <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="0" to="1" />
-                    </stop> 
-                    <stop offset="0" stop-color="#4DAF4C">
-                      <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="0" to="1" />
-                    </stop>
-                    
-                  </linearGradient>
-
-                  <linearGradient id="lower-cup" gradientTransform="rotate(90)">
-                   
-                    <stop offset="0" stop-color="#fff">
-                      <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="1" to="0" />
-                    </stop>
-                    <stop offset="0" stop-color="#4DAF4C">
-                      <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="1" to="0" />
-                    </stop>
-
-                  </linearGradient>
-
-                </defs>
-
-                <g id="updder-cup">
-                  <path class="st0" fill="url(#upper-cup)" d="M6.15,15.33C0,78,48,120.2,75.25,120.2c26.03,0,74.75-42.2,69.63-104.28L6.15,15.33z"/>
-                </g>
-                <g id="lids">
-                  <rect x="5.61" y="8.29" class="st0" width="139.78" height="3.71"/>
-                  <rect x="5.54" y="229.43" class="st0" width="139.78" height="3.71"/>
-                </g>
-                <g id="lower-cup">
-                  <path class="st0" fill="url(#lower-cup)" d="M144.85,225.67C151,163,103,120.8,75.75,120.8C49.71,120.8,1,163,6.11,225.08L144.85,225.67z"/>
+                <linearGradient id="upper-cup" gradientTransform="rotate(90)">
                   
-                  <rect x="50%" y="50%" width="3" height="43%" fill="#4DAF4C"></rect>
-                </g>
-              </svg>
+                  <stop offset="0" stop-color="#fff">
+                    <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="0" to="1" />
+                  </stop> 
+                  <stop offset="0" class="stop-color-1">
+                    <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="0" to="1" />
+                  </stop>
+                  
+                </linearGradient>
+
+                <linearGradient id="lower-cup" gradientTransform="rotate(90)">
+                  
+                  <stop offset="0" stop-color="#fff">
+                    <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="1" to="0" />
+                  </stop>
+                  <stop offset="0" class="stop-color-1">
+                    <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="1" to="0" />
+                  </stop>
+
+                </linearGradient>
+
+              </defs>
+
+              <g id="updder-cup">
+                <path class="st0" fill="url(#upper-cup)" d="M6.15,15.33C0,78,48,120.2,75.25,120.2c26.03,0,74.75-42.2,69.63-104.28L6.15,15.33z"/>
+              </g>
+              <g id="lids">
+                <rect x="5.61" y="8.29" class="st0" width="139.78" height="3.71"/>
+                <rect x="5.54" y="229.43" class="st0" width="139.78" height="3.71"/>
+              </g>
+              <g id="lower-cup">
+                <path class="st0" fill="url(#lower-cup)" d="M144.85,225.67C151,163,103,120.8,75.75,120.8C49.71,120.8,1,163,6.11,225.08L144.85,225.67z"/>
+                
+                <rect x="50%" y="50%" width="3" height="43%" class="fill-1"></rect>
+              </g>
+            </svg>
           </div>
 
-          <ion-item>
-            <div id="timer">
-              <div id="time-passed"
-                [style.width.%]="timerService.timePassed() / averageTime * 100"></div>
-              <div id="time">
-                {{ timerService.timePassed() | date:'HH:mm:ss':'UTC' }}
-              </div>
-            </div>
+          <ion-item lines="none">
+            <ion-label id="time">
+             {{ timerService.timePassed() | date:'HH:mm:ss':'UTC' }}
+            </ion-label>
           </ion-item>
-          <ion-item *ngIf="averageTime != 0" class="ion-text-center">
+          <ion-item  lines="none" *ngIf="averageTime != 0" class="ion-text-center">
             <ion-label>
               {{ 'AverageWorkoutDuration' | translate }}
               {{ averageTime | date:'HH:mm:ss':'UTC'}} 
             </ion-label>
           </ion-item>
 
-          <ion-item *ngIf="controls.IsPaused">
-            <h1 style="width: 100%;" class="ion-text-center">
-              {{ 'Paused' | translate }}
-            </h1>
-          </ion-item>
+          <div *ngIf="controls.IsExerciseRunning && !controls.IsPaused">
 
+            <h1 class="ion-text-center">
+              {{ sheetData.Params[current.ExerciseIndex].Title }}
+            </h1>
+
+            <ion-item class="ion-text-center" lines="none">
+
+              <ion-label>
+                {{ 'YourResult' | translate }}: 
+              </ion-label>
+
+              <ion-input 
+                *ngIf="sheetData.Params[current.ExerciseIndex].Type != 'Bool'; else checkbox"
+                [type]="sheetData.Params[current.ExerciseIndex].Type"
+                [value]="sheetData.Params[current.ExerciseIndex].Goal"
+                [(ngModel)]="current.InputValue">
+              </ion-input>
+
+              <ng-template #checkbox>
+                <ion-checkbox [(ngModel)]='current.InputValue' style='margin-right: 1rem'></ion-checkbox>
+              </ng-template>
+
+              <percentage-chip
+                [percentage]="generalService.calculatePercentage(current.InputValue, sheetData.Params[current.ExerciseIndex].Goal)"></percentage-chip>
+
+            </ion-item>
+
+          </div>
+    
+          <div *ngIf="controls.IsABreak || controls.IsPaused">
+            
+            <ion-item lines="none">
+              <ion-label class="ion-text-center">
+                <ion-icon name="checkmark" color="success"></ion-icon>
+                <h1>
+                  {{ current.ExerciseIndex + 1 }} / {{ sheetData.Params.length }}
+                </h1>
+              </ion-label>
+            </ion-item>           
+          
+          </div>
+          
         </ion-card>
 
       </ion-col>
 
-      <ion-col id="exercises-list"
-        sizeLg="8" sizeMd="7" sizeSm="12">
+      <ion-col id="exercises-list" class="set-text-color"
+        sizeLg="8" sizeMd="7" sizeXs="12">
 
         <ion-grid>
+
           <ion-row>
             <ion-col class="table-header">
               {{ 'Exercises' | translate }}
@@ -172,12 +219,14 @@
               {{ 'Goal' | translate }}
             </ion-col>
           </ion-row>
+
           <ion-row
             *ngFor="let exercise of sheetData.Params; let i = index">
             <ion-col>
               <ion-icon *ngIf="i == current.ExerciseIndex && !controls.IsFinished" name="play"></ion-icon>
               {{ exercise.Title }}
             </ion-col>
+
             <ion-col
               *ngIf="results[i] != null"
               style="max-width: 80px; text-align: center">
@@ -189,6 +238,7 @@
                 <ion-icon name="close" *ngIf="results[i] != 'true'"></ion-icon>
               </ng-template>
             </ion-col>
+
             <ion-col
               style="max-width: 80px"
               class="ion-text-center">
@@ -200,7 +250,9 @@
                 <ion-icon name="close" *ngIf="exercise.Goal != 'true'"></ion-icon>
               </ng-template>
             </ion-col>
+
           </ion-row>
+
         </ion-grid>
 
       </ion-col>
@@ -212,7 +264,7 @@
 
 </ion-content>
 
-<ion-footer style="padding: 0.5rem">
+<ion-footer style="padding: 0.5rem" *ngIf="current.ExerciseIndex != null && !current.IsFinished">
 
   <ion-segment *ngIf="!controls.IsFinished">
 
@@ -220,12 +272,6 @@
       *ngIf="current.ExerciseIndex != null"
       (click)="terminateWorkout()">
       <ion-icon name="square"></ion-icon>
-    </ion-segment-button>
-
-    <ion-segment-button
-      (click)="startWorkout()"
-      *ngIf="current.ExerciseIndex == null">
-      <ion-icon name="play" color="primary"></ion-icon>
     </ion-segment-button>
 
     <ion-segment-button

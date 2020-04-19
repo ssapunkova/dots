@@ -3,6 +3,7 @@
 
 /** Ionic CSS Variables **/
 :root {
+  
   --ion-color-primary: #87d314;
   --ion-color-primary-rgb: 135,211,20;
   --ion-color-primary-contrast: #ffffff;
@@ -32,7 +33,9 @@
     --ion-color-shade: #e06038;
     --ion-color-tint: #fe7c53;
   }
-
+  
+  --base: #ffffff;
+  --text: #010101;
 
   $colors:
   #ff4b2d, #ff8181, #ff5900, #ffb72d, #a5f565,
@@ -69,14 +72,22 @@
       --background-focused: lighten(nth($colors, $i), 20%) !important;   // for ion-item
       --background-hover: lighten(nth($colors, $i), 20%) !important;   // for ion-item
     }
+
+    *.fill-#{i}{
+      fill: nth($colors, $i);
+    }
+
+    *.stop-color-#{$i}{
+      stop-color: nth($colors, $i);
+    }
     
     *.gradient-#{$i} {
       background-color: nth($colors, $i) !important;
-      color: set-text-color(nth($colors, $i)) !important;
+      color: set-text-color(nth($colors, $i));
       --background: nth($colors, $i) !important;
 
-      *{        
-        color: set-text-color(nth($colors, $i)) !important;
+      .set-text-color{
+        color: set-text-color(nth($colors, $i));
       }
     }
   }

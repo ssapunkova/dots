@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, MenuController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
 
 import { interval } from 'rxjs';
@@ -56,6 +56,7 @@ export class WorkoutManagerPage implements OnInit {
   public hourglassAnimationTime;
 
   constructor(
+    public menuController: MenuController,
     public loadingService: LoadingService,
     public route: ActivatedRoute,
     public translate: TranslateService,
@@ -69,6 +70,12 @@ export class WorkoutManagerPage implements OnInit {
     public timeAndDateService: TimeAndDateService,
     public chartService: ChartService
   ) { };
+
+  
+  ionViewWillEnter() {
+    this.menuController.enable(false);
+  }
+
 
   ngOnInit() {
     // Get sheetId
@@ -116,7 +123,7 @@ export class WorkoutManagerPage implements OnInit {
       this.errorToastAndAlertService.showErrorAlert("Oups");
     });
 
-    this.startWorkout();
+    // this.startWorkout();
 
   }
 
@@ -127,6 +134,7 @@ export class WorkoutManagerPage implements OnInit {
     this.controls.IsNotCancelled = true;
     let that = this;
     let secondsLeft = 0;
+
     // Show alert about starting workout
     let alert = await this.alertController.create({
       header: that.translate.instant("StartingWorkoutIn"),
@@ -199,13 +207,37 @@ export class WorkoutManagerPage implements OnInit {
     if(!this.controls.IsFinished){
       // Make a break
       this.controls.IsABreak = true;
-      this.current.BreakSecondsLeft = 10;
+      this.current.BreakSecondsLeft = 1;
+
+      let messagePt1 = this.sheetData.Params[this.current.ExerciseIndex + 1].Title 
+      + "<br>"  + this.translate.instant("in") + "<br>"
+      + "<h1>";
+
+      let messagePt2 = "</h1>";
+      
+      // Show alert about next exercise workout
+      let alert = await this.alertController.create({
+        header: that.translate.instant("NextExercise"),
+        message: messagePt1 + that.current.BreakSecondsLeft + messagePt2,
+        backdropDismiss: false,
+        buttons: [
+          {
+            text: this.translate.instant("Pause"),
+            handler: () => {
+              that.pauseWorkout();
+            }
+          }
+        ]
+      });
+
 
       this.timerService.setCountdown(this.current.BreakSecondsLeft,
         function(seconds){
           that.current.BreakSecondsLeft = seconds;
+          alert.message = messagePt1 + seconds + messagePt2;
         },
         function(){
+          alert.dismiss();
           // Finsish the break and, if workout is not paused, resume timer
           that.controls.IsABreak = false;
           if(that.controls.IsPaused == false) {
@@ -216,6 +248,12 @@ export class WorkoutManagerPage implements OnInit {
           that.presentNextExercise();
         }
       )
+
+      
+
+    await alert.present();
+      
+
     }
   }
 

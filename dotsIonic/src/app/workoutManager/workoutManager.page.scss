@@ -4,21 +4,22 @@ ion-content{
   padding: 0px !important;
 }
 
-#workout-preview{
+#workout-summary{
   position: absolute;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-content: center;
-
+  
   ion-list, ion-item{
     background-color: transparent !important; 
     --padding-start: 0.25rem !important;
     --padding-end: 0.25rem !important;
+    color: inherit !important;
   }
 
-  #workout-summary{
+  #workout-preview, #workout-totals{
     height: 80%;
     max-height: 350px;
     margin: auto;
@@ -34,8 +35,8 @@ ion-content{
 }
 
 #workout{
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   padding: 0px !important;
   
   ion-row{
@@ -45,10 +46,11 @@ ion-content{
 
 #current{
   background-color: white !important;
-  color: black !important;
+  padding: 1rem;
 
   *{
-    color: inherit !important;
+    color: var(--text) !important;
+    --color: var(--text) !important;
   }
 
   
@@ -60,51 +62,23 @@ ion-content{
     height: 120px;
     width: 75px;
     text-align: center;
+    margin: auto;
+  }
 
-    img{
-      stroke: blue;
-    }
-
-
-    #lower{
-      border-radius: 50% 50% 5px 5px;
-    }
-
-    #falling-sand{
-      width: 3px;
-      height: 100%;
-      margin: auto;
-      background-color: red;
-    }
+  #time{
+    font-size: 1.5rem !important;
+    text-align: center;
   }
 
 }
 
-#timer{
-  width: 100%;
-  height: 50px;
-  border-radius: 5px;
-  display: flex;
-  position: relative;
-  color: inherit !important;
+#exercises-list{
+  padding: 10px !important;
 }
 
-#time-passed{
-  border-radius: 5px;
-  background: var(--ion-color-primary);
-  height: 100%;
-  transition: 1s linear;
-  color: inherit !important;
-}
-
-#time{
-  position: absolute;
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  font-size: 1.3rem;
-  text-align: center;
-  color: inherit !important;
+.table-header{
+  background-color: var(--base) !important;
+  color: var(--text) !important;
 }
 
 ion-segment-button {
