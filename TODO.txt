@@ -113,6 +113,7 @@
 19.04:
     Finish workout manager
     Choose sheet color
+    Workout stats: days with exercise time like a heatmap ( take from energyI )
     fix issue with chart component header
     
     make more calculators:
