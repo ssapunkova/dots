@@ -49,7 +49,7 @@
 
     <div *ngIf="controls.IsFinished"
       id="workout-totals" class="set-text-color">
-      <h1>{{ sheetData.Title }} </h1>
+      <h1>Today's workout summary </h1>
 
       <ion-list>
 
@@ -59,25 +59,31 @@
         </ion-item>
 
         <ion-item color="none">
-          <ion-icon name="checkmark" style="padding-right: 0.5rem"></ion-icon>
-          {{ sheetData.RecordsNum }} {{ 'records' | translate }}
+          <ion-icon name="timer" style="padding-right: 0.5rem"></ion-icon>
+          <ion-label>
+            {{ time | date:'mm':'UTC'}} {{ 'workoutDuration' | translate }}
+          </ion-label>
         </ion-item>
 
         <ion-item color="none">
-
-          <ion-icon name="timer" style="padding-right: 0.5rem"></ion-icon>
-          <ion-label>
-            {{ time | date:'mm':'UTC'}}
-          </ion-label>
-
+          <ion-icon name="checkmark" style="padding-right: 0.5rem"></ion-icon>
+          {{ resultsSum / sheetData.Params.length | number:'1.0-0' }}% {{ 'fullfilledGoals' | translate}}
         </ion-item>
+
+        <ion-item 
+          *ngIf="extraResults > 0"
+          color="light">
+          <ion-icon name="checkmark" style="padding-right: 0.5rem"></ion-icon>
+          {{ extraResults }} {{ 'extraResults' | translate}}
+        </ion-item>
+        
 
       </ion-list>
       
       <ion-button 
-        (click)="startWorkout()"
+        routerLink="/workouts"
         class="button-1-light" expand="full" size="large">
-        <ion-icon name="play"></ion-icon>
+        <ion-icon name="arrrow-back"></ion-icon>
       </ion-button>
 
     </div>

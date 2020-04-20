@@ -48,11 +48,15 @@ export class WorkoutManagerPage implements OnInit {
     ExerciseStartedAt: 0                  // Record start time of exercise ( needed for calculating exercise duration )
   }
 
+  public resultsSum = 0;                  // Sum of percentages to show goal reach percentage in totals
+
   public exerciseNumber = 0;              // Exercise count
   public results = [];                    // User's results on each exercise
   public time = 0;                        // Duration of current workout
 
-  public averageTime = 0;
+  public extraResults = 0;                // How many goals has the user overflowed
+
+  public averageTime = 0;                 // This workout average duration
   public hourglassAnimationTime;
 
   constructor(
@@ -197,9 +201,23 @@ export class WorkoutManagerPage implements OnInit {
     this.controls.IsExerciseRunning = false;
 
     // Manage bool results
-    if(this.current.InputValue.toString() == "true") this.results.push(true);
-    else if(this.current.InputValue.toString() == "false") this.results.push(false);
-    else this.results.push(this.current.InputValue);
+    if(this.current.InputValue.toString() == "true") {
+      this.results.push(true);
+      this.resultsSum += 100;
+    }
+    else if(this.current.InputValue.toString() == "false") {
+      this.results.push(false);
+    }
+    else {
+      this.results.push(this.current.InputValue);
+      let percentageOfGoals = this.generalService.calculatePercentage(this.current.InputValue, this.sheetData.Params[this.current.ExerciseIndex].Goal);
+      this.resultsSum += percentageOfGoals;
+      if(percentageOfGoals > 100){
+        this.extraResults++;
+      }
+    }
+
+    console.log(this.resultsSum);
 
     let that = this;
 
@@ -249,11 +267,8 @@ export class WorkoutManagerPage implements OnInit {
         }
       )
 
+      await alert.present();
       
-
-    await alert.present();
-      
-
     }
   }
 
@@ -323,6 +338,7 @@ export class WorkoutManagerPage implements OnInit {
     console.log("FINISHED");
     console.log(this.results);
     console.log(this.time);
+
 
     // Add record to database
     let record = {
