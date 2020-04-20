@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="record.RecordId == null; else editTitle">
+      {{ 'NewWorkoutSheet' | translate }}
+    </ion-title>
+    <ng-template #editTitle>
+      <ion-title>
+        {{ 'EditWorkoutSheet' | translate }}
+      </ion-title>
+    </ng-template>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="padding">
+
+  <ion-item>
+    <ion-label position="floating">{{ 'Title' | translate }}</ion-label>
+    <ion-input type="text" [(ngModel)]="Title"></ion-input>
+  </ion-item>
+
+  <div id="colorChoiceBox">
+
+    <div 
+      *ngFor="let i of colors"
+      class="sheetColor gradient-{{i}}"></div>
+
+  </div>
+
+</ion-content>
+
+<ion-toolbar>
+
+  <ion-button style="width: 25%" slot="start" 
+    fill="clear" color="danger"
+    (click)="closeModal()">
+    {{ 'Cancel' | translate }}
+  </ion-button>
+
+  <ion-button style="width: 25%" slot="end" 
+    fill="clear" color="secondary"
+    (click)="saveChanges()">
+    {{ 'Save' | translate }}
+  </ion-button>
+
+
+</ion-toolbar>

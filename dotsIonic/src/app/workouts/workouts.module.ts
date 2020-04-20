@@ -12,6 +12,8 @@ import { WorkoutsPage } from './workouts.page';
 
 import { ComponentsModule  } from '../components/components.module';
 
+import { NewWorkoutSheetPage } from './newWorkoutSheet/newWorkoutSheet.page';
+
 const routes: Routes = [
   {
     path: '',
@@ -29,6 +31,9 @@ const routes: Routes = [
     ComponentsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [WorkoutsPage]
+  declarations: [
+    WorkoutsPage,
+    NewWorkoutSheetPage
+  ]
 })
 export class WorkoutsPageModule {}

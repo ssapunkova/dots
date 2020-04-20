@@ -23,6 +23,7 @@ import { ComponentsModule } from './components/components.module';
 // Pages
 import { NewNutritionRecordPage } from './nutrition/newNutritionRecord/newNutritionRecord.page';
 import { NewWorkoutRecordPage } from './workoutSheet/newWorkoutRecord/newWorkoutRecord.page';
+import { NewWorkoutSheetPage } from './workouts/newWorkoutSheet/newWorkoutSheet.page';
 
 // Services
 import { ConnectToServerService } from './services/connectToServer.service';
@@ -42,11 +43,13 @@ import { UserService } from './services/user.service';
   declarations: [
     AppComponent,
     NewNutritionRecordPage,
-    NewWorkoutRecordPage
+    NewWorkoutRecordPage,
+    NewWorkoutSheetPage
   ],
   entryComponents: [
     NewNutritionRecordPage,
-    NewWorkoutRecordPage
+    NewWorkoutRecordPage,
+    NewWorkoutSheetPage
   ],
   imports: [
     BrowserModule,
@@ -88,7 +91,8 @@ import { UserService } from './services/user.service';
     ComponentsModule,
     TranslateModule,
     NewNutritionRecordPage,
-    NewWorkoutRecordPage
+    NewWorkoutRecordPage,
+    NewWorkoutSheetPage
   ],
   bootstrap: [AppComponent]
 })
