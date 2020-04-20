@@ -7,7 +7,8 @@ const ParameterSchema = mongoose.Schema({ Title: String, Goal: String, Type: Str
 
 const WorkoutSheetSchema = mongoose.Schema({
     UserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-	  Title: String,
+    Title: String,
+    Color: Number,
 	  Params: [ParameterSchema]
 },
 { collection: "workoutSheets"}

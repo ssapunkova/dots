@@ -333,6 +333,8 @@ export class WorkoutManagerPage implements OnInit {
     this.markAsCompleted();
     this.timerService.pauseTimer();
 
+    console.log(this.timerService.timePassed());
+
     this.time = this.timerService.timePassed() / 1000;
 
     console.log("FINISHED");
