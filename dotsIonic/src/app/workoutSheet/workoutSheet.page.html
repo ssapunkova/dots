@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="color-{{data.Color}}">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/workouts"></ion-back-button>
     </ion-buttons>
@@ -22,6 +22,7 @@
     headerMessage="NoExercisesSet"
     buttonLabel="AddExercises"
     (buttonClicked)="editParams()"
+    [color]="data.Color"
     *ngIf="dataTableService.params.length == 0">
   </no-items-message>
 
@@ -30,6 +31,7 @@
     legendTitle="Exercises"
     (editParamsButtonClicked)="editParams()"
     (addRecordClicked)="addRecord()"
+    [color]="data.Color"
     (showRecordOptionsClicked)="showRecordOptions($event)"
   ></data-table>
 

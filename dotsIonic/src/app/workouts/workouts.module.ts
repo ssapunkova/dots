@@ -12,7 +12,7 @@ import { WorkoutsPage } from './workouts.page';
 
 import { ComponentsModule  } from '../components/components.module';
 
-import { NewWorkoutSheetPage } from './newWorkoutSheet/newWorkoutSheet.page';
+// import { NewWorkoutSheetPage } from './newWorkoutSheet/newWorkoutSheet.page';
 
 const routes: Routes = [
   {
@@ -33,7 +33,7 @@ const routes: Routes = [
   ],
   declarations: [
     WorkoutsPage,
-    NewWorkoutSheetPage
+    // NewWorkoutSheetPage
   ]
 })
 export class WorkoutsPageModule {}

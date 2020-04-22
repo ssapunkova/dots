@@ -6,9 +6,13 @@ ion-col{
 
 ion-card-header{
   display: flex;
-  justify-content: baseline;
-  color: white;
+  padding: 0.5rem !important;
 
+  ion-label{
+    font-size: 1rem;
+    line-height: 2rem;
+    padding-left: 0.25rem;
+  }
   
   ion-button{
     margin-left: auto;
@@ -17,9 +21,7 @@ ion-card-header{
 }
 
 
-  ion-label{
-    font-size: 1rem;
-  }
+  
 
 .chart-legend-color{
   width: 1.3rem;

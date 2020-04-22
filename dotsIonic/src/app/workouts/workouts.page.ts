@@ -150,7 +150,10 @@ export class WorkoutsPage implements OnInit {
   async addSheet(){
 
     const modal = await this.modalController.create({
-      component: NewWorkoutSheetPage
+      component: NewWorkoutSheetPage,
+      componentProps: {
+        sheetTitles: this.workoutSheets.map((sheet) => sheet.Title)
+      }
     });
 
     await modal.present();
@@ -159,6 +162,20 @@ export class WorkoutsPage implements OnInit {
 
     if(modalData.data != null){
       console.log(modalData);
+      let sheet = modalData.data;
+      sheet.UserId = this.userData._id;
+
+      this.workoutService.createSheet(sheet).subscribe( async (data: [any])=>
+        {
+          console.log(data)
+          this.workoutSheets.push(data);
+          // If reached MAX_SHEETS_NUMBER, disable adding new sheets
+          if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.canAddSheet = false;
+        },
+        error => {
+          this.errorToastAndAlertService.showErrorAlert("Oups")
+        }
+      );
     };
 
   //   // Show an alert for the name of the sheet

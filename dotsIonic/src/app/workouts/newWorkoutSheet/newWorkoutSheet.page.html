@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title *ngIf="record.RecordId == null; else editTitle">
+    <ion-title *ngIf="sheet == null; else editSheet">
       {{ 'NewWorkoutSheet' | translate }}
     </ion-title>
-    <ng-template #editTitle>
+    <ng-template #editSheet>
       <ion-title>
         {{ 'EditWorkoutSheet' | translate }}
       </ion-title>
@@ -15,13 +15,14 @@
 
   <ion-item>
     <ion-label position="floating">{{ 'Title' | translate }}</ion-label>
-    <ion-input type="text" [(ngModel)]="Title"></ion-input>
+    <ion-input type="text" [(ngModel)]="sheetData.Title"></ion-input>
   </ion-item>
 
   <div id="colorChoiceBox">
 
     <div 
       *ngFor="let i of colors"
+      (click)="setColor(i)"
       class="sheetColor gradient-{{i}}"></div>
 
   </div>

@@ -110,6 +110,20 @@ ion-label{
 //   padding-right: 7px;
 // }
 
+// Colors
+
+#colorChoiceBox{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sheetColor{
+  width: 30px;
+  height: 30px;
+  margin: 2px;
+  border-radius: 15px;
+}
+
 
 // Table
 

@@ -17,6 +17,14 @@ export class NewWorkoutSheetPage implements OnInit {
 
   public colors = [];
 
+  public data;
+
+  public sheetData = {
+    UserId: null,
+    Title: "",
+    Color: 1,
+  }
+
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
@@ -29,29 +37,40 @@ export class NewWorkoutSheetPage implements OnInit {
 
   async ngOnInit() {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
+    this.data = data;
 
     for(let i = 1; i < 12; i++){
       this.colors.push(i);
     }
 
+    console.log(this.colors);
+
+  }
+
+  async setColor(index){
+    console.log(index);
+    this.sheetData.Color = index;
   }
 
   async saveChanges() {
 
-    console.log(this.record);
+    if(this.sheetData.Title == ""){
+      this.errorToastAndAlertService.showErrorToast(this.translate.instant("EnterAName"));
+      return false;
+    }
+    else {
+      console.log(this.sheetData);
+      // Show error if a sheet with this title already exists
+      if(this.data.sheetTitles.indexOf(this.sheetData.Title) != -1) {
+        this.errorToastAndAlertService.showErrorToast(this.translate.instant("ExistingSheetName"));
+        return false;
+      }
+      else{
+        // If sheet title is fine, add sheet to database
 
-    // if(this.record.Date == null){
-    //   this.errorToastAndAlertService.showErrorToast(this.translate.instant("FillInDate"));
-    //   return false;
-    // }
-    // else{
-    //   if(this.record.Values.length < 1){
-    //     this.errorToastAndAlertService.showErrorToast(this.translate.instant("FillInResults"));
-    //     return false;
-    //   }
-
-    //   await this.modalController.dismiss(this.record);
-    // }
+        await this.modalController.dismiss(this.sheetData);
+      }
+    }
 
   }
 

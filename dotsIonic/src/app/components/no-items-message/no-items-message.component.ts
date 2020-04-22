@@ -11,6 +11,7 @@ export class NoItemsMessage implements OnInit {
 
   @Input() headerMessage;
   @Input() buttonLabel;
+  @Input() color;
   @Output() buttonClicked = new EventEmitter();
 
   constructor(
@@ -18,6 +19,7 @@ export class NoItemsMessage implements OnInit {
   ) {}
 
   ngOnInit(){
+    console.log(this.color);
   }
 
   async buttonFunction(){

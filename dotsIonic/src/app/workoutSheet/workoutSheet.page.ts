@@ -29,6 +29,7 @@ export class WorkoutSheetPage implements OnInit {
 
   public data = {
     Title: String,
+    Color: Number,
     Params: [],
     WorkoutRecords: []
   };

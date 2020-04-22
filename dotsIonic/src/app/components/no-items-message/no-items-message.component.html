@@ -1,12 +1,13 @@
 <div 
   class="no-items-message">
 
-  <h1
-    color="secondary" >
+  <h1>
     {{ headerMessage | translate }}
   </h1>
 
-  <ion-button (click)="buttonFunction()">
+  <ion-button 
+    class="button-{{color}}"
+    (click)="buttonFunction()">
     <ion-icon name="add"></ion-icon>
     {{ buttonLabel | translate }}
   </ion-button>

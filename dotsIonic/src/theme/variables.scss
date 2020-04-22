@@ -38,12 +38,12 @@
   --text: #010101;
 
   $colors:
-  #ff4b2d, #ff8181, #ff5900, #ffb72d, #a5f565,
-  #3fc352, #57fcd2, #2d8ee8, #9292e5, #da92e5, 
-  #2d0081;
+  #ff4b2d, #ff7b00, #ffb72d, #ff8181, #a5f565,
+  #3fc352, #3de9b5, #2d8ee8, #9292e5, #da92e5, 
+  #2d0081, #11d8df;
 
   @function set-text-color($color) {
-    @if (lightness( $color ) > 60) {
+    @if (lightness( $color ) > 80) {
       @return #000; // lighter color, return black
     }
     @else {
@@ -60,17 +60,18 @@
 
     *.param-#{$i}-light {
       background-color: lighten(nth($colors, $i), 10%);
-      color: set-text-color(nth($colors, $i));
+      color: set-text-color(lighten(nth($colors, $i), 10%));
       --background: lighten(nth($colors, $i), 10%) !important;   // for ion-item
     }
 
-    *.button-#{$i}-light{
-      background-color: lighten(nth($colors, $i), 10%);
-      color: set-text-color(nth($colors, $i));
-      --background: lighten(nth($colors, $i), 10%) !important;   // for ion-item
-      --background-activated: lighten(nth($colors, $i), 20%) !important;   // for ion-item
-      --background-focused: lighten(nth($colors, $i), 20%) !important;   // for ion-item
-      --background-hover: lighten(nth($colors, $i), 20%) !important;   // for ion-item
+    *.button-#{$i}{
+      color: set-text-color(lighten(nth($colors, $i), 10%));
+      background: lighten(nth($colors, $i), 10%) !important; 
+      // for ion-button
+      --background: lighten(nth($colors, $i), 10%) !important;           
+      --background-activated: lighten(nth($colors, $i), 20%) !important; 
+      --background-focused: lighten(nth($colors, $i), 20%) !important;
+      --background-hover: lighten(nth($colors, $i), 20%) !important;
     }
 
     *.fill-#{i}{
@@ -80,16 +81,31 @@
     *.stop-color-#{$i}{
       stop-color: nth($colors, $i);
     }
+
+    *.icon-#{$i}{
+      color: darken(nth($colors, $i), 10%);
+    }
     
-    *.gradient-#{$i} {
+    *.color-#{$i} {
       background-color: nth($colors, $i) !important;
-      color: set-text-color(nth($colors, $i));
+      color: set-text-color(nth($colors, $i)) !important;
       --background: nth($colors, $i) !important;
 
       .set-text-color{
-        color: set-text-color(nth($colors, $i));
+        color: set-text-color(nth($colors, $i)) !important;
       }
     }
+
+    *.color-#{$i}-light {
+      background-color: lighten(nth($colors, $i), 10%) !important;
+      color: set-text-color(lighten(nth($colors, $i), 10%));
+      --background: lighten(nth($colors, $i), 10%) !important;
+
+      .set-text-color{
+        color: set-text-color(lighten(nth($colors, $i), 10%));
+      }
+    }
+
   }
 
   --ion-color-success: #1bc012;

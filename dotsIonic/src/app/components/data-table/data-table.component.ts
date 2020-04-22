@@ -12,6 +12,7 @@ import { DataTableService } from '../../services/dataTable.service';
 export class DataTableComponent  {
 
   @Input() legendTitle;
+  @Input() color;
 
   // Event emitters for click actions inside data-table component
   @Output() showRecordOptionsClicked = new EventEmitter();
