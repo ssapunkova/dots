@@ -38,7 +38,8 @@ export class WorkoutManagerPage implements OnInit {
     _id: null,                            // sheetId, comes with url
     Title: "",                            // Sheet title
     Params: [],                           // Params - array of json exercises
-    RecordsNum: 0                         // Number of records
+    RecordsNum: 0,                        // Number of records
+    Color: null                           // Sheet color (used in page)
   };
 
   public current = {                      // Save temporary values for current state
@@ -60,6 +61,7 @@ export class WorkoutManagerPage implements OnInit {
   public hourglassAnimationTime;
 
   constructor(
+    public commonModule: CommonModule,
     public menuController: MenuController,
     public loadingService: LoadingService,
     public route: ActivatedRoute,

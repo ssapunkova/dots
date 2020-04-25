@@ -74,7 +74,7 @@
       --background-hover: lighten(nth($colors, $i), 20%) !important;
     }
 
-    *.fill-#{i}{
+    *.fill-#{$i}{
       fill: nth($colors, $i);
     }
 

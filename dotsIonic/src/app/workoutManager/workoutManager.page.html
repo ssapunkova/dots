@@ -1,4 +1,4 @@
-<ion-content class="gradient-1">
+<ion-content class="color-{{sheetData.Color}}">
 
   <div id="workout-summary" *ngIf="current.ExerciseIndex == null || controls.IsFinished">
 
@@ -45,7 +45,7 @@
       
       <ion-button 
         (click)="startWorkout()"
-        class="button-1" expand="full" size="large">
+        class="button-{{sheetData.Color}}" expand="full" size="large">
         <ion-icon name="play"></ion-icon>
       </ion-button>
 
@@ -92,7 +92,7 @@
       
       <ion-button 
         routerLink="/workouts" routerDirection="root"
-        class="button-1" expand="full" size="large">
+        class="button-{{sheetData.Color}}" expand="full" size="large">
         {{ 'Exit' | translate }}
       </ion-button>
 
@@ -123,7 +123,7 @@
                   <stop offset="0" stop-color="#fff">
                     <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="0" to="1" />
                   </stop> 
-                  <stop offset="0" class="stop-color-1">
+                  <stop offset="0" [ngClass]="'stop-color-' + sheetData.Color">
                     <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="0" to="1" />
                   </stop>
                   
@@ -134,7 +134,7 @@
                   <stop offset="0" stop-color="#fff">
                     <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="1" to="0" />
                   </stop>
-                  <stop offset="0" class="stop-color-1">
+                  <stop offset="0" [ngClass]="'stop-color-' + sheetData.Color">
                     <animate [attr.dur]="hourglassAnimationTime" attributeName="offset" fill="freeze" from="1" to="0" />
                   </stop>
 
@@ -152,7 +152,7 @@
               <g id="lower-cup">
                 <path class="st0" fill="url(#lower-cup)" d="M144.85,225.67C151,163,103,120.8,75.75,120.8C49.71,120.8,1,163,6.11,225.08L144.85,225.67z"/>
                 
-                <rect x="50%" y="50%" width="3" height="43%" class="fill-1"></rect>
+                <rect x="50%" y="50%" width="4" height="43%" [ngClass]="'fill-' + sheetData.Color"></rect>
               </g>
             </svg>
           </div>
