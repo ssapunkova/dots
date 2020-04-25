@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title *ngIf="sheet == null; else editSheet">
+    <ion-title *ngIf="sheetData._id == null; else editSheet">
       {{ 'NewWorkoutSheet' | translate }}
     </ion-title>
     <ng-template #editSheet>
@@ -23,7 +23,9 @@
     <div 
       *ngFor="let i of colors"
       (click)="setColor(i)"
-      class="sheetColor gradient-{{i}}"></div>
+      class="sheetColor color-{{i}}">
+      <ion-icon name="checkmark" *ngIf="i == sheetData.Color"></ion-icon>
+    </div>
 
   </div>
 

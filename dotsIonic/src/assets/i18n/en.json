@@ -78,6 +78,7 @@
 	"Title": "Title",
 	"EnterAName": "Please enter a sheet title",
 	"ExistingSheetName": "A sheet with this title already exists",
+	"ChooseASheetColor": "Choose a color for you sheet",
 	"DeleteSheet": "Delete sheet",
 	"PermanentDeleteWarning": "This workout sheet and all its records will be permanently deleted.",
 	"ConfirmSheetName": "Confirm sheet name",

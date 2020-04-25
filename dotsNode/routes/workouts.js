@@ -56,13 +56,13 @@ router.post("/createSheet", async (req, res) => {
   else res.send(sheet);
 })
 
-router.post("/renameSheet", async (req, res) => {
+router.post("/updateSheet", async (req, res) => {
   let data = req.body.data;
 
   console.log(data);
 
-  let renameSheet = await WorkoutSheet.updateOne({ _id: data._id }, { Title: data.Title });
-  if(renameSheet.err) throw renameSheet.err;
+  let updateSheet = await WorkoutSheet.updateOne({ _id: data._id }, data);
+  if(updateSheet.err) throw updateSheet.err;
   else res.send();
 })
 

@@ -62,7 +62,6 @@ export class WorkoutSheetPage implements OnInit {
       this.data = data[0];
 
       // Dismiss all loading
-      this.loadingService.hidePageLoading();
 
       console.log("***WorkoutSheetPage ", this)
 

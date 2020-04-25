@@ -19,10 +19,15 @@ export class NewWorkoutSheetPage implements OnInit {
 
   public data;
 
+  public oldTitle;                // Track original sheet title; Used for checking if the sheet has 
+                                  // a new title that matches an existing one, but not == oldTitle
+                                  // because oldTitle will be in the sheetTitles list
+
   public sheetData = {
+    _id: null,
     UserId: null,
     Title: "",
-    Color: 1,
+    Color: null,
   }
 
   constructor(
@@ -39,7 +44,12 @@ export class NewWorkoutSheetPage implements OnInit {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
     this.data = data;
 
-    for(let i = 1; i < 12; i++){
+    if(this.data.sheetData != null){
+      this.sheetData = this.data.sheetData;
+      this.oldTitle = this.sheetData.Title;
+    }
+
+    for(let i = 1; i < 17; i++){
       this.colors.push(i);
     }
 
@@ -58,10 +68,17 @@ export class NewWorkoutSheetPage implements OnInit {
       this.errorToastAndAlertService.showErrorToast(this.translate.instant("EnterAName"));
       return false;
     }
+    else if(this.sheetData.Color == null){
+      this.errorToastAndAlertService.showErrorToast(this.translate.instant("ChooseASheetColor"));
+      return false;
+    }
     else {
       console.log(this.sheetData);
       // Show error if a sheet with this title already exists
-      if(this.data.sheetTitles.indexOf(this.sheetData.Title) != -1) {
+      if(
+          this.data.sheetTitles.indexOf(this.sheetData.Title) != -1 &&
+          this.sheetData.Title != this.oldTitle
+        ) {
         this.errorToastAndAlertService.showErrorToast(this.translate.instant("ExistingSheetName"));
         return false;
       }

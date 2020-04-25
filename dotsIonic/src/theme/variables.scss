@@ -38,12 +38,13 @@
   --text: #010101;
 
   $colors:
-  #ff4b2d, #ff7b00, #ffb72d, #ff8181, #a5f565,
-  #3fc352, #3de9b5, #2d8ee8, #9292e5, #da92e5, 
-  #2d0081, #11d8df;
+  #ff4b2d, #ff7b00, #ffb62e, #a5f565, #3fc352, 
+  #11d198, #11d8df, #2d8ee8, #2d0081, #9292e5,
+  #da92e5, #ff8181, #db0049, #520079, #3d3d3d,
+  #22274d, #303f5f, #006b39, #606928;
 
   @function set-text-color($color) {
-    @if (lightness( $color ) > 80) {
+    @if (lightness( $color ) > 60 and saturation( $color) > 60) {
       @return #000; // lighter color, return black
     }
     @else {

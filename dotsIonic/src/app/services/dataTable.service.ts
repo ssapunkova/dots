@@ -12,6 +12,7 @@ import { WorkoutService } from '../services/workout.service';
 import { NutritionService } from '../services/nutrition.service';
 
 import { ComponentsModule } from '../components/components.module';
+import { LoadingService } from './loading.service';
 
 // DataTable Service
 // Implements sorting the data, displayed in ion-grid
@@ -41,6 +42,7 @@ export class DataTableService{
 
 
   constructor(
+    public loadingService: LoadingService,
     public timeAndDateService: TimeAndDateService,
     public chartService: ChartService,
     public generalService: GeneralService,
@@ -113,6 +115,9 @@ export class DataTableService{
     }
 
     console.log("*** DataTableService", this);
+
+    
+    this.loadingService.hidePageLoading();
 
   }
 

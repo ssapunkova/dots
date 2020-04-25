@@ -44,7 +44,7 @@
 
 05.02
 	TODO:
-	  Move modal page imports in page modules
+	  * Move modal page imports in page modules
 
 02.03
   TODO:
@@ -58,8 +58,8 @@
 
 06.03
   TODO:
-    Styles in calculator
-    Show calculated needs in nutrition goals
+    * Styles in calculator
+    * Show calculated needs in nutrition goals
 
 /// some todos got deleted
 
@@ -112,9 +112,8 @@
 
 19.04:
     * Finish workout manager
-    Choose sheet color
-    Workout stats: days with exercise time like a heatmap ( take from energyI )
-    fix issue with chart component header
+    * Choose sheet color
+    * fix issue with chart component header
     
     make more calculators:
       blood pressure
@@ -123,3 +122,11 @@
       l water a day
       preferred weight
       sleep
+
+25.04:
+  TODO:
+    edit sheet color 
+    style new/edit sheet modal
+    style all modals cancel and save buttons
+    Advice for setting new goal after 2 days of achieving more
+    Workout stats: days with exercise time like a heatmap ( take from energyI )
