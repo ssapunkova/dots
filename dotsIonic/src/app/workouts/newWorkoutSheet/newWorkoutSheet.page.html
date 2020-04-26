@@ -20,6 +20,12 @@
 
   <div id="colorChoiceBox">
 
+    <ion-label>{{ 'SheetColor' | translate }}</ion-label>
+
+    <ion-text color="secondary">
+      {{ 'SheetColorNote' | translate }}
+    </ion-text>
+
     <div 
       *ngFor="let i of colors"
       (click)="setColor(i)"

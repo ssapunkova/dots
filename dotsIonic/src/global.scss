@@ -122,14 +122,25 @@ ion-toolbar, ion-router-outlet{
 #colorChoiceBox{
   display: flex;
   flex-wrap: wrap;
+  padding: 1rem;
+
+  ion-text{
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .sheetColor{
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    border-radius: 50%;
+    line-height: 50px;
+    text-align: center;
+    font-size: 1.5rem;
+  }
 }
 
-.sheetColor{
-  width: 30px;
-  height: 30px;
-  margin: 2px;
-  border-radius: 15px;
-}
+
 
 
 // Table
