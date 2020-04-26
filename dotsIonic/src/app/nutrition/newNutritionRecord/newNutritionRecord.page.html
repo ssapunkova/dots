@@ -1,79 +1,81 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-title *ngIf="record.RecordId == null; else editTitle"> New nutrition record</ion-title>
-      <ng-template #editTitle>
-        <ion-title>
-          {{ 'EditNutritionRecord' | translate }}
-        </ion-title>
-      </ng-template>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="record.RecordId == null; else editTitle"> New nutrition record</ion-title>
+    <ng-template #editTitle>
+      <ion-title>
+        {{ 'EditNutritionRecord' | translate }}
+      </ion-title>
+    </ng-template>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content class="padding">
+<ion-content class="padding">
 
-    <ion-grid>
+  <ion-grid>
 
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            {{ 'Date' | translate }}
-            <ion-input
-              slot="end"
-              [(ngModel)]='record.Date'
-              type="date"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          {{ 'Date' | translate }}
+          <ion-input
+            slot="end"
+            [(ngModel)]='record.Date'
+            type="date"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-      <ion-row *ngFor="let field of fields; let i = index" >
+    <ion-row *ngFor="let field of fields; let i = index" >
 
-        <ion-col>
-          <ion-item>
-            {{ field.Title | translate }}
-          </ion-item>
-        </ion-col>
+      <ion-col>
+        <ion-item>
+          {{ field.Title | translate }}
+        </ion-item>
+      </ion-col>
 
-        <ion-col>
-          <ion-item>
+      <ion-col>
+        <ion-item>
 
-            <ion-input type="number" [(ngModel)]='record.Values[i]'>
-            </ion-input>
-             / 
-            <ion-label>{{ goals[i] }} </ion-label>
+          <ion-input type="number" [(ngModel)]='record.Values[i]'>
+          </ion-input>
+            / 
+          <ion-label>{{ goals[i] }} </ion-label>
 
-            <ion-label style="margin-left: 2px">
-              {{ field.Unit | translate }}
-            </ion-label>
+          <ion-label style="margin-left: 2px">
+            {{ field.Unit | translate }}
+          </ion-label>
 
-            <ion-input type="number" placeholder="%" hidden
-              [(ngModel)]='record.PercentageOfGoal[i]'
-              [value]="generalService.calculatePercentage(this.record.Values[i], this.goals[i])">
-            </ion-input>
-          </ion-item>
-        </ion-col>
+          <ion-input type="number" placeholder="%" hidden
+            [(ngModel)]='record.PercentageOfGoal[i]'
+            [value]="generalService.calculatePercentage(this.record.Values[i], this.goals[i])">
+          </ion-input>
+        </ion-item>
+      </ion-col>
 
-        <ion-col style="max-width: 100px"> 
-          <percentage-chip
-              [percentage]="record.PercentageOfGoal[i]"></percentage-chip>
-        </ion-col>
+      <ion-col style="max-width: 100px"> 
+        <percentage-chip
+            [percentage]="record.PercentageOfGoal[i]"></percentage-chip>
+      </ion-col>
 
-      </ion-row>
+    </ion-row>
 
-      <ion-row>
+  </ion-grid>
 
-        <ion-col sizeXs="6">
-          <ion-button expand="full" (click)="closeModal()">
-            {{ 'Cancel' | translate }}
-          </ion-button>
-        </ion-col>
-        <ion-col sizeXs="6">
-          <ion-button expand="full" (click)="saveChanges()">
-            {{ 'Save' | translate }}
-          </ion-button>
-        </ion-col>
+</ion-content>
 
-      </ion-row>
+<ion-toolbar>
 
-    </ion-grid>
+  <ion-button style="width: 50%" slot="start" 
+    fill="clear" color="danger"
+    (click)="closeModal()">
+    {{ 'Cancel' | translate }}
+  </ion-button>
 
-  </ion-content>
+  <ion-button style="width: 50%" slot="end" 
+    fill="clear" color="secondary"
+    (click)="saveChanges()">
+    {{ 'Save' | translate }}
+  </ion-button>
+  
+</ion-toolbar>
+

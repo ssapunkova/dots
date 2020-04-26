@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="tertiary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -22,6 +22,7 @@
     headerMessage="NoNutritionParamsSet"
     buttonLabel="SetNutritionParams"
     (buttonClicked)="editParams()"
+    color="tertiary"
     *ngIf="dataTableService.params.length == 0">
   </no-items-message>
 
@@ -30,6 +31,7 @@
     legendTitle="NutritionGoals"
     (editParamsButtonClicked)="editParams()"
     (addRecordClicked)="addRecord()"
+    color="tertiary"
     (showRecordOptionsClicked)="showRecordOptions($event)"
   ></data-table>
 

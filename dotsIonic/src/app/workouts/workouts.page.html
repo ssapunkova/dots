@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="secondary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -57,11 +57,13 @@
             </ion-grid>
 
             <ion-button
+              class="button-secondary"
               [routerDirection]="'root'" routerLink="/workoutSheet/{{sheet._id}}">
               {{ 'ViewRecords' | translate }}
             </ion-button>
 
             <ion-button
+              class="button-secondary"
               *ngIf="sheet.Params.length > 0"
               [routerDirection]="'root'" routerLink="/workoutManager/{{sheet._id}}">
               {{ 'StartWorkout' | translate }}

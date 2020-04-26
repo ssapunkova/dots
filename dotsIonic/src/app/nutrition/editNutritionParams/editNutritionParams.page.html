@@ -1,97 +1,100 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-title> 
-        {{ 'EditNutritionGoals' | translate }}
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-title> 
+      {{ 'EditNutritionGoals' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content class="padding">
+<ion-content class="padding">
 
-    <ion-card>
-      <ion-card-content>
-        <ion-label style="display: block">
-          {{ 'DefaultNutritionGoalsMessage' | translate }}
+  <ion-card>
+    <ion-card-content>
+      <ion-label style="display: block">
+        {{ 'DefaultNutritionGoalsMessage' | translate }}
+      </ion-label>
+      <ion-text
+        color="secondary"
+        (click)="closeModal()"
+          routerLink="/params"
+        style="cursor: pointer; display: block">
+        {{ 'CalculatorLink' | translate }}
+        <ion-icon name="open"></ion-icon>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-grid>
+
+    <ion-row>
+      <ion-col class="table-header">
+        <ion-label>
+          {{ 'Parameter' | translate }}
         </ion-label>
-        <ion-text
-          color="secondary"
-          (click)="closeModal()"
-           routerLink="/params"
-          style="cursor: pointer; display: block">
-          {{ 'CalculatorLink' | translate }}
-          <ion-icon name="open"></ion-icon>
-        </ion-text>
-      </ion-card-content>
-    </ion-card>
+      </ion-col>
+      <ion-col style="max-width: 120px" class="table-header">
+        {{ 'Goal' | translate }}
+      </ion-col>
+    </ion-row>
 
-    <ion-grid>
+    <ion-row *ngFor="let param of params; let i = index">
 
-      <ion-row>
-        <ion-col class="table-header">
-          <ion-label>
-            {{ 'Parameter' | translate }}
-          </ion-label>
-        </ion-col>
-        <ion-col style="max-width: 120px" class="table-header">
-          {{ 'Goal' | translate }}
-        </ion-col>
-        <ion-col class="table-header" style="max-width: 100px; padding: 0px !important; display: inline;">
-          <ion-button expand="block" fill="clear"
-           (click)="presentActionSheet()">
-            <ion-icon name="add" color="light"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
+      <ion-col>
+        <ion-item lines="none"> 
+          {{ param.Title | translate }} 
+        </ion-item>
+      </ion-col>
 
-      <ion-row *ngFor="let param of params; let i = index">
+      <ion-col style="max-width: 120px" >
 
-        <ion-col>
-          <ion-item lines="none"> 
-            {{ param.Title | translate }} 
-          </ion-item>
-        </ion-col>
+        <ion-item lines="none">
 
-        <ion-col style="max-width: 120px" >
+          <ion-input 
+            style="text-align: right;"
+            type="number" placeholder="Goal" [(ngModel)]='goals[i]' value="goals[i]">
+          </ion-input>
 
-          <ion-item lines="none">
+          <div
+            *ngIf="param.Unit"
+            style="margin-left: 2px">
+            {{ param.Unit | translate }}
+          </div>
+        </ion-item>
 
-            <ion-input 
-              style="text-align: right;"
-              type="number" placeholder="Goal" [(ngModel)]='goals[i]' value="goals[i]">
-            </ion-input>
+      </ion-col>
 
-            <div
-              *ngIf="param.Unit"
-              style="margin-left: 2px">
-              {{ param.Unit | translate }}
-            </div>
-          </ion-item>
+      <ion-col style="max-width: 100px">
+        <ion-button expand="block" fill="clear" (click)="deleteParam(i)">
+          <ion-icon name="trash" color="danger"></ion-icon>
+        </ion-button>
+      </ion-col>
 
-        </ion-col>
+    </ion-row>
 
-        <ion-col style="max-width: 100px">
-          <ion-button expand="block" fill="clear" (click)="deleteParam(i)">
-            <ion-icon name="trash" color="danger"></ion-icon>
-          </ion-button>
-        </ion-col>
+  </ion-grid>
 
-      </ion-row>
-
-      <ion-row>
-
-        <ion-col sizeXs="6">
-          <ion-button expand="full" (click)="closeModal()">
-            {{ 'Cancel' | translate }}
-          </ion-button>
-        </ion-col>
-        <ion-col sizeXs="6">
-          <ion-button expand="full" (click)="saveChanges()">
-            {{ 'Save' | translate }}
-          </ion-button>
-        </ion-col>
-
-      </ion-row>
-    </ion-grid>
+</ion-content>
 
 
-  </ion-content>
+<ion-toolbar>
+
+  <ion-button style="width: 25%" slot="start" 
+    fill="clear" color="danger"
+    (click)="closeModal()">
+    {{ 'Cancel' | translate }}
+  </ion-button>
+
+  <ion-button style="width: 50%" slot="secondary" 
+    fill="clear"
+    (click)="presentActionSheet()">
+    <ion-icon name="add" color="primary"></ion-icon>
+  </ion-button>
+
+  <ion-button style="width: 25%" slot="end" 
+    fill="clear" color="secondary"
+    (click)="saveChanges()">
+    {{ 'Save' | translate }}
+  </ion-button>
+
+</ion-toolbar>
+

@@ -18,12 +18,12 @@
   --ion-color-secondary-shade: #0fa5d0;
   --ion-color-secondary-tint: #29c2ee;
 
-  --ion-color-tertiary: #ffa600;
-  --ion-color-tertiary-rgb: 255, 166, 0;
+  --ion-color-tertiary: #ff7b00;
+  --ion-color-tertiary-rgb: 255,136,4;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade: #e09200;
-  --ion-color-tertiary-tint: #ffaf1a;
+  --ion-color-tertiary-shade: #e07814;
+  --ion-color-tertiary-tint: #ff8645;
 
   .ion-color-red {
     --ion-color-base: #fe6d40;
@@ -75,16 +75,14 @@
       --background-hover: lighten(nth($colors, $i), 20%) !important;
     }
 
-    *.fill-#{$i}{
-      fill: nth($colors, $i);
-    }
-
-    *.stop-color-#{$i}{
-      stop-color: nth($colors, $i);
-    }
-
-    *.icon-#{$i}{
-      color: darken(nth($colors, $i), 10%);
+    *.button-secondary{
+      color: white;
+      background: var(--ion-color-secondary-shade) !important; 
+      // for ion-button
+      --background: var(--ion-color-secondary-shade) !important;           
+      --background-activated: var(--ion-color-secondary-tint) !important; 
+      --background-focused: var(--ion-color-secondary-tint) !important;
+      --background-hover: var(--ion-color-secondary-tint) !important;
     }
     
     *.color-#{$i} {
@@ -107,6 +105,31 @@
       }
     }
 
+    *.color-tertiary{
+      background-color: var(--ion-color-tertiary) !important;
+      color: var(--ion-color-tertiary-contrast);
+      --background: var(--ion-color-tertiary) !important;
+
+      .set-text-color{
+        color: var(--ion-color-tertiary-contrast) !important;
+      }
+    }
+
+    *.color-tertiary-light{
+      background-color: var(--ion-color-tertiary-tint) !important;
+      color: var(--ion-color-tertiary-contrast);
+      --background: var(--ion-color-tertiary-tint) !important;
+
+      .set-text-color{
+        color: var(--ion-color-tertiary-contrast) !important;
+      }
+    }
+
+    *.fill-#{$i}{ fill: nth($colors, $i); }
+    *.stop-color-#{$i}{ stop-color: nth($colors, $i); }
+    *.icon-#{$i}{ color: darken(nth($colors, $i), 10%); }
+
+    *.icon-tertiary { color: var(--ion-color-tertiary-shade) !important }
   }
 
   --ion-color-success: #1bc012;
