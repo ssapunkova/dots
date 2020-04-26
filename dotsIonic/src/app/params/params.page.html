@@ -20,9 +20,9 @@
 
         <ion-card>
 
-          <ion-card-header color="secondary">
+          <ion-card-header color="secondary" class="color-secondary">
 
-            <ion-label>{{ 'GeneralInfo' | translate }}</ion-label>
+            {{ 'MyParams' | translate }}
 
           </ion-card-header>
   
@@ -107,9 +107,16 @@
                     {{ param.Title | translate }}
                   </ion-item>
 
-                  <ion-item *ngIf="userParams.Values != null"> 
-                    {{ userParams.Values[param.Title] }}
-                  </ion-item>
+                  <div *ngIf="userParams.Values != null"> 
+                    <ion-item>
+                      <h1>
+                        {{ userParams.Values[param.Title] }} {{ param.Unit }}
+                      </h1>
+                    </ion-item>
+                    <ion-item>
+                      {{ 'AsOfDate' | translate }} 25.04
+                    </ion-item>
+                  </div>
 
                 </ion-card-content>
 

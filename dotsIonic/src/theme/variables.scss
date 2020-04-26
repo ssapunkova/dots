@@ -44,7 +44,7 @@
   #22274d, #303f5f, #006b39, #606928;
 
   @function set-text-color($color) {
-    @if (lightness( $color ) > 60 and saturation( $color) > 60) {
+    @if (lightness( $color ) > 70 and saturation( $color) > 70) {
       @return #000; // lighter color, return black
     }
     @else {
@@ -105,9 +105,19 @@
       }
     }
 
+    *.color-secondary{
+      background-color: var(--ion-color-secondary-tint) !important;
+      color: var(--ion-color-secondary-contrast) !important;
+      --background: var(--ion-color-secondary-tint) !important;
+
+      .set-text-color{
+        color: var(--ion-color-secondary-contrast) !important;
+      }
+    }
+
     *.color-tertiary{
       background-color: var(--ion-color-tertiary) !important;
-      color: var(--ion-color-tertiary-contrast);
+      color: var(--ion-color-tertiary-contrast) !important;
       --background: var(--ion-color-tertiary) !important;
 
       .set-text-color{
@@ -124,6 +134,8 @@
         color: var(--ion-color-tertiary-contrast) !important;
       }
     }
+
+    
 
     *.fill-#{$i}{ fill: nth($colors, $i); }
     *.stop-color-#{$i}{ stop-color: nth($colors, $i); }
