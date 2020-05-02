@@ -55,7 +55,8 @@ export class CalculatorPage implements OnInit {
     "BodyFatPercentage": 0,
     "DaylyProteinIntake": 0,
     "DaylyKcalIntake": 1,
-    "DaylySugarIntake": 2
+    "DaylySugarIntake": 2,
+    "BloodPressure": 3
   }
 
 

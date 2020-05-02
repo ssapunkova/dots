@@ -130,3 +130,7 @@
     * style all modals cancel and save buttons
     Advice for setting new goal after 2 days of achieving more
     Workout stats: days with exercise time like a heatmap ( take from energyI )
+
+    Workout manager animation?
+
+    animations in general

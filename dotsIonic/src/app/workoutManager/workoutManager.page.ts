@@ -85,6 +85,9 @@ export class WorkoutManagerPage implements OnInit {
 
   ngOnInit() {
     // Get sheetId
+
+    this.loadingService.showPageLoading();
+
     this.sheetData._id = this.route.snapshot.paramMap.get("sheetId");
     // Load sheet data from database
     this.getSheetExercises();
@@ -130,6 +133,8 @@ export class WorkoutManagerPage implements OnInit {
     });
 
     // this.startWorkout();
+
+    this.loadingService.hidePageLoading();
 
   }
 
