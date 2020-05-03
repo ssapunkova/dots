@@ -63,13 +63,52 @@ export class WorkoutSheetPage implements OnInit {
 
       // Dismiss all loading
 
-      console.log("***WorkoutSheetPage ", this)
+      console.log("***WorkoutSheetPage ", this);
 
       this.dataTableService.initializeDataTable(this.data, this.data.WorkoutRecords, "workout");
+
+      this.analyseResults();
 
     });
   };
 
+
+  async analyseResults(){
+    let recordNum = this.data.WorkoutRecords.length;
+      let results = {
+        aboveGoal: {},
+        belowGoal: {},
+        nowhereNearGoal: {}
+      }
+      for(let i = 0; i < 5; i++){
+        let currentRec = this.data.WorkoutRecords[i];
+        console.log(currentRec);
+        for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
+          let category;
+          if(currentRec.PercentageOfGoal[j] > 100){
+            category = "aboveGoal";
+          }
+          else {
+            if(currentRec.PercentageOfGoal[j] > 75){
+              category = "belowGoal";
+            }
+            else{
+              category = "nowhereNearGoal"
+            }
+          }
+            
+          // Add to result category
+          if(results[category][currentRec.Params[j]] == null){
+            results[category][currentRec.Params[j]] = 1;
+          }
+          else{
+            results[category][currentRec.Params[j]]++;
+          }
+        }
+      }
+
+      console.log(results);
+  }
 
   // Edit sheet's params (exercises) and set goals for them
   async editParams(){

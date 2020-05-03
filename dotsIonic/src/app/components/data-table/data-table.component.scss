@@ -12,6 +12,18 @@ ion-col :not(.table-header){
     
 }
 
+table{
+
+  border-collapse: collapse;
+  border-spacing: 0px;
+
+  td{
+    border-collapse: collapse;
+    padding: 0px !important;
+  }
+}
+
+
 @media screen and (max-width: 400px){
   percentage-chip{
     display: none;

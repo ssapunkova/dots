@@ -69,7 +69,7 @@ export class DataTableService{
     this.showingPeriod = [];                  // Array of months that are the chosen showing period
     this.months = [];                         // Array of all record months
     this.sortedByDate = "asc";                // Which way is the date sorted (asc/desc)
-    this.showMode = "chart";                  // Default show mode, can be switched to table
+    this.showMode = "table";                  // Default show mode, can be switched to table
 
     this.tableWidth = 0;                      // Min table width, calculated on table's column number
 
@@ -80,12 +80,6 @@ export class DataTableService{
     // If no records yet
     if(records.length == 0){
       this.allRecords = [];
-      // if(this.params.length > 0){
-      //   this.showNoRecordsAlert();
-      // }
-      // else{
-      //   this.showNoParamsAlert();
-      // }
     }
     else{
       this.allRecords = records;
@@ -154,15 +148,6 @@ export class DataTableService{
     await alert.present();
   }
 
-  // async showNoParamsAlert(){
-  //   let message = this.translate.instant("AddGoalsTip");
-  //   let alert = await this.alertController.create({
-  //     header: this.translate.instant("NoGoalsYet"),
-  //     message: message,
-  //     buttons: [ { text: 'Ok' }]
-  //   });
-  //   await alert.present();
-  // }
 
   // Switch from table/chart view mode
   async changeShowMode(){

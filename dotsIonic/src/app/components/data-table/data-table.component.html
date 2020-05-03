@@ -9,151 +9,165 @@
 
   <div *ngIf="dataTableService.allRecords.length > 0">
 
-    <ion-grid>
+    <chart-legend
+      [color]="color"
+      [legendTitle]="legendTitle"
+      [data]="dataTableService.params"
+      [goals]="dataTableService.goals"
+      [colorScheme]="chartService.colorScheme.domain"
+      (editParamsButtonClicked)="editParams()"
+    ></chart-legend>
+       
+        <ion-toolbar>
+          <ion-item>
+            <ion-label>
+              {{ 'ShowRecordsForPeriod' | translate }}: </ion-label>
+            <ion-select
+              placeholder="Select period"
+              multiple
+              [(ngModel)]="dataTableService.showingPeriod"
+              (ionChange)="dataTableService.setPeriod($event, false)">
+              <ion-select-option
+                *ngFor="let month of dataTableService.months"
+                [value]="month">
+                  {{ month }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-toolbar>
 
-      <ion-row>
-        <ion-col sizeMd="12" sizeLg="4" pushLg="8">
-          <chart-legend
-            [color]="color"
-            [legendTitle]="legendTitle"
-            [data]="dataTableService.params"
-            [goals]="dataTableService.goals"
-            [colorScheme]="chartService.colorScheme.domain"
-            (editParamsButtonClicked)="editParams()"
-          ></chart-legend>
-        </ion-col>
+        <div style="height: 100%;">
 
-        <ion-col sizeMd="12" sizeLg="8" pullLg="4">
+          <div *ngIf="dataTableService.showMode == 'chart' && dataTableService.showingRecords.length > 0" 
+            style="width: 100%; height: 400px; width: 100%" 
+            [style.minWidth.px]="chartService.chartWidth">
 
-          <div style="height: 100%; overflow-x: auto; width: 100%">
+            <ngx-charts-line-chart
+                view=""
+                [results]="chartService.chartData"
+                [scheme]="chartService.colorScheme"
+                schemeType="ordinal"
+                [gradient]="false"
+                showDataLabel="true"
+                [xAxis]="true"
+                [yAxis]="true"
+                showXAxisLabel="false"
+                showYAxisLabel="false"
+              >
+              
+              <ng-template #tooltipTemplate let-model="model">
+                <chart-tooltip [data]="model"></chart-tooltip>
+              </ng-template>
 
-            <ion-toolbar>
-              <ion-item>
-                <ion-label>
-                  {{ 'ShowRecordsForPeriod' | translate }}: </ion-label>
-                <ion-select
-                  placeholder="Select period"
-                  multiple
-                  [(ngModel)]="dataTableService.showingPeriod"
-                  (ionChange)="dataTableService.setPeriod($event, false)">
-                  <ion-select-option
-                    *ngFor="let month of dataTableService.months"
-                    [value]="month">
-                      {{ month }}
-                  </ion-select-option>
-                </ion-select>
-              </ion-item>
-            </ion-toolbar>
-
-            <div *ngIf="dataTableService.showMode == 'chart' && dataTableService.showingRecords.length > 0" style="width: 100%; min-height: 400px; max-height: 80vh;" [style.minWidth.px]="chartService.chartWidth">
-
-              <ngx-charts-line-chart
-                  view=""
-                  [results]="chartService.chartData"
-                  [scheme]="chartService.colorScheme"
-                  schemeType="ordinal"
-                  [gradient]="false"
-                  showDataLabel="true"
-                  xAxis="false"
-                  yAxis="true"
-                  showXAxisLabel="false"
-                  showYAxisLabel="false"
-                >
-                <ng-template #tooltipTemplate let-model="model">
-                  <chart-tooltip [data]="model"></chart-tooltip>
-                </ng-template>
-
-                <ng-template #seriesTooltipTemplate let-model="model">
-                  <chart-tooltip [data]="model"></chart-tooltip>
-                </ng-template>
-              </ngx-charts-line-chart>
-
-            </div>
-
-            <ion-grid 
-              *ngIf="dataTableService.showMode == 'table'" 
-              [style.minWidth.px]="dataTableService.tableWidth">
-
-              <ion-row nowrap>
-                <ion-col
-                  class="table-header color-{{color}}-light"
-                  title='Date'
-                  (click)="dataTableService.sortByDate()">
-                  {{ 'Date' | translate }}
-                  <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
-                  <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
-                </ion-col>
-
-                <ion-col
-                  class="table-header color-{{color}}-light"
-                  *ngFor="let param of dataTableService.params; let i = index"
-                  [title]="param.Title"
-                  (click)="dataTableService.sortCol(param, i)">
-                  <ion-label>
-                    <ion-label *ngIf="param.Title.length > 8; else fullTitle"> 
-                      {{ param.Title | translate | slice:0:8 }}...</ion-label>
-                    <ng-template #fullTitle> {{ param.Title  | translate }} </ng-template>
-                  </ion-label>
-                  <ion-icon name="arrow-dropup" *ngIf="param.sorted == 'asc'; else arrowDown"></ion-icon>
-                  <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
-                </ion-col>
-              </ion-row>
-
-              <ion-row *ngFor="let record of dataTableService.showingRecords" nowrap>
-
-                <ion-col title='Date'>
-
-                  <ion-item lines="none">
-
-                    <ion-button 
-                      (click)="showRecordOptions(record)" fill="clear" class="showRecordOptionsButton">
-                      <ion-icon name="more" style="font-size: 1.5rem" class="icon-{{color}}"></ion-icon>
-                    </ion-button>
-
-                    {{ record.Date | date : 'dd.MM.yy' }}
-                  </ion-item>
-
-                </ion-col>
-
-                <ion-col 
-                  *ngFor="let param of dataTableService.params; let j = index" [title]="param.Title">
-
-                  <ion-item lines="none">
-                    <ion-label *ngIf="param.Type != 'Bool'; else showTick">
-                      {{ record.Values[j] }}
-                    </ion-label>
-
-                    <ng-template #showTick>
-                      <ion-icon name="checkmark-circle" color="success" *ngIf="record.Values[j] == true"></ion-icon>
-                      <ion-icon name="close-circle" color="danger" *ngIf="record.Values[j] == false"></ion-icon>
-                    </ng-template>
-
-                    <ion-label 
-                      *ngIf="param.Unit && record.Values[j] != null"
-                      style="margin-left: 2px">
-                      {{ param.Unit | translate }}
-                    </ion-label>
-
-                    <percentage-chip
-                      *ngIf="record.Values[j] != null && param.Type != 'Bool'"
-                      [percentage]="record.PercentageOfGoal[j]">
-                    </percentage-chip>
-
-                  </ion-item>
-
-                </ion-col>
-
-              </ion-row>
-
-            </ion-grid>
+              <ng-template #seriesTooltipTemplate let-model="model">
+                <chart-tooltip [data]="model"></chart-tooltip>
+              </ng-template>
+            </ngx-charts-line-chart>
 
           </div>
 
-        </ion-col>
+          <ion-grid *ngIf="dataTableService.showMode == 'table'">
 
-      </ion-row>
+            <ion-row>
+              <ion-col style="width: 120px">
+                
+                <table style="width: 100%;">
 
-  </ion-grid>
+                  <tr>
+                    <th>
+                      <div class="table-header color-{{color}}-light"
+                      title='Date'
+                      (click)="dataTableService.sortByDate()">
+                        {{ 'Date' | translate }}
+                        <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
+                        <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
+                      </div>
+                    </th>
+                  </tr>
+
+                  <tr *ngFor="let record of dataTableService.showingRecords">
+                    <td>
+                      <ion-item lines="none">
+
+                        <ion-button 
+                          (click)="showRecordOptions(record)" fill="clear" class="showRecordOptionsButton">
+                          <ion-icon name="more" style="font-size: 1.5rem" class="icon-{{color}}"></ion-icon>
+                        </ion-button>
+    
+                        {{ record.Date | date : 'dd.MM.yy' }}
+                      </ion-item>
+                    </td>
+                  </tr>
+
+                </table>
+
+              </ion-col>
+
+              <ion-col>
+
+                <div style="overflow-x: auto; width: calc(100vw - 150px)">
+
+                  <table style="width: 100%" [style.minWidth.px]="chartService.chartWidth">
+                    
+                    <tr>
+                      <th *ngFor="let param of dataTableService.params; let i = index">
+                        <div 
+                          class="table-header color-{{color}}-light"
+                          [title]="param.Title"
+                          (click)="dataTableService.sortCol(param, i)">
+                          <ion-label>
+                            <ion-label *ngIf="param.Title.length > 8; else fullTitle"> 
+                              {{ param.Title | translate | slice:0:8 }}...</ion-label>
+                            <ng-template #fullTitle> {{ param.Title  | translate }} </ng-template>
+                          </ion-label>
+                          <ion-icon name="arrow-dropup" *ngIf="param.sorted == 'asc'; else arrowDown"></ion-icon>
+                          <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
+                        </div>
+                      </th>
+                    </tr>
+
+                    <tr *ngFor="let record of dataTableService.showingRecords">
+
+                      <td *ngFor="let param of dataTableService.params; let j = index" [title]="param.Title">
+                        <ion-item lines="none">
+                          
+                          <ion-label *ngIf="param.Type != 'Bool'; else showTick">
+                            {{ record.Values[j] }}
+                          </ion-label>
+          
+                          <ng-template #showTick>
+                            <ion-icon name="checkmark-circle" color="success" *ngIf="record.Values[j] == true"></ion-icon>
+                            <ion-icon name="close-circle" color="danger" *ngIf="record.Values[j] == false"></ion-icon>
+                          </ng-template>
+          
+                          <ion-label 
+                            *ngIf="param.Unit && record.Values[j] != null"
+                            style="margin-left: 2px">
+                            {{ param.Unit | translate }}
+                          </ion-label>
+          
+                          <percentage-chip
+                            *ngIf="record.Values[j] != null && param.Type != 'Bool'"
+                            [percentage]="record.PercentageOfGoal[j]">
+                          </percentage-chip>
+          
+                        </ion-item>
+
+                      </td>
+
+                    </tr>
+
+                  </table>
+
+                </div>
+              
+              </ion-col>
+
+            </ion-row>
+
+          </ion-grid>
+
+        </div>
 
   </div>
 
