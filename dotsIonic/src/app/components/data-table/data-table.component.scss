@@ -21,6 +21,20 @@ table{
     border-collapse: collapse;
     padding: 0px !important;
   }
+
+  th{
+    font-style: normal !important;
+  }
+
+  .value-cell{
+    min-width: 120px;
+    border-left: 1px dashed grey;
+    padding-left: 5px !important;
+  }
+
+  ion-item{
+    --padding-start: 0rem !important;
+  }
 }
 
 

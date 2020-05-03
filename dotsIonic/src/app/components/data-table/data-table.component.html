@@ -71,7 +71,7 @@
       <ion-row nowrap>
         <ion-col style="width: 130px">
           
-          <table style="width: 128px">
+          <table style="width: 130px">
 
             <tr>
               <th>
@@ -111,7 +111,7 @@
               
               <tr>
                 <th 
-                  style="width: 110px;"
+                  style="min-width: 120px;"
                   *ngFor="let param of dataTableService.params; let i = index">
                   <div 
                     class="table-header color-{{color}}-light"
@@ -128,10 +128,10 @@
                 </th>
               </tr>
 
-              <tr *ngFor="let record of dataTableService.showingRecords">
+              <tr class="value-row" *ngFor="let record of dataTableService.showingRecords">
 
                 <td 
-                  style="width: 110px;"
+                  class="value-cell"
                   *ngFor="let param of dataTableService.params; let j = index"
                   [title]="param.Title">
 
@@ -180,6 +180,7 @@
     *ngIf="dataTableService.params.length != 0"
     vertical="bottom" 
     horizontal="end" 
+    style="position: fixed;"
     slot="fixed">
     <ion-fab-button 
       (click)="addRecord()">
