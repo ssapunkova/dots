@@ -18,41 +18,61 @@
 
       <ion-row>
 
-        <ion-col
-          *ngFor="let param of data; let i = index"
-          sizeLg="12"
-          sizeMd="4"
-          sizeSm="6"
-          sizeXs="12">
+        <ion-col sizeLg="4" sizeSm="5" sizeXs="6">
 
-          <ion-item lines="none">
-
-            <div class="chart-legend-color" [style.backgroundColor]="colorScheme[i]"></div>
-
-            <ion-label *ngIf="param.Title.length > 20; else fullTitle"> {{ param.Title | translate | slice:0:20 }}...</ion-label>
-            <ng-template #fullTitle> {{ param.Title | translate  }}</ng-template>:
-
-            <ion-label style="margin-left: 5px; display: flex;">
-
-              <div *ngIf="generalService.getType(goals[i]) != 'boolean'">
-                {{ goals[i] }}
-              </div>
-              <div *ngIf="goals[i] == 'true'">
-                <ion-icon name="checkmark-circle" color="success"></ion-icon>
-              </div>
-              <div *ngIf="goals[i] == 'false'">
-                <ion-icon name="close-circle" color="danger"></ion-icon>
-              </div>
-
-              <div
-                *ngIf="param.Unit"
-                style="margin-left: 2px">
-                {{ param.Unit | translate }}
-              </div>
-
-            </ion-label>
-
+          <ion-item color="success" *ngIf="resultsAnalysis.aboveGoal != {}">
+           
           </ion-item>
+
+        </ion-col>
+
+        <ion-col sizeLg="8" sizeSm="7" sizeXs="6">
+
+          <ion-grid>
+
+            <ion-row>
+
+              <ion-col
+                *ngFor="let param of data; let i = index"
+                sizeLg="4"
+                sizeMd="6"
+                sizeSm="12"
+                sizeXs="12">
+      
+                <ion-item lines="none">
+      
+                  <div class="chart-legend-color" [style.backgroundColor]="colorScheme[i]"></div>
+      
+                  <ion-label *ngIf="param.Title.length > 20; else fullTitle"> {{ param.Title | translate | slice:0:20 }}...</ion-label>
+                  <ng-template #fullTitle> {{ param.Title | translate  }}</ng-template>:
+      
+                  <ion-label style="margin-left: 5px; display: flex;">
+      
+                    <div *ngIf="generalService.getType(goals[i]) != 'boolean'">
+                      {{ goals[i] }}
+                    </div>
+                    <div *ngIf="goals[i] == 'true'">
+                      <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                    </div>
+                    <div *ngIf="goals[i] == 'false'">
+                      <ion-icon name="close-circle" color="danger"></ion-icon>
+                    </div>
+      
+                    <div
+                      *ngIf="param.Unit"
+                      style="margin-left: 2px">
+                      {{ param.Unit | translate }}
+                    </div>
+      
+                  </ion-label>
+      
+                </ion-item>
+      
+              </ion-col>
+      
+            </ion-row>
+
+          </ion-grid>
 
         </ion-col>
 

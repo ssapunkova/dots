@@ -13,6 +13,7 @@ export class ChartLegendComponent implements OnInit {
   @Input() color;
   @Input() data: any[];
   @Input() goals: any[];
+  @Input() resultsAnalysis: any[];
   @Input() colorScheme: any[];
 
   public showLegend = true;               // Show or hide legend

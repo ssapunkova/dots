@@ -108,6 +108,8 @@ export class WorkoutSheetPage implements OnInit {
       }
 
       console.log(results);
+
+      this.dataTableService.resultsAnalysis = results;
   }
 
   // Edit sheet's params (exercises) and set goals for them
