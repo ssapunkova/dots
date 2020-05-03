@@ -68,10 +68,10 @@
 
           <ion-grid *ngIf="dataTableService.showMode == 'table'">
 
-            <ion-row>
-              <ion-col style="width: 120px">
+            <ion-row nowrap>
+              <ion-col style="width: 130px">
                 
-                <table style="width: 100%;">
+                <table style="width: 128px">
 
                   <tr>
                     <th>
@@ -103,14 +103,16 @@
 
               </ion-col>
 
-              <ion-col>
+              <ion-col style="width: calc(100% - 130px);">
 
-                <div style="overflow-x: auto; width: calc(100vw - 150px)">
+                <div style="overflow-x: auto;">
 
-                  <table style="width: 100%" [style.minWidth.px]="chartService.chartWidth">
+                  <table style="width: 100%">
                     
                     <tr>
-                      <th *ngFor="let param of dataTableService.params; let i = index">
+                      <th 
+                        style="width: 110px;"
+                        *ngFor="let param of dataTableService.params; let i = index">
                         <div 
                           class="table-header color-{{color}}-light"
                           [title]="param.Title"
@@ -128,7 +130,11 @@
 
                     <tr *ngFor="let record of dataTableService.showingRecords">
 
-                      <td *ngFor="let param of dataTableService.params; let j = index" [title]="param.Title">
+                      <td 
+                        style="width: 110px;"
+                        *ngFor="let param of dataTableService.params; let j = index"
+                        [title]="param.Title">
+
                         <ion-item lines="none">
                           
                           <ion-label *ngIf="param.Type != 'Bool'; else showTick">
