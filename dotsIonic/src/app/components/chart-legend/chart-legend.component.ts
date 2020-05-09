@@ -7,7 +7,7 @@ import { GeneralService } from '../../services/general.service';
   templateUrl: './chart-legend.component.html',
   styleUrls: ['./chart-legend.component.scss']
 })
-export class ChartLegendComponent implements OnInit {
+export class ChartLegendComponent {
 
   @Input() legendTitle: String;
   @Input() color;
@@ -16,7 +16,7 @@ export class ChartLegendComponent implements OnInit {
   @Input() resultsAnalysis: any[];
   @Input() colorScheme: any[];
 
-  public showLegend = true;               // Show or hide legend
+  public showLegend = false;               // Show or hide legend
 
   @Output() editParamsButtonClicked = new EventEmitter();
 
@@ -29,11 +29,10 @@ export class ChartLegendComponent implements OnInit {
     public generalService: GeneralService
   ) { }
 
-  ngOnInit() { 
-    if(this.data.length > 6){
-      this.showLegend = false;
-    }
+  async toggleLegend(){
+    console.log("toggle");
+    if(this.showLegend == true) this.showLegend = false;
+    else this.showLegend = true;
   }
-
 
 }

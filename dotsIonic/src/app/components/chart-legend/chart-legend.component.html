@@ -1,134 +1,47 @@
-<ion-card>
+<ion-card [id]="showLegend">
 
-  <ion-card-header class="color-{{color}}">
-  
-    <ion-label class="set-text-color">
-      {{ legendTitle | translate }}
-    </ion-label>
-    
-    <ion-button fill="clear" (click)="editParams()" size="small">
-      <ion-icon name="create" color="light"></ion-icon>
-    </ion-button>
+  <div>
 
-  </ion-card-header>
+    <ion-item lines="none" class="ion-no-padding" *ngFor="let param of data; let i = index">
 
-  <ion-card-content>
+      <div class="chart-legend-color" [style.backgroundColor]="colorScheme[i]"></div>
 
-    <ion-grid *ngIf="showLegend">
+      <div *ngIf="param.Title.length > 25; else fullTitle"> 
+        {{ param.Title | translate | slice:0:25 }}...
+      </div>
+      <ng-template #fullTitle> 
+        <div>{{ param.Title | translate  }}</div>
+      </ng-template>:
 
-      <ion-row>
+      <ion-label style="margin-left: 5px; display: flex;">
 
-        <ion-col sizeLg="4" sizeSm="6" sizeXs="12">
+        <div *ngIf="generalService.getType(goals[i]) != 'boolean'">
+          {{ goals[i] }}
+        </div>
+        <div *ngIf="goals[i] == 'true'">
+          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+        </div>
+        <div *ngIf="goals[i] == 'false'">
+          <ion-icon name="close-circle" color="danger"></ion-icon>
+        </div>
 
-          <!-- <h1> {{ 'Last5EntryStats' | translate }} </h1>
-
-          <div *ngFor="let category of resultsCategories">
-
-            <ion-card *ngIf="resultsAnalysis[category].length > 0">
-
-              <ion-card-header 
-                (click)="toggleAnalysisDetails(category)"
-                [color]="categoryColors[category]">
-
-                <ion-label style="flex-grow: 1;">
-                  {{ 'exercisesWithResults.' + category | translate }}: {{ resultsAnalysis[category].length }} {{ 'exercises' | translate }}
-                </ion-label>
-
-                <ion-button fill="clear" color="light">
-                  <ion-icon name="arrow-dropdown-circle" *ngIf="!showAnalysisDetails[category]"></ion-icon>
-                  <ion-icon name="arrow-dropup-circle" *ngIf="showAnalysisDetails[category]"></ion-icon>
-                </ion-button>
-
-              </ion-card-header>
-
-              <ion-card-content *ngIf="showAnalysisDetails[category]">
-
-                <div *ngFor="let param of resultsAnalysis[category]">
-                  {{ param.Title }} ({{ param.AveragePercentage | number:'1.0-0' }}%)
-                </div>
-
-              </ion-card-content>
-
-            </ion-card>
-
-          </div> -->
-
-        </ion-col>
-
-        <ion-col sizeLg="8" sizeSm="6" sizeXs="12">
-
-          <ion-grid>
-
-            <ion-row>
-
-              <ion-col
-                *ngFor="let param of data; let i = index"
-                sizeLg="4"
-                sizeMd="6"
-                sizeSm="12"
-                sizeXs="12">
-      
-                <ion-item lines="none">
-      
-                  <div class="chart-legend-color" [style.backgroundColor]="colorScheme[i]"></div>
-      
-                  <ion-label *ngIf="param.Title.length > 20; else fullTitle"> {{ param.Title | translate | slice:0:20 }}...</ion-label>
-                  <ng-template #fullTitle> {{ param.Title | translate  }}</ng-template>:
-      
-                  <ion-label style="margin-left: 5px; display: flex;">
-      
-                    <div *ngIf="generalService.getType(goals[i]) != 'boolean'">
-                      {{ goals[i] }}
-                    </div>
-                    <div *ngIf="goals[i] == 'true'">
-                      <ion-icon name="checkmark-circle" color="success"></ion-icon>
-                    </div>
-                    <div *ngIf="goals[i] == 'false'">
-                      <ion-icon name="close-circle" color="danger"></ion-icon>
-                    </div>
-      
-                    <div
-                      *ngIf="param.Unit"
-                      style="margin-left: 2px">
-                      {{ param.Unit | translate }}
-                    </div>
-      
-                  </ion-label>
-      
-                </ion-item>
-      
-              </ion-col>
-      
-            </ion-row>
-
-          </ion-grid>
-
-        </ion-col>
-
-      </ion-row>
-
-    </ion-grid>
-
-    <ion-button expand="block" fill="clear" title="Show legend" class="icon-{{color}}"
-      *ngIf="!showLegend"
-      (click)="showLegend = true">
-
-      <ion-icon name="arrow-dropdown-circle" class="icon-{{color}}"></ion-icon>
-      <ion-label style="padding-left: 5px; font-size: 0.9rem !important">
-        {{ 'ShowMore' | translate }}
+        <div
+          *ngIf="param.Unit"
+          style="margin-left: 2px">
+          {{ param.Unit | translate }}
+        </div>
+        
       </ion-label>
+
+    </ion-item>
+
+  </div>
+
+  <div id="toggleLegend" (click)="toggleLegend()">
+    <ion-button fill="clear">
+      <ion-icon name="arrow-dropleft-circle" *ngIf="!showLegend"></ion-icon>
+      <ion-icon name="arrow-dropright-circle" *ngIf="showLegend"></ion-icon>
     </ion-button>
-
-    <ion-button expand="block" fill="clear" title="Hide legend" class="icon-{{color}}"
-      *ngIf="showLegend"
-      (click)="showLegend = false">
-
-      <ion-icon name="arrow-dropup-circle" class="icon-{{color}}"></ion-icon>
-      <ion-label style="padding-left: 5px; font-size: 0.9rem !important">
-        {{ 'ShowLess' | translate }}
-      </ion-label>
-    </ion-button>
-
-  </ion-card-content>
+  </div>
 
 </ion-card>
