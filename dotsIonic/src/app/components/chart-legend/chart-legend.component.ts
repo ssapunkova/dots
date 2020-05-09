@@ -22,7 +22,7 @@ export class ChartLegendComponent implements OnInit {
   public categoryColors = {
     "aboveGoal": "success", 
     "belowGoal": "warning", 
-    "nowherenearGoal": "danger"
+    "nowhereNearGoal": "danger"
   };
 
   public showAnalysisDetails = {

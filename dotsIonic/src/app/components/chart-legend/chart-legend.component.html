@@ -20,31 +20,36 @@
 
         <ion-col sizeLg="4" sizeSm="5" sizeXs="12">
 
-          <ion-card *ngFor="let category of resultsCategories">
+          <h1> {{ 'Last5EntryStats' | translate }} </h1>
 
-            <ion-card-header [color]="categoryColors[category]">
-              <ion-label>
-                {{ 'exercisesWithResults.' + category | translate }}: {{ resultsAnalysis[category].length }} {{ 'exercises' | translate }}
-              </ion-label>
+          <div *ngFor="let category of resultsCategories">
 
-              <ion-button 
-                *ngIf="resultsAnalysis[category] != []"
-                fill="clear" color="light" 
-                (click)="toggleAnalysisDetails(category)">
-                <ion-icon name="arrow-dropdown-circle" *ngIf="!showAnalysisDetails[category]"></ion-icon>
-                <ion-icon name="arrow-dropup-circle" *ngIf="showAnalysisDetails[category]"></ion-icon>
-              </ion-button>
-            </ion-card-header>
+            <ion-card *ngIf="resultsAnalysis[category].length > 0">
 
-            <ion-card-content *ngIf="showAnalysisDetails[category]">
+              <ion-card-header [color]="categoryColors[category]">
+                <ion-label>
+                  {{ 'exercisesWithResults.' + category | translate }}: {{ resultsAnalysis[category].length }} {{ 'exercises' | translate }}
+                </ion-label>
 
-              <div *ngFor="let param of resultsAnalysis[category]">
-                {{ param.Title }} ({{ param.Number }} {{ 'times' | translate}})
-              </div>
+                <ion-button 
+                  fill="clear" color="light" 
+                  (click)="toggleAnalysisDetails(category)">
+                  <ion-icon name="arrow-dropdown-circle" *ngIf="!showAnalysisDetails[category]"></ion-icon>
+                  <ion-icon name="arrow-dropup-circle" *ngIf="showAnalysisDetails[category]"></ion-icon>
+                </ion-button>
+              </ion-card-header>
 
-            </ion-card-content>
+              <ion-card-content *ngIf="showAnalysisDetails[category]">
 
-          </ion-card>
+                <div *ngFor="let param of resultsAnalysis[category]">
+                  {{ param.Title }} ({{ param.AveragePercentage | number:'1.0-0' }}%)
+                </div>
+
+              </ion-card-content>
+
+            </ion-card>
+
+          </div>
 
         </ion-col>
 

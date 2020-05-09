@@ -74,55 +74,59 @@ export class WorkoutSheetPage implements OnInit {
 
 
   async analyseResults(){
-    let recordNum = this.data.WorkoutRecords.length;
-      let results = {
-        aboveGoal: [],
-        belowGoal: [],
-        nowhereNearGoal: []
-      }
+    
+    let results = {
+      "aboveGoal": [],
+      "belowGoal": [],
+      "nowhereNearGoal": []
+    };
 
-      let registeredParams = {
-        aboveGoal: [],
-        belowGoal: [],
-        nowhereNearGoal: []
-      }
+    let goalsData = [];
 
-      for(let i = 0; i < 5; i++){
-        let currentRec = this.data.WorkoutRecords[i];
-        console.log(currentRec);
-        for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
-          let category;
-          let paramTitle = this.data.Params.filter((p) => p._id == currentRec.Params[j])[0].Title;
-          if(currentRec.PercentageOfGoal[j] > 100){
-            category = "aboveGoal";
-          }
-          else {
-            if(currentRec.PercentageOfGoal[j] > 75){
-              category = "belowGoal";
-            }
-            else{
-              category = "nowhereNearGoal"
-            }
-          }
-            
-          // Add to result category
-          let index = registeredParams[category].indexOf(currentRec.Params[j]);
-          if(index < 0){
-            results[category].push({
-              Title: paramTitle,
-              Number: 1
-            });
-            registeredParams[category].push(currentRec.Params[j]);
-          }
-          else{
-            results[category][index].Number++;
-          }
+    let registeredParams = [];
+
+    for(let i = 0; i < 5; i++){
+      let currentRec = this.data.WorkoutRecords[i];
+      for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
+        let paramTitle = this.data.Params.filter((p) => p._id == currentRec.Params[j])[0].Title;
+                
+        let index = registeredParams.indexOf(currentRec.Params[j]);
+        if(index < 0){
+          // Add param to goalsData array
+          goalsData.push({
+            Title: paramTitle,
+            PercentageSum: currentRec.PercentageOfGoal[j],
+            AveragePercentage: 0
+          });
+          registeredParams.push(currentRec.Params[j]);
         }
+        else{
+          // Increment result percentage sum 
+          goalsData[index].PercentageSum += currentRec.PercentageOfGoal[j];
+        }
+        
+      }
+    }
+
+    for(let i = 0; i < goalsData.length; i++){
+      let averagePercentage = Math.floor(goalsData[i].PercentageSum / 5);
+      goalsData[i].AveragePercentage = averagePercentage;
+
+      if(averagePercentage > 100){
+        results.aboveGoal.push(goalsData[i]);
+      }
+      else if(averagePercentage > 75){
+        results.belowGoal.push(goalsData[i]);
+      }
+      else{
+        results.nowhereNearGoal.push(goalsData[i]);
       }
 
-      console.log(results);
+    }
 
-      this.dataTableService.resultsAnalysis = results;
+    console.log(results);
+
+    this.dataTableService.resultsAnalysis = results;
   }
 
   // Edit sheet's params (exercises) and set goals for them
