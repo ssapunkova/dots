@@ -76,15 +76,23 @@ export class WorkoutSheetPage implements OnInit {
   async analyseResults(){
     let recordNum = this.data.WorkoutRecords.length;
       let results = {
-        aboveGoal: {},
-        belowGoal: {},
-        nowhereNearGoal: {}
+        aboveGoal: [],
+        belowGoal: [],
+        nowhereNearGoal: []
       }
+
+      let registeredParams = {
+        aboveGoal: [],
+        belowGoal: [],
+        nowhereNearGoal: []
+      }
+
       for(let i = 0; i < 5; i++){
         let currentRec = this.data.WorkoutRecords[i];
         console.log(currentRec);
         for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
           let category;
+          let paramTitle = this.data.Params.filter((p) => p._id == currentRec.Params[j])[0].Title;
           if(currentRec.PercentageOfGoal[j] > 100){
             category = "aboveGoal";
           }
@@ -98,11 +106,16 @@ export class WorkoutSheetPage implements OnInit {
           }
             
           // Add to result category
-          if(results[category][currentRec.Params[j]] == null){
-            results[category][currentRec.Params[j]] = 1;
+          let index = registeredParams[category].indexOf(currentRec.Params[j]);
+          if(index < 0){
+            results[category].push({
+              Title: paramTitle,
+              Number: 1
+            });
+            registeredParams[category].push(currentRec.Params[j]);
           }
           else{
-            results[category][currentRec.Params[j]]++;
+            results[category][index].Number++;
           }
         }
       }

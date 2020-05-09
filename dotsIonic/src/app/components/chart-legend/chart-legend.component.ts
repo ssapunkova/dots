@@ -18,6 +18,19 @@ export class ChartLegendComponent implements OnInit {
 
   public showLegend = true;               // Show or hide legend
 
+  public resultsCategories = ["aboveGoal", "belowGoal", "nowhereNearGoal"];
+  public categoryColors = {
+    "aboveGoal": "success", 
+    "belowGoal": "warning", 
+    "nowherenearGoal": "danger"
+  };
+
+  public showAnalysisDetails = {
+    aboveGoal: false,
+    belowGoal: false,
+    nowhereNearGoal: false
+  }
+
   @Output() editParamsButtonClicked = new EventEmitter();
 
   editParams() {
@@ -33,6 +46,11 @@ export class ChartLegendComponent implements OnInit {
     if(this.data.length > 6){
       this.showLegend = false;
     }
+  }
+
+  async toggleAnalysisDetails(category){
+    if(this.showAnalysisDetails[category] == true) this.showAnalysisDetails[category] = false;
+    else this.showAnalysisDetails[category] = true;
   }
 
 }
