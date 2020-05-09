@@ -10,6 +10,7 @@
   <div *ngIf="dataTableService.allRecords.length > 0">
 
     <chart-legend
+      *ngIf="dataTableService.showMode == 'chart'"
       [color]="color"
       [legendTitle]="legendTitle"
       [data]="dataTableService.params"
@@ -18,6 +19,49 @@
       [colorScheme]="chartService.colorScheme.domain"
       (editParamsButtonClicked)="editParams()"
     ></chart-legend>
+
+    <ion-card>
+
+      <ion-card-content>
+
+        <h1> {{ 'Last5EntryStats' | translate }} </h1>
+
+        <div *ngFor="let category of resultsCategories">
+
+          <ion-card *ngIf="dataTableService.resultsAnalysis[category].length > 0">
+
+            <ion-card-header 
+              style="display: flex;"
+              (click)="toggleAnalysisDetails(category)"
+              [color]="categoryColors[category]">
+
+              <ion-label style="flex-grow: 1;">
+                {{ 'exercisesWithResults.' + category | translate }}: 
+                {{ dataTableService.resultsAnalysis[category].length }} {{ 'exercises' | translate }}
+              </ion-label>
+
+              <ion-button fill="clear" color="light">
+                <ion-icon name="arrow-dropdown-circle" *ngIf="!showAnalysisDetails[category]"></ion-icon>
+                <ion-icon name="arrow-dropup-circle" *ngIf="showAnalysisDetails[category]"></ion-icon>
+              </ion-button>
+
+            </ion-card-header>
+
+            <ion-card-content *ngIf="showAnalysisDetails[category]">
+
+              <div *ngFor="let param of dataTableService.resultsAnalysis[category]">
+                {{ param.Title }} ({{ param.AveragePercentage | number:'1.0-0' }}%)
+              </div>
+
+            </ion-card-content>
+
+          </ion-card>
+
+        </div>
+
+      </ion-card-content>
+
+    </ion-card>
        
     <ion-toolbar>
       <ion-item>

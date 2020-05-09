@@ -18,25 +18,27 @@
 
       <ion-row>
 
-        <ion-col sizeLg="4" sizeSm="5" sizeXs="12">
+        <ion-col sizeLg="4" sizeSm="6" sizeXs="12">
 
-          <h1> {{ 'Last5EntryStats' | translate }} </h1>
+          <!-- <h1> {{ 'Last5EntryStats' | translate }} </h1>
 
           <div *ngFor="let category of resultsCategories">
 
             <ion-card *ngIf="resultsAnalysis[category].length > 0">
 
-              <ion-card-header [color]="categoryColors[category]">
-                <ion-label>
+              <ion-card-header 
+                (click)="toggleAnalysisDetails(category)"
+                [color]="categoryColors[category]">
+
+                <ion-label style="flex-grow: 1;">
                   {{ 'exercisesWithResults.' + category | translate }}: {{ resultsAnalysis[category].length }} {{ 'exercises' | translate }}
                 </ion-label>
 
-                <ion-button 
-                  fill="clear" color="light" 
-                  (click)="toggleAnalysisDetails(category)">
+                <ion-button fill="clear" color="light">
                   <ion-icon name="arrow-dropdown-circle" *ngIf="!showAnalysisDetails[category]"></ion-icon>
                   <ion-icon name="arrow-dropup-circle" *ngIf="showAnalysisDetails[category]"></ion-icon>
                 </ion-button>
+
               </ion-card-header>
 
               <ion-card-content *ngIf="showAnalysisDetails[category]">
@@ -49,11 +51,11 @@
 
             </ion-card>
 
-          </div>
+          </div> -->
 
         </ion-col>
 
-        <ion-col sizeLg="8" sizeSm="7" sizeXs="12">
+        <ion-col sizeLg="8" sizeSm="6" sizeXs="12">
 
           <ion-grid>
 

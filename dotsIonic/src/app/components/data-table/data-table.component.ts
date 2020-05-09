@@ -19,11 +19,32 @@ export class DataTableComponent  {
   @Output() addRecordClicked = new EventEmitter();
   @Output() editParamsButtonClicked = new EventEmitter();
 
+  
+  public resultsCategories = ["aboveGoal", "belowGoal", "nowhereNearGoal"];
+  public categoryColors = {
+    "aboveGoal": "success", 
+    "belowGoal": "warning", 
+    "nowhereNearGoal": "danger"
+  };
+
+  public showAnalysisDetails = {
+    aboveGoal: false,
+    belowGoal: false,
+    nowhereNearGoal: false
+  }
+
+
   constructor(
     public chartService: ChartService,
     public generalService: GeneralService,
     public dataTableService: DataTableService
   ) { }
+
+  
+  async toggleAnalysisDetails(category){
+    if(this.showAnalysisDetails[category] == true) this.showAnalysisDetails[category] = false;
+    else this.showAnalysisDetails[category] = true;
+  }
 
   async addRecord() {
     // Emit addRecordClicked event to parent (nutrition.page.html)
