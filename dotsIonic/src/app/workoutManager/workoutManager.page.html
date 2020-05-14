@@ -2,7 +2,7 @@
 
   <div id="workout-summary" *ngIf="current.ExerciseIndex == null || controls.IsFinished">
 
-    <div *ngIf="current.ExerciseIndex == null"
+    <div *ngIf="current.ExerciseIndex == null && controls.IsDataLoaded"
       id="workout-preview" class="set-text-color">
       <h1>{{ sheetData.Title }} </h1>
 

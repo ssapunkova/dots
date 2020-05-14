@@ -27,6 +27,7 @@ import { TimeAndDateService } from '../services/timeAndDate.service';
 export class WorkoutManagerPage implements OnInit {
 
   public controls = {                     // Control pausing, timer
+    IsDataLoaded: false,
     IsNotCancelled: true,                 // Is workout not cancelled
     IsExerciseRunning: false,             // Not paused, not during a break, not finished -> an exercise is in process
     IsPaused: false,                      // Is workout on pause
@@ -105,9 +106,6 @@ export class WorkoutManagerPage implements OnInit {
 
       this.exerciseNumber = this.sheetData.Params.length;
 
-      // Dismiss all loading
-      this.loadingService.hidePageLoading();
-
     });
 
     // Get average time for exercises
@@ -126,6 +124,9 @@ export class WorkoutManagerPage implements OnInit {
         this.hourglassAnimationTime = this.averageTime / 1000 + "s";
 
         console.log(this.averageTime);
+
+        this.controls.IsDataLoaded = true;
+
       }
     },
     error => {
@@ -133,6 +134,8 @@ export class WorkoutManagerPage implements OnInit {
     });
 
     // this.startWorkout();
+
+    
 
     this.loadingService.hidePageLoading();
 
