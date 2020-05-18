@@ -12,6 +12,14 @@ ion-col :not(.table-header){
     
 }
 
+.statsCard{
+  display: flex;
+  color: white;
+  align-items: center;
+  padding-left: 0.75rem !important;
+  cursor: pointer;
+}
+
 table{
 
   border-collapse: collapse;

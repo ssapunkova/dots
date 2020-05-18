@@ -76,6 +76,7 @@ export class WorkoutSheetPage implements OnInit {
   async analyseResults(){
     
     let results = {
+      "needsNewGoal": [],
       "aboveGoal": [],
       "belowGoal": [],
       "nowhereNearGoal": []
@@ -88,13 +89,14 @@ export class WorkoutSheetPage implements OnInit {
     for(let i = 0; i < 5; i++){
       let currentRec = this.data.WorkoutRecords[i];
       for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
-        let paramTitle = this.data.Params.filter((p) => p._id == currentRec.Params[j])[0].Title;
+        let paramData = this.data.Params.filter((p) => p._id == currentRec.Params[j])[0];
                 
         let index = registeredParams.indexOf(currentRec.Params[j]);
         if(index < 0){
           // Add param to goalsData array
+          console.log(currentRec);
           goalsData.push({
-            Title: paramTitle,
+            Data: paramData,
             PercentageSum: currentRec.PercentageOfGoal[j],
             AveragePercentage: 0
           });
@@ -112,6 +114,10 @@ export class WorkoutSheetPage implements OnInit {
       let averagePercentage = Math.floor(goalsData[i].PercentageSum / 5);
       goalsData[i].AveragePercentage = averagePercentage;
 
+      if(averagePercentage >= 110){
+        results.needsNewGoal.push(goalsData[i]);
+      } 
+
       if(averagePercentage > 100){
         results.aboveGoal.push(goalsData[i]);
       }
@@ -127,17 +133,51 @@ export class WorkoutSheetPage implements OnInit {
     console.log(results);
 
     this.dataTableService.resultsAnalysis = results;
+
+    if(results.needsNewGoal.length > 0){
+
+      let paramsToEdit = [];
+
+      let message = await this.translate.instant("TooGoodResults") + ":";
+      for(let i = 0; i < results.needsNewGoal.length; i++){
+        let title = results.needsNewGoal[i].Data.Title;
+        message += title;
+        paramsToEdit.push(title);
+      }
+      
+      console.log(paramsToEdit)
+
+      let alert = await this.alertController.create({
+        header: this.translate.instant("GoalsThatNeedUpdating"),
+        message: message,
+        buttons: [
+          {
+            text: this.translate.instant("Cancel"),
+            role: 'cancel',
+            cssClass: 'secondary'
+          },
+          {
+            text: this.translate.instant("UpdateGoalNow"),
+            handler: () => this.editParams(paramsToEdit)
+          }
+        ]
+      })
+      
+      await alert.present();
+
+    }
+    
   }
 
   // Edit sheet's params (exercises) and set goals for them
-  async editParams(){
+  async editParams(params){
 
     // Select configureable data about the sheet
     let updateData = {
       _id: this.sheetId,
-      Title: this.dataTableService.title,
-      Params: this.dataTableService.params
-    };
+      Params: this.dataTableService.params,
+      Highlight: params || []
+    }
 
     // Show a configuration modal
     const modal = await this.modalController.create({
@@ -154,8 +194,11 @@ export class WorkoutSheetPage implements OnInit {
 
       await this.loadingService.showProcessLoading(this.translate.instant("SavingChanges"));
 
-      // Update sheet data and reloat sheets
-      this.workoutService.updateSheetConfiguration(modalData).subscribe( async (data: [any]) =>
+      console.log(this.dataTableService.params);
+
+      console.log(updateData);
+
+      this.workoutService.updateSheetData(modalData).subscribe( async (data: [any]) =>
         {
           this.getSheetData();
           await this.loadingService.hideProcessLoading();

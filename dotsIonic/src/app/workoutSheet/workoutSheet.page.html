@@ -21,7 +21,7 @@
   <no-items-message 
     headerMessage="NoExercisesSet"
     buttonLabel="AddExercises"
-    (buttonClicked)="editParams()"
+    (buttonClicked)="editParams(null)"
     [color]="data.Color"
     *ngIf="dataTableService.params.length == 0">
   </no-items-message>
@@ -29,7 +29,7 @@
   <data-table
     *ngIf="dataTableService.params"
     legendTitle="Exercises"
-    (editParamsButtonClicked)="editParams()"
+    (editParamsButtonClicked)="editParams(null)"
     (addRecordClicked)="addRecord()"
     [color]="data.Color"
     (showRecordOptionsClicked)="showRecordOptions($event)"

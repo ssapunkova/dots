@@ -34,7 +34,7 @@ export class EditWorkoutParamsPage implements OnInit {
   ngOnInit() {
     this.sheet = JSON.parse(JSON.stringify(this.navParams.data));
     this.sheet.DeletedExercisesId = [];
-    console.log(this.exerciseTitles);
+    console.log(this);
   }
 
 

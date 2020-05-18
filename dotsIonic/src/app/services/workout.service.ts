@@ -41,9 +41,9 @@ export class WorkoutService {
     );
   }
 
-  public updateSheet(sheetData){
+  public updateSheetData(sheetData){
     return this.http.post(
-      this.connectToServerService.serverUrl + '/updateSheet',
+      this.connectToServerService.serverUrl + '/updateSheetData',
       {data: sheetData}
     );
   }
@@ -77,11 +77,5 @@ export class WorkoutService {
     );
   }
 
-  public updateSheetConfiguration(sheetData){
-    return this.http.post(
-      this.connectToServerService.serverUrl + '/updateSheetConfiguration',
-      {data: sheetData}
-    );
-  }
 
 }

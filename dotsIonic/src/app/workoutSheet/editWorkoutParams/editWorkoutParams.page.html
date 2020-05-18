@@ -24,7 +24,7 @@
       <ion-row *ngFor="let col of sheet.Params; let i = index">
 
         <ion-col>
-          <ion-item lines="none">
+          <ion-item lines="none" >
             <ion-input 
               type="text" placeholder="Exercise title" 
               [(ngModel)]='col.Title'>
@@ -34,7 +34,7 @@
 
         <ion-col style="max-width: 150px; text-align: center;">
 
-          <ion-item lines="none">
+          <ion-item lines="none" [class]="sheet.Highlight.indexOf(col.Title) != -1 ? 'param-7': ''">
 
             <ion-icon 
               style="font-size: 1rem; margin-right: 5px"
@@ -62,9 +62,15 @@
               <ion-icon name="checkmark-circle" color="success"></ion-icon>
             </ion-label>
 
-            <ion-button expand="block" fill="clear" (click)="deleteExercise(i)">
+            <ion-button 
+              *ngIf="sheet.Highlight.indexOf(col.Title) < 0; else showHighlight"
+              expand="block" fill="clear" (click)="deleteExercise(i)">
               <ion-icon name="trash" color="danger"></ion-icon>
             </ion-button>
+
+            <ng-template #showHighlight>
+              <ion-icon name="check" color="warning"></ion-icon>
+            </ng-template>
 
           </ion-item>
 

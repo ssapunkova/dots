@@ -259,7 +259,7 @@ export class WorkoutsPage implements OnInit {
       console.log(modalData);
       let sheet = modalData.data;
 
-      this.workoutService.updateSheet(sheet).subscribe( async (data: [any])=>
+      this.workoutService.updateSheetData(sheet).subscribe( async (data: [any])=>
         {
           console.log(data)
           this.workoutSheets[index].Title = sheet.Title;

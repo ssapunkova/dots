@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertController, ModalController, MenuController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
 
 import { interval } from 'rxjs';
@@ -71,7 +71,6 @@ export class WorkoutManagerPage implements OnInit {
     public errorToastAndAlertService: ErrorToastAndAlertService,
     public timerService: TimerService,
     public alertController: AlertController,
-    public modalController: ModalController,
     public workoutService: WorkoutService,
     public dataTableService: DataTableService,
     public timeAndDateService: TimeAndDateService,

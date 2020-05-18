@@ -56,15 +56,6 @@ router.post("/createSheet", async (req, res) => {
   else res.send(sheet);
 })
 
-router.post("/updateSheet", async (req, res) => {
-  let data = req.body.data;
-
-  console.log(data);
-
-  let updateSheet = await WorkoutSheet.updateOne({ _id: data._id }, data);
-  if(updateSheet.err) throw updateSheet.err;
-  else res.send();
-})
 
 router.post("/deleteSheet", async (req, res) => {
   let sheetId = req.body.sheetId;
@@ -79,7 +70,7 @@ router.post("/deleteSheet", async (req, res) => {
 
 })
 
-router.post("/updateSheetConfiguration", async (req, res) => {
+router.post("/updateSheetData", async (req, res) => {
   let sheet = req.body.data;
   let deletedExerciseIds = sheet.DeletedExercisesId;
 
