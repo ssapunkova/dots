@@ -105,10 +105,8 @@
 16.04
   TODO:
     * Update Workout manager design
-    Update workouts and workoutsheet pages
-    Reorder exercises in workout manager
-    Save exercise order/use once
-    Stats on all sheets in workouts
+    * Update workouts and workoutsheet pages
+    * Stats on all sheets in workouts
 
 19.04:
     * Finish workout manager
@@ -128,9 +126,18 @@
     * edit sheet color 
     * style new/edit sheet modal
     * style all modals cancel and save buttons
-    Advice for setting new goal after 2 days of achieving more
+    * Advice for setting new goal after 2 days of achieving more
     Workout stats: days with exercise time like a heatmap ( take from energyI )
 
     Workout manager animation?
 
     animations in general
+
+18.05:
+  TODO:
+    Reorder exercises in workout manager
+    Save exercise order/use once
+
+  FIX:
+    Translation in goals over 150% alert
+    Nutrition
