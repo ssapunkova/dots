@@ -166,6 +166,14 @@ export class WorkoutSheetPage implements OnInit {
       await alert.present();
 
     }
+
+    // Days since start
+
+    let firstEntry = this.data.WorkoutRecords[this.data.WorkoutRecords.length - 1].Date;
+    let lastEntry = this.data.WorkoutRecords[0].Date;
+    let weeks = Math.round((new Date(lastEntry).getTime() - new Date(firstEntry).getTime()) / (1000*60*60*24*7));
+    console.log(weeks);
+    this.dataTableService.weeksSinceStart = weeks;
     
   }
 

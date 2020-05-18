@@ -20,6 +20,8 @@
 	"exercises": "exercises",
 	"Result": "Result",
 	"records": "records",
+	"weeksSinceStart": "weeks since start",
+	"timesAWeek": "times a week",
 	"ViewRecords": "View records",
 	"NoWorkoutSheets": "No workout sheets yet",
 	"AddYourFirstSheet": "Add your first workout sheet",

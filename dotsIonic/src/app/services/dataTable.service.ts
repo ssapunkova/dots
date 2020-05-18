@@ -29,6 +29,7 @@ export class DataTableService{
   public months: any[];
   public goals: any[];
   public resultsAnalysis;
+  public weeksSinceStart;
 
   public tableWidth = 0;
 
