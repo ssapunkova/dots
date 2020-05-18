@@ -12,6 +12,10 @@ ion-col :not(.table-header){
     
 }
 
+h1{
+  padding-left: 0.5rem !important;
+}
+
 .statsCard{
   display: flex;
   color: white;
@@ -52,3 +56,6 @@ table{
   }
 }
 
+ion-fab-button{
+  margin-top: 10px !important; 
+}

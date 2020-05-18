@@ -15,7 +15,7 @@
 
         <ion-row>
 
-          <ion-col sizeLg="4" sizeMd="6" sizeXs="12">
+          <ion-col sizeLg="4" sizeMd="5" sizeXs="12">
             <h1> {{ 'Last5EntryStats' | translate }} </h1>
 
             <div *ngFor="let category of resultsCategories">
@@ -54,9 +54,11 @@
           </ion-col>
 
           <ion-col>
-            <ion-button (click)="editParams()" size="small">
-              <ion-icon name="create" color="light"></ion-icon>
-            </ion-button>
+
+            <h1> {{ 'Overall' | translate }} </h1>
+
+            <ion-item></ion-item>
+            
           </ion-col>
 
         </ion-row>
@@ -245,8 +247,19 @@
     horizontal="end" 
     style="position: fixed;"
     slot="fixed">
+
+    <ion-fab-button
+      size="small"
+      color="warning"
+       (click)="editParams()">
+      <ion-icon name="create" color="light" style="font-size: 1rem"></ion-icon>
+    </ion-fab-button>
+
     <ion-fab-button 
+      size="medium"
+      color="success"
       (click)="addRecord()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
+    
   </ion-fab>
