@@ -27,6 +27,12 @@ export class DataTableComponent  {
     "nowhereNearGoal": "danger"
   };
 
+  public categoryIcons = {
+    "aboveGoal": "trending-up", 
+    "belowGoal": "remove", 
+    "nowhereNearGoal": "trending-down"
+  }
+
   public showAnalysisDetails = {
     aboveGoal: false,
     belowGoal: false,

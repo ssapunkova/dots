@@ -27,6 +27,11 @@
                   (click)="toggleAnalysisDetails(category)"
                   [color]="categoryColors[category]">
 
+                  <ion-icon 
+                    [name]="categoryIcons[category]" 
+                    color="light" style="padding-right: 0.5rem; font-size: 1.1rem"
+                  ></ion-icon>
+
                   <ion-label style="flex-grow: 1; color: white !important">
                     {{ 'exercisesWithResults.' + category | translate }}: 
                     {{ dataTableService.resultsAnalysis[category].length }} {{ 'exercises' | translate }}
@@ -41,7 +46,9 @@
 
                 <ion-card-content *ngIf="showAnalysisDetails[category]">
 
-                  <div *ngFor="let param of dataTableService.resultsAnalysis[category]">
+                  <div 
+                    style="padding: 0.15rem"
+                    *ngFor="let param of dataTableService.resultsAnalysis[category]">
                     {{ param.Data.Title }} ({{ param.AveragePercentage | number:'1.0-0' }}%)
                   </div>
 
