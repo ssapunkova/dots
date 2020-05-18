@@ -114,7 +114,7 @@ export class WorkoutSheetPage implements OnInit {
       let averagePercentage = Math.floor(goalsData[i].PercentageSum / 5);
       goalsData[i].AveragePercentage = averagePercentage;
 
-      if(averagePercentage >= 110){
+      if(averagePercentage >= 150){
         results.needsNewGoal.push(goalsData[i]);
       } 
 
