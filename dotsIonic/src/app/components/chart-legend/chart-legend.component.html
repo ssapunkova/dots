@@ -1,6 +1,6 @@
 <ion-card [id]="showLegend">
 
-  <div>
+  <div style="flex-grow: 1;">
 
     <ion-item lines="none" class="ion-no-padding" *ngFor="let param of data; let i = index">
 
@@ -38,9 +38,9 @@
   </div>
 
   <div id="toggleLegend" (click)="toggleLegend()">
-    <ion-button fill="clear">
-      <ion-icon name="arrow-dropleft-circle" *ngIf="!showLegend"></ion-icon>
-      <ion-icon name="arrow-dropright-circle" *ngIf="showLegend"></ion-icon>
+    <ion-button color="secondary" fill="clear">
+      <ion-icon name="arrow-dropleft" *ngIf="!showLegend"></ion-icon>
+      <ion-icon name="arrow-dropright" *ngIf="showLegend"></ion-icon>
     </ion-button>
   </div>
 

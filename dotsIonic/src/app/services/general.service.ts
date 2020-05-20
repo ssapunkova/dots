@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { TimeAndDateService } from './timeAndDate.service';
 
 
-// Chart Service
-// Implements formatting and displaying record data in a line chart
+// General Service
+// General functions used everywhere
 
 @Injectable()
 export class GeneralService{

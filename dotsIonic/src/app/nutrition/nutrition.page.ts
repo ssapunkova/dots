@@ -13,6 +13,7 @@ import { NutritionService } from '../services/nutrition.service';
 import { NewNutritionRecordPage } from './newNutritionRecord/newNutritionRecord.page';
 import { EditNutritionParamsPage } from './editNutritionParams/editNutritionParams.page';
 import { ParamsService } from '../services/params.service';
+import { AnalyseService } from '../services/analyse.service';
 
 @Component({
   selector: 'app-nutrition',
@@ -39,6 +40,7 @@ export class NutritionPage implements OnInit {
     public paramsService: ParamsService,
     public dataTableService: DataTableService,
     public chartService: ChartService,
+    public analyseService: AnalyseService,
     private route: ActivatedRoute
   ) { };
 
@@ -109,11 +111,14 @@ export class NutritionPage implements OnInit {
 
         console.log("***NutritionPage ", this);
 
+        this.analyseService.analyseWorkoutResults(this.data);
+
         this.dataTableService.initializeDataTable(data.general, data.records, "nutrition");
 
       });
 
     });
+
   };
 
   async editParams(){

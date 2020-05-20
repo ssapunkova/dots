@@ -38,8 +38,8 @@
                   </ion-label>
 
                   <ion-button fill="clear" color="light">
-                    <ion-icon name="arrow-dropdown-circle" *ngIf="!showAnalysisDetails[category]"></ion-icon>
-                    <ion-icon name="arrow-dropup-circle" *ngIf="showAnalysisDetails[category]"></ion-icon>
+                    <ion-icon name="arrow-dropdown" *ngIf="!showAnalysisDetails[category]"></ion-icon>
+                    <ion-icon name="arrow-dropup" *ngIf="showAnalysisDetails[category]"></ion-icon>
                   </ion-button>
 
                 </ion-card-header>
@@ -63,6 +63,10 @@
           <ion-col>
 
             <h1> {{ 'Overall' | translate }} </h1>
+
+            <ion-item>
+              {{ paramsToEdit | json }}
+            </ion-item>
 
             <ion-item>
               <ion-icon name="grid" style="padding-right: 0.5rem"></ion-icon>

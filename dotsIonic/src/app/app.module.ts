@@ -34,6 +34,7 @@ import { DataTableService } from './services/dataTable.service';
 import { TimeAndDateService } from './services/timeAndDate.service';
 import { TimerService } from './services/timer.service';
 import { ChartService } from './services/chart.service';
+import { AnalyseService } from './services/analyse.service';
 import { WorkoutService } from './services/workout.service';
 import { StorageService } from './services/storage.service';
 import { LocalAuthService } from './services/localAuth.service';
@@ -80,6 +81,7 @@ import { UserService } from './services/user.service';
     TimerService,
     ChartService,
     WorkoutService,
+    AnalyseService,
     StorageService,
     LocalAuthService,
     UserService,
