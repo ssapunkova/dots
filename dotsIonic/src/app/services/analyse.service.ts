@@ -112,4 +112,52 @@ export class AnalyseService{
 
   }
 
+  async analyseNutrition(data){
+    console.log(data);
+
+    console.log("***Analysing data ", data)
+
+    let results = {
+      "needsNewGoal": [],
+      "aboveGoal": [],
+      "belowGoal": [],
+      "nowhereNearGoal": []
+    };
+
+    let registeredParams = []
+    let goalsData = [];
+
+    console.log("start")
+
+    for(let i = 0; i < 5; i++){
+      let currentRec = data.records[i];
+      console.log(currentRec, currentRec.PercentageOfGoal);
+      for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
+        let paramData = data.general.Params.filter((p) => p._id == currentRec.Params[j])[0];
+
+        console.log(paramData);
+                
+        let index = registeredParams.indexOf(currentRec.Params[j]);
+        if(index < 0){
+          // Add param to goalsData array
+          console.log(currentRec);
+          goalsData.push({
+            Data: paramData,
+            PercentageSum: currentRec.PercentageOfGoal[j],
+            AveragePercentage: 0
+          });
+          registeredParams.push(currentRec.Params[j]);
+        }
+        else{
+          // Increment result percentage sum 
+          goalsData[index].PercentageSum += currentRec.PercentageOfGoal[j];
+        }
+        
+      }
+    }
+
+    console.log(goalsData);
+
+  }
+
 }

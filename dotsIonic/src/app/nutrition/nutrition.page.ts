@@ -111,7 +111,7 @@ export class NutritionPage implements OnInit {
 
         console.log("***NutritionPage ", this);
 
-        this.analyseService.analyseWorkoutResults(this.data);
+        this.analyseService.analyseNutrition(this.data);
 
         this.dataTableService.initializeDataTable(data.general, data.records, "nutrition");
 
