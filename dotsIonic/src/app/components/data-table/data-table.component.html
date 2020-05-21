@@ -13,7 +13,84 @@
 
       <ion-grid>
 
-        <ion-row>
+        <ion-row *ngIf="legendTitle == 'Exercises'">
+
+          <ion-col sizeLg="4" sizeMd="5" sizeXs="12">
+            <h1> {{ 'Last5EntryStats' | translate }} </h1>
+
+            <div *ngFor="let category of resultsCategories">
+
+              <ion-card *ngIf="dataTableService.resultsAnalysis[category].length > 0">
+
+                <ion-card-header 
+                  class="statsCard"
+                  (click)="toggleAnalysisDetails(category)"
+                  [color]="categoryColors[category]">
+
+                  <ion-icon 
+                    [name]="categoryIcons[category]" 
+                    color="light" style="padding-right: 0.5rem; font-size: 1.1rem"
+                  ></ion-icon>
+
+                  <ion-label style="flex-grow: 1; color: white !important">
+                    {{ 'exercisesWithResults.' + category | translate }}: 
+                    {{ dataTableService.resultsAnalysis[category].length }} {{ 'exercises' | translate }}
+                  </ion-label>
+
+                  <ion-button fill="clear" color="light">
+                    <ion-icon name="arrow-dropdown" *ngIf="!showAnalysisDetails[category]"></ion-icon>
+                    <ion-icon name="arrow-dropup" *ngIf="showAnalysisDetails[category]"></ion-icon>
+                  </ion-button>
+
+                </ion-card-header>
+
+                <ion-card-content *ngIf="showAnalysisDetails[category]">
+
+                  <div 
+                    style="padding: 0.15rem"
+                    *ngFor="let param of dataTableService.resultsAnalysis[category]">
+                    {{ param.Data.Title | translate }} ({{ param.AveragePercentage | number:'1.0-0' }}%)
+                  </div>
+
+                </ion-card-content>
+
+              </ion-card>
+
+            </div>
+
+          </ion-col>
+
+          <ion-col>
+
+            <h1> {{ 'Overall' | translate }} </h1>
+
+            <ion-item *ngIf=" dataTableService.resultsAnalysis.paramsToEdit.length > 0">
+              {{ dataTableService.resultsAnalysis.paramsToEdit | json }}
+            </ion-item>
+
+            <ion-item>
+              <ion-icon name="grid" style="padding-right: 0.5rem"></ion-icon>
+              {{ dataTableService.params.length }} {{ 'exercises' | translate }}
+            </ion-item>
+            <ion-item>
+              <ion-icon name="checkmark" style="padding-right: 0.5rem"></ion-icon>
+              {{ dataTableService.allRecords.length }} {{ 'records' | translate }}
+            </ion-item>
+            <ion-item>
+              <ion-icon name="calendar" style="padding-right: 0.5rem"></ion-icon>
+              {{ dataTableService.weeksSinceStart }} {{ 'weeksSinceStart' | translate }}
+            </ion-item>
+            <ion-item>
+              <ion-icon name="play" style="padding-right: 0.5rem"></ion-icon>
+              {{ dataTableService.allRecords.length / dataTableService.weeksSinceStart | number: "1.0-1" }} 
+              {{ 'timesAWeek' | translate }}
+            </ion-item>
+            
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row *ngIf="legendTitle == 'NutritionGoals'">
 
           <ion-col sizeLg="4" sizeMd="5" sizeXs="12">
             <h1> {{ 'Last5EntryStats' | translate }} </h1>
@@ -65,12 +142,8 @@
             <h1> {{ 'Overall' | translate }} </h1>
 
             <ion-item>
-              {{ paramsToEdit | json }}
-            </ion-item>
-
-            <ion-item>
               <ion-icon name="grid" style="padding-right: 0.5rem"></ion-icon>
-              {{ dataTableService.params.length }} {{ 'exercises' | translate }}
+              {{ dataTableService.params.length }} {{ 'params' | translate }}
             </ion-item>
             <ion-item>
               <ion-icon name="checkmark" style="padding-right: 0.5rem"></ion-icon>
@@ -79,11 +152,6 @@
             <ion-item>
               <ion-icon name="calendar" style="padding-right: 0.5rem"></ion-icon>
               {{ dataTableService.weeksSinceStart }} {{ 'weeksSinceStart' | translate }}
-            </ion-item>
-            <ion-item>
-              <ion-icon name="play" style="padding-right: 0.5rem"></ion-icon>
-              {{ dataTableService.allRecords.length / dataTableService.weeksSinceStart | number: "1.0-1" }} 
-              {{ 'timesAWeek' | translate }}
             </ion-item>
             
           </ion-col>

@@ -22,12 +22,13 @@ export class AnalyseService{
       "needsNewGoal": [],
       "aboveGoal": [],
       "belowGoal": [],
-      "nowhereNearGoal": []
+      "nowhereNearGoal": [],
+      "paramsToEdit": []
     };
 
     
     let number = 5;
-    if(data.records.length < 5) number = data.records.length;
+    if(data.WorkoutRecords.length < 5) number = data.WorkoutRecords.length;
 
     let goalsData = [];
     let registeredParams = [];
@@ -82,14 +83,12 @@ export class AnalyseService{
 
     if(results.needsNewGoal.length > 0){
 
-      let paramsToEdit = [];
-
       for(let i = 0; i < results.needsNewGoal.length; i++){
-        paramsToEdit.push(results.needsNewGoal[i].Data.Title);
+        this.dataTableService.resultsAnalysis.paramsToEdit.push(results.needsNewGoal[i].Data.Title);
       }
 
       
-      // console.log(paramsToEdit)
+      // console.log(this.paramsToEdit)
 
       // let alert = await this.alertController.create({
       //   header: this.translate.instant("GoalsThatNeedUpdating"),
