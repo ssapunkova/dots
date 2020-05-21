@@ -18,7 +18,7 @@
           <ion-col sizeLg="4" sizeMd="5" sizeXs="12">
             <h1> {{ 'Last5EntryStats' | translate }} </h1>
 
-            <!-- <div *ngFor="let category of resultsCategories">
+            <div *ngFor="let category of resultsCategories">
 
               <ion-card *ngIf="dataTableService.resultsAnalysis[category].length > 0">
 
@@ -49,14 +49,14 @@
                   <div 
                     style="padding: 0.15rem"
                     *ngFor="let param of dataTableService.resultsAnalysis[category]">
-                    {{ param.Data.Title }} ({{ param.AveragePercentage | number:'1.0-0' }}%)
+                    {{ param.Data.Title | translate }} ({{ param.AveragePercentage | number:'1.0-0' }}%)
                   </div>
 
                 </ion-card-content>
 
               </ion-card>
 
-            </div> -->
+            </div>
 
           </ion-col>
 

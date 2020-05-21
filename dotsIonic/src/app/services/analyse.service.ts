@@ -25,11 +25,14 @@ export class AnalyseService{
       "nowhereNearGoal": []
     };
 
-    let goalsData = [];
+    
+    let number = 5;
+    if(data.records.length < 5) number = data.records.length;
 
+    let goalsData = [];
     let registeredParams = [];
 
-    for(let i = 0; i < 5; i++){
+    for(let i = 0; i < number; i++){
       let currentRec = data.WorkoutRecords[i];
       for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
         let paramData = data.Params.filter((p) => p._id == currentRec.Params[j])[0];
@@ -54,7 +57,7 @@ export class AnalyseService{
     }
 
     for(let i = 0; i < goalsData.length; i++){
-      let averagePercentage = Math.floor(goalsData[i].PercentageSum / 5);
+      let averagePercentage = Math.floor(goalsData[i].PercentageSum / number);
       goalsData[i].AveragePercentage = averagePercentage;
 
       if(averagePercentage >= 150){
@@ -81,12 +84,10 @@ export class AnalyseService{
 
       let paramsToEdit = [];
 
-      let message = await this.translate.instant("TooGoodResults") + ":";
       for(let i = 0; i < results.needsNewGoal.length; i++){
-        let title = results.needsNewGoal[i].Data.Title;
-        message += title;
-        paramsToEdit.push(title);
+        paramsToEdit.push(results.needsNewGoal[i].Data.Title);
       }
+
       
       // console.log(paramsToEdit)
 
@@ -129,11 +130,14 @@ export class AnalyseService{
 
     console.log("start")
 
-    for(let i = 0; i < 5; i++){
+    let number = 5;
+    if(data.records.length < 5) number = data.records.length;
+
+    for(let i = 0; i < number; i++){
       let currentRec = data.records[i];
-      console.log(currentRec, currentRec.PercentageOfGoal);
+      console.log(currentRec, currentRec.Date, currentRec.PercentageOfGoal);
       for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
-        let paramData = data.general.Params.filter((p) => p._id == currentRec.Params[j])[0];
+        let paramData = data.general.Params.filter((p) => p.Index == currentRec.Params[j])[0];
 
         console.log(paramData);
                 
@@ -155,6 +159,31 @@ export class AnalyseService{
         
       }
     }
+
+    
+    for(let i = 0; i < goalsData.length; i++){
+      let averagePercentage = Math.floor(goalsData[i].PercentageSum / number);
+      goalsData[i].AveragePercentage = averagePercentage;
+
+      if(averagePercentage >= 150){
+        results.needsNewGoal.push(goalsData[i]);
+      } 
+
+      if(averagePercentage > 100){
+        results.aboveGoal.push(goalsData[i]);
+      }
+      else if(averagePercentage > 75){
+        results.belowGoal.push(goalsData[i]);
+      }
+      else{
+        results.nowhereNearGoal.push(goalsData[i]);
+      }
+
+    }
+
+    console.log("***Analysis results ", results);
+
+    this.dataTableService.resultsAnalysis = results;
 
     console.log(goalsData);
 
