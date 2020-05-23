@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { GeneralService } from '../../services/general.service';
 import { ChartService } from '../../services/chart.service';
 import { DataTableService } from '../../services/dataTable.service';
+import { AnalyseService } from 'src/app/services/analyse.service';
 
 @Component({
   selector: 'data-table',
@@ -20,18 +21,6 @@ export class DataTableComponent  {
   @Output() editParamsButtonClicked = new EventEmitter();
 
   
-  public resultsCategories = ["aboveGoal", "belowGoal", "nowhereNearGoal"];
-  public categoryColors = {
-    "aboveGoal": "success", 
-    "belowGoal": "warning", 
-    "nowhereNearGoal": "danger"
-  };
-
-  public categoryIcons = {
-    "aboveGoal": "trending-up", 
-    "belowGoal": "remove", 
-    "nowhereNearGoal": "trending-down"
-  }
 
   public showAnalysisDetails = {
     aboveGoal: false,
@@ -43,7 +32,8 @@ export class DataTableComponent  {
   constructor(
     public chartService: ChartService,
     public generalService: GeneralService,
-    public dataTableService: DataTableService
+    public dataTableService: DataTableService,
+    public analyseService: AnalyseService
   ) { }
 
   

@@ -14,17 +14,37 @@ export class AnalyseService{
     public dataTableService: DataTableService
   ) {}
 
+  
+  public resultsCategories = [];
+  public categoryColors = {};
+
+  public categoryIcons = {};
+
   async analyseWorkoutResults(data){
     
     console.log("***Analysing data ", data)
 
+
     let results = {
+      "paramsToEdit": [],
       "needsNewGoal": [],
       "aboveGoal": [],
-      "belowGoal": [],
-      "nowhereNearGoal": [],
-      "paramsToEdit": []
+      "nearGoal": [],
+      "nowhereNearGoal": []
     };
+
+    this.resultsCategories = ["aboveGoal", "nearGoal", "nowhereNearGoal"];
+    this.categoryColors = {
+      "aboveGoal": "warning", 
+      "nearGoal": "success", 
+      "nowhereNearGoal": "danger"
+    };
+
+    this.categoryIcons = {
+      "aboveGoal": "trending-up", 
+      "nearGoal": "remove", 
+      "nowhereNearGoal": "trending-down"
+    }
 
     
     let number = 5;
@@ -57,6 +77,8 @@ export class AnalyseService{
       }
     }
 
+    
+
     for(let i = 0; i < goalsData.length; i++){
       let averagePercentage = Math.floor(goalsData[i].PercentageSum / number);
       goalsData[i].AveragePercentage = averagePercentage;
@@ -68,13 +90,12 @@ export class AnalyseService{
       if(averagePercentage > 100){
         results.aboveGoal.push(goalsData[i]);
       }
-      else if(averagePercentage > 75){
-        results.belowGoal.push(goalsData[i]);
+      else if(averagePercentage > 80){
+        results.nearGoal.push(goalsData[i]);
       }
       else{
         results.nowhereNearGoal.push(goalsData[i]);
       }
-
     }
 
     console.log("***Analysis results ", results);
@@ -86,29 +107,8 @@ export class AnalyseService{
       for(let i = 0; i < results.needsNewGoal.length; i++){
         this.dataTableService.resultsAnalysis.paramsToEdit.push(results.needsNewGoal[i].Data.Title);
       }
-
-      
-      // console.log(this.paramsToEdit)
-
-      // let alert = await this.alertController.create({
-      //   header: this.translate.instant("GoalsThatNeedUpdating"),
-      //   message: message,
-      //   buttons: [
-      //     {
-      //       text: this.translate.instant("Cancel"),
-      //       role: 'cancel',
-      //       cssClass: 'secondary'
-      //     },
-      //     {
-      //       text: this.translate.instant("UpdateGoalNow"),
-      //       handler: () => this.editParams(paramsToEdit)
-      //     }
-      //   ]
-      // })
-      
-      // await alert.present();
-
     }
+
 
   }
 
@@ -118,11 +118,25 @@ export class AnalyseService{
     console.log("***Analysing data ", data)
 
     let results = {
-      "needsNewGoal": [],
       "aboveGoal": [],
-      "belowGoal": [],
+      "nearGoal": [],
+      "lowerThanGoal": [],
       "nowhereNearGoal": []
     };
+
+    
+    this.resultsCategories = ["aboveGoal", "nearGoal", "lowerThanGoal"];
+    this.categoryColors = {
+      "nearGoal": "success", 
+      "aboveGoal": "danger", 
+      "lowerThanGoal": "danger"
+    };
+
+    this.categoryIcons = {
+      "aboveGoal": "trending-up", 
+      "nearGoal": "remove", 
+      "lowerThanGoal": "trending-down"
+    }
 
     let registeredParams = []
     let goalsData = [];
@@ -164,18 +178,19 @@ export class AnalyseService{
       let averagePercentage = Math.floor(goalsData[i].PercentageSum / number);
       goalsData[i].AveragePercentage = averagePercentage;
 
-      if(averagePercentage >= 150){
-        results.needsNewGoal.push(goalsData[i]);
-      } 
-
-      if(averagePercentage > 100){
-        results.aboveGoal.push(goalsData[i]);
-      }
-      else if(averagePercentage > 75){
-        results.belowGoal.push(goalsData[i]);
-      }
-      else{
+      if(averagePercentage >= 150 || averagePercentage < 50){
         results.nowhereNearGoal.push(goalsData[i]);
+      } 
+      else{
+        if(averagePercentage > 110){
+          results.aboveGoal.push(goalsData[i]);
+        }
+        else if(averagePercentage > 80){
+          results.nearGoal.push(goalsData[i]);
+        }
+        else{
+          results.lowerThanGoal.push(goalsData[i]);
+        }
       }
 
     }
