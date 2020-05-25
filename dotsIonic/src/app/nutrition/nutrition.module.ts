@@ -5,6 +5,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 import { TranslateModule } from '@ngx-translate/core';
 
 import { NutritionPage } from './nutrition.page';
@@ -26,6 +30,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     NgxChartsModule,
+    NgxDatatableModule,
     ComponentsModule,
     TranslateModule,
     RouterModule.forChild(routes)

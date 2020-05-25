@@ -17,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { ComponentsModule } from './components/components.module';
 
@@ -61,6 +62,7 @@ import { UserService } from './services/user.service';
     HttpClientModule,
     FormsModule,
     NgxChartsModule,
+    NgxDatatableModule,
     BrowserAnimationsModule,
     TranslateModule.forRoot({
       loader: {
@@ -90,6 +92,7 @@ import { UserService } from './services/user.service';
   ],
   exports: [
     NgxChartsModule,
+    NgxDatatableModule,
     ComponentsModule,
     TranslateModule,
     NewNutritionRecordPage,

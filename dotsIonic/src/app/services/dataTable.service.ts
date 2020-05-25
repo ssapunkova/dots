@@ -13,14 +13,41 @@ import { NutritionService } from '../services/nutrition.service';
 
 import { ComponentsModule } from '../components/components.module';
 
+<<<<<<< HEAD
+=======
+import { BrowserModule } from '@angular/platform-browser';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+>>>>>>> 9118aa9cb5c75b36463540fbed5f156b25a8eabe
 import { LoadingService } from './loading.service';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // DataTable Service
 // Implements sorting the data, displayed in ion-grid
 
 @Injectable()
 export class DataTableService{
+
+  public rows = [
+    {
+      "name": "Ethel Price",
+      "gender": "female",
+      "age": 22
+    },
+    {
+      "name": "Claudine Neal",
+      "gender": "female",
+      "age": 55
+    },
+    {
+      "name": "Beryl Rice",
+      "gender": "female",
+      "age": 67
+    },
+    {
+      "name": "Simon Grimm",
+      "gender": "male",
+      "age": 28
+    }
+  ];
 
   public showMode: String;
   public title: String;
@@ -52,6 +79,7 @@ export class DataTableService{
     public generalService: GeneralService,
     public alertController: AlertController,
     public modalController: ModalController,
+    public ngxDatatable: NgxDatatableModule,
     public errorToastAndAlertService: ErrorToastAndAlertService,
 
     public workoutService: WorkoutService,
@@ -169,7 +197,11 @@ export class DataTableService{
     }
 
     // Filter which records to show and sort them by date
-    this.showingRecords = this.allRecords.filter((record) => this.showingPeriod.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
+    this.showingRecords = this.allRecords.filter(
+      (record) => {
+        this.showingPeriod.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1;
+        return { Date: record.Date, }
+      });
 
     // Format data for chart
     if(this.showingPeriod.length > 0){
