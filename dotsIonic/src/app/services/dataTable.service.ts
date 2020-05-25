@@ -12,7 +12,10 @@ import { WorkoutService } from '../services/workout.service';
 import { NutritionService } from '../services/nutrition.service';
 
 import { ComponentsModule } from '../components/components.module';
+
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { LoadingService } from './loading.service';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // DataTable Service
 // Implements sorting the data, displayed in ion-grid
@@ -51,6 +54,7 @@ export class DataTableService{
     public alertController: AlertController,
     public modalController: ModalController,
     public errorToastAndAlertService: ErrorToastAndAlertService,
+    public ngxDataTable: NgxDatatableModule,
 
     public workoutService: WorkoutService,
     public nutritionService: NutritionService,

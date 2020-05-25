@@ -142,3 +142,7 @@
     Translation in goals over 150% alert
     Nutrition analyse
     Fix deletedParams not being deleted
+
+  TODO
+    language switch button
+    bulgarian translations

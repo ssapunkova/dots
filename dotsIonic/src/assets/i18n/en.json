@@ -43,6 +43,7 @@
 	"Last5EntryStats": "Last 5 entries",
 	"exercisesWithResults.aboveGoal": "Above goal",
 	"exercisesWithResults.nearGoal": "Near goal",
+	"exercisesWithResults.lowerThanGoal": "Below goal",
 	"exercisesWithResults.nowhereNearGoal": "Insufficient",
 	"GoalsThatNeedUpdating": "Don't forget to update your goals",
 	"UpdateGoalNow": "Update goal now",

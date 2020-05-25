@@ -226,10 +226,10 @@
 
     </div>
 
-    <ion-grid *ngIf="dataTableService.showMode == 'table' && dataTableService.showingRecords.length > 0">
+    <table *ngIf="dataTableService.showMode == 'table' && dataTableService.showingRecords.length > 0">
 
-      <ion-row nowrap>
-        <ion-col style="width: 130px">
+      <tr>
+        <td style="width: 130px">
           
           <table style="width: 130px">
 
@@ -261,9 +261,9 @@
 
           </table>
 
-        </ion-col>
+        </td>
 
-        <ion-col style="width: calc(100% - 130px);">
+        <td style="min-width: calc(100vw - 130px);">
 
           <div style="overflow-x: auto;">
 
@@ -327,11 +327,11 @@
 
           </div>
         
-        </ion-col>
+        </td>
 
-      </ion-row>
+      </tr>
 
-    </ion-grid>
+    </table>
 
   </div>
 
