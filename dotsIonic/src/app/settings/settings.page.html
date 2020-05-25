@@ -11,35 +11,73 @@
 
 <ion-content>
 
+  
+  
   <ion-card>
 
     <ion-card-header color="secondary">
      
-      {{ 'GeneralInfo' | translate }}
+      {{ 'Appearance' | translate }}
+
+    </ion-card-header>
+
+    <ion-card-content>
+       
+      
+    <ion-item>
+      <ion-label>App language: </ion-label>
+
+      <ion-select (ionChange)="setLanguage()" [(ngModel)]="userData.Lang">
+        <ion-select-option *ngFor="let lang of translate.langs">{{ lang }}</ion-select-option>
+      </ion-select>
+
+    </ion-item>
+
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card>
+
+    <ion-card-header color="secondary">
+     
+      {{ 'UserInfo' | translate }}
 
     </ion-card-header>
 
     <ion-card-content>
        
       <ion-item>
-        Username: {{ userData.Username }}
+        <ion-label>Username: </ion-label>
+        <ion-input [(ngModel)]="userData.Username"></ion-input>
       </ion-item>
 
       <ion-item>
         Email: {{ userData.Email }}
       </ion-item>
 
-      <ion-item>
-        <ion-label>App language: </ion-label>
-
-        <ion-select (ionChange)="setLanguage()" [(ngModel)]="chosenLanguage">
-          <ion-select-option *ngFor="let lang of translate.langs">{{ lang }}</ion-select-option>
-        </ion-select>
-
-      </ion-item>
-
     </ion-card-content>
 
+    <ion-item *ngIf="infoChanged">
+
+      <ion-button
+        style="width: 50%"
+        (click)="saveUserInfoChanges()"
+        fill="clear">
+        {{ 'Save' | translate }}
+      </ion-button>
+
+      <ion-button
+        color="danger"
+        (click)="discardUserInfoChanges()"
+        style="width: 50%"
+        fill="clear">
+        {{ 'Cancel' | translate }}
+      </ion-button>
+
+    </ion-item>
+
   </ion-card>
+
 
 </ion-content>

@@ -101,9 +101,12 @@ export class AppComponent {
 
   }
 
-  public initializeApp() {
+  async initializeApp() {
     this.translate.addLangs(['en', 'bg']);
-    this.translate.setDefaultLang('en');
+
+    console.log("***User language", this.userData.Lang);
+
+    this.translate.setDefaultLang(this.userData.Lang);
 
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();

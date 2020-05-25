@@ -8,6 +8,7 @@ import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.servic
 
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-settings',
@@ -19,15 +20,12 @@ export class SettingsPage implements OnInit {
   
   public userData;
 
+  public originalUserData;
+
   public dbData;
 
-  public chosenLanguage;
-
-  public userParams = {
-    Titles: [],
-    Values: {},
-    ParamData: []
-  }
+  public appearanceChanged = false;
+  public userDataChanged = false;
   
   constructor(
     public userService: UserService,
@@ -36,6 +34,7 @@ export class SettingsPage implements OnInit {
     private navController: NavController,
     private translate: TranslateService,
     private alertController: AlertController,
+    public storageService: StorageService,
     private errorToastAndAlertService: ErrorToastAndAlertService,
     private route: ActivatedRoute
   ) { }
@@ -44,6 +43,7 @@ export class SettingsPage implements OnInit {
     this.loadingService.showPageLoading();
 
     this.userData = this.route.snapshot.data.userData;
+    this.originalUserData = this.userData;
     console.log("***UserData", this.userData);
 
 
@@ -52,36 +52,20 @@ export class SettingsPage implements OnInit {
   }
 
   async setLanguage(){
-    this.translate.use(this.chosenLanguage);
-
-    this.userData.Lang = this.chosenLanguage;
+    this.translate.use(this.userData.Lang);
+    
+    this.storageService.set("DotsUserData.Lang", this.userData.Lang);
+    console.log(this.storageService.get("DotsUserData"));
   }
 
-  async ionViewCanLeave() {
-    console.log("will leave");
-    const shouldLeave = await this.confirmLeave();
-    return shouldLeave;
+  async saveChanges(){
+    console.log(this.userData);
+    this.userDataChanged = false;
   }
-  
-  async confirmLeave(): Promise<Boolean> {
-    let resolveLeaving;
-    const canLeave = new Promise<Boolean>(resolve => resolveLeaving = resolve);
-    let alert = await this.alertController.create({
-      message: 'Do you want to leave the page?',
-      buttons: [
-        {
-          text: 'No',
-          role: 'cancel',
-          handler: () => resolveLeaving(false)
-        },
-        {
-          text: 'Yes',
-          handler: () => resolveLeaving(true)
-        }
-      ]
-    });
-    await alert.present();
-    return canLeave
+
+  async discardChanges(){
+    this.userData = this.originalUserData;
+    this.userDataChanged = false;
   }
 
 }
