@@ -54,6 +54,13 @@ export class LocalAuthService{
     )
   }
 
+  public comparePasswords(pass1, pass2){
+    console.log(pass1, pass2);
+    return this.http.post(this.connectToServerService.serverUrl + '/comparePasswords',
+      { pass1: pass1, pass2: pass2 } 
+    )
+  }
+
   public login(data){
     return this.http.post(this.connectToServerService.serverUrl + '/login',
       { userData: data } 

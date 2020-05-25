@@ -44,6 +44,16 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {    
 
+    
+
+    this.loadingService.hidePageLoading();
+  }
+
+  ionViewWillEnter() {
+    this.menuController.enable(false);
+  }
+  
+  public signInWithFB() {
     this.authService.authState.subscribe((user) => {
       this.fbUser = user;
       this.fbLoggedIn = (user != null);
@@ -57,14 +67,6 @@ export class LoginPage implements OnInit {
       });
     });
 
-    this.loadingService.hidePageLoading();
-  }
-
-  ionViewWillEnter() {
-    this.menuController.enable(false);
-  }
-  
-  public signInWithFB() {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
   
@@ -90,12 +92,17 @@ export class LoginPage implements OnInit {
     if(this.checkingEmail == false){
       this.checkingEmail = true;
 
+      console.log("check");
+
       setTimeout(() => {
+        console.log("get info")
         this.localAuthService.checkEmail(this.email.value).subscribe( async (data: [any]) => {
-          console.log(data["matchingEmails"]);
+          console.log(data);
 
           if(data["matchingEmails"] == 1) this.emailNotExistingError = false;
           else this.emailNotExistingError = true;
+
+          console.log("end check");
           
           this.checkingEmail = false;
         },
@@ -123,10 +130,19 @@ export class LoginPage implements OnInit {
     }
 
     this.localAuthService.login(data).subscribe( async (data: [any]) => {
+      
       console.log(data);
+
 
       if(data["userData"] != null){
         this.setStorageData(data["userData"]);
+      }
+      else{
+        let alert = await this.alertController.create({
+          header: this.translate.instant("WrongPassword")
+        })
+
+        await alert.present();
       }
     },
     error => {

@@ -56,6 +56,11 @@
         Email: {{ userData.Email }}
       </ion-item>
 
+      <ion-button
+        (click)="editGeneralInfo()">
+        {{ 'Edit' | translate }}
+      </ion-button>
+
     </ion-card-content>
 
     <ion-item *ngIf="infoChanged">

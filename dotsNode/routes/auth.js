@@ -109,14 +109,13 @@ router.get("/logout", async (req, res) => {
   res.redirect('/login');
 })
 
-
 router.post("/login", async (req, res) => {
   let userData = req.body.userData;
-  console.log(userData);
-
   let user = await User.findOne({ Email: userData.email });
-  
+
   console.log(user);
+  
+  console.log(userData.password, user.Password);
 
   bcrypt.compare(userData.password, user.Password, function (err, result) {
     if (result === true) {
@@ -127,12 +126,28 @@ router.post("/login", async (req, res) => {
         Status: user.Status, 
         Email: user.Email 
       } });
-
+  
     }
     else{
       res.send({ error: "WrongPasswordError"});
     }
   });
+  
+
+})
+
+router.post("/comparePasswords", (req, res) => {
+
+  let pass1 = req.body.pass1;
+  let pass2 = req.body.pass2;
+
+  console.log(req.body)
+
+  bcrypt.compare(pass1, pass2, function (err, result) {
+
+    return result;
+  });
+
 
 })
 

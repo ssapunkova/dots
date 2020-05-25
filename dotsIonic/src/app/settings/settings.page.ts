@@ -9,6 +9,7 @@ import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.servic
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { StorageService } from '../services/storage.service';
+import { LocalAuthService } from '../services/localAuth.service';
 
 @Component({
   selector: 'app-settings',
@@ -36,7 +37,8 @@ export class SettingsPage implements OnInit {
     private alertController: AlertController,
     public storageService: StorageService,
     private errorToastAndAlertService: ErrorToastAndAlertService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public localAuthService: LocalAuthService
   ) { }
 
   async ngOnInit() {
@@ -56,6 +58,50 @@ export class SettingsPage implements OnInit {
     
     this.storageService.set("DotsUserData.Lang", this.userData.Lang);
     console.log(this.storageService.get("DotsUserData"));
+  }
+
+  async editGeneralInfo(){
+
+    let that = this;
+
+    let alert = this.alertController.create({
+      header: this.translate.instant("EditGeneralInfo"),
+      message: "Enter password",
+      inputs: [
+        {
+          name: "Password",
+          type: 'password'
+        }
+      ],
+      buttons: [
+        {
+          text: this.translate.instant("Cancel"),
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+
+            console.log(data, this.userData)
+
+            if(data.Password == ""){
+              that.errorToastAndAlertService.showErrorToast(this.translate.instant("EnterPassword"));
+              return false;
+            }
+            else {
+              
+              that.localAuthService.comparePasswords(data.Password, this.userData.Password).subscribe((result: any) => {
+                console.log(result)
+              });
+
+            }
+          }
+        }
+      ]
+    });
+
+    await (await alert).present();
+
   }
 
   async saveChanges(){

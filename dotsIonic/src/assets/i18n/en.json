@@ -91,6 +91,7 @@
 	"EditWorkoutSheet": "Edit workout sheet",
 	"Title": "Title",
 	"EnterAName": "Please enter a sheet title",
+	"EnterPassword": "Please enter your password",
 	"ExistingSheetName": "A sheet with this title already exists",
 	"SheetColor": "Sheet color",
 	"SheetColorNote": "This color appears in the sheet and workout manager. You can change it at any time",
