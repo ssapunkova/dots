@@ -5,8 +5,6 @@ import { ChartService } from '../../services/chart.service';
 import { DataTableService } from '../../services/dataTable.service';
 import { AnalyseService } from 'src/app/services/analyse.service';
 
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
 @Component({
   selector: 'data-table',
   templateUrl: './data-table.component.html',
@@ -35,8 +33,7 @@ export class DataTableComponent  {
     public chartService: ChartService,
     public generalService: GeneralService,
     public dataTableService: DataTableService,
-    public analyseService: AnalyseService,
-    public ngxDatatable: NgxDatatableModule,
+    public analyseService: AnalyseService
   ) { }
 
   

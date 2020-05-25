@@ -170,7 +170,7 @@ export class DataTableService{
 
     // Filter which records to show and sort them by date
     this.showingRecords = this.allRecords.filter(
-      (record) => this.showingPeriod.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1;);
+      (record) => this.showingPeriod.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
 
     // Format data for chart
     if(this.showingPeriod.length > 0){

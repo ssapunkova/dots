@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -30,7 +29,6 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     NgxChartsModule,
-    NgxDatatableModule,
     ComponentsModule,
     TranslateModule,
     RouterModule.forChild(routes)

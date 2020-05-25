@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { RouterModule } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
@@ -32,7 +31,6 @@ import { NoItemsMessage } from './no-items-message/no-items-message.component';
     CommonModule,
     IonicModule,
     NgxChartsModule,
-    NgxDatatableModule,
     FormsModule,
     TranslateModule,
     RouterModule
