@@ -194,7 +194,11 @@ export class DataTableService{
     }
 
     // Filter which records to show and sort them by date
-    this.showingRecords = this.allRecords.filter((record) => this.showingPeriod.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1);
+    this.showingRecords = this.allRecords.filter(
+      (record) => {
+        this.showingPeriod.indexOf(record.Date.split("-")[1] + "." + record.Date.split("-")[0]) > -1;
+        return { Date: record.Date, }
+      });
 
     // Format data for chart
     if(this.showingPeriod.length > 0){
