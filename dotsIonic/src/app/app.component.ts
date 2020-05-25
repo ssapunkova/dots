@@ -50,6 +50,12 @@ export class AppComponent {
       icon: 'grid',
       iconColor: 'red'
     },
+    {
+      title: 'Settings',
+      url: '/settings',
+      icon: 'settings',
+      iconColor: 'dark'
+    },
   ];
 
   public userData;

@@ -144,5 +144,6 @@
     Fix deletedParams not being deleted
 
   TODO
+    Settings
     language switch button
     bulgarian translations

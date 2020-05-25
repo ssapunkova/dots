@@ -7,6 +7,7 @@ import { WorkoutsPage } from './workouts/workouts.page';
 import { WorkoutSheetPage } from './workoutSheet/workoutSheet.page';
 import { WorkoutManagerPage } from './workoutManager/workoutManager.page';
 import { ParamsPage } from './params/params.page';
+import { SettingsPage } from './settings/settings.page';
 
 const routes: Routes = [
   {
@@ -43,6 +44,11 @@ const routes: Routes = [
     loadChildren: () => import('./params/params.module').then(m => m.ParamsPageModule),
     resolve: { userData: UserService }
   },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule),
+    resolve: { userData: UserService }
+  },
   { 
     path: 'register', 
     loadChildren: './register/register.module#RegisterPageModule' 
@@ -72,12 +78,3 @@ const routes: Routes = [
   providers: [UserService]
 })
 export class AppRoutingModule {}
-
-// @NgModule({
-//   imports: [RouterModule.forRoot(routes)],
-//   exports: [RouterModule],
-//   providers: [
-//     UserService
-//   ]
-// })
-// export class AppRoutingModule {}
