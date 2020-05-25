@@ -226,7 +226,15 @@
 
     </div>
 
-    <table *ngIf="dataTableService.showMode == 'table' && dataTableService.showingRecords.length > 0">
+    <ngx-datatable 
+      *ngIf="dataTableService.showMode == 'table' && dataTableService.showingRecords.length > 0"
+      [rows]="dataTableService.rows"> 
+      <ngx-datatable-column name="Name"></ngx-datatable-column>
+      <ngx-datatable-column name="Gender"></ngx-datatable-column>
+      <ngx-datatable-column name="Age"></ngx-datatable-column>
+    </ngx-datatable>
+
+    <!-- <table *ngIf="dataTableService.showMode == 'table' && dataTableService.showingRecords.length > 0">
 
       <tr>
         <td style="width: 130px">
@@ -331,7 +339,7 @@
 
       </tr>
 
-    </table>
+    </table> -->
 
   </div>
 

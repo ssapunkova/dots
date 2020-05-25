@@ -15,13 +15,35 @@ import { ComponentsModule } from '../components/components.module';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { LoadingService } from './loading.service';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // DataTable Service
 // Implements sorting the data, displayed in ion-grid
 
 @Injectable()
 export class DataTableService{
+
+  public rows = [
+    {
+      "name": "Ethel Price",
+      "gender": "female",
+      "age": 22
+    },
+    {
+      "name": "Claudine Neal",
+      "gender": "female",
+      "age": 55
+    },
+    {
+      "name": "Beryl Rice",
+      "gender": "female",
+      "age": 67
+    },
+    {
+      "name": "Simon Grimm",
+      "gender": "male",
+      "age": 28
+    }
+  ];
 
   public showMode: String;
   public title: String;
@@ -53,8 +75,8 @@ export class DataTableService{
     public generalService: GeneralService,
     public alertController: AlertController,
     public modalController: ModalController,
+    public ngxDatatable: NgxDatatableModule,
     public errorToastAndAlertService: ErrorToastAndAlertService,
-    public ngxDataTable: NgxDatatableModule,
 
     public workoutService: WorkoutService,
     public nutritionService: NutritionService,

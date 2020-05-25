@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { WorkoutSheetPage } from './workoutSheet.page';
 import { ComponentsModule  } from '../components/components.module';
@@ -26,6 +27,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     NgxChartsModule,
+    NgxDatatableModule,
     ComponentsModule,
     TranslateModule,
     RouterModule.forChild(routes)

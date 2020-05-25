@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { GeneralService } from './general.service';
 import { TimeAndDateService } from './timeAndDate.service';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
