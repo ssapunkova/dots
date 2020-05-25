@@ -13,6 +13,7 @@ import { NutritionService } from '../services/nutrition.service';
 
 import { ComponentsModule } from '../components/components.module';
 
+import { BrowserModule } from '@angular/platform-browser';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { LoadingService } from './loading.service';
 
