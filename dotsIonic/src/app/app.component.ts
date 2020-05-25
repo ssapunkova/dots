@@ -53,8 +53,8 @@ export class AppComponent {
     {
       title: 'Settings',
       url: '/settings',
-      icon: 'settings',
-      iconColor: 'dark'
+      icon: 'settings-sharp',
+      iconColor: 'medium'
     },
   ];
 

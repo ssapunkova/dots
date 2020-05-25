@@ -11,7 +11,8 @@ const UserSchema = mongoose.Schema({
     Password: String,
     Email: String,
     FbToken: String,
-    Status: String
+    Status: String,
+    Lang: String
 },
 { collection: "users" }
 );

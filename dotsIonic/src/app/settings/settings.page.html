@@ -11,4 +11,35 @@
 
 <ion-content>
 
+  <ion-card>
+
+    <ion-card-header color="secondary">
+     
+      {{ 'GeneralInfo' | translate }}
+
+    </ion-card-header>
+
+    <ion-card-content>
+       
+      <ion-item>
+        Username: {{ userData.Username }}
+      </ion-item>
+
+      <ion-item>
+        Email: {{ userData.Email }}
+      </ion-item>
+
+      <ion-item>
+        <ion-label>App language: </ion-label>
+
+        <ion-select (ionChange)="setLanguage()" [(ngModel)]="chosenLanguage">
+          <ion-select-option *ngFor="let lang of translate.langs">{{ lang }}</ion-select-option>
+        </ion-select>
+
+      </ion-item>
+
+    </ion-card-content>
+
+  </ion-card>
+
 </ion-content>

@@ -153,5 +153,6 @@
 	"Login": "Login",
 	"Password": "Password",
 	"ExpiredVerificationToken": "This registration link has expired",
-	"FinishRegistration": "Finish registration"
+	"FinishRegistration": "Finish registration",
+	"GeneralInfo": "General"
 }
