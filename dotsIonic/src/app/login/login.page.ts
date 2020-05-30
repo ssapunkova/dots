@@ -43,13 +43,12 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {    
-
-    
-
+    console.log("Storage login -> ngOnInit ", this.storageService.get("DotsUserData"));
     this.loadingService.hidePageLoading();
   }
 
   ionViewWillEnter() {
+    console.log("Storage login -> ionViewWillEnter ", this.storageService.get("DotsUserData"));
     this.menuController.enable(false);
   }
   
@@ -92,18 +91,12 @@ export class LoginPage implements OnInit {
     if(this.checkingEmail == false){
       this.checkingEmail = true;
 
-      console.log("check");
+      console.log("***Checking if acc with this email exists");
 
       setTimeout(() => {
-        console.log("get info")
         this.localAuthService.checkEmail(this.email.value).subscribe( async (data: [any]) => {
-          console.log(data);
-
           if(data["matchingEmails"] == 1) this.emailNotExistingError = false;
           else this.emailNotExistingError = true;
-
-          console.log("end check");
-          
           this.checkingEmail = false;
         },
         error => {
@@ -114,12 +107,30 @@ export class LoginPage implements OnInit {
   }
 
   async setStorageData(user){
+    
+    let alert = await this.alertController.create({
+      header: this.translate.instant("LoggingIn")
+    })
+
+    await alert.present();
+
     console.log("***Logged in as ", user.Username);
 
-    this.storageService.set("DotsUserData", user);
+    console.log("Storage login -> setStorageData before set storage", this.storageService.get("DotsUserData"));
+    
     this.userService.data = user;
+    this.storageService.set("DotsUserData", {});
+    this.storageService.set("DotsUserData", user).then(() =>{
+      console.log("Storage login -> user after set storage", this.userService.data);
 
-    this.router.navigate(['/home']);
+      console.log("Storage login -> setStorageData after set storage", this.storageService.get("DotsUserData"));
+  
+        alert.dismiss();
+        this.router.navigate(['/home']);
+    })
+    
+
+    
   }
 
   async login(){
@@ -131,7 +142,7 @@ export class LoginPage implements OnInit {
 
     this.localAuthService.login(data).subscribe( async (data: [any]) => {
       
-      console.log(data);
+      console.log("Login data ", data);
 
 
       if(data["userData"] != null){
@@ -139,7 +150,8 @@ export class LoginPage implements OnInit {
       }
       else{
         let alert = await this.alertController.create({
-          header: this.translate.instant("WrongPassword")
+          header: this.translate.instant("WrongPassword"),
+          message: "<a href='/forgottenPassword'>" + this.translate.instant("ForgottenPassword") + "</a>"
         })
 
         await alert.present();

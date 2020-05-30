@@ -21,6 +21,7 @@ export class UserService implements Resolve<Observable<string>> {
   resolve() {
 
     this.data = this.storageService.get("DotsUserData");
+    console.log("RESOLVE ", this.data);
     return this.data;
   
   }

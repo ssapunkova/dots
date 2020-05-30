@@ -66,8 +66,6 @@ const routes: Routes = [
     loadChildren: './welcome/welcome.module#WelcomePageModule' 
   },
 
-
-
 ];
 
 @NgModule({

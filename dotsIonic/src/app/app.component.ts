@@ -81,21 +81,20 @@ export class AppComponent {
       console.log("No user data")
       // Check if user has logged in
       this.storageService.get("DotsUserData").then((data) => {
-        console.log(data);
+        console.log("Storage service app.component ", data);
         if(data == null){  
           // If not logged, navigate to login
           this.router.navigate(['/login']);
         }
         else{
           // Set user data in userService
-          console.log("setting ", data)
           this.userData = data;
           this.initializeApp();
         }
       })
     }
     else{
-      console.log("User data ", this.userData)
+      console.log("User data  app.component ", this.userData)
       this.initializeApp();
     }
 
@@ -103,8 +102,6 @@ export class AppComponent {
 
   async initializeApp() {
     this.translate.addLangs(['en', 'bg']);
-
-    console.log("***User language", this.userData.Lang);
 
     this.translate.setDefaultLang(this.userData.Lang);
 
@@ -117,9 +114,14 @@ export class AppComponent {
   public logout(){
     console.log("***Logout");
     
-    this.storageService.set("DotsUserData", null);
+    this.userData = null;
     
-    this.router.navigate(['/login']);
+    this.storageService.set("DotsUserData", "null").then(() => {
+      console.log("Storage app.component -> logout ", this.storageService.get("DotsUserData"));
+
+      this.router.navigate(['/login']);
+    })
+
   }
 
 }
