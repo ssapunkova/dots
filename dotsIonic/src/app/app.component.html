@@ -9,24 +9,7 @@
   </div>
 
   <ion-split-pane contentId="my-content">
-    <ion-menu type="overlay" contentId="my-content" *ngIf="userData">
-      <ion-header>
-        <ion-toolbar>
-          <!-- <ion-img src="assets/logo.png" style="height: 30px"></ion-img> -->
-
-          <ion-item lines="none">
-            {{ userData.Username }}
-          </ion-item>
-
-          <ion-button
-            slot="end" 
-            fill="clear" 
-            (click)="logout()">
-            <ion-icon name="exit-outline"></ion-icon>
-          </ion-button>
-
-        </ion-toolbar>
-      </ion-header>
+    <ion-menu type="overlay" contentId="my-content">
       <ion-content>
         <ion-list lines="none">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
@@ -44,6 +27,15 @@
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
+      <ion-footer>
+        <ion-button
+          slot="end" 
+          fill="clear" 
+          (click)="logout()">
+          <ion-icon name="exit"></ion-icon>
+          <ion-label>{{ 'Logout' | translate }}</ion-label>
+        </ion-button>
+      </ion-footer>
     </ion-menu>
     <ion-router-outlet id="my-content"></ion-router-outlet>
   </ion-split-pane>

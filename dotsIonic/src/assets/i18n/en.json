@@ -152,6 +152,7 @@
 	"registerEmailContent.subject": "Your registration at Dots",
 	"registerEmailContent.text": "Follow this link to confirm your registration and start using Dots: ",
 	"Login": "Login",
+	"Logout": "Log out",
 	"Password": "Password",
 	"WrongPassword": "Wrong password. Try again",
 	"ForgottenPassword": "Forgotten password?",

@@ -156,7 +156,6 @@ router.post("/handleFbUser", async(req, res) => {
 
   let user = await User.findOne({ Email: userData.email, FbToken: {$ne: null} });
 
-
   if(user == null){
 
     let user = new User({

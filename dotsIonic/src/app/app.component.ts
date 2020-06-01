@@ -77,34 +77,39 @@ export class AppComponent {
   ) {
 
     
-    if(this.userData == null){
-      console.log("No user data")
-      // Check if user has logged in
-      this.storageService.get("DotsUserData").then((data) => {
-        console.log("Storage service app.component ", data);
-        if(data == null){  
-          // If not logged, navigate to login
-          this.router.navigate(['/login']);
-        }
-        else{
-          // Set user data in userService
-          this.userData = data;
-          this.initializeApp();
-        }
-      })
-    }
-    else{
-      console.log("User data  app.component ", this.userData)
-      this.initializeApp();
-    }
+    // if(this.userData == null){
+    //   console.log("No user data")
+    //   // Check if user has logged in
+    //   this.storageService.get("DotsUserData").then((data) => {
+    //     console.log("Storage service app.component ", data);
+    //     if(data == "null"){  
+    //       console.log("data is null")
+    //       // If not logged, navigate to login
+    //       this.router.navigate(['/login']);
+    //     }
+    //     else{
+    //       // Set user data in userService
+    //       this.userData = data;
+    //       this.initializeApp();
+    //     }
+    //   })
+    // }
+    // else{
+    //   console.log("User data  app.component ", this.userData)
+    //   this.initializeApp();
+    // }
+
+    
+    this.userData = this.route.snapshot.data.userData;
+
+    this.initializeApp();
 
   }
 
   async initializeApp() {
     this.translate.addLangs(['en', 'bg']);
 
-    let lang = this.userData.Lang || 'en';
-    this.translate.setDefaultLang(lang);
+    this.translate.setDefaultLang('en');
 
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();

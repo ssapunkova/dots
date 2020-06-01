@@ -49,6 +49,7 @@ export class LoginPage implements OnInit {
 
   ionViewWillEnter() {
     console.log("Storage login -> ionViewWillEnter ", this.storageService.get("DotsUserData"));
+
     this.menuController.enable(false);
   }
   
@@ -114,6 +115,11 @@ export class LoginPage implements OnInit {
 
     await alert.present();
 
+    
+    if(user["Lang"] != null){
+      this.translate.setDefaultLang(user["Lang"]);
+    }
+
     console.log("***Logged in as ", user.Username);
 
     console.log("Storage login -> setStorageData before set storage", this.storageService.get("DotsUserData"));
@@ -126,7 +132,10 @@ export class LoginPage implements OnInit {
       console.log("Storage login -> setStorageData after set storage", this.storageService.get("DotsUserData"));
   
         alert.dismiss();
-        this.router.navigate(['/home']);
+
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 200);
     })
     
 

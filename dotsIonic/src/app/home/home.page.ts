@@ -28,7 +28,8 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter() {
     this.menuController.enable(true);
-    
+
+    this.userData = this.route.snapshot.data.userData;
     console.log("USERDATA", this.userData)
 
   }
@@ -37,10 +38,6 @@ export class HomePage implements OnInit {
     this.loadingService.showPageLoading();
 
     // Do something
-
-    this.userData = this.route.snapshot.data.userData;
-
-    console.log("USERDATA", this.userData)
 
     this.loadingService.hidePageLoading();
 
