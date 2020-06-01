@@ -34,8 +34,6 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter() {
     this.menuController.enable(true);
-
-
   }
 
   ngOnInit(){
@@ -53,9 +51,11 @@ export class HomePage implements OnInit {
     
     this.workoutService.getWorkoutSheetsData(this.userData._id).subscribe( async (data: [any]) => {
 
-      this.analyseService.getWorkoutStats(data);
+      this.workoutStats = await this.analyseService.getWorkoutStats(data);
 
       console.log(data);
+
+      console.log(this.workoutStats);
 
       this.loadingService.hidePageLoading();
 

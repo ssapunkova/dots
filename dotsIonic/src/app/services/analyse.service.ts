@@ -25,17 +25,31 @@ export class AnalyseService{
   async getWorkoutStats(data){
 
     let stats = {
-      "Frequency": {},
+      "Sheets": [],
+      "OverallFrequency": 0,
+      "Frequency": [],
+      "StartAndNow": [],
       "MonthlyStats": [],
-      "StartAndNow": {
-        StartPercentage: 0,
-        CurrentPercentage: 0
-      },
-      "PeaksAndDowns": {}
+      "PeaksAndDowns": {
+        "PeakPeriod": {},
+        "DownPeriod": {}
+      }
     };
+
 
     for(let i = 0; i < data.length; i++){
       console.log("Sheet", data[i]);
+
+      stats.Sheets[i] = {
+        Title: data[i].Title,
+        Color: data[i].Color
+      }
+      
+      stats.StartAndNow[i] = {
+        "StartPercentage": 0, 
+        "CurrentPercentage": 0, 
+        "Diff": 0
+      };
 
       let entries = data[i].WorkoutRecords.length;
       let firstEntry = data[i].WorkoutRecords[0];
@@ -47,10 +61,9 @@ export class AnalyseService{
       // Frequency
       stats.Frequency[i] = entries / weeks;
 
-      
-
       let analyseEntries = [firstEntry, lastEntry];
       let labels = ["StartPercentage", "CurrentPercentage"];
+
 
       for(let e = 0; e < analyseEntries.length; e++){
 
@@ -63,16 +76,22 @@ export class AnalyseService{
           console.log(data[i].Params[v].Goal);
           sum += this.generalService.calculatePercentage(entry.Values[v], data[i].Params[v].Goal);
         }
-
         
-        stats.StartAndNow[labels[e]] = sum / entry.Values.length;
+        stats.StartAndNow[i][labels[e]] += sum / entry.Values.length;
 
       }
 
+
+      stats.StartAndNow[i].Diff = stats.StartAndNow[i].CurrentPercentage - stats.StartAndNow[i].StartPercentage;
       
+
+      stats.OverallFrequency += stats.Frequency[i];
+
     }
 
     console.log(stats);
+
+    return stats;
 
   }
 

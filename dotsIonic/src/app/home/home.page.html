@@ -13,18 +13,34 @@
 
   {{ userData | json }}
 
-  <ion-card>
+  <ion-card *ngIf="workoutStats">
     <ion-card-header>
       {{ 'Workouts' | translate }}
     </ion-card-header>
 
     <ion-card-content>
 
-      <ion-item *ngFor="let sheet of data">
+      <ion-item>
+        {{ 'WorkoutFrequency' | translate }} 
+        {{ workoutStats.OverallFrequency | number: '1.0-1' }} {{ 'timesAWeek' | translate }}
+      </ion-item>
 
-        {{ data.Title }}
+      <ion-item *ngFor="let sheet of workoutStats.Sheets; let i = index">
+
+        {{ sheet.Title }}
+
+        ({{ workoutStats.Frequency[i] | number: '1.0-1' }} {{ 'timesAWeek' | translate }})
+        {{ workoutStats.StartAndNow[i].CurrentPercentage }}% {{ 'latestAchievement' | translate}}
+
+        <ion-item>
+          {{ workoutStats.StartAndNow[i].Diff >= 0 ? '+' : '-'}} 
+          {{ workoutStats.StartAndNow[i].Diff | number: '1.0-0' }}% {{ 'goalAchievementsSinceStart' | translate }}
+        </ion-item>
 
       </ion-item>
+
+
+      
 
     </ion-card-content>
 
