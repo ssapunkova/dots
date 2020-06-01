@@ -7,6 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '../services/loading.service';
 import { MenuController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { AnalyseService } from '../services/analyse.service';
+import { WorkoutService } from '../services/workout.service';
 
 @Component({
   selector: 'app-home',
@@ -17,29 +19,47 @@ import { ActivatedRoute } from '@angular/router';
 @Injectable()
 export class HomePage implements OnInit {
 
-  public userData = [];
+  public userData;
+
+  public workoutStats;
 
   constructor(
     public loadingService: LoadingService,
     private translate: TranslateService,
     private menuController: MenuController,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private analyseService: AnalyseService,
+    private workoutService: WorkoutService
   ){}
 
   ionViewWillEnter() {
     this.menuController.enable(true);
 
-    this.userData = this.route.snapshot.data.userData;
-    console.log("USERDATA", this.userData)
 
   }
 
   ngOnInit(){
     this.loadingService.showPageLoading();
 
-    // Do something
+    this.userData = this.route.snapshot.data.userData;
+    console.log("USERDATA", this.userData)
 
-    this.loadingService.hidePageLoading();
+    this.getWorkoutStats();
+    
+  }
+
+  async getWorkoutStats(){
+    
+    
+    this.workoutService.getWorkoutSheetsData(this.userData._id).subscribe( async (data: [any]) => {
+
+      this.analyseService.getWorkoutStats(data);
+
+      console.log(data);
+
+      this.loadingService.hidePageLoading();
+
+    });
 
   }
 

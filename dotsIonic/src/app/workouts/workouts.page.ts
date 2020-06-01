@@ -64,7 +64,7 @@ export class WorkoutsPage implements OnInit {
 
     console.log(this.userData);
 
-    this.workoutService.getWorkoutSheetsData(this.userData._id).subscribe( async (data: [any])=> {
+    this.workoutService.getWorkoutSheetsData(this.userData._id).subscribe( async (data: [any]) => {
 
       // Get data about all sheets
       this.workoutSheets = data;
@@ -178,61 +178,6 @@ export class WorkoutsPage implements OnInit {
       );
     };
 
-  //   // Show an alert for the name of the sheet
-  //   const alert = await this.alertController.create({
-  //     header: this.translate.instant("NewSheet"),
-  //     inputs: [
-  //       {
-  //         name: this.translate.instant("Title"),
-  //         type: 'text'
-  //       }
-  //     ],
-  //     buttons: [
-  //       {
-  //         text: this.translate.instant("Cancel"),
-  //         role: 'cancel',
-  //         cssClass: 'secondary'
-  //       }, {
-  //         text: 'Ok',
-  //         handler: (data) => {
-
-  //           if(data.Title == ""){
-  //             this.errorToastAndAlertService.showErrorToast(this.translate.instant("EnterAName"));
-  //             return false;
-  //           }
-  //           else {
-  //             // Get all sheet names in order to check for repeating names
-  //             let sheetTitles = this.workoutSheets.map((sheet) => sheet.Title);
-  //             // Show error if a sheet with tis title already exists
-  //             if(sheetTitles.indexOf(data.Title) != -1) {
-  //               this.errorToastAndAlertService.showErrorToast(this.translate.instant("ExistingSheetName"));
-  //               return false;
-  //             }
-  //             else{
-  //               // If sheet title is fine, add sheet to database
-
-  //               data.UserId = this.userData._id;
-
-  //               this.workoutService.createSheet(data).subscribe( async (data: [any])=>
-  //                 {
-  //                   console.log(data)
-  //                   this.workoutSheets.push(data);
-  //                   // If reached MAX_SHEETS_NUMBER, disable adding new sheets
-  //                   if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.canAddSheet = false;
-  //                 },
-  //                 error => {
-  //                   this.errorToastAndAlertService.showErrorAlert("Oups")
-  //                 }
-  //               );
-
-  //             }
-  //           }
-  //         }
-  //       }
-  //     ]
-  //   });
-
-  //   await alert.present();
   }
 
   async editSheet(sheet, index){

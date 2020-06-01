@@ -53,4 +53,8 @@ export class GeneralService{
     return result;
   }
 
+  countWeeks(start, end){
+    return Math.round((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24*7));
+  }
+
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { DataTableService } from './dataTable.service';
+import { GeneralService } from './general.service';
 
 
 
@@ -11,7 +12,8 @@ import { DataTableService } from './dataTable.service';
 export class AnalyseService{
 
   constructor(
-    public dataTableService: DataTableService
+    public dataTableService: DataTableService,
+    private generalService: GeneralService
   ) {}
 
   
@@ -19,6 +21,60 @@ export class AnalyseService{
   public categoryColors = {};
 
   public categoryIcons = {};
+
+  async getWorkoutStats(data){
+
+    let stats = {
+      "Frequency": {},
+      "MonthlyStats": [],
+      "StartAndNow": {
+        StartPercentage: 0,
+        CurrentPercentage: 0
+      },
+      "PeaksAndDowns": {}
+    };
+
+    for(let i = 0; i < data.length; i++){
+      console.log("Sheet", data[i]);
+
+      let entries = data[i].WorkoutRecords.length;
+      let firstEntry = data[i].WorkoutRecords[0];
+      let lastEntry = data[i].WorkoutRecords[entries - 1];
+      let weeks = this.generalService.countWeeks(firstEntry.Date, lastEntry.Date);
+
+      console.log(weeks);
+
+      // Frequency
+      stats.Frequency[i] = entries / weeks;
+
+      
+
+      let analyseEntries = [firstEntry, lastEntry];
+      let labels = ["StartPercentage", "CurrentPercentage"];
+
+      for(let e = 0; e < analyseEntries.length; e++){
+
+        let entry = analyseEntries[e];
+
+        let percentageAtStart = 0;
+        let sum = 0;
+        for(let v = 0; v < entry.Values.length; v++){
+          console.log(entry.Values[v]);
+          console.log(data[i].Params[v].Goal);
+          sum += this.generalService.calculatePercentage(entry.Values[v], data[i].Params[v].Goal);
+        }
+
+        
+        stats.StartAndNow[labels[e]] = sum / entry.Values.length;
+
+      }
+
+      
+    }
+
+    console.log(stats);
+
+  }
 
   async analyseWorkoutResults(data){
     
@@ -77,7 +133,6 @@ export class AnalyseService{
       }
     }
 
-    
 
     for(let i = 0; i < goalsData.length; i++){
       let averagePercentage = Math.floor(goalsData[i].PercentageSum / number);
@@ -109,7 +164,15 @@ export class AnalyseService{
       }
     }
 
+    
+    // Weeks since start
 
+    let firstEntry = data.WorkoutRecords[data.WorkoutRecords.length - 1].Date;
+    let lastEntry = data.WorkoutRecords[0].Date;
+    let weeks = this.generalService.countWeeks(firstEntry, lastEntry);
+    console.log(weeks);
+    this.dataTableService.weeksSinceStart = weeks;
+    
   }
 
   async analyseNutrition(data){
@@ -200,6 +263,14 @@ export class AnalyseService{
     this.dataTableService.resultsAnalysis = results;
 
     console.log(goalsData);
+
+    // Weeks since start
+
+    let firstEntry = data.records[data.records.length - 1].Date;
+    let lastEntry = data.records[0].Date;
+    let weeks = this.generalService.countWeeks(firstEntry, lastEntry);
+    console.log(weeks);
+    this.dataTableService.weeksSinceStart = weeks;
 
   }
 

@@ -13,4 +13,24 @@
 
   {{ userData | json }}
 
+  <ion-card>
+    <ion-card-header>
+      {{ 'Workouts' | translate }}
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-item *ngFor="let sheet of data">
+
+        {{ data.Title }}
+
+      </ion-item>
+
+    </ion-card-content>
+
+    <ion-button routerLink="/workouts">
+      {{ 'Goto' | translate }}
+    </ion-button>
+  </ion-card>
+
 </ion-content>
