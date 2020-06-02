@@ -54,6 +54,8 @@ export class ParamsPage implements OnInit {
 
       this.dbData = userParams;
 
+      console.log(userParams);
+
       if(this.dbData != null){
         // If there is data, process it
         for(let i = 0; i < this.dbData.Params.length; i++){
@@ -66,8 +68,8 @@ export class ParamsPage implements OnInit {
           this.userParams.ParamData.push(paramData);
         }
 
-        this.userData.Values["Age"] = this.userData.Age;
-        this.userData.Values["Gender"] = this.userData.Gender;
+        this.userParams.Values["Age"] = this.userData.Age;
+        this.userParams.Values["Gender"] = this.userData.Gender;
       }
 
     })
@@ -127,32 +129,6 @@ export class ParamsPage implements OnInit {
       }
 
     });
-  }
-
-  // Checks if generalInfo has changed and controlls SaveChanges button
-  async changingUserValues(param, i){
-
-
-    // Index of param in the array of params which have new values
-    let indexOfChangedParam = this.changedUserValues.indexOf(i);
-
-    console.log(this.changedUserValues);
-
-    console.log(this.userParams.Values[param], this.dbData.Values[i])
-
-    // If new and old value are different
-    if(this.userParams.Values[param] != this.dbData.Values[i]){
-      // If the changed param isn't in the changedUserValues, push it
-      if(indexOfChangedParam < 0){
-        this.changedUserValues.push(i);
-      }
-    }
-    else{
-      // If the param has it's old value back, remove it from changedUserValues
-      this.changedUserValues.splice(indexOfChangedParam, 1);
-    }
-    this.loadingService.hidePageLoading();
-
   }
 
   // Updates userParamData according to userParamsTitles and values

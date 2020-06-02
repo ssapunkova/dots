@@ -66,6 +66,7 @@ export class CalculatorPage implements OnInit {
     
     let that = this;
 
+
     console.log(this.param);
     console.log(this.userValues[this.param.Title]);
 
@@ -85,6 +86,15 @@ export class CalculatorPage implements OnInit {
           text: this.translate.instant("Save results"),
           cssClass: 'primary',
           handler: async (data) => {
+
+            let needRecalculating = [];
+
+            for(let i = 0; i < this.formulas.length; i++){
+              console.log(this.formulas[i]);
+              console.log(this.userValues, this.param)
+              console.log(this.formulas[i].required)
+            }
+
             await that.modalController.dismiss(that.userValues);
           }
         }
