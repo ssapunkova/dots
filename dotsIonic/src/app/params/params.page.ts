@@ -54,16 +54,7 @@ export class ParamsPage implements OnInit {
 
       this.dbData = userParams;
 
-      if(this.dbData == null){
-        this.dbData = { 
-          Params: [0, 1],
-          Values: []
-        }
-        this.userParams.Titles = ["Gender", "Age"];
-        this.userParams.ParamData.push(this.paramsService.allParams[0]);
-        this.userParams.ParamData.push(this.paramsService.allParams[1]);
-      }
-      else{
+      if(this.dbData != null){
         // If there is data, process it
         for(let i = 0; i < this.dbData.Params.length; i++){
           let paramIndex = this.dbData.Params[i];
@@ -75,6 +66,8 @@ export class ParamsPage implements OnInit {
           this.userParams.ParamData.push(paramData);
         }
 
+        this.userData.Values["Age"] = this.userData.Age;
+        this.userData.Values["Gender"] = this.userData.Gender;
       }
 
     })
@@ -92,52 +85,48 @@ export class ParamsPage implements OnInit {
 
     console.log(this.userParams);
 
-    if(this.userParams.Values["Gender"] != null && this.userParams.Values["Age"] != null){
-      const modal = await this.modalController.create({
-        component: CalculatorPage,
-        componentProps: {
-          param: param,
-          userValues: this.userParams.Values
+    
+    const modal = await this.modalController.create({
+      component: CalculatorPage,
+      componentProps: {
+        param: param,
+        userValues: this.userParams.Values
+      }
+    });
+    await modal.present();
+
+    // Get modal data and if it's not null, update params and values
+    await modal.onWillDismiss().then((modalData: OverlayEventDetail) => {
+
+      console.log("Modal data ", modalData);
+
+      modalData = modalData.data;
+
+      if(modalData != null){
+
+        // Merge current and new user values
+        this.userParams.Values = {
+          ...this.userParams.Values,
+          ...modalData
         }
-      });
-      await modal.present();
+        
+        // Update param titles
+        this.userParams.Titles = Object.keys(this.userParams.Values);
 
-      // Get modal data and if it's not null, update params and values
-      await modal.onWillDismiss().then((modalData: OverlayEventDetail) => {
-
-        console.log("Modal data ", modalData);
-
-        modalData = modalData.data;
-
-        if(modalData != null){
-
-          // Merge current and new user values
-          this.userParams.Values = {
-            ...this.userParams.Values,
-            ...modalData
+        // Update ParamData
+        for(let i = 0; i < this.userParams.Titles.length; i++){
+          if(this.userParams.ParamData[i] == null){
+            this.userParams.ParamData[i] = this.paramsService.allParams.filter((param) => {
+              param.Title == this.userParams.Titles[i]
+            })[0];
           }
-          
-          // Update param titles
-          this.userParams.Titles = Object.keys(this.userParams.Values);
-
-          // Update ParamData
-          for(let i = 0; i < this.userParams.Titles.length; i++){
-            if(this.userParams.ParamData[i] == null){
-              this.userParams.ParamData[i] = this.paramsService.allParams.filter((param) => {
-                param.Title == this.userParams.Titles[i]
-              })[0];
-            }
-          }
-
-          // Update param data in db
-          this.updateUserParams();
         }
 
-      });
-    }
-    else{
-      this.errorToastAndAlertService.showErrorToast(this.translate.instant("FirstEnterGeneralParams"))
-    }
+        // Update param data in db
+        this.updateUserParams();
+      }
+
+    });
   }
 
   // Checks if generalInfo has changed and controlls SaveChanges button
@@ -171,21 +160,6 @@ export class ParamsPage implements OnInit {
   async updateUserParams(){
 
     console.log(this.dbData);
-
-    if(this.userParams.Titles == ["Gender", "Age"]){
-
-      let alert = await this.alertController.create({
-        header: this.translate.instant("NowYouCanMakeCalculations"),
-        message: this.translate.instant("ChooseFromParamsCalculator"),
-        buttons: [
-          {
-            text: "Ok"
-          }
-        ]
-      });
-
-      await alert.present();
-    }
 
     if(this.changedUserValues){
 

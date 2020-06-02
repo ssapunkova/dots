@@ -124,7 +124,9 @@ router.post("/login", async (req, res) => {
         _id: user._id,
         Username: user.Username, 
         Status: user.Status, 
-        Email: user.Email 
+        Email: user.Email,
+        Age: user.Age,
+        Gender: user.Gender
       } });
   
     }

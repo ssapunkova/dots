@@ -10,6 +10,23 @@ export class ParamsService {
 
   public allParams = [
     {
+      Index: 0,
+      Title: "Gender",
+      Options: [
+        { "Title": "Male", "Value": 0 },
+        { "Title": "Female", "Value": 1 },                 // 0 - gender  
+      ],
+      Type: "select",
+      ManuallyEditable: false
+    },
+    {
+      Index: 1,
+      Title: "Age",
+      Unit: "y.o.",                                        // 1 - age
+      Type: "number",
+      ManuallyEditable: true
+    },
+    {
       Index: 2,
       Title: "Weight",
       Unit: "kg",                                          // 2 - weight
