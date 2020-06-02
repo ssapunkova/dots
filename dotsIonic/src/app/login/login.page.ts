@@ -138,8 +138,6 @@ export class LoginPage implements OnInit {
         }, 200);
     })
     
-
-    
   }
 
   async login(){

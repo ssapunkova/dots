@@ -7,6 +7,8 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
 
 import { StorageService } from './storage.service';
+import { HttpClient } from '@angular/common/http';
+import { ConnectToServerService } from './connectToServer.service';
 
 @Injectable()
 export class UserService implements Resolve<Observable<string>> {
@@ -15,6 +17,8 @@ export class UserService implements Resolve<Observable<string>> {
 
   constructor(
     private storageService: StorageService,
+    private http: HttpClient,
+    private connectToServerService: ConnectToServerService,
     private router: Router
   ) { }
 
@@ -24,6 +28,14 @@ export class UserService implements Resolve<Observable<string>> {
     console.log("RESOLVE ", this.data);
     return this.data;
   
+  }
+
+  public updateUserData(newData){
+    console.log(newData);
+    return this.http.post(
+      this.connectToServerService.serverUrl + '/updateUserData',
+      {data: newData}
+    );
   }
 
 }

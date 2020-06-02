@@ -25,8 +25,7 @@ export class SettingsPage implements OnInit {
 
   public dbData;
 
-  public appearanceChanged = false;
-  public userDataChanged = false;
+  public generalInfoEditable = false;
   
   constructor(
     public userService: UserService,
@@ -60,58 +59,17 @@ export class SettingsPage implements OnInit {
     console.log(this.storageService.get("DotsUserData"));
   }
 
-  async editGeneralInfo(){
+  
 
-    let that = this;
-
-    let alert = this.alertController.create({
-      header: this.translate.instant("EditGeneralInfo"),
-      message: "Enter password",
-      inputs: [
-        {
-          name: "Password",
-          type: 'password'
-        }
-      ],
-      buttons: [
-        {
-          text: this.translate.instant("Cancel"),
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Ok',
-          handler: (data) => {
-
-            console.log(data, this.userData)
-
-            if(data.Password == ""){
-              that.errorToastAndAlertService.showErrorToast(this.translate.instant("EnterPassword"));
-              return false;
-            }
-            else {
-              
-              that.localAuthService.comparePasswords(data.Password, this.userData.Password).subscribe((result: any) => {
-                console.log(result)
-              });
-
-            }
-          }
-        }
-      ]
-    });
-
-    await (await alert).present();
-
-  }
-
-  async saveChanges(){
+  async saveGeneralInfo(){
     console.log(this.userData);
-    this.userDataChanged = false;
-  }
+    this.generalInfoEditable = false;
 
-  async discardChanges(){
-    this.userData = this.originalUserData;
-    this.userDataChanged = false;
+    this.userService.updateUserData(this.userData).subscribe( async (data: [any]) => {
+
+      console.log(data);
+
+    });
   }
 
 }

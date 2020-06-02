@@ -162,7 +162,9 @@ router.post("/handleFbUser", async(req, res) => {
       Username: userData.name,
       Email: userData.email,
       FbToken: userData.authToken,
-      Status: "user"
+      Status: "user",
+      Age: null,
+      Gender: null
     })
 
     user.save();
@@ -175,11 +177,33 @@ router.post("/handleFbUser", async(req, res) => {
       Username: user.Username, 
       Status: user.Status, 
       Email: user.Email,
-      FbToken: user.FbToken 
+      FbToken: user.FbToken,
+      Age: user.Age,
+      Gender: user.Gender 
     } });
 
   }
   
+})
+
+router.post('/updateUserData', async (req, res) => {
+  let newData = req.body.data;
+  console.log(newData);
+
+  let update = await User.updateOne(
+    { _id: ObjectId(newData._id) }, 
+    {
+      $set: {
+        Username: newData.Username,
+        Age: newData.Age,
+        Gender: newData.Gender
+      }
+    });
+
+  if(update.err) throw update.err;
+  else{
+    res.send();
+  }
 })
 
 

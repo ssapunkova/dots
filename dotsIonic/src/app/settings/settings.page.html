@@ -41,25 +41,52 @@
 
     <ion-card-header color="secondary">
      
-      {{ 'UserInfo' | translate }}
+      {{ 'UserInfo' | translate }} ({{ userData.Email }})
 
     </ion-card-header>
 
     <ion-card-content>
        
       <ion-item>
-        <ion-label>Username: </ion-label>
-        <ion-input [(ngModel)]="userData.Username"></ion-input>
+        <ion-label>{{ 'Username' | translate }}: </ion-label>
+        <ion-input [(ngModel)]="userData.Username" [disabled]="!generalInfoEditable"></ion-input>
       </ion-item>
 
       <ion-item>
-        Email: {{ userData.Email }}
+        <ion-label>{{ 'Age' | translate }}:</ion-label>
+        <ion-input [(ngModel)]="userData.Age" [disabled]="!generalInfoEditable"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>{{ 'Gender' | translate }}: </ion-label>
+        <ion-label *ngIf="!generalInfoEditable">
+          {{ (userData.Gender == 0 ? 'Male' : 'Female') | translate}} 
+        </ion-label>
+        <ion-label *ngIf="generalInfoEditable">
+          <ion-select [(ngModel)]="userData.Gender">
+            <ion-select-option value="0">
+              {{ 'Male' | translate }}
+            </ion-select-option>
+            <ion-select-option value="1">
+              {{ 'Female' | translate }} 
+            </ion-select-option>
+          </ion-select>
+        </ion-label>
       </ion-item>
 
       <ion-button
-        (click)="editGeneralInfo()">
+        *ngIf="!generalInfoEditable"
+        (click)="generalInfoEditable = true">
         {{ 'Edit' | translate }}
       </ion-button>
+
+      <ion-button
+        *ngIf="generalInfoEditable"
+        (click)="saveGeneralInfo()">
+        {{ 'Save changes' | translate }}
+      </ion-button>
+
+      {{ userData | json }}
 
     </ion-card-content>
 
