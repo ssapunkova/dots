@@ -29,7 +29,7 @@ export class AnalyseService{
       "OverallFrequency": 0,
       "Frequency": [],
       "StartAndNow": [],
-      "MonthlyStats": [],
+      "MonthlyStats": {},
       "PeaksAndDowns": {
         "PeakPeriod": {},
         "DownPeriod": {}
@@ -60,20 +60,18 @@ export class AnalyseService{
 
       // Frequency
       stats.Frequency[i] = entries / weeks;
+      stats.OverallFrequency += stats.Frequency[i];
 
       let analyseEntries = [firstEntry, lastEntry];
       let labels = ["StartPercentage", "CurrentPercentage"];
 
+      // Start and now
 
       for(let e = 0; e < analyseEntries.length; e++){
 
         let entry = analyseEntries[e];
-
-        let percentageAtStart = 0;
         let sum = 0;
         for(let v = 0; v < entry.Values.length; v++){
-          console.log(entry.Values[v]);
-          console.log(data[i].Params[v].Goal);
           sum += this.generalService.calculatePercentage(entry.Values[v], data[i].Params[v].Goal);
         }
         
@@ -81,17 +79,46 @@ export class AnalyseService{
 
       }
 
-
       stats.StartAndNow[i].Diff = stats.StartAndNow[i].CurrentPercentage - stats.StartAndNow[i].StartPercentage;
       
 
-      stats.OverallFrequency += stats.Frequency[i];
+
+      // Monthly stats
+
+      // let months = [...this.generalService.getMonths(data[i].WorkoutRecords)];
+
+      let monthlyData = {};
+  
+      for(let j = 0; j < data[i].WorkoutRecords.length; j++){
+        let record = data[i].WorkoutRecords[i];
+        let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
+        if(monthlyData[splitDate] == null){
+          monthlyData[splitDate] = {
+            "PercentageSum": 0,
+            "Records": 0
+          };
+        }
+        else{
+          monthlyData[splitDate].Records++;
+          let percentageSum = 0;
+          record.Values.forEach((val, j) => {
+            percentageSum += this.generalService.calculatePercentage(val, data[i].Params[j].Goal);
+          });
+          monthlyData[splitDate].PercentageSum += percentageSum /  data[i].Params.length;
+        }
+      }
+
+      stats.MonthlyStats = monthlyData;
 
     }
 
     console.log(stats);
 
     return stats;
+
+  }
+
+  async getNutritionStats(){
 
   }
 

@@ -13,6 +13,8 @@ export class GeneralService{
     public timeAndDateService: TimeAndDateService
   ) {}
 
+
+  // Calculate percentage of goal (boolean and time values handled too)
   calculatePercentage(value, goal){
 
     let percentageOfGoal = 0;
@@ -40,6 +42,7 @@ export class GeneralService{
     return percentageOfGoal;
   }
 
+  // Get variable type (string booleans handled too)
   getType(variable){
     let result = typeof variable;
 
@@ -53,8 +56,22 @@ export class GeneralService{
     return result;
   }
 
+  // Count weeks betwen dates (start and end)
   countWeeks(start, end){
     return Math.round((new Date(end).getTime() - new Date(start).getTime()) / (1000*60*60*24*7));
+  }
+
+  // Get the months from first to last record
+  getMonths(allRecords){
+    let months = [];
+    allRecords.forEach((record, i) => {
+      record.index = i;
+      let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
+      if(months.indexOf(splitDate) < 0){
+        months.push(splitDate);
+      }
+    })
+    return months;
   }
 
 }

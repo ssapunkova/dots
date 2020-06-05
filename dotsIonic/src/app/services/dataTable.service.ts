@@ -129,7 +129,7 @@ export class DataTableService{
 
     this.timeAndDateService.sortByDate(this.allRecords, "asc");
 
-    this.getShowingMonths();
+    this.months = this.generalService.getMonths(this.allRecords);
 
     // If there is no showingPeriod set, params for this.setPeriod function will be
     // null for $event and true for default
@@ -178,19 +178,19 @@ export class DataTableService{
     }
   }
 
-  // Get array of records months
-  async getShowingMonths(){
-    // Array of months - Used to allow the user to select a period ov viewed chart/table
-    let months = [];
-    this.allRecords.forEach((record, i) => {
-      record.index = i;
-      let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
-      if(months.indexOf(splitDate) < 0){
-        months.push(splitDate);
-      }
-    })
-    this.months = months;
-  }
+  // // Get array of records months
+  // async getShowingMonths(){
+  //   // Array of months - Used to allow the user to select a period ov viewed chart/table
+  //   let months = [];
+  //   this.allRecords.forEach((record, i) => {
+  //     record.index = i;
+  //     let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
+  //     if(months.indexOf(splitDate) < 0){
+  //       months.push(splitDate);
+  //     }
+  //   })
+  //   this.months = months;
+  // }
 
 
   // Add record via modal and send modalData to the corresponding service
