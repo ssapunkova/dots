@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { DataTableService } from './dataTable.service';
 import { GeneralService } from './general.service';
+import { isBuffer } from 'util';
 
 
 
@@ -29,7 +30,10 @@ export class AnalyseService{
       "OverallFrequency": 0,
       "Frequency": [],
       "StartAndNow": [],
-      "MonthlyStats": {},
+      "MonthlyStats": {
+        "Months": [],
+        "Data": {}
+      },
       "PeaksAndDowns": {
         "PeakPeriod": {},
         "DownPeriod": {}
@@ -82,33 +86,55 @@ export class AnalyseService{
       stats.StartAndNow[i].Diff = stats.StartAndNow[i].CurrentPercentage - stats.StartAndNow[i].StartPercentage;
       
 
-
       // Monthly stats
 
-      // let months = [...this.generalService.getMonths(data[i].WorkoutRecords)];
+      let months = [...this.generalService.getMonths(data[i].WorkoutRecords)];
 
       let monthlyData = {};
   
-      for(let j = 0; j < data[i].WorkoutRecords.length; j++){
-        let record = data[i].WorkoutRecords[i];
+      let monthlyPercentageSum = [];
+      let m = 0;
+
+      for(let r = 0; r < data[i].WorkoutRecords.length; r++){
+        let record = data[i].WorkoutRecords[r];
         let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
         if(monthlyData[splitDate] == null){
           monthlyData[splitDate] = {
-            "PercentageSum": 0,
-            "Records": 0
+            "Percentage": 0,
+            "Records": 0,
+            "Arrows": ["up", "up"]
           };
+          
         }
-        else{
-          monthlyData[splitDate].Records++;
-          let percentageSum = 0;
-          record.Values.forEach((val, j) => {
-            percentageSum += this.generalService.calculatePercentage(val, data[i].Params[j].Goal);
-          });
-          monthlyData[splitDate].PercentageSum += percentageSum /  data[i].Params.length;
+        
+        monthlyData[splitDate].Records++;
+        let percentageSum = 0;
+        for(let v = 0; v < record.Values.length; v++){
+          percentageSum += this.generalService.calculatePercentage(record.Values[v], data[i].Params[v].Goal);
         }
+        if(monthlyPercentageSum[splitDate] == null) monthlyPercentageSum[splitDate] = 0;
+        monthlyPercentageSum[splitDate] += percentageSum /  data[i].Params.length;
+        
       }
 
-      stats.MonthlyStats = monthlyData;
+      for(let m = 0; m < months.length; m++){
+        let month = months[m];
+        monthlyData[month].Percentage = monthlyPercentageSum[month] / monthlyData[month].Records;
+        
+        // If there is a previous month, compare percentage and record number
+        if(m > 1){
+          if(monthlyData[months[m - 1]].Percentage > monthlyData[month].Percentage){
+            monthlyData[month].Arrows[0] = "down";
+          }
+          if(monthlyData[months[m - 1]].Records > monthlyData[month].Records){
+            monthlyData[month].Arrows[1] = "down";
+          }
+        }
+
+      }
+
+      stats.MonthlyStats.Months = months;
+      stats.MonthlyStats.Data = monthlyData;
 
     }
 

@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="!loadingService.isPageLoading">
 
   <ion-grid>
 
@@ -17,9 +17,54 @@
 
       <ion-col>
 
-        <!-- <ion-card *ngFor="let month of workoutStats.MonthlyStats">
+        <div class="monthCarousel">
 
-        </ion-card> -->
+          <ion-slides [options]="slideOpts">
+
+            <ion-slide
+              *ngFor="let month of workoutStats.MonthlyStats.Months.reverse(); let i = index">
+              
+                <ion-card>
+
+                  <ion-card-header class="color-{{i + 1}}">
+                    {{ month }}
+                  </ion-card-header>
+
+                  <ion-card-content>
+
+                    <div class="sub-header">
+                      {{ 'Workouts' | translate }}
+                    </div>
+
+                    <div>
+                      <ion-icon 
+                        class="tendencyIcon"
+                        name="arrow-{{ workoutStats.MonthlyStats.Data[month].Arrows[0]}}"
+                        [color]="workoutStats.MonthlyStats.Data[month].Arrows[0] == 'up' ? 'success': 'danger'">
+                      </ion-icon>
+                      {{ workoutStats.MonthlyStats.Data[month].Records / 4 | number: '1.0-1'}}
+                      {{ 'timesAWeek' | translate }}
+                    </div>
+
+                    <div>
+                      <ion-icon 
+                        class="tendencyIcon"
+                        name="arrow-{{ workoutStats.MonthlyStats.Data[month].Arrows[0]}}"
+                        [color]="workoutStats.MonthlyStats.Data[month].Arrows[0] == 'up' ? 'success': 'danger'">
+                      </ion-icon>
+                      {{ workoutStats.MonthlyStats.Data[month].Percentage | number: '1.0-0'}}%
+                      {{ 'fullfilledGoals' | translate }}
+                    </div>
+
+                  </ion-card-content>
+
+                </ion-card>
+
+            </ion-slide>
+
+          </ion-slides>
+          
+        </div>
 
       </ion-col>
 

@@ -23,6 +23,10 @@ export class HomePage implements OnInit {
 
   public workoutStats;
 
+  public sliderOpts = {
+    initialSlide: 1
+  }
+
   constructor(
     public loadingService: LoadingService,
     private translate: TranslateService,
