@@ -144,7 +144,107 @@ export class AnalyseService{
 
   }
 
-  async getNutritionStats(){
+  async getNutritionStats(data){
+
+    
+    let stats = {
+      "MonthlyStats": {
+        "Months": [],
+        "Data": {}
+      },
+      "PeaksAndDowns": {
+        "PeakPeriod": {},
+        "DownPeriod": {}
+      },
+      "StartAndNow": {
+        "StartPercentage": 0, 
+        "CurrentPercentage": 0, 
+        "Diff": 0
+      }
+    };
+
+
+    let entries = data.Records.length;
+    let firstEntry = data.Records[0];
+    let lastEntry = data.Records[entries - 1];
+    let weeks = this.generalService.countWeeks(firstEntry.Date, lastEntry.Date);
+
+    console.log(weeks);
+
+    let analyseEntries = [firstEntry, lastEntry];
+    let labels = ["StartPercentage", "CurrentPercentage"];
+
+    // Start and now
+
+    for(let e = 0; e < analyseEntries.length; e++){
+
+      let entry = analyseEntries[e];
+      let sum = 0;
+      for(let v = 0; v < entry.Values.length; v++){
+        sum += this.generalService.calculatePercentage(entry.Values[v], data.Params[v].Goal);
+      }
+      
+      stats.StartAndNow[labels[e]] += sum / entry.Values.length;
+
+    }
+
+    stats.StartAndNow.Diff = stats.StartAndNow.CurrentPercentage - stats.StartAndNow.StartPercentage;
+    
+
+    // Monthly stats
+
+    let months = [...this.generalService.getMonths(data.Records)];
+
+    let monthlyData = {};
+
+    let monthlyPercentageSum = [];
+    let m = 0;
+
+    for(let r = 0; r < data.Records.length; r++){
+      let record = data.Records[r];
+      let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
+      if(monthlyData[splitDate] == null){
+        monthlyData[splitDate] = {
+          "Percentage": 0,
+          "Records": 0,
+          "Arrows": ["up", "up"]
+        };
+        
+      }
+      
+      monthlyData[splitDate].Records++;
+      let percentageSum = 0;
+      for(let v = 0; v < record.Values.length; v++){
+        percentageSum += this.generalService.calculatePercentage(record.Values[v], data.Params[v].Goal);
+      }
+      if(monthlyPercentageSum[splitDate] == null) monthlyPercentageSum[splitDate] = 0;
+      monthlyPercentageSum[splitDate] += percentageSum / data.Params.length;
+      
+    }
+
+    for(let m = 0; m < months.length; m++){
+      let month = months[m];
+      monthlyData[month].Percentage = monthlyPercentageSum[month] / monthlyData[month].Records;
+      
+      // If there is a previous month, compare percentage and record number
+      if(m > 1){
+        if(monthlyData[months[m - 1]].Percentage > monthlyData[month].Percentage){
+          monthlyData[month].Arrows[0] = "down";
+        }
+        if(monthlyData[months[m - 1]].Records > monthlyData[month].Records){
+          monthlyData[month].Arrows[1] = "down";
+        }
+      }
+
+    }
+
+    stats.MonthlyStats.Months = months;
+    stats.MonthlyStats.Data = monthlyData;
+
+
+    console.log(stats);
+
+    return stats;
 
   }
 
@@ -338,11 +438,11 @@ export class AnalyseService{
 
     // Weeks since start
 
-    let firstEntry = data.Records[data.Records.length - 1].Date;
-    let lastEntry = data.Records[0].Date;
-    let weeks = this.generalService.countWeeks(firstEntry, lastEntry);
-    console.log(weeks);
-    this.dataTableService.weeksSinceStart = weeks;
+    // let firstEntry = data.Records[data.Records.length - 1].Date;
+    // let lastEntry = data.Records[0].Date;
+    // let weeks = this.generalService.countWeeks(firstEntry, lastEntry);
+    // console.log(weeks);
+    // this.dataTableService.weeksSinceStart = weeks;
 
   }
 

@@ -58,7 +58,7 @@ export class NutritionPage implements OnInit {
   async getNutritionData(){
 
 
-    this.nutritionService.getNutritionData().subscribe(async (data: any) => {
+    this.nutritionService.getNutritionData(this.userData._id).subscribe(async (data: any) => {
 
 
       // If user has chosen nutrition params

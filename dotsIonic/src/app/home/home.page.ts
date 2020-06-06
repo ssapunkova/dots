@@ -9,6 +9,7 @@ import { MenuController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { AnalyseService } from '../services/analyse.service';
 import { WorkoutService } from '../services/workout.service';
+import { NutritionService } from '../services/nutrition.service';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +23,7 @@ export class HomePage implements OnInit {
   public userData;
 
   public workoutStats;
+  public nutritionStats;
 
   public sliderOpts = {
     initialSlide: 1
@@ -33,7 +35,8 @@ export class HomePage implements OnInit {
     private menuController: MenuController,
     private route: ActivatedRoute,
     private analyseService: AnalyseService,
-    private workoutService: WorkoutService
+    private workoutService: WorkoutService,
+    private nutritionService: NutritionService
   ){}
 
   ionViewWillEnter() {
@@ -46,25 +49,54 @@ export class HomePage implements OnInit {
     this.userData = this.route.snapshot.data.userData;
     console.log("USERDATA", this.userData)
 
-    this.getWorkoutStats();
+
+    Promise.all([this.getWorkoutStats(), this.getNutritionStats()])
+    .then(() => {
+      this.loadingService.hidePageLoading();
+    });
+
     
   }
 
-  async getWorkoutStats(){
-    
+  getWorkoutStats = () => new Promise((resolve) => {
     
     this.workoutService.getWorkoutSheetsData(this.userData._id).subscribe( async (data: [any]) => {
 
-      this.workoutStats = await this.analyseService.getWorkoutStats(data);
+      
+      if(data.length > 0){
 
-      console.log(data);
+        this.workoutStats = await this.analyseService.getWorkoutStats(data);
 
-      console.log(this.workoutStats);
 
-      this.loadingService.hidePageLoading();
+        console.log(this.workoutStats);
+
+      }
+
+      
+      resolve(true);
 
     });
 
-  }
+  });
+
+  getNutritionStats = () => new Promise((resolve) => {
+      
+      
+    this.nutritionService.getNutritionData(this.userData._id).subscribe( async (data: [any]) => {
+
+      if(data["Records"].length > 0){
+
+        this.nutritionStats = await this.analyseService.getNutritionStats(data);
+
+        console.log(this.nutritionStats);
+
+      }
+
+      resolve(true);
+
+    });
+
+  });
+
 
 }
