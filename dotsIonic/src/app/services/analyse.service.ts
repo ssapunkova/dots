@@ -279,13 +279,13 @@ export class AnalyseService{
     console.log("start")
 
     let number = 5;
-    if(data.records.length < 5) number = data.records.length;
+    if(data.Records.length < 5) number = data.Records.length;
 
     for(let i = 0; i < number; i++){
-      let currentRec = data.records[i];
+      let currentRec = data.Records[i];
       console.log(currentRec, currentRec.Date, currentRec.PercentageOfGoal);
       for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
-        let paramData = data.general.Params.filter((p) => p.Index == currentRec.Params[j])[0];
+        let paramData = data.General.Params.filter((p) => p.Index == currentRec.Params[j])[0];
 
         console.log(paramData);
                 
@@ -338,8 +338,8 @@ export class AnalyseService{
 
     // Weeks since start
 
-    let firstEntry = data.records[data.records.length - 1].Date;
-    let lastEntry = data.records[0].Date;
+    let firstEntry = data.Records[data.Records.length - 1].Date;
+    let lastEntry = data.Records[0].Date;
     let weeks = this.generalService.countWeeks(firstEntry, lastEntry);
     console.log(weeks);
     this.dataTableService.weeksSinceStart = weeks;
