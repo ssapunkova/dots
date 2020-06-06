@@ -123,8 +123,8 @@ export class NutritionPage implements OnInit {
 
   async editParams(){
 
-    // Select configureable data about the sheet
-    let updateData = {
+    // Provide data
+    let data = {
       Params: this.dataTableService.params,
       Goals: this.dataTableService.goals
     };
@@ -132,7 +132,7 @@ export class NutritionPage implements OnInit {
     // Show a configuration modal
     const modal = await this.modalController.create({
       component: EditNutritionParamsPage,
-      componentProps: updateData
+      componentProps: data
     });
     await modal.present();
 
@@ -147,7 +147,7 @@ export class NutritionPage implements OnInit {
       await this.loadingService.showProcessLoading("Saving changes");
 
       // Update nutrition params
-      this.nutritionService.updateNutritionParams(modalData).subscribe( async (data: [any])=>
+      this.nutritionService.updateNutritionParams(modalData, this.userData._id).subscribe( async (data: [any])=>
         {
           await this.getNutritionData();
           await this.loadingService.hideProcessLoading();
@@ -193,6 +193,7 @@ export class NutritionPage implements OnInit {
     let modalProps = {
       component: NewNutritionRecordPage,
       componentProps: {
+        UserId: this.userData._id,
         RecordId: null,
         Fields: this.dataTableService.params,
         Goals: this.dataTableService.goals,

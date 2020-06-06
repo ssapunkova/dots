@@ -25,6 +25,7 @@ router.get("/getNutritionData/:userId", async (req, res) => {
 
 router.post("/updateNutritionParams", async (req, res) => {
   let data = req.body.data;
+  let userId = req.body.userId;
   let params = data.params;
   let customGoals = data.customGoals;
   let deletedParams = data.deletedParams;
@@ -34,14 +35,14 @@ router.post("/updateNutritionParams", async (req, res) => {
     Params: params
   }
 
-  let updateObj = await Nutrition.updateOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }, nutritionObj, { upsert: true });
+  let updateObj = await Nutrition.updateOne({ UserId: ObjectId(userId) }, nutritionObj, { upsert: true });
   if(updateObj.err) throw updateObj.err;
 
   if(deletedParams.length > 0){
 
     let recordsOfDeletedParams = await NutritionRecord.find(
       {
-        UserId: ObjectId("5d98ade96dfda51dc84991d9"),
+        UserId: ObjectId(userId),
         Params: { $in: deletedParams }
       }
     );
@@ -78,7 +79,7 @@ router.post("/addNutritionRecord", async (req, res) => {
 
   let upsertRecord = await NutritionRecord.updateOne(
     {
-      UserId: ObjectId("5d98ade96dfda51dc84991d9"),
+      UserId: ObjectId(record.UserId),
       Date: record.Date
     },
     {

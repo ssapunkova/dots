@@ -39,10 +39,10 @@ export class NutritionService {
     return this.http.get(this.connectToServerService.serverUrl + '/getNutritionData/' + userId)
   }
 
-  public updateNutritionParams(data){
+  public updateNutritionParams(data, userId){
     return this.http.post(
       this.connectToServerService.serverUrl + '/updateNutritionParams',
-      {data: data}
+      { data: data, userId: userId }
     )
   }
 
@@ -50,7 +50,7 @@ export class NutritionService {
     console.log(recordData);
     return this.http.post(
       this.connectToServerService.serverUrl + '/addNutritionRecord',
-      {data: recordData}
+      { data: recordData }
     );
   }
 

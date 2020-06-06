@@ -18,6 +18,7 @@ export class NewNutritionRecordPage implements OnInit {
   public goals;
 
   public record = {
+    UserId: null,
     RecordId: null,
     Date: null,
     Values: [],
@@ -36,6 +37,7 @@ export class NewNutritionRecordPage implements OnInit {
   async ngOnInit() {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
 
+    this.record.UserId = data.UserId;
     this.record.RecordId = data.RecordId;
     this.record.Date = data.Date;
     this.record.PercentageOfGoal = [];
