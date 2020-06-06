@@ -19,7 +19,7 @@ router.get("/getNutritionData", async (req, res) => {
     nutritionData.save();
   }
   if(nutritionRecords.err) throw nutritionRecords.err;
-  res.send({ General: nutritionData, Records: nutritionRecords});
+  res.send({ Goals: nutritionData.Goals, Params: nutritionData.Params, Records: nutritionRecords});
 })
 
 router.post("/updateNutritionParams", async (req, res) => {

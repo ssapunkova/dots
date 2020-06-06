@@ -62,11 +62,11 @@ export class NutritionPage implements OnInit {
 
 
       // If user has chosen nutrition params
-      if(data.General.Params.length != 0){
+      if(data.Params.length != 0){
         // Get each param info by index
-        for(var i = 0; i < data.General.Params.length; i++){
-          let paramIndex = data.General.Params[i];
-          data.General.Params[i] = this.paramsService.allParams[paramIndex];
+        for(var i = 0; i < data.Params.length; i++){
+          let paramIndex = data.Params[i];
+          data.Params[i] = this.paramsService.allParams[paramIndex];
         }
       }
 
@@ -80,11 +80,11 @@ export class NutritionPage implements OnInit {
         if(this.userParams != null){
 
           // Get goals - combine custom and default goals
-          for(var i = 0; i < data.General.Params.length; i++){
+          for(var i = 0; i < data.Params.length; i++){
             // If no custom goal - this col in db will be null
-            if(data.General.Goals[i] == null){
+            if(data.Goals[i] == null){
 
-              let paramIndex = data.General.Params[i].Index;
+              let paramIndex = data.Params[i].Index;
               // User hasn't entered a custom goal, so
               // -- can use calculated goals from Params page
               // -- can use default goals
@@ -92,13 +92,13 @@ export class NutritionPage implements OnInit {
               // Check if there is a calculated value for this param
               let indexInUserCalculatedValues = userParams.Params.indexOf(paramIndex);
               if(indexInUserCalculatedValues > -1){
-                console.log("Has calculated value for ", data.General.Params[i].Title, " and it is ", this.userParams.Values[indexInUserCalculatedValues]);
-                data.General.Goals[i] = this.userParams.Values[indexInUserCalculatedValues];
+                console.log("Has calculated value for ", data.Params[i].Title, " and it is ", this.userParams.Values[indexInUserCalculatedValues]);
+                data.Goals[i] = this.userParams.Values[indexInUserCalculatedValues];
               }
               else{
                 // If not, use default value from paramsService
                 // Get default goal by param index
-                data.General.Goals[i] = this.paramsService.allParams[paramIndex].Goal;
+                data.Goals[i] = this.paramsService.allParams[paramIndex].Goal;
               }
             }
           }
@@ -111,7 +111,7 @@ export class NutritionPage implements OnInit {
 
         console.log("***NutritionPage ", this);
 
-        this.dataTableService.initializeDataTable(data.General, data.Records, "nutrition");
+        this.dataTableService.initializeDataTable(data, data.Records, "nutrition");
       
         this.analyseService.analyseNutrition(this.data);
 

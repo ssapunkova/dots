@@ -285,7 +285,7 @@ export class AnalyseService{
       let currentRec = data.Records[i];
       console.log(currentRec, currentRec.Date, currentRec.PercentageOfGoal);
       for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
-        let paramData = data.General.Params.filter((p) => p.Index == currentRec.Params[j])[0];
+        let paramData = data.Params.filter((p) => p.Index == currentRec.Params[j])[0];
 
         console.log(paramData);
                 
