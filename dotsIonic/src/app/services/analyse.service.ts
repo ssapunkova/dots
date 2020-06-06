@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { DataTableService } from './dataTable.service';
 import { GeneralService } from './general.service';
 import { isBuffer } from 'util';
+import { NutritionService } from './nutrition.service';
 
 
 
@@ -14,7 +15,8 @@ export class AnalyseService{
 
   constructor(
     public dataTableService: DataTableService,
-    private generalService: GeneralService
+    private generalService: GeneralService,
+    private nutritionService: NutritionService
   ) {}
 
   
@@ -49,16 +51,16 @@ export class AnalyseService{
         Color: data[i].Color
       }
       
-      stats.StartAndNow[i] = {
-        "StartPercentage": 0, 
-        "CurrentPercentage": 0, 
-        "Diff": 0
-      };
+      // stats.StartAndNow[i] = {
+      //   "StartPercentage": 0, 
+      //   "CurrentPercentage": 0, 
+      //   "Diff": 0
+      // };
 
       let entries = data[i].WorkoutRecords.length;
-      let firstEntry = data[i].WorkoutRecords[0];
-      let lastEntry = data[i].WorkoutRecords[entries - 1];
-      let weeks = this.generalService.countWeeks(firstEntry.Date, lastEntry.Date);
+      let firstRecord = data[i].WorkoutRecords[0];
+      let lastRecord = data[i].WorkoutRecords[entries - 1];
+      let weeks = this.generalService.countWeeks(firstRecord.Date, lastRecord.Date);
 
       console.log(weeks);
 
@@ -66,24 +68,24 @@ export class AnalyseService{
       stats.Frequency[i] = entries / weeks;
       stats.OverallFrequency += stats.Frequency[i];
 
-      let analyseEntries = [firstEntry, lastEntry];
-      let labels = ["StartPercentage", "CurrentPercentage"];
+      // let analyseRecords = [firstRecord, lastRecord];
+      // let labels = ["StartPercentage", "CurrentPercentage"];
 
-      // Start and now
+      // // Start and now
 
-      for(let e = 0; e < analyseEntries.length; e++){
+      // for(let e = 0; e < analyseRecords.length; e++){
 
-        let entry = analyseEntries[e];
-        let sum = 0;
-        for(let v = 0; v < entry.Values.length; v++){
-          sum += this.generalService.calculatePercentage(entry.Values[v], data[i].Params[v].Goal);
-        }
+      //   let record = analyseRecords[e];
+      //   let sum = 0;
+      //   for(let v = 0; v < record.Values.length; v++){
+      //     sum += this.generalService.calculatePercentage(record.Values[v], data[i].Params[v].Goal);
+      //   }
         
-        stats.StartAndNow[i][labels[e]] += sum / entry.Values.length;
+      //   stats.StartAndNow[i][labels[e]] += sum / record.Values.length;
 
-      }
+      // }
 
-      stats.StartAndNow[i].Diff = stats.StartAndNow[i].CurrentPercentage - stats.StartAndNow[i].StartPercentage;
+      // stats.StartAndNow[i].Diff = stats.StartAndNow[i].CurrentPercentage - stats.StartAndNow[i].StartPercentage;
       
 
       // Monthly stats
@@ -165,26 +167,29 @@ export class AnalyseService{
 
 
     let entries = data.Records.length;
-    let firstEntry = data.Records[0];
-    let lastEntry = data.Records[entries - 1];
-    let weeks = this.generalService.countWeeks(firstEntry.Date, lastEntry.Date);
+    let firstRecord = data.Records[0];
+    let lastRecord = data.Records[entries - 1];
+    let weeks = this.generalService.countWeeks(firstRecord.Date, lastRecord.Date);
 
-    console.log(weeks);
 
-    let analyseEntries = [firstEntry, lastEntry];
+    let analyseRecords = [firstRecord, lastRecord];
     let labels = ["StartPercentage", "CurrentPercentage"];
 
     // Start and now
 
-    for(let e = 0; e < analyseEntries.length; e++){
+    for(let e = 0; e < analyseRecords.length; e++){
 
-      let entry = analyseEntries[e];
+      let record = analyseRecords[e];
       let sum = 0;
-      for(let v = 0; v < entry.Values.length; v++){
-        sum += this.generalService.calculatePercentage(entry.Values[v], data.Params[v].Goal);
+      for(let v = 0; v < record.Values.length; v++){
+        let goal = data.Params[v].Goal;
+        if(goal == null){
+          goal = this.nutritionService.Params.filter((p) => p.Index == record.Params[v])[0].Goal;
+        }
+        sum += this.generalService.calculatePercentage(record.Values[v], goal);
       }
       
-      stats.StartAndNow[labels[e]] += sum / entry.Values.length;
+      stats.StartAndNow[labels[e]] += sum / record.Values.length;
 
     }
 
@@ -207,7 +212,7 @@ export class AnalyseService{
         monthlyData[splitDate] = {
           "Percentage": 0,
           "Records": 0,
-          "Arrows": ["up", "up"]
+          "Arrows": "up"
         };
         
       }
@@ -215,7 +220,11 @@ export class AnalyseService{
       monthlyData[splitDate].Records++;
       let percentageSum = 0;
       for(let v = 0; v < record.Values.length; v++){
-        percentageSum += this.generalService.calculatePercentage(record.Values[v], data.Params[v].Goal);
+        let goal = data.Params[v].Goal;
+        if(goal == null){
+          goal = this.nutritionService.Params.filter((p) => p.Index == record.Params[v])[0].Goal;
+        }
+        percentageSum += this.generalService.calculatePercentage(record.Values[v], goal);
       }
       if(monthlyPercentageSum[splitDate] == null) monthlyPercentageSum[splitDate] = 0;
       monthlyPercentageSum[splitDate] += percentageSum / data.Params.length;
@@ -229,10 +238,7 @@ export class AnalyseService{
       // If there is a previous month, compare percentage and record number
       if(m > 1){
         if(monthlyData[months[m - 1]].Percentage > monthlyData[month].Percentage){
-          monthlyData[month].Arrows[0] = "down";
-        }
-        if(monthlyData[months[m - 1]].Records > monthlyData[month].Records){
-          monthlyData[month].Arrows[1] = "down";
+          monthlyData[month].Arrows = "down";
         }
       }
 
@@ -241,6 +247,55 @@ export class AnalyseService{
     stats.MonthlyStats.Months = months;
     stats.MonthlyStats.Data = monthlyData;
 
+
+    console.log(stats);
+
+    return stats;
+
+  }
+
+  // WorkoutPage: analyse each sheet
+  async analyseWorkoutSheets(data){
+
+    console.log(data);
+
+    let stats = {
+      "StartAndNow": []
+    }
+
+    for(let i = 0; i < data.length; i++){
+
+      stats.StartAndNow[i] = {
+        "StartPercentage": 0, 
+        "CurrentPercentage": 0, 
+        "Diff": 0
+      }
+
+      let entries = data[i].WorkoutRecords.length;
+      let firstRecord = data[i].WorkoutRecords[0];
+      let lastRecord = data[i].WorkoutRecords[entries - 1];
+
+      let analyseRecords = [firstRecord, lastRecord];
+      let labels = ["StartPercentage", "CurrentPercentage"];
+
+
+      // Start and now
+
+      for(let e = 0; e < analyseRecords.length; e++){
+
+        let record = analyseRecords[e];
+        let sum = 0;
+        for(let v = 0; v < record.Values.length; v++){
+          sum += this.generalService.calculatePercentage(record.Values[v], data[i].Params[v].Goal);
+        }
+        
+        stats.StartAndNow[i][labels[e]] += sum / record.Values.length;
+
+      }
+
+      stats.StartAndNow[i].Diff = stats.StartAndNow[i].CurrentPercentage - stats.StartAndNow[i].StartPercentage;
+
+    }
 
     console.log(stats);
 
@@ -339,9 +394,9 @@ export class AnalyseService{
     
     // Weeks since start
 
-    let firstEntry = data.WorkoutRecords[data.WorkoutRecords.length - 1].Date;
-    let lastEntry = data.WorkoutRecords[0].Date;
-    let weeks = this.generalService.countWeeks(firstEntry, lastEntry);
+    let firstRecord = data.WorkoutRecords[data.WorkoutRecords.length - 1].Date;
+    let lastRecord = data.WorkoutRecords[0].Date;
+    let weeks = this.generalService.countWeeks(firstRecord, lastRecord);
     console.log(weeks);
     this.dataTableService.weeksSinceStart = weeks;
     
@@ -438,9 +493,9 @@ export class AnalyseService{
 
     // Weeks since start
 
-    // let firstEntry = data.Records[data.Records.length - 1].Date;
-    // let lastEntry = data.Records[0].Date;
-    // let weeks = this.generalService.countWeeks(firstEntry, lastEntry);
+    // let firstRecord = data.Records[data.Records.length - 1].Date;
+    // let lastRecord = data.Records[0].Date;
+    // let weeks = this.generalService.countWeeks(firstRecord, lastRecord);
     // console.log(weeks);
     // this.dataTableService.weeksSinceStart = weeks;
 

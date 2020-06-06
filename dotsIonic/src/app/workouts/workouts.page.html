@@ -45,9 +45,28 @@
               <ion-icon name="grid" style="padding-right: 0.5rem"></ion-icon>
               {{ sheet.Params.length }} {{ 'exercises' | translate }}
             </ion-item>
+
             <ion-item>
               <ion-icon name="checkmark" style="padding-right: 0.5rem"></ion-icon>
               {{ sheet.WorkoutRecords.length }} {{ 'records' | translate }}
+            </ion-item>
+
+            <ion-item>
+              <ion-icon 
+                name="time" 
+                style="padding-right: 0.5rem"></ion-icon>
+              {{ stats.StartAndNow[i].CurrentPercentage | number: '1.0-0' }}% {{ 'onDate' | translate }} 
+              {{ timeAndDateService.formatDate(workoutSheets[i].WorkoutRecords[workoutSheets[i].WorkoutRecords.length - 1].Date) }}
+      
+            </ion-item>
+
+            <ion-item>
+              <ion-icon 
+                name="arrow-{{ stats.StartAndNow[i].Diff >= 0 ? 'up': 'down'}}" 
+                color="{{ stats.StartAndNow[i].Diff >= 0 ? 'success': 'danger'}}"
+                style="padding-right: 0.5rem"></ion-icon>
+              {{ stats.StartAndNow[i].Diff >= 0 ? '+': ''}}{{ stats.StartAndNow[i].Diff | number: '1.0-0' }}% 
+              {{ 'goalAchievementsSinceStart' | translate }}
             </ion-item>
 
           </ion-card-content>

@@ -25,6 +25,8 @@ export class HomePage implements OnInit {
   public workoutStats;
   public nutritionStats;
 
+  public showingMonths;
+
   public sliderOpts = {
     initialSlide: 1
   }
@@ -52,6 +54,22 @@ export class HomePage implements OnInit {
 
     Promise.all([this.getWorkoutStats(), this.getNutritionStats()])
     .then(() => {
+
+      let a = this.workoutStats.MonthlyStats.Months;
+      let b = this.nutritionStats.MonthlyStats.Months;
+      if(a.length > b.length){
+        this.showingMonths = b;
+        this.showingMonths = [...a];
+      }
+      else{
+        this.showingMonths = a;
+        this.showingMonths = [...b];
+      }
+
+      // Show months in desc
+      this.showingMonths.reverse();
+      
+
       this.loadingService.hidePageLoading();
     });
 

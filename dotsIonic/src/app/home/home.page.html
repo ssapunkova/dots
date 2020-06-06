@@ -22,7 +22,7 @@
           <ion-slides [options]="slideOpts">
 
             <ion-slide
-              *ngFor="let month of workoutStats.MonthlyStats.Months.reverse(); let i = index">
+              *ngFor="let month of showingMonths; let i = index">
               
                 <ion-card>
 
@@ -32,28 +32,50 @@
 
                   <ion-card-content>
 
-                    <div class="sub-header">
-                      {{ 'Workouts' | translate }}
+                    <div *ngIf="workoutStats.MonthlyStats.Data[month] != null">
+
+                      <div class="sub-header">
+                        {{ 'Workouts' | translate }}
+                      </div>
+
+                      <div>
+                        <ion-icon 
+                          class="tendencyIcon"
+                          name="arrow-{{ workoutStats.MonthlyStats.Data[month].Arrows[0]}}"
+                          [color]="workoutStats.MonthlyStats.Data[month].Arrows[0] == 'up' ? 'success': 'danger'">
+                        </ion-icon>
+                        {{ workoutStats.MonthlyStats.Data[month].Records / 4 | number: '1.0-1'}}
+                        {{ 'timesAWeek' | translate }}
+                      </div>
+
+                      <div>
+                        <ion-icon 
+                          class="tendencyIcon"
+                          name="arrow-{{ workoutStats.MonthlyStats.Data[month].Arrows[1]}}"
+                          [color]="workoutStats.MonthlyStats.Data[month].Arrows[1] == 'up' ? 'success': 'danger'">
+                        </ion-icon>
+                        {{ workoutStats.MonthlyStats.Data[month].Percentage | number: '1.0-0'}}%
+                        {{ 'fullfilledGoals' | translate }}
+                      </div>
+
                     </div>
 
-                    <div>
-                      <ion-icon 
-                        class="tendencyIcon"
-                        name="arrow-{{ workoutStats.MonthlyStats.Data[month].Arrows[0]}}"
-                        [color]="workoutStats.MonthlyStats.Data[month].Arrows[0] == 'up' ? 'success': 'danger'">
-                      </ion-icon>
-                      {{ workoutStats.MonthlyStats.Data[month].Records / 4 | number: '1.0-1'}}
-                      {{ 'timesAWeek' | translate }}
-                    </div>
+                    <div *ngIf="nutritionStats.MonthlyStats.Data[month] != null">
 
-                    <div>
-                      <ion-icon 
-                        class="tendencyIcon"
-                        name="arrow-{{ workoutStats.MonthlyStats.Data[month].Arrows[0]}}"
-                        [color]="workoutStats.MonthlyStats.Data[month].Arrows[0] == 'up' ? 'success': 'danger'">
-                      </ion-icon>
-                      {{ workoutStats.MonthlyStats.Data[month].Percentage | number: '1.0-0'}}%
-                      {{ 'fullfilledGoals' | translate }}
+                      <div class="sub-header">
+                        {{ 'Nutrition' | translate }}
+                      </div>
+
+                      <div>
+                        <ion-icon 
+                          class="tendencyIcon"
+                          name="arrow-{{ nutritionStats.MonthlyStats.Data[month].Arrows}}"
+                          [color]="nutritionStats.MonthlyStats.Data[month].Arrows == 'up' ? 'success': 'danger'">
+                        </ion-icon>
+                        {{ nutritionStats.MonthlyStats.Data[month].Percentage | number: '1.0-0'}}%
+                        {{ 'fullfilledGoals' | translate }}
+                      </div>
+
                     </div>
 
                   </ion-card-content>
@@ -94,7 +116,7 @@
                 {{ workoutStats.StartAndNow[i].CurrentPercentage | number: '1.0-0' }}% {{ 'latestAchievement' | translate}}
               </div>
               <div>
-                {{ workoutStats.StartAndNow[i].Diff >= 0 ? '+' : '-'}} 
+                {{ workoutStats.StartAndNow[i].Diff >= 0 ? '+' : ''}} 
                 {{ workoutStats.StartAndNow[i].Diff | number: '1.0-0' }}% {{ 'goalAchievementsSinceStart' | translate }}
               </div>
 
@@ -113,7 +135,36 @@
 
       </ion-col>
 
-      
+      <ion-col sizeLg="6" sizeMd="6" sizeSm="12">
+
+        <ion-card *ngIf="nutritionStats">
+          <ion-card-header class="color-tertiary">
+            {{ 'Nutrition' | translate }} 
+          </ion-card-header>
+
+          <ion-card-content>
+
+            <div 
+              style="margin-bottom: 7px">
+
+              <div>
+                {{ nutritionStats.StartAndNow.CurrentPercentage | number: '1.0-0' }}% {{ 'latestAchievement' | translate}}
+              </div>
+
+            </div>
+
+          </ion-card-content>
+
+          <ion-button 
+            expand="full"
+            fill="clear"
+            color="secondary"
+            routerLink="/nutrition">
+            {{ 'GoToNutrition' | translate }}
+          </ion-button>
+        </ion-card>
+
+      </ion-col>
 
     </ion-row>
 

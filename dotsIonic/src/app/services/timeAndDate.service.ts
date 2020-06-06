@@ -48,7 +48,7 @@ export class TimeAndDateService{
   }
 
   // Formats date dd.mm
-  async formatDate(date){
+  formatDate(date){
     let splitDate = date.split("-");
     return splitDate[2] + "." + splitDate[1];
   }

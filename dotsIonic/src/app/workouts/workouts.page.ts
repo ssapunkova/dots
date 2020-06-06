@@ -7,12 +7,11 @@ import { AlertController, ModalController, ActionSheetController } from '@ionic/
 import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '../services/loading.service';
 import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
-import { DataTableService } from '../services/dataTable.service';
 import { TimeAndDateService } from '../services/timeAndDate.service';
-import { ChartService } from '../services/chart.service';
 import { WorkoutService } from '../services/workout.service';
 
 import { NewWorkoutSheetPage } from './newWorkoutSheet/newWorkoutSheet.page';
+import { AnalyseService } from '../services/analyse.service';
 
 @Component({
   selector: 'app-workouts',
@@ -26,14 +25,12 @@ export class WorkoutsPage implements OnInit {
   public MAX_SHEETS_NUMBER = 3;
 
   public workoutSheets = [];
-  public currentSheetIndex = 0;
 
-  public showMode = 'chart';
   public showPeriods = [];
 
   public canAddSheet = true;
 
-  public chartData = [];
+  public stats = {};
 
   public userData;
 
@@ -43,11 +40,10 @@ export class WorkoutsPage implements OnInit {
     public workoutService: WorkoutService,
     public translate: TranslateService,
     public timeAndDateService: TimeAndDateService,
+    public analyseService: AnalyseService,
     public alertController: AlertController,
     public modalController: ModalController,
     public actionSheetController: ActionSheetController,
-    public dataTableService: DataTableService,
-    public chartService: ChartService,
     private route: ActivatedRoute
   ) { };
 
@@ -72,38 +68,10 @@ export class WorkoutsPage implements OnInit {
 
       if(this.workoutSheets.length > 0){
 
-        // Sort records and get workout periods in every sheet
-        for(var i = 0; i < this.workoutSheets.length; i++){
-
-          let months = [];
-          this.timeAndDateService.sortByDate(this.workoutSheets[i].WorkoutRecords, "asc");
-
-          // Get array of the months of the records
-          // Used to allow the user to select a period ov viewed chart/table
-          this.workoutSheets[i].WorkoutRecords.forEach((record) => {
-            let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
-            if(months.indexOf(splitDate) < 0){
-              months.push(splitDate);
-            }
-          })
-          this.workoutSheets[i].WorkoutMonths = months;
-
-          this.chartData[i] = [];
-          this.chartData[i].push(
-            {
-              "name": this.translate.instant("Exercises"),
-              "value": this.workoutSheets[i].Params.length
-            },
-            {
-              "name": this.translate.instant("WorkoutRecords"),
-              "value": this.workoutSheets[i].WorkoutRecords.length
-            }
-          );
-
-        }
-
         // Disable adding a new sheet if there are MAX_SHEETS_NUMBER already
         if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.canAddSheet = false;
+
+        this.stats = await this.analyseService.analyseWorkoutSheets(data);
 
       }
 
@@ -216,57 +184,6 @@ export class WorkoutsPage implements OnInit {
       );
     };
 
-    // const alert = await this.alertController.create({
-    //   header: this.translate.instant("EditSheet"),
-    //   inputs: [
-    //     {
-    //       name: this.translate.instant("Title"),
-    //       value: sheet.Title,
-    //       type: 'text'
-    //     }
-    //   ],
-    //   buttons: [
-    //     {
-    //       text: this.translate.instant("Cancel"),
-    //       role: 'cancel',
-    //       cssClass: 'secondary'
-    //     }, {
-    //       text: 'Ok',
-    //       handler: (data) => {
-
-    //         if(data.Title == ""){
-    //           this.errorToastAndAlertService.showErrorToast(this.translate.instant("EnterAName"));
-    //           return false;
-    //         }
-    //         else {
-    //           // Get all sheet names in order to check for repeating names
-    //           let sheetTitles = this.workoutSheets.map((sheet) => sheet.Title);
-
-    //           // Show error if a sheet with tis title already exists
-    //           if(sheetTitles.indexOf(data.Title) != -1) {
-    //             this.errorToastAndAlertService.showErrorToast(this.translate.instant("ExistingSheetName"));
-    //             return false;
-    //           }
-    //           else{
-    //             // If sheet title is fine, add sheet to database
-
-    //             sheet.Title = data.Title;
-    //             this.workoutSheets[index].Title = sheet.Title;
-
-    //             this.workoutService.renameSheet(sheet).subscribe((data: [any])=>
-    //               error => {
-    //                 this.errorToastAndAlertService.showErrorAlert("Oups")
-    //               }
-    //             );
-
-    //           }
-    //         }
-    //       }
-    //     }
-    //   ]
-    // });
-
-    // await alert.present();
   }
 
   async deleteSheet(sheet, index){
