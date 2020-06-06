@@ -16,3 +16,10 @@
 ion-card-content{
     padding: 0rem !important;
 }
+
+.item-interactive-disabled{
+    * {
+        opacity: 1 !important;
+        color: var(--text) !important;
+    }
+}

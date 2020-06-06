@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <ion-split-pane contentId="my-content">
+  <ion-split-pane  [when]="false" contentId="my-content">
     <ion-menu type="overlay" contentId="my-content">
       <ion-content>
         <ion-list lines="none">
@@ -30,10 +30,11 @@
       <ion-footer>
         <ion-button
           slot="end" 
-          fill="clear" 
+          fill="clear"
+          color="dark" 
           (click)="logout()">
           <ion-icon name="exit"></ion-icon>
-          <ion-label>{{ 'Logout' | translate }}</ion-label>
+          <ion-label style="padding-left: 10px">{{ 'Logout' | translate }}</ion-label>
         </ion-button>
       </ion-footer>
     </ion-menu>
