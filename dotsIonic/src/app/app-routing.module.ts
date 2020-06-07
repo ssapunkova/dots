@@ -6,7 +6,7 @@ import { UserService } from './services/user.service';
 import { WorkoutsPage } from './workouts/workouts.page';
 import { WorkoutSheetPage } from './workoutSheet/workoutSheet.page';
 import { WorkoutManagerPage } from './workoutManager/workoutManager.page';
-import { ParamsPage } from './params/params.page';
+import { CalculatorsPage } from './calculators/calculators.page';
 import { SettingsPage } from './settings/settings.page';
 
 const routes: Routes = [
@@ -41,7 +41,7 @@ const routes: Routes = [
   },
   {
     path: 'params',
-    loadChildren: () => import('./params/params.module').then(m => m.ParamsPageModule),
+    loadChildren: () => import('./calculators/calculators.module').then(m => m.CalculatorsPageModule),
     resolve: { userData: UserService }
   },
   {

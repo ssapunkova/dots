@@ -7,13 +7,13 @@ import { IonicModule } from '@ionic/angular';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ParamsPage } from './params.page';
+import { CalculatorsPage } from './calculators.page';
 import { CalculatorPage } from './calculator/calculator.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ParamsPage
+    component: CalculatorsPage
   }
 ];
 
@@ -29,8 +29,8 @@ const routes: Routes = [
     CalculatorPage
   ],
   declarations: [
-    ParamsPage,
+    CalculatorsPage,
     CalculatorPage
   ]
 })
-export class ParamsPageModule {}
+export class CalculatorsPageModule {}

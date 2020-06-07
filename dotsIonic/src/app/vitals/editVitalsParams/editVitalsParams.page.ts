@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 
 @Injectable()
-export class EditVitalsParamsPage implements OnInit {
+export class EditVitalsCalculatorsPage implements OnInit {
 
   public params;
   public deletedParams;

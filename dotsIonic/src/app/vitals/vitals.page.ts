@@ -11,7 +11,7 @@ import { ChartService } from '../services/chart.service';
 import { VitalsService } from '../services/vitals.service';
 
 import { NewVitalsRecordPage } from './newVitalsRecord/newVitalsRecord.page';
-import { EditVitalsParamsPage } from './editVitalsParams/editVitalsParams.page';
+import { EditVitalsCalculatorsPage } from './editVitalsParams/editVitalsParams.page';
 import { ParamsService } from '../services/params.service';
 
 @Component({
@@ -127,7 +127,7 @@ export class VitalsPage implements OnInit {
 
     // Show a configuration modal
     const modal = await this.modalController.create({
-      component: EditVitalsParamsPage,
+      component: EditVitalsCalculatorsPage,
       componentProps: data
     });
     await modal.present();

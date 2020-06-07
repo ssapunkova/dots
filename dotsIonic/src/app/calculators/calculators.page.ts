@@ -14,10 +14,10 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-params',
-  templateUrl: './params.page.html',
-  styleUrls: ['./params.page.scss'],
+  templateUrl: './calculators.page.html',
+  styleUrls: ['./calculators.page.scss'],
 })
-export class ParamsPage implements OnInit {
+export class CalculatorsPage implements OnInit {
 
  
   public userData;

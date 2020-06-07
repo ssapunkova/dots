@@ -11,7 +11,7 @@ import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.ser
 })
 
 @Injectable()
-export class EditWorkoutParamsPage implements OnInit {
+export class EditWorkoutCalculatorsPage implements OnInit {
 
   public MAX_SHEET_EXERCISES = 15;
 

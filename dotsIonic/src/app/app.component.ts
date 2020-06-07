@@ -41,12 +41,12 @@ export class AppComponent {
     {
       title: 'Vitals',
       url: '/vitals',
-      icon: 'vitals-sharp',
-      iconColor: 'tertiary'
+      icon: 'heart-sharp',
+      iconColor: 'red'
     },
     {
-      title: 'Parameters',
-      url: '/params',
+      title: 'Calculators',
+      url: '/calculators',
       icon: 'grid',
       iconColor: 'red'
     },

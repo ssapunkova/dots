@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { VitalsPage } from './vitals.page';
 
-import { EditVitalsParamsPage } from './editVitalsParams/editVitalsParams.page';
+import { EditVitalsCalculatorsPage } from './editVitalsParams/editVitalsParams.page';
 
 import { ComponentsModule  } from '../components/components.module';
 
@@ -34,11 +34,11 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   entryComponents: [
-    EditVitalsParamsPage
+    EditVitalsCalculatorsPage
   ],
   declarations: [
     VitalsPage,
-    EditVitalsParamsPage
+    EditVitalsCalculatorsPage
   ]
 })
 export class VitalsPageModule {}

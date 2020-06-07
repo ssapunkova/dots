@@ -11,7 +11,7 @@ import { ComponentsModule  } from '../components/components.module';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { EditWorkoutParamsPage } from './editWorkoutParams/editWorkoutParams.page';
+import { EditWorkoutCalculatorsPage } from './editWorkoutParams/editWorkoutParams.page';
 
 const routes: Routes = [
   {
@@ -31,11 +31,11 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   entryComponents: [
-    EditWorkoutParamsPage
+    EditWorkoutCalculatorsPage
   ],
   declarations: [
     WorkoutSheetPage,
-    EditWorkoutParamsPage
+    EditWorkoutCalculatorsPage
   ]
 })
 export class WorkoutSheetPageModule {}
