@@ -87,7 +87,6 @@ export class ParamsService {
       Unit: "kcal",                                        // 9 - DaylyKcalIntake intake
       Goal: 2000,
       Type: "number",
-      Color: 1,
       Icon: "vitals"
     },
     {
@@ -96,7 +95,6 @@ export class ParamsService {
       Goal: 20,                                            // 10 - body fat percentage
       Unit: "%",
       Type: "number",
-      Color: 7,
       Icon: "vitals"
     },
     {
@@ -105,7 +103,6 @@ export class ParamsService {
       Goal: 85,                                            // 11 - dayly protein intake in gr
       Unit: "g",
       Type: "number",
-      Color: 3,
       Icon: "vitals"
     },
     {
@@ -114,7 +111,6 @@ export class ParamsService {
       Goal: 12,                                            // 12 - zone blocks
       Unit: "bl",
       Type: "number",
-      Color: 5,
       Icon: "vitals"
     },
     {
@@ -123,21 +119,8 @@ export class ParamsService {
       Goal: 40,                                            // 13 - dayly sugar intake in gr
       Unit: "gr",
       Type: "number",
-      Color: 2,
       Icon: "vitals"
     }
-  ]
-
-  public categories = [
-    {
-      Title: "Vitals",
-      Id: "vitals"
-    }
-  ]
-
-  public general = [
-    this.allParams[0],
-    this.allParams[1]
   ]
 
   public vitals = [
@@ -145,6 +128,14 @@ export class ParamsService {
     this.allParams[3],
     this.allParams[4],
     this.allParams[6],
+    this.allParams[9],
+    this.allParams[10],
+    this.allParams[11],
+    this.allParams[12],
+    this.allParams[13]
+  ]
+  
+  public calculatable = [
     this.allParams[9],
     this.allParams[10],
     this.allParams[11],

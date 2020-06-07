@@ -47,8 +47,8 @@ export class AppComponent {
     {
       title: 'Calculators',
       url: '/calculators',
-      icon: 'grid',
-      iconColor: 'red'
+      icon: 'calculator',
+      iconColor: 'tertiary'
     },
     {
       title: 'Settings',

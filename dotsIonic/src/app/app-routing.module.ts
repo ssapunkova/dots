@@ -40,7 +40,7 @@ const routes: Routes = [
     resolve: { userData: UserService }
   },
   {
-    path: 'params',
+    path: 'calculators',
     loadChildren: () => import('./calculators/calculators.module').then(m => m.CalculatorsPageModule),
     resolve: { userData: UserService }
   },
