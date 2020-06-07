@@ -73,9 +73,6 @@ export class CalculatorPage implements OnInit {
           text: this.translate.instant("Save results"),
           cssClass: 'primary',
           handler: async (data) => {
-
-            let needRecalculating = [];
-
             await that.modalController.dismiss(that.userValues);
           }
         }
@@ -83,8 +80,6 @@ export class CalculatorPage implements OnInit {
     });
     await alert.present();
   }
-
-
 
   public blocks = {
     required: [
