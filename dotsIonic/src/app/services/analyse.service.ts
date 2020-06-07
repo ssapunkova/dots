@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { DataTableService } from './dataTable.service';
 import { GeneralService } from './general.service';
-import { isBuffer } from 'util';
 import { NutritionService } from './nutrition.service';
 
 
@@ -14,7 +12,6 @@ import { NutritionService } from './nutrition.service';
 export class AnalyseService{
 
   constructor(
-    public dataTableService: DataTableService,
     private generalService: GeneralService,
     private nutritionService: NutritionService
   ) {}
@@ -309,42 +306,43 @@ export class AnalyseService{
 
 
     let results = {
-      "paramsToEdit": [],
-      "needsNewGoal": [],
-      "aboveGoal": [],
-      "nearGoal": [],
-      "nowhereNearGoal": []
+      "weeks": 0,
+      "categories": ["aboveGoal", "nearGoal", "nowhereNearGoal"],
+      "data": {
+        "paramsToEdit": [],
+        "needsNewGoal": [],
+        "aboveGoal": [],
+        "nearGoal": [],
+        "nowhereNearGoal": []
+      },
+      "colors": {
+        "aboveGoal": "warning", 
+        "nearGoal": "success", 
+        "nowhereNearGoal": "danger"
+      },
+      "icons": {
+        "aboveGoal": "trending-up", 
+        "nearGoal": "remove", 
+        "nowhereNearGoal": "trending-down"
+      }
     };
 
-    this.resultsCategories = ["aboveGoal", "nearGoal", "nowhereNearGoal"];
-    this.categoryColors = {
-      "aboveGoal": "warning", 
-      "nearGoal": "success", 
-      "nowhereNearGoal": "danger"
-    };
-
-    this.categoryIcons = {
-      "aboveGoal": "trending-up", 
-      "nearGoal": "remove", 
-      "nowhereNearGoal": "trending-down"
-    }
 
     
     let number = 5;
-    if(data.WorkoutRecords.length < 5) number = data.WorkoutRecords.length;
+    if(data.records.length < 5) number = data.records.length;
 
     let goalsData = [];
     let registeredParams = [];
 
     for(let i = 0; i < number; i++){
-      let currentRec = data.WorkoutRecords[i];
+      let currentRec = data.records[i];
       for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
-        let paramData = data.Params.filter((p) => p._id == currentRec.Params[j])[0];
+        let paramData = data.params.filter((p) => p._id == currentRec.Params[j])[0];
                 
         let index = registeredParams.indexOf(currentRec.Params[j]);
         if(index < 0){
           // Add param to goalsData array
-          console.log(currentRec);
           goalsData.push({
             Data: paramData,
             PercentageSum: currentRec.PercentageOfGoal[j],
@@ -366,44 +364,43 @@ export class AnalyseService{
       goalsData[i].AveragePercentage = averagePercentage;
 
       if(averagePercentage >= 150){
-        results.needsNewGoal.push(goalsData[i]);
+        results.data.needsNewGoal.push(goalsData[i]);
       } 
 
       if(averagePercentage > 100){
-        results.aboveGoal.push(goalsData[i]);
+        results.data.aboveGoal.push(goalsData[i]);
       }
       else if(averagePercentage > 80){
-        results.nearGoal.push(goalsData[i]);
+        results.data.nearGoal.push(goalsData[i]);
       }
       else{
-        results.nowhereNearGoal.push(goalsData[i]);
+        results.data.nowhereNearGoal.push(goalsData[i]);
       }
     }
 
-    console.log("***Analysis results ", results);
 
-    this.dataTableService.resultsAnalysis = results;
 
-    if(results.needsNewGoal.length > 0){
+    if(results.data.needsNewGoal.length > 0){
 
-      for(let i = 0; i < results.needsNewGoal.length; i++){
-        this.dataTableService.resultsAnalysis.paramsToEdit.push(results.needsNewGoal[i].Data.Title);
+      for(let i = 0; i < results.data.needsNewGoal.length; i++){
+        results.data.paramsToEdit.push(results.data.needsNewGoal[i].Data.Title);
       }
     }
 
     
     // Weeks since start
 
-    let firstRecord = data.WorkoutRecords[data.WorkoutRecords.length - 1].Date;
-    let lastRecord = data.WorkoutRecords[0].Date;
-    let weeks = this.generalService.countWeeks(firstRecord, lastRecord);
-    console.log(weeks);
-    this.dataTableService.weeksSinceStart = weeks;
+    let firstRecord = data.records[data.records.length - 1].Date;
+    let lastRecord = data.records[0].Date;
+    results.weeks = this.generalService.countWeeks(firstRecord, lastRecord);
+
+    
+    console.log("***Analysis results ", results);
+    return results;
     
   }
 
   async analyseNutrition(data){
-    console.log(data);
 
     console.log("***Analysing data ", data)
 
@@ -431,23 +428,18 @@ export class AnalyseService{
     let registeredParams = []
     let goalsData = [];
 
-    console.log("start")
 
     let number = 5;
     if(data.Records.length < 5) number = data.Records.length;
 
     for(let i = 0; i < number; i++){
       let currentRec = data.Records[i];
-      console.log(currentRec, currentRec.Date, currentRec.PercentageOfGoal);
       for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
         let paramData = data.Params.filter((p) => p.Index == currentRec.Params[j])[0];
-
-        console.log(paramData);
                 
         let index = registeredParams.indexOf(currentRec.Params[j]);
         if(index < 0){
           // Add param to goalsData array
-          console.log(currentRec);
           goalsData.push({
             Data: paramData,
             PercentageSum: currentRec.PercentageOfGoal[j],

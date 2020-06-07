@@ -11,33 +11,33 @@
 
     <ion-card>
 
-      <ion-grid>
+      <ion-grid *ngIf="dataTableService.resultsAnalysis != null">
 
         <ion-row *ngIf="legendTitle == 'Exercises'">
 
           <ion-col sizeLg="4" sizeMd="5" sizeXs="12">
             <h1> {{ 'Last5EntryStats' | translate }} </h1>
 
-            <div *ngFor="let category of analyseService.resultsCategories">
+            <div *ngFor="let category of dataTableService.resultsAnalysis.categories">
 
-              <ion-card *ngIf="dataTableService.resultsAnalysis[category].length > 0">
+              <ion-card *ngIf="dataTableService.resultsAnalysis.data[category].length > 0">
 
                 <ion-card-header 
                   class="statsCard"
                   (click)="toggleAnalysisDetails(category)"
-                  [color]="analyseService.categoryColors[category]">
+                  [color]="dataTableService.resultsAnalysis.colors[category]">
 
                   <ion-icon 
-                    [name]="analyseService.categoryIcons[category]" 
+                    [name]="dataTableService.resultsAnalysis.icons[category]" 
                     color="light" style="padding-right: 0.5rem; font-size: 1.1rem"
                   ></ion-icon>
 
                   <ion-label style="flex-grow: 1; color: white !important">
                     {{ 'exercisesWithResults.' + category | translate }}: 
-                    {{ dataTableService.resultsAnalysis[category].length }} {{ 'exercises' | translate }}
+                    {{ dataTableService.resultsAnalysis.data[category].length }} {{ 'exercises' | translate }}
                   </ion-label>
 
-                  <ion-button fill="clear" color="light">
+                   <ion-button fill="clear" color="light">
                     <ion-icon name="arrow-dropdown" *ngIf="!showAnalysisDetails[category]"></ion-icon>
                     <ion-icon name="arrow-dropup" *ngIf="showAnalysisDetails[category]"></ion-icon>
                   </ion-button>
@@ -52,7 +52,7 @@
                     {{ param.Data.Title | translate }} ({{ param.AveragePercentage | number:'1.0-0' }}%)
                   </div>
 
-                </ion-card-content>
+                </ion-card-content> 
 
               </ion-card>
 
@@ -60,11 +60,11 @@
 
           </ion-col>
 
-          <ion-col>
+          <ion-col >
 
             <h1> {{ 'Overall' | translate }} </h1>
 
-            <ion-item *ngIf="dataTableService.resultsAnalysis.paramsToEdit.length > 0">
+            <ion-item *ngIf="dataTableService.resultsAnalysis.data.paramsToEdit.length > 0">
               {{ dataTableService.resultsAnalysis.paramsToEdit | json }}
             </ion-item>
 
@@ -72,17 +72,20 @@
               <ion-icon name="grid" style="padding-right: 0.5rem"></ion-icon>
               {{ dataTableService.params.length }} {{ 'exercises' | translate }}
             </ion-item>
+
             <ion-item>
               <ion-icon name="checkmark" style="padding-right: 0.5rem"></ion-icon>
               {{ dataTableService.allRecords.length }} {{ 'records' | translate }}
             </ion-item>
+
             <ion-item>
               <ion-icon name="calendar" style="padding-right: 0.5rem"></ion-icon>
-              {{ dataTableService.weeksSinceStart }} {{ 'weeksSinceStart' | translate }}
+              {{ dataTableService.resultsAnalysis.weeksSinceStart }} {{ 'weeksSinceStart' | translate }}
             </ion-item>
+
             <ion-item>
               <ion-icon name="play" style="padding-right: 0.5rem"></ion-icon>
-              {{ dataTableService.allRecords.length / dataTableService.weeksSinceStart | number: "1.0-1" }} 
+              {{ dataTableService.allRecords.length / dataTableService.resultsAnalysis.weeksSinceStart | number: "1.0-1" }} 
               {{ 'timesAWeek' | translate }}
             </ion-item>
             
@@ -95,17 +98,17 @@
           <ion-col sizeLg="4" sizeMd="5" sizeXs="12">
             <h1> {{ 'Last5EntryStats' | translate }} </h1>
 
-            <div *ngFor="let category of analyseService.resultsCategories">
+            <div *ngFor="let category of dataTableService.resultsAnalysis.categories">
 
-              <ion-card *ngIf="dataTableService.resultsAnalysis[category].length > 0">
+              <ion-card *ngIf="dataTableService.resultsAnalysis.data[category].length > 0">
 
                 <ion-card-header 
                   class="statsCard"
                   (click)="toggleAnalysisDetails(category)"
-                  [color]="analyseService.categoryColors[category]">
+                  [color]="dataTableService.resultsAnalysis.colors[category]">
 
                   <ion-icon 
-                    [name]="analyseService.categoryIcons[category]" 
+                    [name]="dataTableService.resultsAnalysis.icons[category]" 
                     color="light" style="padding-right: 0.5rem; font-size: 1.1rem"
                   ></ion-icon>
 

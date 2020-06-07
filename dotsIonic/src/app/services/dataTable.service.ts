@@ -15,6 +15,8 @@ import { ComponentsModule } from '../components/components.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { LoadingService } from './loading.service';
+import { AnalyseService } from './analyse.service';
+import { resolve } from 'url';
 
 // DataTable Service
 // Implements sorting the data, displayed in ion-grid
@@ -56,7 +58,8 @@ export class DataTableService{
 
     public workoutService: WorkoutService,
     public nutritionService: NutritionService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public analyseService: AnalyseService
   ) { }
 
 // initializeDataTable is called by data-table component
@@ -90,22 +93,7 @@ export class DataTableService{
       this.prepareData();
     }
 
-    // If there are no user-selected goals, use params' default goals
-    if(this.goals == null){
-      this.goals = [];
-      for(var i = 0; i < this.params.length; i++){
-        this.goals.push(this.params[i].Goal);
-      }
-    }
-
-    // Calculate each record's params % of goal
-    for(var i = 0; i < this.allRecords.length; i++){
-      let record = this.allRecords[i];
-      record.PercentageOfGoal = [];
-      for(var j = 0; j < record.Values.length; j++){
-        record.PercentageOfGoal[j] = this.generalService.calculatePercentage(record.Values[j], this.goals[j]);
-      }
-    }
+     
 
     // Calculate table width based on table column number
     for(var i = 0; i < this.params.length; i++){
@@ -127,6 +115,8 @@ export class DataTableService{
   // Sorts data, gets and sets showing period
   async prepareData(){
 
+    console.log("PREPARE DATA", this.allRecords)
+
     this.timeAndDateService.sortByDate(this.allRecords, "asc");
 
     this.months = this.generalService.getMonths(this.allRecords);
@@ -139,6 +129,40 @@ export class DataTableService{
     else{
       this.setPeriod(this.showingPeriod, false);
     }
+
+    new Promise((resolve) => {
+
+      // If there are no user-selected goals, use params' default goals
+      if(this.goals == null){
+        this.goals = [];
+        for(var i = 0; i < this.params.length; i++){
+          this.goals.push(this.params[i].Goal);
+        }
+      }
+      
+      // Calculate each record's params % of goal
+      for(var i = 0; i < this.allRecords.length; i++){
+        let record = this.allRecords[i];
+        record.PercentageOfGoal = [];
+        for(var j = 0; j < record.Values.length; j++){
+          record.PercentageOfGoal[j] = this.generalService.calculatePercentage(record.Values[j], this.goals[j]);
+        }
+      }
+
+      resolve();
+
+
+    }).then( async () => {
+
+      this.resultsAnalysis = await this.analyseService.analyseWorkoutResults({
+        "params": this.params,
+        "records": this.allRecords
+      });
+      console.log(this.resultsAnalysis);
+
+    })
+
+    
 
   }
 
@@ -177,20 +201,6 @@ export class DataTableService{
       this.initializeChart();
     }
   }
-
-  // // Get array of records months
-  // async getShowingMonths(){
-  //   // Array of months - Used to allow the user to select a period ov viewed chart/table
-  //   let months = [];
-  //   this.allRecords.forEach((record, i) => {
-  //     record.index = i;
-  //     let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
-  //     if(months.indexOf(splitDate) < 0){
-  //       months.push(splitDate);
-  //     }
-  //   })
-  //   this.months = months;
-  // }
 
 
   // Add record via modal and send modalData to the corresponding service
