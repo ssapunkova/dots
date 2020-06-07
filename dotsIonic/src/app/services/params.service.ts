@@ -17,49 +17,46 @@ export class ParamsService {
         { "Title": "Female", "Value": 1 },                 // 0 - gender  
       ],
       Type: "select",
-      ManuallyEditable: false
     },
     {
       Index: 1,
       Title: "Age",
       Unit: "y.o.",                                        // 1 - age
       Type: "number",
-      ManuallyEditable: true
     },
     {
       Index: 2,
       Title: "Weight",
       Unit: "kg",                                          // 2 - weight
       Type: "number",
-      ManuallyEditable: true
+      Icon: "heart"
     },
     {
       Index: 3,
       Title: "Height",
       Unit: "cm",                                          // 3 - height
       Type: "number",
-      ManuallyEditable: true
+      Icon: "heart"
     },
     {
       Index: 4,
       Title: "Waist",
       Unit: "cm",                                          // 4 - waist
       Type: "number",
-      ManuallyEditable: true
+      Icon: "heart"
     },
     {
       Index: 5,
       Title: "Wrist",
       Unit: "cm",                                          // 5 - waist
       Type: "number",
-      ManuallyEditable: true
     },
     {
       Index: 6,
       Title: "Hips",
       Unit: "cm",                                          // 6 - hips
       Type: "number",
-      ManuallyEditable: true
+      Icon: "heart"
     },
     {
       Index: 7,
@@ -73,7 +70,6 @@ export class ParamsService {
         { "Title": "professional", "Value": 1 }
       ],
       Type: "select",
-      ManuallyEditable: false
     },
     {
       Index: 8,
@@ -84,7 +80,6 @@ export class ParamsService {
         { "Title": "heavy", "Value": 1.4 },   
       ],
       Type: "select",
-      ManuallyEditable: false
     },
     {
       Index: 9,
@@ -92,8 +87,8 @@ export class ParamsService {
       Unit: "kcal",                                        // 9 - DaylyKcalIntake intake
       Goal: 2000,
       Type: "number",
-      ManuallyEditable: true,
-      Color: 1
+      Color: 1,
+      Icon: "nutrition"
     },
     {
       Index: 10,
@@ -101,8 +96,8 @@ export class ParamsService {
       Goal: 20,                                            // 10 - body fat percentage
       Unit: "%",
       Type: "number",
-      ManuallyEditable: false,
-      Color: 7
+      Color: 7,
+      Icon: "nutrition"
     },
     {
       Index: 11,
@@ -110,8 +105,8 @@ export class ParamsService {
       Goal: 85,                                            // 11 - dayly protein intake in gr
       Unit: "g",
       Type: "number",
-      ManuallyEditable: true,
-      Color: 3
+      Color: 3,
+      Icon: "nutrition"
     },
     {
       Index: 12,
@@ -119,8 +114,8 @@ export class ParamsService {
       Goal: 12,                                            // 12 - zone blocks
       Unit: "bl",
       Type: "number",
-      ManuallyEditable: true,
-      Color: 5
+      Color: 5,
+      Icon: "nutrition"
     },
     {
       Index: 13,
@@ -128,8 +123,8 @@ export class ParamsService {
       Goal: 40,                                            // 13 - dayly sugar intake in gr
       Unit: "gr",
       Type: "number",
-      ManuallyEditable: true,
-      Color: 2
+      Color: 2,
+      Icon: "nutrition"
     }
   ]
 
@@ -146,6 +141,10 @@ export class ParamsService {
   ]
 
   public nutrition = [
+    this.allParams[2],
+    this.allParams[3],
+    this.allParams[4],
+    this.allParams[6],
     this.allParams[9],
     this.allParams[10],
     this.allParams[11],

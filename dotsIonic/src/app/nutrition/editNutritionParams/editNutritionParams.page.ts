@@ -41,6 +41,7 @@ export class EditNutritionParamsPage implements OnInit {
     console.log(this.nutritionService.Params, this.goals);
 
     let usedParamIndexes = this.params.map((param) => param.Index);
+    console.log(usedParamIndexes);
     let notUsedParams = this.nutritionService.Params.filter((param) => usedParamIndexes.indexOf(param.Index) < 0);
 
     if(notUsedParams.length == 0){
@@ -50,7 +51,7 @@ export class EditNutritionParamsPage implements OnInit {
       let possibleParams = notUsedParams.map((param) => {
         return {
           text: this.translate.instant(param.Title),
-          icon: 'refresh-circle',
+          icon: param.Icon,
           handler: () => {
             this.addParam(param)
           }
