@@ -29,21 +29,21 @@ export class ParamsService {
       Title: "Weight",
       Unit: "kg",                                          // 2 - weight
       Type: "number",
-      Icon: "heart"
+      Icon: "hand"
     },
     {
       Index: 3,
       Title: "Height",
       Unit: "cm",                                          // 3 - height
       Type: "number",
-      Icon: "heart"
+      Icon: "hand"
     },
     {
       Index: 4,
       Title: "Waist",
       Unit: "cm",                                          // 4 - waist
       Type: "number",
-      Icon: "heart"
+      Icon: "hand"
     },
     {
       Index: 5,
@@ -56,7 +56,7 @@ export class ParamsService {
       Title: "Hips",
       Unit: "cm",                                          // 6 - hips
       Type: "number",
-      Icon: "heart"
+      Icon: "hand"
     },
     {
       Index: 7,
@@ -87,7 +87,7 @@ export class ParamsService {
       Unit: "kcal",                                        // 9 - DaylyKcalIntake intake
       Goal: 2000,
       Type: "number",
-      Icon: "vitals"
+      Icon: "nutrition"
     },
     {
       Index: 10,
@@ -95,7 +95,7 @@ export class ParamsService {
       Goal: 20,                                            // 10 - body fat percentage
       Unit: "%",
       Type: "number",
-      Icon: "vitals"
+      Icon: "nutrition"
     },
     {
       Index: 11,
@@ -103,7 +103,7 @@ export class ParamsService {
       Goal: 85,                                            // 11 - dayly protein intake in gr
       Unit: "g",
       Type: "number",
-      Icon: "vitals"
+      Icon: "nutrition"
     },
     {
       Index: 12,
@@ -111,7 +111,7 @@ export class ParamsService {
       Goal: 12,                                            // 12 - zone blocks
       Unit: "bl",
       Type: "number",
-      Icon: "vitals"
+      Icon: "nutrition"
     },
     {
       Index: 13,
@@ -119,8 +119,40 @@ export class ParamsService {
       Goal: 40,                                            // 13 - dayly sugar intake in gr
       Unit: "gr",
       Type: "number",
-      Icon: "vitals"
-    }
+      Icon: "nutrition"
+    },
+    {
+      Index: 14,
+      Title: "BloodSugar",
+      Goal: 4,                                            // 14 - blood sugar
+      Unit: "mmol/L",
+      Type: "number",
+      Icon: "nutrition"
+    },
+    {
+      Index: 15,
+      Title: "SystolicBloodPressure",
+      Goal: 120,                                            // 15 - systolic blood pressure
+      Unit: "mmHg",
+      Type: "number",
+      Icon: "heart"
+    },
+    {
+      Index: 16,
+      Title: "DiastolicBloodPressure",
+      Goal: 80,                                            // 16 - diastolic blood pressure
+      Unit: "mmHg",
+      Type: "number",
+      Icon: "heart"
+    },
+    {
+      Index: 17,
+      Title: "Pulse",
+      Goal: 70,                                            // 17 - pulse
+      Unit: "b/m",
+      Type: "number",
+      Icon: "heart"
+    },
   ]
 
   public vitals = [
@@ -132,7 +164,11 @@ export class ParamsService {
     this.allParams[10],
     this.allParams[11],
     this.allParams[12],
-    this.allParams[13]
+    this.allParams[13],
+    this.allParams[14],
+    this.allParams[15],
+    this.allParams[16],
+    this.allParams[17]
   ]
   
   public calculatable = [
