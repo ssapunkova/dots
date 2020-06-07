@@ -42,23 +42,10 @@ export class CalculatorPage implements OnInit {
     console.log(this.param, this.userValues);
   }
 
-  async triggerCalculation(){
-    console.log(this.param, this.userValues);
-    this.formulas[this.calculators[this.param.Title]].formula();
-  }
 
   public bodyMassConstants = [];
 
-  
-  public calculators = {
-    "Blocks": 0,
-    "BodyFatPercentage": 0,
-    "DaylyProteinIntake": 0,
-    "DaylyKcalIntake": 1,
-    "DaylySugarIntake": 2,
-    "SystolicBloodPressure": 3
-  }
-
+ 
 
   async finishCalculations(){
     console.log("User params: ", this.userValues);
@@ -88,12 +75,6 @@ export class CalculatorPage implements OnInit {
           handler: async (data) => {
 
             let needRecalculating = [];
-
-            for(let i = 0; i < this.formulas.length; i++){
-              console.log(this.formulas[i]);
-              console.log(this.userValues, this.param)
-              console.log(this.formulas[i].required)
-            }
 
             await that.modalController.dismiss(that.userValues);
           }
@@ -242,7 +223,6 @@ export class CalculatorPage implements OnInit {
     }
   }
 
-  
   public sugarIntake = {
     required: [
       this.paramsService.allParams[9],      // 9 - DaylyKcalIntake
@@ -261,11 +241,20 @@ export class CalculatorPage implements OnInit {
     }
   }
 
-  public formulas = [
-    this.blocks,
-    this.kcalIntake,
-    this.sugarIntake
-  ]
+   
+  public calculators = {
+    "Blocks": this.blocks,
+    "BodyFatPercentage": this.blocks,
+    "DaylyProteinIntake": this.blocks,
+    "DaylyKcalIntake": this.kcalIntake,
+    "DaylySugarIntake": this.sugarIntake
+  }
+
+  
+  async triggerCalculation(){
+    console.log(this.param, this.userValues);
+    this.calculators[this.param.Title].formula();
+  }
 
 
   async closeModal(){

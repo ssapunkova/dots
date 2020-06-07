@@ -17,7 +17,7 @@
     </ion-item>
 
     <ion-row 
-    *ngFor="let field of formulas[calculators[param.Title]].required; let i = index">
+    *ngFor="let field of calculators[param.Title].required; let i = index">
       <ion-col>
     
         <div *ngIf="field.Type == 'number'" class="value-input-div">
