@@ -158,8 +158,6 @@ export class CalculatorsPage implements OnInit {
         this.dbData.Values.push(paramValue);
       }
 
-      this.sortParamsByValue();
-
     }
 
     console.log("***Updated userParams ", this.dbData);
@@ -170,20 +168,6 @@ export class CalculatorsPage implements OnInit {
     })
 
     this.changedUserValues = [];
-  }
-
-  // Sort each param category, so that 
-  // -- params that the user has calculated appear first
-  // -- calculated params are ordered newer -> older
-  // -- -- this happens because they are added later in userParamTitles, so their index will be greater
-  async sortParamsByValue(){
-
-    for(let i = 0; i < this.paramsService.categories.length; i++){
-      let category = this.paramsService.categories[i].Id;
-      this.paramsService[category].sort((a, b) => {
-        return this.userParams.Titles.indexOf(b.Title) - this.userParams.Titles.indexOf(a.Title)
-      })
-    }
   }
 
 
