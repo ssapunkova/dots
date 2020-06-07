@@ -9,7 +9,7 @@ import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.servic
 import { ChartService } from '../services/chart.service';
 
 import { WorkoutService } from '../services/workout.service';
-import { NutritionService } from '../services/nutrition.service';
+import { VitalsService } from '../services/vitals.service';
 
 import { ComponentsModule } from '../components/components.module';
 
@@ -43,7 +43,7 @@ export class DataTableService{
 
   public services = {
     "workout": this.workoutService,
-    "nutrition": this.nutritionService
+    "vitals": this.vitalsService
   }
 
 
@@ -57,7 +57,7 @@ export class DataTableService{
     public errorToastAndAlertService: ErrorToastAndAlertService,
 
     public workoutService: WorkoutService,
-    public nutritionService: NutritionService,
+    public vitalsService: VitalsService,
     public translate: TranslateService,
     public analyseService: AnalyseService
   ) { }
@@ -159,8 +159,8 @@ export class DataTableService{
       // Use analyseService for analysing results
       
       let func = "analyseWorkoutResults";
-      if(this.service == this.nutritionService){
-        func = "analyseNutrition";
+      if(this.service == this.vitalsService){
+        func = "analyseVitals";
       }
       this.resultsAnalysis = await this.analyseService[func]({
         "Params": this.params,

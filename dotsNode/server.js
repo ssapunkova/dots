@@ -57,7 +57,7 @@ const dbConnection = require('./dbConnection');
 // Require routes
 app.use(require("./routes/auth"));
 app.use(require("./routes/workouts"));
-app.use(require("./routes/nutrition"));
+app.use(require("./routes/vitals"));
 app.use(require("./routes/calculate"));
 
 

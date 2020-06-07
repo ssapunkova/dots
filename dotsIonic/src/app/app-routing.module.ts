@@ -35,8 +35,8 @@ const routes: Routes = [
     loadChildren: () => import('./workoutManager/workoutManager.module').then(m => m.WorkoutManagerPageModule)
   },
   {
-    path: 'nutrition',
-    loadChildren: () => import('./nutrition/nutrition.module').then(m => m.NutritionPageModule),
+    path: 'vitals',
+    loadChildren: () => import('./vitals/vitals.module').then(m => m.VitalsPageModule),
     resolve: { userData: UserService }
   },
   {

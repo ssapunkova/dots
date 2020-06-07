@@ -2,16 +2,16 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { ModalController, NavParams, ActionSheetController } from '@ionic/angular';
 
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
-import { NutritionService } from '../../services/nutrition.service';
+import { VitalsService } from '../../services/vitals.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'modal-page',
-  templateUrl: './editNutritionParams.page.html'
+  templateUrl: './editVitalsParams.page.html'
 })
 
 @Injectable()
-export class EditNutritionParamsPage implements OnInit {
+export class EditVitalsParamsPage implements OnInit {
 
   public params;
   public deletedParams;
@@ -22,7 +22,7 @@ export class EditNutritionParamsPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
-    private nutritionService: NutritionService,
+    private vitalsService: VitalsService,
     private actionSheetController: ActionSheetController,
     private errorToastAndAlertService: ErrorToastAndAlertService,
     private translate: TranslateService
@@ -38,11 +38,11 @@ export class EditNutritionParamsPage implements OnInit {
 
   async presentActionSheet() {
 
-    console.log(this.nutritionService.Params, this.goals);
+    console.log(this.vitalsService.Params, this.goals);
 
     let usedParamIndexes = this.params.map((param) => param.Index);
     console.log(usedParamIndexes);
-    let notUsedParams = this.nutritionService.Params.filter((param) => usedParamIndexes.indexOf(param.Index) < 0);
+    let notUsedParams = this.vitalsService.Params.filter((param) => usedParamIndexes.indexOf(param.Index) < 0);
 
     if(notUsedParams.length == 0){
       this.errorToastAndAlertService.showErrorToast("AllParamsUsed");

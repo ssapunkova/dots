@@ -10,16 +10,16 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { NutritionPage } from './nutrition.page';
+import { VitalsPage } from './vitals.page';
 
-import { EditNutritionParamsPage } from './editNutritionParams/editNutritionParams.page';
+import { EditVitalsParamsPage } from './editVitalsParams/editVitalsParams.page';
 
 import { ComponentsModule  } from '../components/components.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: NutritionPage
+    component: VitalsPage
   }
 ];
 
@@ -34,11 +34,11 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   entryComponents: [
-    EditNutritionParamsPage
+    EditVitalsParamsPage
   ],
   declarations: [
-    NutritionPage,
-    EditNutritionParamsPage
+    VitalsPage,
+    EditVitalsParamsPage
   ]
 })
-export class NutritionPageModule {}
+export class VitalsPageModule {}

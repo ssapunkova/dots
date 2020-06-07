@@ -39,9 +39,9 @@ export class AppComponent {
       iconColor: 'secondary'
     },
     {
-      title: 'Nutrition',
-      url: '/nutrition',
-      icon: 'nutrition-sharp',
+      title: 'Vitals',
+      url: '/vitals',
+      icon: 'vitals-sharp',
       iconColor: 'tertiary'
     },
     {

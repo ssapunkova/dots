@@ -9,7 +9,7 @@ import { MenuController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { AnalyseService } from '../services/analyse.service';
 import { WorkoutService } from '../services/workout.service';
-import { NutritionService } from '../services/nutrition.service';
+import { VitalsService } from '../services/vitals.service';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +23,7 @@ export class HomePage implements OnInit {
   public userData;
 
   public workoutStats;
-  public nutritionStats;
+  public vitalsStats;
 
   public showingMonths;
 
@@ -38,7 +38,7 @@ export class HomePage implements OnInit {
     private route: ActivatedRoute,
     private analyseService: AnalyseService,
     private workoutService: WorkoutService,
-    private nutritionService: NutritionService
+    private vitalsService: VitalsService
   ){}
 
   ionViewWillEnter() {
@@ -52,11 +52,11 @@ export class HomePage implements OnInit {
     console.log("USERDATA", this.userData)
 
 
-    Promise.all([this.getWorkoutStats(), this.getNutritionStats()])
+    Promise.all([this.getWorkoutStats(), this.getVitalsStats()])
     .then(() => {
 
       let a = this.workoutStats.MonthlyStats.Months;
-      let b = this.nutritionStats.MonthlyStats.Months;
+      let b = this.vitalsStats.MonthlyStats.Months;
       if(a.length > b.length){
         this.showingMonths = b;
         this.showingMonths = [...a];
@@ -97,16 +97,16 @@ export class HomePage implements OnInit {
 
   });
 
-  getNutritionStats = () => new Promise((resolve) => {
+  getVitalsStats = () => new Promise((resolve) => {
       
       
-    this.nutritionService.getNutritionData(this.userData._id).subscribe( async (data: [any]) => {
+    this.vitalsService.getVitalsData(this.userData._id).subscribe( async (data: [any]) => {
 
       if(data["Records"].length > 0){
 
-        this.nutritionStats = await this.analyseService.getNutritionStats(data);
+        this.vitalsStats = await this.analyseService.getVitalsStats(data);
 
-        console.log(this.nutritionStats);
+        console.log(this.vitalsStats);
 
       }
 

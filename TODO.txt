@@ -31,10 +31,10 @@
 
 25.01
   TODO:
-    * Style editNutritionParams
+    * Style editVitalsParams
 
   FIX:
-    * Default value in editNutritionParams
+    * Default value in editVitalsParams
     * Chart update period
     * Table responsible
 
@@ -59,7 +59,7 @@
 06.03
   TODO:
     * Styles in calculator
-    * Show calculated needs in nutrition goals
+    * Show calculated needs in vitals goals
 
 /// some todos got deleted
 
@@ -89,18 +89,18 @@
 
 08.04
   FIX:
-    * bug in param data loading in nutrition
+    * bug in param data loading in vitals
   TODO:
     * No items message
-    * Translate nutrition params
+    * Translate vitals params
 
 11.04
   TODO:
     * update params page
     * fix params page design
-    * Router snapshot nutrition
-    * Request with user id nutrition
-    * fix cell width issues in editNutritionParams
+    * Router snapshot vitals
+    * Request with user id vitals
+    * fix cell width issues in editVitalsParams
 
 16.04
   TODO:
@@ -140,7 +140,7 @@
 
   FIX:
     Translation in goals over 150% alert
-    Nutrition analyse
+    Vitals analyse
     Fix deletedParams not being deleted
 
   TODO

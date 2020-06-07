@@ -2,14 +2,14 @@
 //Require Mongoose
 const mongoose = require('mongoose');
 
-const NutritionSchema = mongoose.Schema({
+const VitalsSchema = mongoose.Schema({
     UserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	  Params: Array,
 	  Goals: Array
 },
-{ collection: "nutrition"}
+{ collection: "vitals"}
 );
 
-const Nutrition = mongoose.model('Nutrition', NutritionSchema);
+const Vitals = mongoose.model('Vitals', VitalsSchema);
 
-module.exports = Nutrition;
+module.exports = Vitals;

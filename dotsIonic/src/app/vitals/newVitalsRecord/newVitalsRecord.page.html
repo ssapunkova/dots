@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title *ngIf="record.RecordId == null; else editTitle"> New nutrition record</ion-title>
+    <ion-title *ngIf="record.RecordId == null; else editTitle"> New vitals record</ion-title>
     <ng-template #editTitle>
       <ion-title>
-        {{ 'EditNutritionRecord' | translate }}
+        {{ 'EditVitalsRecord' | translate }}
       </ion-title>
     </ng-template>
   </ion-toolbar>

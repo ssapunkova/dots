@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 
 import { GeneralService } from './general.service';
-import { NutritionService } from './nutrition.service';
+import { VitalsService } from './vitals.service';
 
 
 
 // Analyse Service
-// Analyses workout/nutrition data from db
+// Analyses workout/vitals data from db
 
 @Injectable()
 export class AnalyseService{
 
   constructor(
     private generalService: GeneralService,
-    private nutritionService: NutritionService
+    private vitalsService: VitalsService
   ) {}
 
 
@@ -138,7 +138,7 @@ export class AnalyseService{
 
   }
 
-  async getNutritionStats(data){
+  async getVitalsStats(data){
 
     
     let stats = {
@@ -176,7 +176,7 @@ export class AnalyseService{
       for(let v = 0; v < record.Values.length; v++){
         let goal = data.Params[v].Goal;
         if(goal == null){
-          goal = this.nutritionService.Params.filter((p) => p.Index == record.Params[v])[0].Goal;
+          goal = this.vitalsService.Params.filter((p) => p.Index == record.Params[v])[0].Goal;
         }
         sum += this.generalService.calculatePercentage(record.Values[v], goal);
       }
@@ -214,7 +214,7 @@ export class AnalyseService{
       for(let v = 0; v < record.Values.length; v++){
         let goal = data.Params[v].Goal;
         if(goal == null){
-          goal = this.nutritionService.Params.filter((p) => p.Index == record.Params[v])[0].Goal;
+          goal = this.vitalsService.Params.filter((p) => p.Index == record.Params[v])[0].Goal;
         }
         percentageSum += this.generalService.calculatePercentage(record.Values[v], goal);
       }
@@ -392,7 +392,7 @@ export class AnalyseService{
     
   }
 
-  async analyseNutrition(data){
+  async analyseVitals(data){
 
     console.log("***Analysing data ", data)
 

@@ -3,7 +3,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 
 import { GeneralService } from '../../services/general.service';
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
-import { TimeAndDateService } from './node_modules/src/app/services/timeAndDate.service';
+import { TimeAndDateService } from 'src/app/services/timeAndDate.service';
 
 @Component({
   selector: 'modal-page',

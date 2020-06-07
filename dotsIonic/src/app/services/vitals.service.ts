@@ -2,13 +2,13 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ConnectToServerService } from './connectToServer.service';
-import { LoadingService } from '../services/loading.service';
-import { ParamsService } from '../services/params.service';
+import { LoadingService } from './loading.service';
+import { ParamsService } from './params.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NutritionService {
+export class VitalsService {
 
 
   public data = {
@@ -29,19 +29,19 @@ export class NutritionService {
       public paramsService: ParamsService
   ) {
 
-    this.Params = this.paramsService.nutrition;
+    this.Params = this.paramsService.vitals;
     this.DefaultParamsIndex = 0;
     this.DefaultParams = [this.Params[0]];
 
   }
 
-  public getNutritionData(userId){
-    return this.http.get(this.connectToServerService.serverUrl + '/getNutritionData/' + userId)
+  public getVitalsData(userId){
+    return this.http.get(this.connectToServerService.serverUrl + '/getVitalsData/' + userId)
   }
 
-  public updateNutritionParams(data, userId){
+  public updateVitalsParams(data, userId){
     return this.http.post(
-      this.connectToServerService.serverUrl + '/updateNutritionParams',
+      this.connectToServerService.serverUrl + '/updateVitalsParams',
       { data: data, userId: userId }
     )
   }
@@ -49,21 +49,21 @@ export class NutritionService {
   public addRecord(recordData){
     console.log(recordData);
     return this.http.post(
-      this.connectToServerService.serverUrl + '/addNutritionRecord',
+      this.connectToServerService.serverUrl + '/addVitalsRecord',
       { data: recordData }
     );
   }
 
   public editRecord(recordData){
     return this.http.post(
-      this.connectToServerService.serverUrl + '/editNutritionRecord',
+      this.connectToServerService.serverUrl + '/editVitalsRecord',
       {data: recordData}
     );
   }
 
   public deleteRecord(recordId){
     return this.http.post(
-      this.connectToServerService.serverUrl + '/deleteNutritionRecord',
+      this.connectToServerService.serverUrl + '/deleteVitalsRecord',
       {recordId: recordId}
     );
   }

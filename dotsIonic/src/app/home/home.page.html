@@ -64,19 +64,19 @@
 
                     </div>
 
-                    <div *ngIf="nutritionStats.MonthlyStats.Data[month] != null">
+                    <div *ngIf="vitalsStats.MonthlyStats.Data[month] != null">
 
                       <div class="sub-header">
-                        {{ 'Nutrition' | translate }}
+                        {{ 'Vitals' | translate }}
                       </div>
 
                       <div>
                         <ion-icon 
                           class="tendencyIcon"
-                          name="arrow-{{ nutritionStats.MonthlyStats.Data[month].Arrows}}"
-                          [color]="nutritionStats.MonthlyStats.Data[month].Arrows == 'up' ? 'success': 'danger'">
+                          name="arrow-{{ vitalsStats.MonthlyStats.Data[month].Arrows}}"
+                          [color]="vitalsStats.MonthlyStats.Data[month].Arrows == 'up' ? 'success': 'danger'">
                         </ion-icon>
-                        {{ nutritionStats.MonthlyStats.Data[month].Percentage | number: '1.0-0'}}%
+                        {{ vitalsStats.MonthlyStats.Data[month].Percentage | number: '1.0-0'}}%
                         {{ 'fullfilledGoals' | translate }}
                       </div>
 

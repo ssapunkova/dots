@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      {{ 'Nutrition' | translate }}
+      {{ 'Vitals' | translate }}
     </ion-title>
 
     <ion-buttons slot="end">
@@ -19,8 +19,8 @@
 <ion-content *ngIf="!loadingService.isPageLoading">
 
   <no-items-message 
-    headerMessage="NoNutritionParamsSet"
-    buttonLabel="SetNutritionParams"
+    headerMessage="NoVitalsParamsSet"
+    buttonLabel="SetVitalsParams"
     (buttonClicked)="editParams()"
     color="tertiary"
     *ngIf="dataTableService.params.length == 0">
@@ -28,7 +28,7 @@
 
   <data-table
     *ngIf="dataTableService.params"
-    legendTitle="NutritionGoals"
+    legendTitle="VitalsGoals"
     (editParamsButtonClicked)="editParams()"
     (addRecordClicked)="addRecord()"
     color="tertiary"

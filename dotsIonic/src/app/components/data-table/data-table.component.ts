@@ -43,17 +43,17 @@ export class DataTableComponent  {
   }
 
   async addRecord() {
-    // Emit addRecordClicked event to parent (nutrition.page.html)
+    // Emit addRecordClicked event to parent (vitals.page.html)
     this.addRecordClicked.emit();
   }
 
   async editParams(){
-    // Emit editParamsButtonClicked event to parent (nutrition.page.html)
+    // Emit editParamsButtonClicked event to parent (vitals.page.html)
     this.editParamsButtonClicked.emit();
   }
 
   async showRecordOptions($event){
-    // Emit showRecordOptionsClicked event to parent (nutrition.page.html)
+    // Emit showRecordOptionsClicked event to parent (vitals.page.html)
     this.showRecordOptionsClicked.emit($event);
   }
 

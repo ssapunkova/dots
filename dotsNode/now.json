@@ -1,7 +1,7 @@
 {
   "routes": [
     { "src": "/", "dest": "/index.js" },
-	{ "src": "/nutrition", "dest": "/index.js" },
+	{ "src": "/vitals", "dest": "/index.js" },
 	{ "src": "/workouts", "dest": "/index.js" },
 	{ "src": "/getUserParams", "dest": "/index.js" }
   ],

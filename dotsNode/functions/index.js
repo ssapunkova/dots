@@ -27,42 +27,42 @@ global.include = function(file) {
 const ObjectId = require('mongodb').ObjectID;
 
 const User = require('../schemas/userSchema');
-const Nutrition = require('../schemas/nutritionSchema');
-const NutritionRecord = require('../schemas/nutritionRecordSchema');
+const Vitals = require('../schemas/vitalsSchema');
+const VitalsRecord = require('../schemas/vitalsRecordSchema');
 
 
-app.get("/getNutritionData", async (req, res) => {
+app.get("/getVitalsData", async (req, res) => {
 
-  let nutritionData = await Nutrition.findOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") });  // replace with userid later
-  let nutritionRecords = await NutritionRecord.find({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }); // replace with userid later
-  if(nutritionData !== null) {
-    if(nutritionData.err) throw nutritionData.err;
+  let vitalsData = await Vitals.findOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") });  // replace with userid later
+  let vitalsRecords = await VitalsRecord.find({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }); // replace with userid later
+  if(vitalsData !== null) {
+    if(vitalsData.err) throw vitalsData.err;
   }
   else{
-    nutritionData = new Nutrition({ UserId: ObjectId("5d98ade96dfda51dc84991d9") })
-    nutritionData.save();
+    vitalsData = new Vitals({ UserId: ObjectId("5d98ade96dfda51dc84991d9") })
+    vitalsData.save();
   }
-  if(nutritionRecords.err) throw nutritionRecords.err;
-  res.send({ general: nutritionData, records: nutritionRecords});
+  if(vitalsRecords.err) throw vitalsRecords.err;
+  res.send({ general: vitalsData, records: vitalsRecords});
 })
 
-app.post("/updateNutritionParams", async (req, res) => {
+app.post("/updateVitalsParams", async (req, res) => {
   let data = req.body.data;
   let params = data.params;
   let customGoals = data.customGoals;
   let deletedParams = data.deletedParams;
 
-  let nutritionObj = {
+  let vitalsObj = {
     Goals: customGoals,
     Params: params
   }
 
-  let updateObj = await Nutrition.updateOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }, nutritionObj, { upsert: true });
+  let updateObj = await Vitals.updateOne({ UserId: ObjectId("5d98ade96dfda51dc84991d9") }, vitalsObj, { upsert: true });
   if(updateObj.err) throw updateObj.err;
 
   if(deletedParams.length > 0){
 
-    let recordsOfDeletedParams = await NutritionRecord.find(
+    let recordsOfDeletedParams = await VitalsRecord.find(
       {
         UserId: ObjectId("5d98ade96dfda51dc84991d9"),
         Params: { $in: deletedParams }
@@ -84,12 +84,12 @@ app.post("/updateNutritionParams", async (req, res) => {
   res.send();
 })
 
-app.post("/addNutritionRecord", async (req, res) => {
+app.post("/addVitalsRecord", async (req, res) => {
   let record = req.body.data;
 
   console.log("adding record", record);
 
-  let upsertRecord = await NutritionRecord.updateOne(
+  let upsertRecord = await VitalsRecord.updateOne(
     {
       UserId: ObjectId("5d98ade96dfda51dc84991d9"),
       Date: record.Date
@@ -108,17 +108,17 @@ app.post("/addNutritionRecord", async (req, res) => {
 })
 
 
-app.post("/editNutritionRecord", async (req, res) => {
+app.post("/editVitalsRecord", async (req, res) => {
   let record = req.body.data;
 
   // delete existing record with the same date
 
-  let deletedRecords = await NutritionRecord.deleteOne({
+  let deletedRecords = await VitalsRecord.deleteOne({
     Date: record.Date,
     _id: { $ne: ObjectId(record.RecordId) }
   })
 
-  let updateRecord = await NutritionRecord.updateOne({ _id: ObjectId(record.RecordId) }, {
+  let updateRecord = await VitalsRecord.updateOne({ _id: ObjectId(record.RecordId) }, {
     $set: {
       Date: record.Date,
       Values: record.Values,
@@ -132,10 +132,10 @@ app.post("/editNutritionRecord", async (req, res) => {
 })
 
 
-app.post("/deleteNutritionRecord", async (req, res) => {
+app.post("/deleteVitalsRecord", async (req, res) => {
   let recordId = req.body.recordId;
 
-  let deleteRecord = await NutritionRecord.findOneAndDelete({_id: ObjectId(recordId)})
+  let deleteRecord = await VitalsRecord.findOneAndDelete({_id: ObjectId(recordId)})
   if(deleteRecord !== null && deleteRecord.err) throw deleteRecord.err;
   else res.send();
 })

@@ -88,7 +88,7 @@ export class ParamsService {
       Goal: 2000,
       Type: "number",
       Color: 1,
-      Icon: "nutrition"
+      Icon: "vitals"
     },
     {
       Index: 10,
@@ -97,7 +97,7 @@ export class ParamsService {
       Unit: "%",
       Type: "number",
       Color: 7,
-      Icon: "nutrition"
+      Icon: "vitals"
     },
     {
       Index: 11,
@@ -106,7 +106,7 @@ export class ParamsService {
       Unit: "g",
       Type: "number",
       Color: 3,
-      Icon: "nutrition"
+      Icon: "vitals"
     },
     {
       Index: 12,
@@ -115,7 +115,7 @@ export class ParamsService {
       Unit: "bl",
       Type: "number",
       Color: 5,
-      Icon: "nutrition"
+      Icon: "vitals"
     },
     {
       Index: 13,
@@ -124,14 +124,14 @@ export class ParamsService {
       Unit: "gr",
       Type: "number",
       Color: 2,
-      Icon: "nutrition"
+      Icon: "vitals"
     }
   ]
 
   public categories = [
     {
-      Title: "Nutrition",
-      Id: "nutrition"
+      Title: "Vitals",
+      Id: "vitals"
     }
   ]
 
@@ -140,7 +140,7 @@ export class ParamsService {
     this.allParams[1]
   ]
 
-  public nutrition = [
+  public vitals = [
     this.allParams[2],
     this.allParams[3],
     this.allParams[4],

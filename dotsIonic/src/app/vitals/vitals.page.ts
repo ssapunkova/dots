@@ -8,18 +8,18 @@ import { GeneralService } from '../services/general.service'
 import { ErrorToastAndAlertService } from '../services/errorToastAndAlert.service';
 import { DataTableService } from '../services/dataTable.service';
 import { ChartService } from '../services/chart.service';
-import { NutritionService } from '../services/nutrition.service';
+import { VitalsService } from '../services/vitals.service';
 
-import { NewNutritionRecordPage } from './newNutritionRecord/newNutritionRecord.page';
-import { EditNutritionParamsPage } from './editNutritionParams/editNutritionParams.page';
+import { NewVitalsRecordPage } from './newVitalsRecord/newVitalsRecord.page';
+import { EditVitalsParamsPage } from './editVitalsParams/editVitalsParams.page';
 import { ParamsService } from '../services/params.service';
 
 @Component({
-  selector: 'app-nutrition',
-  templateUrl: './nutrition.page.html',
-  styleUrls: ['./nutrition.page.scss'],
+  selector: 'app-vitals',
+  templateUrl: './vitals.page.html',
+  styleUrls: ['./vitals.page.scss'],
 })
-export class NutritionPage implements OnInit {
+export class VitalsPage implements OnInit {
 
   public data = {
     General: {},
@@ -35,7 +35,7 @@ export class NutritionPage implements OnInit {
     public errorToastAndAlertService: ErrorToastAndAlertService,
     public actionSheetController: ActionSheetController,
     public modalController: ModalController,
-    public nutritionService: NutritionService,
+    public vitalsService: VitalsService,
     public paramsService: ParamsService,
     public dataTableService: DataTableService,
     public chartService: ChartService,
@@ -47,19 +47,19 @@ export class NutritionPage implements OnInit {
     
     this.userData = this.route.snapshot.data.userData;
 
-    // Load nutrition data from database
+    // Load vitals data from database
 
     console.log("about to get nutr data");
-    this.getNutritionData();
+    this.getVitalsData();
   }
 
-  async getNutritionData(){
+  async getVitalsData(){
 
 
-    this.nutritionService.getNutritionData(this.userData._id).subscribe(async (data: any) => {
+    this.vitalsService.getVitalsData(this.userData._id).subscribe(async (data: any) => {
 
 
-      // If user has chosen nutrition params
+      // If user has chosen vitals params
       if(data.Params.length != 0){
         // Get each param info by index
         for(var i = 0; i < data.Params.length; i++){
@@ -107,9 +107,9 @@ export class NutritionPage implements OnInit {
         this.data = data;
         this.loadingService.hidePageLoading();
 
-        console.log("***NutritionPage ", this);
+        console.log("***VitalsPage ", this);
 
-        this.dataTableService.initializeDataTable(data, data.Records, "nutrition");
+        this.dataTableService.initializeDataTable(data, data.Records, "vitals");
 
       });
 
@@ -127,7 +127,7 @@ export class NutritionPage implements OnInit {
 
     // Show a configuration modal
     const modal = await this.modalController.create({
-      component: EditNutritionParamsPage,
+      component: EditVitalsParamsPage,
       componentProps: data
     });
     await modal.present();
@@ -142,10 +142,10 @@ export class NutritionPage implements OnInit {
 
       await this.loadingService.showProcessLoading("Saving changes");
 
-      // Update nutrition params
-      this.nutritionService.updateNutritionParams(modalData, this.userData._id).subscribe( async (data: [any])=>
+      // Update vitals params
+      this.vitalsService.updateVitalsParams(modalData, this.userData._id).subscribe( async (data: [any])=>
         {
-          await this.getNutritionData();
+          await this.getVitalsData();
           await this.loadingService.hideProcessLoading();
         },
         error => {
@@ -187,7 +187,7 @@ export class NutritionPage implements OnInit {
   async addRecord(){
 
     let modalProps = {
-      component: NewNutritionRecordPage,
+      component: NewVitalsRecordPage,
       componentProps: {
         UserId: this.userData._id,
         RecordId: null,
@@ -206,7 +206,7 @@ export class NutritionPage implements OnInit {
   async editRecord(record){
 
     let modalProps = {
-      component: NewNutritionRecordPage,
+      component: NewVitalsRecordPage,
       componentProps: {
         RecordId: record._id,
         Fields: this.dataTableService.params,
