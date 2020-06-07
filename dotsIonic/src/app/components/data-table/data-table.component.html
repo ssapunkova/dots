@@ -48,7 +48,7 @@
 
                   <div 
                     style="padding: 0.15rem"
-                    *ngFor="let param of dataTableService.resultsAnalysis[category]">
+                    *ngFor="let param of dataTableService.resultsAnalysis.data[category]">
                     {{ param.Data.Title | translate }} ({{ param.AveragePercentage | number:'1.0-0' }}%)
                   </div>
 
@@ -114,7 +114,7 @@
 
                   <ion-label style="flex-grow: 1; color: white !important">
                     {{ 'exercisesWithResults.' + category | translate }}: 
-                    {{ dataTableService.resultsAnalysis[category].length }} {{ 'params' | translate }}
+                    {{ dataTableService.resultsAnalysis.data[category].length }} {{ 'params' | translate }}
                   </ion-label>
 
                   <ion-button fill="clear" color="light">
@@ -128,7 +128,7 @@
 
                   <div 
                     style="padding: 0.15rem"
-                    *ngFor="let param of dataTableService.resultsAnalysis[category]">
+                    *ngFor="let param of dataTableService.resultsAnalysis.data[category]">
                     {{ param.Data.Title | translate }} ({{ param.AveragePercentage | number:'1.0-0' }}%)
                   </div>
 

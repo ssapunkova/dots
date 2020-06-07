@@ -16,11 +16,6 @@ export class AnalyseService{
     private nutritionService: NutritionService
   ) {}
 
-  
-  public resultsCategories = [];
-  public categoryColors = {};
-
-  public categoryIcons = {};
 
   async getWorkoutStats(data){
 
@@ -304,7 +299,6 @@ export class AnalyseService{
     
     console.log("***Analysing data ", data)
 
-
     let results = {
       "weeks": 0,
       "categories": ["aboveGoal", "nearGoal", "nowhereNearGoal"],
@@ -327,8 +321,6 @@ export class AnalyseService{
       }
     };
 
-
-    
     let number = 5;
     if(data.records.length < 5) number = data.records.length;
 
@@ -405,25 +397,46 @@ export class AnalyseService{
     console.log("***Analysing data ", data)
 
     let results = {
-      "aboveGoal": [],
-      "nearGoal": [],
-      "lowerThanGoal": [],
-      "nowhereNearGoal": []
+      "weeks": 0,
+      "categories": ["aboveGoal", "nearGoal", "lowerThanGoal"],
+      "data": {
+        "aboveGoal": [],
+        "nearGoal": [],
+        "lowerThanGoal": [],
+        "nowhereNearGoal": []
+      },
+      "colors": {
+        "nearGoal": "success", 
+        "aboveGoal": "danger", 
+        "lowerThanGoal": "danger"
+      },
+      "icons": {
+        "aboveGoal": "trending-up", 
+        "nearGoal": "remove", 
+        "lowerThanGoal": "trending-down"
+      }
     };
+
+    // let results = {
+    //   "aboveGoal": [],
+    //   "nearGoal": [],
+    //   "lowerThanGoal": [],
+    //   "nowhereNearGoal": []
+    // };
 
     
-    this.resultsCategories = ["aboveGoal", "nearGoal", "lowerThanGoal"];
-    this.categoryColors = {
-      "nearGoal": "success", 
-      "aboveGoal": "danger", 
-      "lowerThanGoal": "danger"
-    };
+    // this.resultsCategories = ["aboveGoal", "nearGoal", "lowerThanGoal"];
+    // this.categoryColors = {
+    //   "nearGoal": "success", 
+    //   "aboveGoal": "danger", 
+    //   "lowerThanGoal": "danger"
+    // };
 
-    this.categoryIcons = {
-      "aboveGoal": "trending-up", 
-      "nearGoal": "remove", 
-      "lowerThanGoal": "trending-down"
-    }
+    // this.categoryIcons = {
+    //   "aboveGoal": "trending-up", 
+    //   "nearGoal": "remove", 
+    //   "lowerThanGoal": "trending-down"
+    // }
 
     let registeredParams = []
     let goalsData = [];
@@ -461,27 +474,32 @@ export class AnalyseService{
       goalsData[i].AveragePercentage = averagePercentage;
 
       if(averagePercentage >= 150 || averagePercentage < 50){
-        results.nowhereNearGoal.push(goalsData[i]);
+        results.data.nowhereNearGoal.push(goalsData[i]);
       } 
       else{
         if(averagePercentage > 110){
-          results.aboveGoal.push(goalsData[i]);
+          results.data.aboveGoal.push(goalsData[i]);
         }
         else if(averagePercentage > 80){
-          results.nearGoal.push(goalsData[i]);
+          results.data.nearGoal.push(goalsData[i]);
         }
         else{
-          results.lowerThanGoal.push(goalsData[i]);
+          results.data.lowerThanGoal.push(goalsData[i]);
         }
       }
 
     }
 
+    
+    // Weeks since start
+
+    let firstRecord = data.records[data.records.length - 1].Date;
+    let lastRecord = data.records[0].Date;
+    results.weeks = this.generalService.countWeeks(firstRecord, lastRecord);
+
     console.log("***Analysis results ", results);
 
-    this.dataTableService.resultsAnalysis = results;
-
-    console.log(goalsData);
+    return results;
 
     // Weeks since start
 
