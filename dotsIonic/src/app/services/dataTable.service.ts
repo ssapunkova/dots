@@ -130,6 +130,8 @@ export class DataTableService{
       this.setPeriod(this.showingPeriod, false);
     }
 
+    // Get goals if there are no user defined, and calculate goal achievement percentage 
+    // Only after this promise is resolved, analyse results
     new Promise((resolve) => {
 
       // If there are no user-selected goals, use params' default goals
@@ -154,15 +156,20 @@ export class DataTableService{
 
     }).then( async () => {
 
-      this.resultsAnalysis = await this.analyseService.analyseWorkoutResults({
-        "params": this.params,
-        "records": this.allRecords
+      // Use analyseService for analysing results
+      
+      let func = "analyseWorkoutResults";
+      if(this.service == this.nutritionService){
+        func = "analyseNutrition";
+      }
+      this.resultsAnalysis = await this.analyseService[func]({
+        "Params": this.params,
+        "Records": this.allRecords
       });
       console.log(this.resultsAnalysis);
 
     })
 
-    
 
   }
 

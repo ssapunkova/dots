@@ -322,15 +322,15 @@ export class AnalyseService{
     };
 
     let number = 5;
-    if(data.records.length < 5) number = data.records.length;
+    if(data.Records.length < 5) number = data.Records.length;
 
     let goalsData = [];
     let registeredParams = [];
 
     for(let i = 0; i < number; i++){
-      let currentRec = data.records[i];
+      let currentRec = data.Records[i];
       for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
-        let paramData = data.params.filter((p) => p._id == currentRec.Params[j])[0];
+        let paramData = data.Params.filter((p) => p._id == currentRec.Params[j])[0];
                 
         let index = registeredParams.indexOf(currentRec.Params[j]);
         if(index < 0){
@@ -382,8 +382,8 @@ export class AnalyseService{
     
     // Weeks since start
 
-    let firstRecord = data.records[data.records.length - 1].Date;
-    let lastRecord = data.records[0].Date;
+    let firstRecord = data.Records[data.Records.length - 1].Date;
+    let lastRecord = data.Records[0].Date;
     results.weeks = this.generalService.countWeeks(firstRecord, lastRecord);
 
     
@@ -416,27 +416,6 @@ export class AnalyseService{
         "lowerThanGoal": "trending-down"
       }
     };
-
-    // let results = {
-    //   "aboveGoal": [],
-    //   "nearGoal": [],
-    //   "lowerThanGoal": [],
-    //   "nowhereNearGoal": []
-    // };
-
-    
-    // this.resultsCategories = ["aboveGoal", "nearGoal", "lowerThanGoal"];
-    // this.categoryColors = {
-    //   "nearGoal": "success", 
-    //   "aboveGoal": "danger", 
-    //   "lowerThanGoal": "danger"
-    // };
-
-    // this.categoryIcons = {
-    //   "aboveGoal": "trending-up", 
-    //   "nearGoal": "remove", 
-    //   "lowerThanGoal": "trending-down"
-    // }
 
     let registeredParams = []
     let goalsData = [];
@@ -493,21 +472,14 @@ export class AnalyseService{
     
     // Weeks since start
 
-    let firstRecord = data.records[data.records.length - 1].Date;
-    let lastRecord = data.records[0].Date;
+    let firstRecord = data.Records[data.Records.length - 1].Date;
+    let lastRecord = data.Records[0].Date;
     results.weeks = this.generalService.countWeeks(firstRecord, lastRecord);
 
     console.log("***Analysis results ", results);
 
     return results;
 
-    // Weeks since start
-
-    // let firstRecord = data.Records[data.Records.length - 1].Date;
-    // let lastRecord = data.Records[0].Date;
-    // let weeks = this.generalService.countWeeks(firstRecord, lastRecord);
-    // console.log(weeks);
-    // this.dataTableService.weeksSinceStart = weeks;
 
   }
 
