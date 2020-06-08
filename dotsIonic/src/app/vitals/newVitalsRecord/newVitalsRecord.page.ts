@@ -4,6 +4,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { GeneralService } from '../../services/general.service';
 import { ErrorToastAndAlertService } from '../../services/errorToastAndAlert.service';
 import { TimeAndDateService } from 'src/app/services/timeAndDate.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'modal-page',
@@ -31,7 +32,8 @@ export class NewVitalsRecordPage implements OnInit {
     private navParams: NavParams,
     public generalService: GeneralService,
     private errorToastAndAlertService: ErrorToastAndAlertService,
-    private timeAndDateService: TimeAndDateService
+    private timeAndDateService: TimeAndDateService,
+    public translate: TranslateService
   ) { }
 
   async ngOnInit() {

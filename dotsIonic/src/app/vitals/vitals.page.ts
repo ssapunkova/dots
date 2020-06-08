@@ -12,7 +12,9 @@ import { VitalsService } from '../services/vitals.service';
 
 import { NewVitalsRecordPage } from './newVitalsRecord/newVitalsRecord.page';
 import { EditVitalsCalculatorsPage } from './editVitalsParams/editVitalsParams.page';
+import { DoctorFriendlyPage } from './doctorFriendly/doctorFriendly.page';
 import { ParamsService } from '../services/params.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-vitals',
@@ -39,6 +41,7 @@ export class VitalsPage implements OnInit {
     public paramsService: ParamsService,
     public dataTableService: DataTableService,
     public chartService: ChartService,
+    public translate: TranslateService,
     private route: ActivatedRoute
   ) { };
 
@@ -225,6 +228,20 @@ export class VitalsPage implements OnInit {
   async deleteRecord(record){
 
     this.dataTableService.deleteRecord(record);
+
+  }
+
+  async makeDataDoctorFriendly(){
+
+    const modal = await this.modalController.create({
+      component: DoctorFriendlyPage,
+      componentProps: {
+        Period: this.dataTableService.showingPeriod,
+        Params: this.dataTableService.params,
+        Records: this.dataTableService.allRecords
+      }
+    });
+    await modal.present();
 
   }
 

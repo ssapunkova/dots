@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ng-template>
+      <ion-title>
+        {{ 'DoctorFriendly' | translate }}
+      </ion-title>
+    </ng-template>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="padding">
+
+  <ion-item>
+
+    <ion-label>{{ 'Params' | translate }}</ion-label>
+    <ion-select 
+      multiple="true"
+      [(ngModel)]="paramsToUse"
+      okText="Ok" [cancelText]="translate.instant('Cancel')">
+
+      <ion-select-option 
+        *ngFor="let param of params"
+        [value]="param.Index">
+          {{ param.Title | translate }}
+      </ion-select-option>
+    </ion-select>
+
+  </ion-item>
+
+  <ion-item>
+    {{ 'ShowRecordsForPeriod' | translate }}: {{ period }}
+  </ion-item>
+
+  
+
+  <ion-item lines="none">
+    <ion-text color="secondary">
+      {{ 'DoctorFriendlyText' | translate }}
+    </ion-text>
+  </ion-item>
+
+  <ion-textarea 
+    style="width: 100%; font-family: 'Consolas' !important"
+    auto-grow="true"
+    rows="10"
+    [value]="output">
+    
+  </ion-textarea>
+
+</ion-content>
+
+<ion-toolbar>
+
+  <ion-button style="width: 50%" slot="start" 
+    fill="clear" color="danger"
+    (click)="closeModal()">
+    {{ 'Close' | translate }}
+  </ion-button>
+
+  <ion-button style="width: 50%" slot="end" 
+    fill="clear" color="secondary"
+    (click)="generateOutput()">
+    {{ 'Generate' | translate }}
+  </ion-button>
+
+  
+</ion-toolbar>
+

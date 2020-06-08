@@ -6,12 +6,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-import { BrowserModule } from '@angular/platform-browser';
-
 import { TranslateModule } from '@ngx-translate/core';
 
 import { VitalsPage } from './vitals.page';
 
+import { DoctorFriendlyPage } from './doctorFriendly/doctorFriendly.page';
 import { EditVitalsCalculatorsPage } from './editVitalsParams/editVitalsParams.page';
 
 import { ComponentsModule  } from '../components/components.module';
@@ -34,11 +33,13 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   entryComponents: [
-    EditVitalsCalculatorsPage
+    EditVitalsCalculatorsPage,
+    DoctorFriendlyPage
   ],
   declarations: [
     VitalsPage,
-    EditVitalsCalculatorsPage
+    EditVitalsCalculatorsPage,
+    DoctorFriendlyPage
   ]
 })
 export class VitalsPageModule {}

@@ -9,6 +9,13 @@
 
     <ion-buttons slot="end">
 
+      <ion-button 
+        (click)="makeDataDoctorFriendly()"
+        style="font-size: 0.8rem !important">
+        <ion-icon name="medical" style="margin-right: 3px"></ion-icon>
+        {{ 'DoctorFriendly' | translate }}
+      </ion-button>
+
       <toggle-showing-mode></toggle-showing-mode>
 
     </ion-buttons>
