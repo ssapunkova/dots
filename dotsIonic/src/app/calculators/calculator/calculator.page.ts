@@ -291,6 +291,36 @@ export class CalculatorPage implements OnInit {
     }
   }
 
+  public waterIntake = {
+    required: [
+      this.paramsService.allParams[1],      // 1 - Age
+      this.paramsService.allParams[2],      // 2 - Weight
+    ],
+    formula: async () => {
+
+      let values = {
+        Age: this.userValues.Age,
+        Weight: this.userValues.Weight
+      };
+      
+      this.userValues.DaylyWaterIntake = Math.round(values.Weight * 2.04 / 2.2);
+
+      if(values.Age < 30){
+        this.userValues.DaylyWaterIntake *= 40;
+      }
+      else if(values.Age < 55){
+        this.userValues.DaylyWaterIntake *= 35;
+      }
+      else {
+        this.userValues.DaylyWaterIntake *= 30;
+      }
+
+      this.userValues.DaylyWaterIntake = Math.round(this.userValues.DaylyWaterIntake / 28.3 / 33.8 * 100) / 100;
+
+      this.finishCalculations();
+    }
+  }
+
    
   public calculators = {
     "Blocks": this.blocks,
@@ -300,7 +330,8 @@ export class CalculatorPage implements OnInit {
     "DaylySugarIntake": this.sugarIntake,
     "SystolicBloodPressure": this.sysBloodPressure,
     "BMI": this.bmi,
-    "IdealWeightDevine": this.idealWeightDevine
+    "IdealWeightDevine": this.idealWeightDevine,
+    "DaylyWaterIntake": this.waterIntake
   }
 
   

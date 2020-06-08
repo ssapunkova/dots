@@ -163,8 +163,15 @@ export class ParamsService {
     },
     {
       Index: 19,
-      Title: "IdealWeightDevine",                           // Ideal weight Devine index
+      Title: "IdealWeightDevine",                          // 19 - Ideal weight Devine index
       Unit: "",
+      Type: "number",
+      Icon: "heart"
+    },
+    {
+      Index: 20,
+      Title: "DaylyWaterIntake",                               // 20 - Water intake
+      Unit: "L",
       Type: "number",
       Icon: "heart"
     }
@@ -183,7 +190,10 @@ export class ParamsService {
     this.allParams[14],
     this.allParams[15],
     this.allParams[16],
-    this.allParams[17]
+    this.allParams[17],
+    this.allParams[18],
+    this.allParams[19],
+    this.allParams[20]
   ]
   
   public calculatable = [
@@ -193,10 +203,9 @@ export class ParamsService {
     this.allParams[12],
     this.allParams[13],
     this.allParams[15],
-    this.allParams[16],
-    this.allParams[17],
     this.allParams[18],
-    this.allParams[19]
+    this.allParams[19],
+    this.allParams[20]
   ]
 
   constructor(

@@ -122,7 +122,8 @@ export class VitalsPage implements OnInit {
     // Provide data
     let data = {
       Params: this.dataTableService.params,
-      Goals: this.dataTableService.goals
+      Goals: this.dataTableService.goals,
+      UserValues: this.userParams
     };
 
     // Show a configuration modal

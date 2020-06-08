@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class EditVitalsCalculatorsPage implements OnInit {
 
   public params;
+  public userValues;
   public deletedParams;
 
   public goals = [];
@@ -32,6 +33,7 @@ export class EditVitalsCalculatorsPage implements OnInit {
     let data = JSON.parse(JSON.stringify(this.navParams.data));
     this.params = data.Params;
     this.goals = data.Goals;
+    this.userValues = data.UserValues;
     this.deletedParams = [];
   }
 
@@ -75,7 +77,13 @@ export class EditVitalsCalculatorsPage implements OnInit {
 
   async addParam(param){
     this.params.push(param);
-    this.goals.push(param.Goal)
+    if(param.Goal == null){
+      let position = this.userValues.Params.indexOf(param.Index);
+      this.goals.push(this.userValues.Values[position]);
+    }
+    else{
+      this.goals.push(param.Goal);
+    }
   }
 
   async deleteParam(index){
