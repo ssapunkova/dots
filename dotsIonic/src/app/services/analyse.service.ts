@@ -43,12 +43,6 @@ export class AnalyseService{
         Color: data[i].Color
       }
       
-      // stats.StartAndNow[i] = {
-      //   "StartPercentage": 0, 
-      //   "CurrentPercentage": 0, 
-      //   "Diff": 0
-      // };
-
       let entries = data[i].WorkoutRecords.length;
       let firstRecord = data[i].WorkoutRecords[0];
       let lastRecord = data[i].WorkoutRecords[entries - 1];
@@ -59,26 +53,6 @@ export class AnalyseService{
       // Frequency
       stats.Frequency[i] = entries / weeks;
       stats.OverallFrequency += stats.Frequency[i];
-
-      // let analyseRecords = [firstRecord, lastRecord];
-      // let labels = ["StartPercentage", "CurrentPercentage"];
-
-      // // Start and now
-
-      // for(let e = 0; e < analyseRecords.length; e++){
-
-      //   let record = analyseRecords[e];
-      //   let sum = 0;
-      //   for(let v = 0; v < record.Values.length; v++){
-      //     sum += this.generalService.calculatePercentage(record.Values[v], data[i].Params[v].Goal);
-      //   }
-        
-      //   stats.StartAndNow[i][labels[e]] += sum / record.Values.length;
-
-      // }
-
-      // stats.StartAndNow[i].Diff = stats.StartAndNow[i].CurrentPercentage - stats.StartAndNow[i].StartPercentage;
-      
 
       // Monthly stats
 
@@ -173,15 +147,19 @@ export class AnalyseService{
 
       let record = analyseRecords[e];
       let sum = 0;
+      let records = 0;
       for(let v = 0; v < record.Values.length; v++){
-        let goal = data.Params[v].Goal;
-        if(goal == null){
-          goal = this.vitalsService.Params.filter((p) => p.Index == record.Params[v])[0].Goal;
+        if(record.Values[v] != null){
+          let goal = data.Params[v].Goal;
+          if(goal == null){
+            goal = this.vitalsService.Params.filter((p) => p.Index == record.Params[v])[0].Goal;
+          }
+          sum += this.generalService.calculatePercentage(record.Values[v], goal);
+          records++;
         }
-        sum += this.generalService.calculatePercentage(record.Values[v], goal);
       }
       
-      stats.StartAndNow[labels[e]] += sum / record.Values.length;
+      stats.StartAndNow[labels[e]] += sum / records;
 
     }
 
@@ -402,8 +380,7 @@ export class AnalyseService{
       "data": {
         "aboveGoal": [],
         "nearGoal": [],
-        "lowerThanGoal": [],
-        "nowhereNearGoal": []
+        "lowerThanGoal": []
       },
       "colors": {
         "nearGoal": "success", 
@@ -417,54 +394,54 @@ export class AnalyseService{
       }
     };
 
-    let registeredParams = []
-    let goalsData = [];
-
 
     let number = 5;
     if(data.Records.length < 5) number = data.Records.length;
 
+    let registeredParams = []
+    let goalsData = [];
+
     for(let i = 0; i < number; i++){
       let currentRec = data.Records[i];
       for(let j = 0; j < currentRec.PercentageOfGoal.length; j++){
-        let paramData = data.Params.filter((p) => p.Index == currentRec.Params[j])[0];
-                
-        let index = registeredParams.indexOf(currentRec.Params[j]);
-        if(index < 0){
-          // Add param to goalsData array
-          goalsData.push({
-            Data: paramData,
-            PercentageSum: currentRec.PercentageOfGoal[j],
-            AveragePercentage: 0
-          });
-          registeredParams.push(currentRec.Params[j]);
+        if(currentRec.Values[j] != null){
+          let paramData = data.Params.filter((p) => p.Index == currentRec.Params[j])[0];
+                  
+          let index = registeredParams.indexOf(currentRec.Params[j]);
+          if(index < 0){
+            // Add param to goalsData array
+            goalsData.push({
+              Data: paramData,
+              PercentageSum: currentRec.PercentageOfGoal[j],
+              Number: 1,
+              AveragePercentage: 0
+            });
+            registeredParams.push(currentRec.Params[j]);
+          }
+          else{
+            // Increment result percentage sum 
+            goalsData[index].PercentageSum += currentRec.PercentageOfGoal[j];
+            goalsData[index].Number++;
+          }
         }
-        else{
-          // Increment result percentage sum 
-          goalsData[index].PercentageSum += currentRec.PercentageOfGoal[j];
-        }
-        
       }
     }
 
     
     for(let i = 0; i < goalsData.length; i++){
-      let averagePercentage = Math.floor(goalsData[i].PercentageSum / number);
+
+      console.log(goalsData[i])
+      let averagePercentage = Math.floor(goalsData[i].PercentageSum / goalsData[i].Number);
       goalsData[i].AveragePercentage = averagePercentage;
 
-      if(averagePercentage >= 150 || averagePercentage < 50){
-        results.data.nowhereNearGoal.push(goalsData[i]);
-      } 
+      if(averagePercentage > 110){
+        results.data.aboveGoal.push(goalsData[i]);
+      }
+      else if(averagePercentage > 80){
+        results.data.nearGoal.push(goalsData[i]);
+      }
       else{
-        if(averagePercentage > 110){
-          results.data.aboveGoal.push(goalsData[i]);
-        }
-        else if(averagePercentage > 80){
-          results.data.nearGoal.push(goalsData[i]);
-        }
-        else{
-          results.data.lowerThanGoal.push(goalsData[i]);
-        }
+        results.data.lowerThanGoal.push(goalsData[i]);
       }
 
     }

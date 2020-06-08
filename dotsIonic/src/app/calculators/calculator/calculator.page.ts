@@ -236,13 +236,30 @@ export class CalculatorPage implements OnInit {
     }
   }
 
+  public sysBloodPressure = {
+    required: [
+      this.paramsService.allParams[1],      // 1 - Age
+    ],
+    formula: async () => {
+
+      let values = {
+        Age: this.userValues.Age,
+      };
+      
+      this.userValues.SystolicBloodPressure = 100 + values.Age;
+
+      this.finishCalculations();
+    }
+  }
+
    
   public calculators = {
     "Blocks": this.blocks,
     "BodyFatPercentage": this.blocks,
     "DaylyProteinIntake": this.blocks,
     "DaylyKcalIntake": this.kcalIntake,
-    "DaylySugarIntake": this.sugarIntake
+    "DaylySugarIntake": this.sugarIntake,
+    "SystolicBloodPressure": this.sysBloodPressure
   }
 
   
