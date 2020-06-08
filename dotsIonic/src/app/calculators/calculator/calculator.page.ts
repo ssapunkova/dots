@@ -228,9 +228,7 @@ export class CalculatorPage implements OnInit {
         DaylyKcalIntake: this.userValues.DaylyKcalIntake,
       };
       
-      this.userValues.DaylySugarIntake = values.DaylyKcalIntake / 40;
-
-      this.userValues.DaylySugarIntake = Math.floor(this.userValues.DaylySugarIntake);
+      this.userValues.DaylySugarIntake = Math.floor(values.DaylyKcalIntake / 40);
 
       this.finishCalculations();
     }
@@ -252,6 +250,47 @@ export class CalculatorPage implements OnInit {
     }
   }
 
+  public bmi = {
+    required: [
+      this.paramsService.allParams[2],      // 2 - Weight
+      this.paramsService.allParams[3]       // 3 - Height
+    ],
+    formula: async () => {
+
+      let values = {
+        Weight: this.userValues.Weight,
+        Height: this.userValues.Height
+      };
+      
+      this.userValues.BMI = Math.floor(values.Weight / Math.pow((values.Height) / 100, 2));
+
+      this.finishCalculations();
+    }
+  }
+
+  public idealWeightDevine = {
+    required: [
+      this.paramsService.allParams[0],      // 0 - Gender
+      this.paramsService.allParams[3],      // 3 - Height
+    ],
+    formula: async () => {
+
+      let values = {
+        Gender: this.userValues.Gender,
+        Height: this.userValues.Height
+      };
+      
+      if(values.Gender == 0){
+        this.userValues.IdealWeightDevine = Math.round(50 + 2.3*(values.Height / 2.54 - 60));
+      }
+      else{
+        this.userValues.IdealWeightDevine = Math.round(45.5 + 2.3*(values.Height / 2.54 - 60));
+      }
+
+      this.finishCalculations();
+    }
+  }
+
    
   public calculators = {
     "Blocks": this.blocks,
@@ -259,7 +298,9 @@ export class CalculatorPage implements OnInit {
     "DaylyProteinIntake": this.blocks,
     "DaylyKcalIntake": this.kcalIntake,
     "DaylySugarIntake": this.sugarIntake,
-    "SystolicBloodPressure": this.sysBloodPressure
+    "SystolicBloodPressure": this.sysBloodPressure,
+    "BMI": this.bmi,
+    "IdealWeightDevine": this.idealWeightDevine
   }
 
   

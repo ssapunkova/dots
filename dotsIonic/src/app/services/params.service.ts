@@ -153,6 +153,21 @@ export class ParamsService {
       Type: "number",
       Icon: "heart"
     },
+    {
+      Index: 18,
+      Title: "BMI",
+      Goal: 22,                                            // 18 - BMI
+      Unit: "",
+      Type: "number",
+      Icon: "heart"
+    },
+    {
+      Index: 19,
+      Title: "IdealWeightDevine",                           // Ideal weight Devine index
+      Unit: "",
+      Type: "number",
+      Icon: "heart"
+    }
   ]
 
   public vitals = [
@@ -179,7 +194,9 @@ export class ParamsService {
     this.allParams[13],
     this.allParams[15],
     this.allParams[16],
-    this.allParams[17]
+    this.allParams[17],
+    this.allParams[18],
+    this.allParams[19]
   ]
 
   constructor(
