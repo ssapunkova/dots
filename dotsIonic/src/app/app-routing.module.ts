@@ -7,7 +7,6 @@ import { WorkoutsPage } from './workouts/workouts.page';
 import { WorkoutSheetPage } from './workoutSheet/workoutSheet.page';
 import { WorkoutManagerPage } from './workoutManager/workoutManager.page';
 import { CalculatorsPage } from './calculators/calculators.page';
-import { SettingsPage } from './settings/settings.page';
 
 const routes: Routes = [
   {
@@ -42,11 +41,6 @@ const routes: Routes = [
   {
     path: 'calculators',
     loadChildren: () => import('./calculators/calculators.module').then(m => m.CalculatorsPageModule),
-    resolve: { userData: UserService }
-  },
-  {
-    path: 'settings',
-    loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule),
     resolve: { userData: UserService }
   },
   { 

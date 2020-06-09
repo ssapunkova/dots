@@ -55,13 +55,7 @@ export class AppComponent {
       url: '/guide',
       icon: 'settings-sharp',
       iconColor: 'medium'
-    },
-    {
-      title: 'Settings',
-      url: '/settings',
-      icon: 'settings-sharp',
-      iconColor: 'medium'
-    },
+    }
   ];
 
   public userData;

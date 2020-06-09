@@ -28,7 +28,7 @@
             <ion-slide
               *ngFor="let month of showingMonths; let i = index">
               
-                <ion-card>
+                <ion-card style="height: 100%;">
 
                   <ion-card-header class="color-{{i + 1}}">
                     {{ month }}
@@ -103,8 +103,6 @@
         <h1>
           {{ 'Analysis' | translate }}
         </h1>
-
-        
 
       </ion-col>
 
