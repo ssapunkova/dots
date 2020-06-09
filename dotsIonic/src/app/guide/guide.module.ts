@@ -5,12 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { WelcomePage } from './welcome.page';
+
+import { TranslateModule } from '@ngx-translate/core';
+import { GuidePage } from './guide.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: WelcomePage
+    component: GuidePage
   }
 ];
 
@@ -19,8 +21,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    TranslateModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [WelcomePage]
+  declarations: [GuidePage]
 })
-export class WelcomePageModule {}
+export class GuidePageModule {}

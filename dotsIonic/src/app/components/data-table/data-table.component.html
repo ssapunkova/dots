@@ -80,12 +80,12 @@
 
             <ion-item>
               <ion-icon name="calendar" style="padding-right: 0.5rem"></ion-icon>
-              {{ dataTableService.resultsAnalysis.weeksSinceStart }} {{ 'weeksSinceStart' | translate }}
+              {{ dataTableService.resultsAnalysis.weeks }} {{ 'weeksSinceStart' | translate }}
             </ion-item>
 
             <ion-item>
               <ion-icon name="play" style="padding-right: 0.5rem"></ion-icon>
-              {{ dataTableService.allRecords.length / dataTableService.resultsAnalysis.weeksSinceStart | number: "1.0-1" }} 
+              {{ dataTableService.allRecords.length / dataTableService.resultsAnalysis.weeks | number: "1.0-1" }} 
               {{ 'timesAWeek' | translate }}
             </ion-item>
             
@@ -154,7 +154,7 @@
             </ion-item>
             <ion-item>
               <ion-icon name="calendar" style="padding-right: 0.5rem"></ion-icon>
-              {{ dataTableService.weeksSinceStart }} {{ 'weeksSinceStart' | translate }}
+              {{ dataTableService.weeks }} {{ 'weeksSinceStart' | translate }}
             </ion-item>
             
           </ion-col>

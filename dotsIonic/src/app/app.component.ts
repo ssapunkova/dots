@@ -51,6 +51,12 @@ export class AppComponent {
       iconColor: 'tertiary'
     },
     {
+      title: 'Guide',
+      url: '/guide',
+      icon: 'settings-sharp',
+      iconColor: 'medium'
+    },
+    {
       title: 'Settings',
       url: '/settings',
       icon: 'settings-sharp',
@@ -65,11 +71,6 @@ export class AppComponent {
     private platform: Platform,
     private translate: TranslateService,
     public loadingService: LoadingService,
-    private errorToastAndAlertService: ErrorToastAndAlertService,
-    private dataTableService: DataTableService,
-    private timeAndDateService: TimeAndDateService,
-    private chartService: ChartService,
-    private workoutService: WorkoutService,
     private statusBar: StatusBar,
     private storageService: StorageService,
     public userService: UserService,

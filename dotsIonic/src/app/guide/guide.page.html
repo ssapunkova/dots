@@ -1,0 +1,138 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'Guide' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-slides #slider
+    pager="true">
+
+    <ion-slide>
+
+      <div class="slide">
+      
+        <h1>{{ 'Dots' | translate }}</h1>
+
+        <ion-text>
+          {{ 'About.Dots' | translate}}
+        </ion-text>
+
+        <ion-grid >
+
+          <ion-row>
+
+            <ion-col sizeMd="3" sizeSm="6" sizeXs="12">
+
+              <ion-card>
+                <ion-card-header color="secondary">
+                  <ion-icon src="../../assets/icons/svg/barbell.svg"></ion-icon>
+                  {{ 'Workout' | translate }} 
+                </ion-card-header>
+                <ion-card-content>
+                  {{ 'About.Workouts' | translate }}
+                </ion-card-content>
+              </ion-card>
+
+            </ion-col>
+
+            <ion-col sizeMd="3" sizeSm="6" sizeXs="12">
+
+              <ion-card>
+                <ion-card-header color="red">
+                  <ion-icon src="../../assets/icons/svg/heart-sharp.svg"></ion-icon>
+                  {{ 'Vitals' | translate }} 
+                </ion-card-header>
+                <ion-card-content>
+                  {{ 'About.Vitals' | translate }}
+                </ion-card-content>
+              </ion-card>
+
+            </ion-col>
+
+            <ion-col sizeMd="3" sizeSm="6" sizeXs="12">
+
+              <ion-card>
+                <ion-card-header color="tertiary">
+                  <ion-icon src="../../assets/icons/svg/calculator.svg"></ion-icon>
+                  {{ 'Calculators' | translate }} 
+                </ion-card-header>
+                <ion-card-content>
+                  {{ 'About.Calculators' | translate }}
+                </ion-card-content>
+              </ion-card>
+
+            </ion-col>
+
+            <ion-col sizeMd="3" sizeSm="6" sizeXs="12">
+
+              <ion-card>
+                <ion-card-header color="primary">
+                  <ion-icon src="../../assets/icons/svg/home-outline.svg"></ion-icon>
+                  {{ 'Home' | translate }} 
+                </ion-card-header>
+                <ion-card-content>
+                  {{ 'About.Home' | translate }}
+                </ion-card-content>
+              </ion-card>
+
+            </ion-col>
+
+          </ion-row>
+
+        </ion-grid>
+
+      </div>      
+
+    </ion-slide>
+
+    <ion-slide>
+
+      <div class="slide">
+      
+        <h1>{{ 'BasicSetup' | translate }}</h1>
+
+        <ion-item>
+          <ion-label>App language: </ion-label>
+    
+          <ion-select (ionChange)="setLanguage()" [(ngModel)]="userData.Lang" [value]="userData.Lang">
+            <ion-select-option *ngFor="let lang of translate.langs">{{ lang }}</ion-select-option>
+          </ion-select>
+    
+        </ion-item>
+
+        <ion-item>
+          <ion-label>{{ 'Username' | translate }}: </ion-label>
+          <ion-input [(ngModel)]="userData.Username"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label>{{ 'Age' | translate }}:</ion-label>
+          <ion-input [(ngModel)]="userData.Age"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label>{{ 'Gender' | translate }}: </ion-label>          
+          <ion-select [(ngModel)]="userData.Gender" [value]="userData.Gender">
+            <ion-select-option value="0">
+              {{ 'Male' | translate }}
+            </ion-select-option>
+            <ion-select-option value="1">
+              {{ 'Female' | translate }} 
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button
+          (click)="saveUserData()">
+          {{ 'Save' | translate }}
+        </ion-button>
+
+      </div>      
+
+    </ion-slide>
+
+  </ion-slides>
+
+</ion-content>

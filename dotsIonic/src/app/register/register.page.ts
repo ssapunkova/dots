@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController} from '@ionic/angular';
 import { Validators, FormControl, FormGroupDirective, FormBuilder, FormGroup } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
 import { AlertController } from '@ionic/angular';
 import { ActivatedRoute } from "@angular/router";
 import { Router } from '@angular/router';
@@ -164,7 +163,7 @@ export class RegisterPage implements OnInit {
       this.errorToastAndAlertService.showErrorAlert("Oups")
     });
 
-    this.router.navigate(['/welcome']);
+    this.router.navigate(['/guide']);
 
   }
 
