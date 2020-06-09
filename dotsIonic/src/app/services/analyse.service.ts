@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { GeneralService } from './general.service';
 import { VitalsService } from './vitals.service';
+import { ParamsService } from './params.service';
 
 
 
@@ -13,7 +14,8 @@ export class AnalyseService{
 
   constructor(
     private generalService: GeneralService,
-    private vitalsService: VitalsService
+    private vitalsService: VitalsService,
+    private paramsService: ParamsService
   ) {}
 
 
@@ -113,7 +115,8 @@ export class AnalyseService{
   }
 
   async getVitalsStats(data){
-
+  
+    console.log("Vitals data ", data);
     
     let stats = {
       "MonthlyStats": {
@@ -189,15 +192,23 @@ export class AnalyseService{
       
       monthlyData[splitDate].Records++;
       let percentageSum = 0;
+      let number = 0;
       for(let v = 0; v < record.Values.length; v++){
-        let goal = data.Params[v].Goal;
-        if(goal == null){
-          goal = this.vitalsService.Params.filter((p) => p.Index == record.Params[v])[0].Goal;
+        console.log("v", v, ":", record.Values[v]);
+        if(record.Values[v] != null){
+          // Get user selected goal
+          let goal =data.Goals[v];;
+          // If no user goal, then default param goal
+          if(goal == null){
+            goal = this.paramsService.allParams[data.Params[v]].Goal;
+          }
+          percentageSum += this.generalService.calculatePercentage(record.Values[v], goal);
+          number++;
         }
-        percentageSum += this.generalService.calculatePercentage(record.Values[v], goal);
       }
       if(monthlyPercentageSum[splitDate] == null) monthlyPercentageSum[splitDate] = 0;
-      monthlyPercentageSum[splitDate] += percentageSum / data.Params.length;
+      console.log("r", r, ":", percentageSum, number);
+      monthlyPercentageSum[splitDate] += percentageSum / number;
       
     }
 

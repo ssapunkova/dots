@@ -17,10 +17,6 @@ export class VitalsService {
   };
 
   public Params = [];
-  public userCalculatedValues;
-
-  public DefaultParams;
-  public DefaultParamsIndex;
 
   constructor(
       public http: HttpClient,
@@ -30,8 +26,6 @@ export class VitalsService {
   ) {
 
     this.Params = this.paramsService.vitals;
-    this.DefaultParamsIndex = 0;
-    this.DefaultParams = [this.Params[0]];
 
   }
 
