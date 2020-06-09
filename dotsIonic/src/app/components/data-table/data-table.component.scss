@@ -28,29 +28,49 @@ ion-card-content{
   padding: 0.75rem !important;
 }
 
-table{
 
-  border-collapse: collapse;
-  border-spacing: 0px;
+.tables-container{
+  display: flex;
+  flex-wrap: nowrap;
 
-  td{
+
+  .date-col{
+    width: 130px;
+  }
+
+  .data-col{
+    width: calc(100% - 130px);
+  }
+    
+  table{
+    width: 100%;
     border-collapse: collapse;
-    padding: 0px !important;
+    border-spacing: 0px;
+
+    td{
+      border-collapse: collapse;
+      padding: 0px !important;
+    }
+
+    th{
+      font-style: normal !important;
+    }
+
+    .value-cell{
+      min-width: 120px;
+      border-left: 1px dashed grey;
+      padding-left: 5px !important;
+
+      ion-item{
+        max-width: 200px !important;
+      }
+    }
+
+    ion-item{
+      --padding-start: 0.5rem !important;
+    }
   }
 
-  th{
-    font-style: normal !important;
-  }
-
-  .value-cell{
-    min-width: 120px;
-    border-left: 1px dashed grey;
-    padding-left: 5px !important;
-  }
-
-  ion-item{
-    --padding-start: 0rem !important;
-  }
 }
 
 

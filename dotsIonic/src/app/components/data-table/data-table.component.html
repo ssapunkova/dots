@@ -231,113 +231,112 @@
 
       </div>
 
-      <ion-grid 
+      <div
+        class="tables-container"
         *ngIf="dataTableService.showMode == 'table' && dataTableService.showingRecords.length > 0">
 
-        <ion-row no-wrap>
-          <ion-col style="width: 130px">
-            
-            <table style="width: 130px">
+        <div class="date-col">
+          
+          <table>
 
+            <tr>
+              <th>
+                <div class="table-header color-{{color}}-light"
+                title='Date'
+                (click)="dataTableService.sortByDate()">
+                  {{ 'Date' | translate }}
+                  <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
+                  <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
+                </div>
+              </th>
+            </tr>
+
+            <tr *ngFor="let record of dataTableService.showingRecords">
+              <td>
+                <ion-item lines="none">
+
+                  <ion-button 
+                    (click)="showRecordOptions(record)" fill="clear" class="showRecordOptionsButton">
+                    <ion-icon name="more" style="font-size: 1.5rem" class="icon-{{color}}"></ion-icon>
+                  </ion-button>
+
+                  {{ record.Date | date : 'dd.MM.yy' }}
+                </ion-item>
+              </td>
+            </tr>
+
+          </table>
+
+        </div>
+
+        <div class="data-col">
+
+          <div style="overflow-x: auto;">
+
+            <table>
+              
               <tr>
-                <th>
-                  <div class="table-header color-{{color}}-light"
-                  title='Date'
-                  (click)="dataTableService.sortByDate()">
-                    {{ 'Date' | translate }}
-                    <ion-icon name="arrow-dropup" *ngIf="dataTableService.sortedByDate == 'asc'; else arrowDown"></ion-icon>
+                <th 
+                  *ngFor="let param of dataTableService.params; let i = index">
+                  <div 
+                    class="table-header color-{{color}}-light"
+                    [title]="param.Title"
+                    (click)="dataTableService.sortCol(param, i)">
+                    <ion-label>
+                      <ion-label *ngIf="param.Title.length > 8; else fullTitle"> 
+                        {{ param.Title | translate | slice:0:8 }}...</ion-label>
+                      <ng-template #fullTitle> {{ param.Title  | translate }} </ng-template>
+                    </ion-label>
+                    <ion-icon name="arrow-dropup" *ngIf="param.sorted == 'asc'; else arrowDown"></ion-icon>
                     <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
                   </div>
                 </th>
               </tr>
 
-              <tr *ngFor="let record of dataTableService.showingRecords">
-                <td>
+              <tr class="value-row" *ngFor="let record of dataTableService.showingRecords">
+
+                <td 
+                  class="value-cell"
+                  *ngFor="let param of dataTableService.params; let j = index"
+                  [title]="param.Title">
+
                   <ion-item lines="none">
-
-                    <ion-button 
-                      (click)="showRecordOptions(record)" fill="clear" class="showRecordOptionsButton">
-                      <ion-icon name="more" style="font-size: 1.5rem" class="icon-{{color}}"></ion-icon>
-                    </ion-button>
-
-                    {{ record.Date | date : 'dd.MM.yy' }}
-                  </ion-item>
-                </td>
-              </tr>
-
-            </table>
-
-          </ion-col>
-
-          <ion-col style="width: calc(100% - 130px);">
-
-            <div style="overflow-x: auto;">
-
-              <table>
-                
-                <tr>
-                  <th 
-                    style="min-width: 150px; max-width: 250px;"
-                    *ngFor="let param of dataTableService.params; let i = index">
-                    <div 
-                      class="table-header color-{{color}}-light"
-                      [title]="param.Title"
-                      (click)="dataTableService.sortCol(param, i)">
-                      <ion-label>
-                        <ion-label *ngIf="param.Title.length > 8; else fullTitle"> 
-                          {{ param.Title | translate | slice:0:8 }}...</ion-label>
-                        <ng-template #fullTitle> {{ param.Title  | translate }} </ng-template>
-                      </ion-label>
-                      <ion-icon name="arrow-dropup" *ngIf="param.sorted == 'asc'; else arrowDown"></ion-icon>
-                      <ng-template #arrowDown><ion-icon name="arrow-dropdown"></ion-icon></ng-template>
-                    </div>
-                  </th>
-                </tr>
-
-                <tr class="value-row" *ngFor="let record of dataTableService.showingRecords">
-
-                  <td 
-                    class="value-cell"
-                    *ngFor="let param of dataTableService.params; let j = index"
-                    [title]="param.Title">
-
-                    <ion-item lines="none">
-                      
-                      <ion-label *ngIf="param.Type != 'Bool'; else showTick">
+                    
+                    <div>
+                      <span *ngIf="param.Type != 'Bool'; else showTick">
                         {{ record.Values[j] }}
-                      </ion-label>
+                      </span>
       
                       <ng-template #showTick>
                         <ion-icon name="checkmark-circle" color="success" *ngIf="record.Values[j] == true"></ion-icon>
                         <ion-icon name="close-circle" color="danger" *ngIf="record.Values[j] == false"></ion-icon>
                       </ng-template>
       
-                      <ion-label 
+                      <span
                         *ngIf="param.Unit && record.Values[j] != null"
                         style="margin-left: 2px">
                         {{ param.Unit | translate }}
-                      </ion-label>
-      
-                      <percentage-chip
-                        *ngIf="record.Values[j] != null && param.Type != 'Bool'"
-                        [percentage]="record.PercentageOfGoal[j]">
-                      </percentage-chip>
-      
-                    </ion-item>
+                      </span>
+                    </div>
+    
+                    <percentage-chip
+                      *ngIf="record.Values[j] != null && param.Type != 'Bool'"
+                      [percentage]="record.PercentageOfGoal[j]">
+                    </percentage-chip>
+    
+                  </ion-item>
 
-                  </td>
+                </td>
 
-                </tr>
+              </tr>
 
-              </table>
+            </table>
 
-            </div>
-          
-          </ion-col>
+          </div>
+        
+        </div>
 
-        </ion-row>
-
-      </ion-grid>
+      </div>
 
     </ion-card>
 
