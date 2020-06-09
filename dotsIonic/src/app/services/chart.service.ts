@@ -62,7 +62,7 @@ export class ChartService{
         let currentParamIndex = registeredParams.indexOf(currentParam);
         if(currentParamIndex < 0){
           this.chartData.push({
-            "name": currentParam.Title,
+            "name": currentParam.Title || currentParam.Index,
             "series": []
           })
           registeredParams.push(currentParam);
