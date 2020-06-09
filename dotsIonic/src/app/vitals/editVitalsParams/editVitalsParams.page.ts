@@ -61,6 +61,14 @@ export class EditVitalsCalculatorsPage implements OnInit {
       })
 
       possibleParams.push({
+        text: 'Custom',
+        icon: 'star',
+        handler: () => {
+          this.addParam("custom")
+        }
+      })
+
+      possibleParams.push({
         text: 'Cancel',
         icon: 'close',
         handler: null
@@ -76,13 +84,19 @@ export class EditVitalsCalculatorsPage implements OnInit {
   }
 
   async addParam(param){
-    this.params.push(param);
-    if(param.Goal == null){
-      let position = this.userValues.Params.indexOf(param.Index);
-      this.goals.push(this.userValues.Values[position]);
+    if(param != "custom"){
+      this.params.push(param);
+      if(param.Goal == null){
+        let position = this.userValues.Params.indexOf(param.Index);
+        this.goals.push(this.userValues.Values[position]);
+      }
+      else{
+        this.goals.push(param.Goal);
+      }
     }
     else{
-      this.goals.push(param.Goal);
+      console.log("custom param");
+      this.params.push({ "Index": "Custom goal", "Type": "custom", "Goal": 0 });
     }
   }
 
@@ -90,9 +104,12 @@ export class EditVitalsCalculatorsPage implements OnInit {
     this.deletedParams.push(this.params[index].Index);
     this.params.splice(index, 1);
     this.goals.splice(index, 1);
+    this.customGoals.splice(index, 1);
   }
 
   async saveChanges() {
+
+    let deleteParams = [];
 
     for(var i = 0; i < this.params.length; i++){
       let checking = this.goals[i];
@@ -105,6 +122,11 @@ export class EditVitalsCalculatorsPage implements OnInit {
       else {
         this.customGoals[i] = null;
       }
+
+      if(checking == null){
+        this.deleteParam(i);
+      }
+
     }
 
     let results = {

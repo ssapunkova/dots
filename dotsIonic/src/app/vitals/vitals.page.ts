@@ -67,7 +67,12 @@ export class VitalsPage implements OnInit {
         // Get each param info by index
         for(var i = 0; i < data.Params.length; i++){
           let paramIndex = data.Params[i];
-          data.Params[i] = this.paramsService.allParams[paramIndex];
+          if(this.paramsService.allParams[data.Params[i]] != null){
+            data.Params[i] = this.paramsService.allParams[paramIndex];
+          }
+          else{
+            data.Params[i] = { "Index": -1, "Title": data.Params[i] }
+          }
         }
       }
 

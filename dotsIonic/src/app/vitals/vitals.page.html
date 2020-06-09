@@ -10,7 +10,7 @@
     <ion-buttons slot="end">
 
       <ion-button 
-        *ngIf="dataTableService.params.length > 0"
+        *ngIf="dataTableService.records != []"
         (click)="makeDataDoctorFriendly()"
         style="font-size: 0.8rem !important">
         <ion-icon name="medical" style="margin-right: 3px"></ion-icon>

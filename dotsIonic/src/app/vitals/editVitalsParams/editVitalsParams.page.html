@@ -40,8 +40,15 @@
     <ion-row *ngFor="let param of params; let i = index">
 
       <ion-col>
-        <ion-item lines="none"> 
-          {{ param.Title | translate }} 
+        <ion-item lines="none" > 
+          
+          <ion-label *ngIf="param.Type != 'custom'">
+            {{ param.Title | translate }}
+          </ion-label> 
+
+          <ion-input *ngIf="param.Type == 'custom'" [(ngModel)]="param.Index">
+          </ion-input> 
+
         </ion-item>
       </ion-col>
 
