@@ -2,16 +2,11 @@ import { Component, Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 // Services
 import { LoadingService } from './services/loading.service';
-import { ErrorToastAndAlertService } from './services/errorToastAndAlert.service';
-import { DataTableService } from './services/dataTable.service';
-import { TimeAndDateService } from './services/timeAndDate.service';
-import { ChartService } from './services/chart.service';
-import { WorkoutService } from './services/workout.service';
 import { StorageService } from './services/storage.service';
 import { UserService } from './services/user.service';
 
@@ -67,37 +62,23 @@ export class AppComponent {
     public loadingService: LoadingService,
     private statusBar: StatusBar,
     private storageService: StorageService,
-    public userService: UserService,
-    private route: ActivatedRoute
+    public userService: UserService
   ) {
 
     
-    // if(this.userData == null){
-    //   console.log("No user data")
-    //   // Check if user has logged in
-    //   this.storageService.get("DotsUserData").then((data) => {
-    //     console.log("Storage service app.component ", data);
-    //     if(data == "null"){  
-    //       console.log("data is null")
-    //       // If not logged, navigate to login
-    //       this.router.navigate(['/login']);
-    //     }
-    //     else{
-    //       // Set user data in userService
-    //       this.userData = data;
-    //       this.initializeApp();
-    //     }
-    //   })
-    // }
-    // else{
-    //   console.log("User data  app.component ", this.userData)
-    //   this.initializeApp();
-    // }
-
-    
-    this.userData = this.route.snapshot.data.userData;
-
-    this.initializeApp();
+    this.storageService.get("DotsUserData").then((data) => {
+      console.log("Storage service app.component ", data);
+      if(data == "null"){  
+        console.log("data is null")
+        // If not logged, navigate to login
+        this.router.navigate(['/login']);
+      }
+      else{
+        // Set user data in userService
+        this.userData = data;
+        this.initializeApp();
+      }
+    })
 
   }
 
@@ -105,6 +86,10 @@ export class AppComponent {
     this.translate.addLangs(['en', 'bg']);
 
     this.translate.setDefaultLang('en');
+
+    if(this.userData["Lang"] != 'en'){
+      this.translate.setDefaultLang(this.userData["Lang"]);
+    }
 
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();

@@ -70,12 +70,6 @@ export class GuidePage implements OnInit {
     this.loadingService.hidePageLoading();
   }
 
-  async setLanguage(){
-    this.translate.use(this.userData.Lang);
-    
-    this.storageService.set("DotsUserData.Lang", this.userData.Lang);
-    console.log(this.storageService.get("DotsUserData"));
-  }
 
   async saveUserData(){
 
@@ -86,11 +80,23 @@ export class GuidePage implements OnInit {
       && this.userData.Age < 100
       && this.userData.Gender != null){
 
-        this.userService.updateUserData(this.userData).subscribe( async (data: [any]) => {
-          console.log(data);
-        });
+        
 
-        this.router.navigate(['/home']);
+      new Promise((resolve) => {
+        this.translate.use(this.userData.Lang);
+        this.storageService.set("DotsUserData", this.userData);
+
+        resolve();
+      }).then(() => {
+
+          this.userService.updateUserData(this.userData).subscribe( async (data: [any]) => {
+            console.log(data);
+          });
+
+
+          this.router.navigate(['/home']);
+
+      });
     }
     else{
       this.errorToastAndAlertService.showErrorToast(this.translate.instant("EnterGeneralInfo"));
