@@ -26,6 +26,8 @@ export class LoginPage implements OnInit {
 
   public fbUser: SocialUser;
   public fbLoggedIn: boolean;
+
+  public userData;
   
   constructor(
     private router: Router,
@@ -43,12 +45,25 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {    
-    console.log("Storage login -> ngOnInit ", this.storageService.get("DotsUserData"));
-    this.loadingService.hidePageLoading();
+
+    this.loadingService.showPageLoading();
+
+    this.storageService.get("DotsUserData").then((userData) =>{
+
+      console.log(userData);
+
+      if(userData["Email"] != null){
+        this.router.navigate(['/home']);
+      }
+
+      this.loadingService.hidePageLoading();
+      
+    });
+
+
   }
 
   ionViewWillEnter() {
-    console.log("Storage login -> ionViewWillEnter ", this.storageService.get("DotsUserData"));
 
     this.menuController.enable(false);
   }
@@ -120,17 +135,11 @@ export class LoginPage implements OnInit {
       this.translate.setDefaultLang(user["Lang"]);
     }
 
-    console.log("***Logged in as ", user.Username);
+    console.log("***Logged in as ", user);
 
-    console.log("Storage login -> setStorageData before set storage", this.storageService.get("DotsUserData"));
-    
     this.userService.data = user;
-    this.storageService.set("DotsUserData", {});
     this.storageService.set("DotsUserData", user).then(() =>{
-      console.log("Storage login -> user after set storage", this.userService.data);
-
-      console.log("Storage login -> setStorageData after set storage", this.storageService.get("DotsUserData"));
-  
+      
         alert.dismiss();
 
         setTimeout(() => {
@@ -148,9 +157,6 @@ export class LoginPage implements OnInit {
     }
 
     this.localAuthService.login(data).subscribe( async (data: [any]) => {
-      
-      console.log("Login data ", data);
-
 
       if(data["userData"] != null){
         this.setStorageData(data["userData"]);
