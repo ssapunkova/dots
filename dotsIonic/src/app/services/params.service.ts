@@ -171,6 +171,7 @@ export class ParamsService {
     {
       Index: 20,
       Title: "DaylyWaterIntake",                               // 20 - Water intake
+      Goal: 1.5,
       Unit: "L",
       Type: "number",
       Icon: "heart"

@@ -8,6 +8,8 @@ ion-card-header{
 
 ion-card-content{
     font-size: 1rem;
+    text-align: center;
+    color: var(--text);
 }
 
 
@@ -35,4 +37,10 @@ ion-card-content{
             margin-right: 3px;
         }
     }
+}
+
+
+h3{
+    font-size: 1.3rem;
+    padding-bottom: 0.3rem;
 }

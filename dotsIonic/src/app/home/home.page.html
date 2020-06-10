@@ -109,8 +109,50 @@
       <ion-col>
 
         <h1>
-          {{ 'Analysis' | translate }}
+          {{ 'Goals' | translate }}
         </h1>
+
+        <ion-grid>
+
+          <ion-row>
+
+            <ion-col 
+              *ngFor="let param of vitalsStats.Tips.Params"
+              sizeLg="3" sizeMd="4" sizeSm="6" sizeXs="12">
+
+              <ion-card style="height: 100%;">
+
+                <ion-card-header 
+                  [class]="vitalsStats.Tips.Data[param].Class">
+                  {{ vitalsStats.Tips.Data[param].Title | translate }}
+                </ion-card-header>
+
+                <ion-card-content style="padding: 1rem; font-size: 1.1rem">
+
+                  <h3>
+                    {{ (vitalsStats.Tips.Data[param].NearGoal == 1 ?  'GoalAchieved' : '') | translate }}
+                    {{ (vitalsStats.Tips.Data[param].NearGoal == 0 ?  'AlmostThere' : '') | translate }}
+                    {{ (vitalsStats.Tips.Data[param].NearGoal == -1 ?  'NowhereNearGoal' : '') | translate }}
+                  </h3>
+
+                  <h3>
+                    {{ vitalsStats.Tips.Data[param].UserValue }} / {{ vitalsStats.Tips.Data[param].Goal }}
+                  </h3>
+
+                  <b>
+                    {{ (vitalsStats.Tips.Data[param].Positive ? 'Add' : 'Reduce') | translate }}
+                    {{ vitalsStats.Tips.Data[param].Positive ? vitalsStats.Tips.Data[param].Difference : vitalsStats.Tips.Data[param].Difference * -1}} 
+                  </b>
+                  {{ 'toAchieveGoal' | translate }}
+
+                </ion-card-content>
+              </ion-card>
+
+            </ion-col>
+
+          </ion-row>
+
+        </ion-grid>
 
       </ion-col>
 

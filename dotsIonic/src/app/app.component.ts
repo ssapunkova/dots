@@ -91,7 +91,7 @@ export class AppComponent {
 
       console.log("Not null");
 
-      if(this.userData["Lang"] != 'en'){
+      if(this.userData["Lang"] != null){
         this.translate.setDefaultLang(this.userData["Lang"]);
       }
 

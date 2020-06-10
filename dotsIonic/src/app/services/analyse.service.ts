@@ -65,6 +65,7 @@ export class AnalyseService{
       let monthlyPercentageSum = [];
       let m = 0;
 
+      // Monthly Percentage sum
       for(let r = 0; r < data[i].WorkoutRecords.length; r++){
         let record = data[i].WorkoutRecords[r];
         let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
@@ -131,6 +132,10 @@ export class AnalyseService{
         "StartPercentage": 0, 
         "CurrentPercentage": 0, 
         "Diff": 0
+      },
+      "Tips": {
+        "Params": [],
+        "Data": {}
       }
     };
 
@@ -138,8 +143,6 @@ export class AnalyseService{
     let entries = data.Records.length;
     let firstRecord = data.Records[0];
     let lastRecord = data.Records[entries - 1];
-    let weeks = this.generalService.countWeeks(firstRecord.Date, lastRecord.Date);
-
 
     let analyseRecords = [firstRecord, lastRecord];
     let labels = ["StartPercentage", "CurrentPercentage"];
@@ -152,14 +155,50 @@ export class AnalyseService{
       let sum = 0;
       let records = 0;
       for(let v = 0; v < record.Values.length; v++){
-        if(record.Values[v] != null){
-          let goal = data.Params[v].Goal;
+        let currentParam = record.Params[v];
+        let currentValue = record.Values[v];
+        let paramData = this.vitalsService.Params.filter((p) => p.Index == currentParam)[0];
+        console.log(currentParam, currentValue, record)
+        let goal = currentParam.Goal;
+        if(currentValue != null){
           if(goal == null){
-            goal = this.vitalsService.Params.filter((p) => p.Index == record.Params[v])[0].Goal;
+            goal = paramData.Goal;
+
           }
-          sum += this.generalService.calculatePercentage(record.Values[v], goal);
+          sum += this.generalService.calculatePercentage(currentValue, goal);
           records++;
+
+          if(stats.Tips[currentParam] == null){
+            stats.Tips.Params.push(currentParam);
+            stats.Tips.Data[currentParam] = {
+              "Title": paramData.Title,
+              "UserValue": currentValue,
+              "Goal": goal,
+              "Difference": goal - currentValue,
+              "Positive": false,
+              "NearGoal": 0,
+              "Class": "color-3"
+            };
+            if(stats.Tips.Data[currentParam].Difference > 0){
+              stats.Tips.Data[currentParam].Positive = true;
+            }
+
+            if(Math.abs(stats.Tips.Data[currentParam].Difference) < (stats.Tips.Data[currentParam].Goal / 10)){
+              stats.Tips.Data[currentParam].NearGoal = 1;
+              stats.Tips.Data[currentParam].Class = "color-4";
+            }
+            else if(Math.abs(stats.Tips.Data[currentParam].Difference) < (stats.Tips.Data[currentParam].Goal / 5)){
+              stats.Tips.Data[currentParam].NearGoal = 0;
+              stats.Tips.Data[currentParam].Class = "color-3";
+            }
+            if(Math.abs(stats.Tips.Data[currentParam].Difference) > (stats.Tips.Data[currentParam].Goal / 3)){
+              stats.Tips.Data[currentParam].NearGoal = -1;
+              stats.Tips.Data[currentParam].Class = "color-1";
+            }
+          }
         }
+
+        
       }
       
       stats.StartAndNow[labels[e]] += sum / records;
@@ -194,10 +233,9 @@ export class AnalyseService{
       let percentageSum = 0;
       let number = 0;
       for(let v = 0; v < record.Values.length; v++){
-        console.log("v", v, ":", record.Values[v]);
         if(record.Values[v] != null){
           // Get user selected goal
-          let goal =data.Goals[v];;
+          let goal = data.Goals[v];;
           // If no user goal, then default param goal
           if(goal == null){
             goal = this.paramsService.allParams[data.Params[v]].Goal;
@@ -212,6 +250,7 @@ export class AnalyseService{
       
     }
 
+    // Arrows
     for(let m = 0; m < months.length; m++){
       let month = months[m];
       monthlyData[month].Percentage = monthlyPercentageSum[month] / monthlyData[month].Records;
@@ -227,7 +266,6 @@ export class AnalyseService{
 
     stats.MonthlyStats.Months = months;
     stats.MonthlyStats.Data = monthlyData;
-
 
     console.log(stats);
 

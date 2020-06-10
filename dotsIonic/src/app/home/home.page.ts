@@ -57,6 +57,7 @@ export class HomePage implements OnInit {
 
     Promise.all([this.getWorkoutStats(), this.getVitalsStats()])
     .then(() => {
+
       let w = [];
       let v = [];
       if(this.workoutStats != null){
@@ -81,7 +82,6 @@ export class HomePage implements OnInit {
         // Show months in desc
         this.showingMonths.reverse();
       }
-      
 
       this.loadingService.hidePageLoading();
     });
@@ -93,17 +93,11 @@ export class HomePage implements OnInit {
     
     this.workoutService.getWorkoutSheetsData(this.userData._id).subscribe( async (data: [any]) => {
 
-      
       if(data.length > 0){
-
         this.workoutStats = await this.analyseService.getWorkoutStats(data);
-
-
         console.log(this.workoutStats);
-
       }
 
-      
       resolve(true);
 
     });
@@ -116,11 +110,23 @@ export class HomePage implements OnInit {
     this.vitalsService.getVitalsData(this.userData._id).subscribe( async (data: [any]) => {
 
       if(data["Records"].length > 0){
-
         this.vitalsStats = await this.analyseService.getVitalsStats(data);
-
         console.log(this.vitalsStats);
+      }
 
+      resolve(true);
+
+    });
+
+  });
+
+  getOverallAnalysis = () => new Promise((resolve) => {
+      
+      
+    this.vitalsService.getVitalsData(this.userData._id).subscribe( async (data: [any]) => {
+
+      if(data["Records"].length > 0){
+        this.vitalsStats = await this.analyseService.getVitalsStats(data);
       }
 
       resolve(true);
