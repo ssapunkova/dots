@@ -52,7 +52,7 @@ export class LoginPage implements OnInit {
 
       console.log(userData);
 
-      if(userData["Email"] != null){
+      if(userData != null){
         this.router.navigate(['/home']);
       }
 

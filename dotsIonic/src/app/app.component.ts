@@ -87,8 +87,14 @@ export class AppComponent {
 
     this.translate.setDefaultLang('en');
 
-    if(this.userData["Lang"] != 'en'){
-      this.translate.setDefaultLang(this.userData["Lang"]);
+    if(this.userData != null){
+
+      console.log("Not null");
+
+      if(this.userData["Lang"] != 'en'){
+        this.translate.setDefaultLang(this.userData["Lang"]);
+      }
+
     }
 
     this.platform.ready().then(() => {
