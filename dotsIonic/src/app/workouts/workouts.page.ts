@@ -71,7 +71,9 @@ export class WorkoutsPage implements OnInit {
         // Disable adding a new sheet if there are MAX_SHEETS_NUMBER already
         if(this.workoutSheets.length == this.MAX_SHEETS_NUMBER) this.canAddSheet = false;
 
-        this.stats = await this.analyseService.analyseWorkoutSheets(data);
+        if(this.workoutSheets.length > 0){
+          this.stats = await this.analyseService.analyseWorkoutSheets(data);
+        }
 
       }
 

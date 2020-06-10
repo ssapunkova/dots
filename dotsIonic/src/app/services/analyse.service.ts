@@ -354,39 +354,43 @@ export class AnalyseService{
 
     for(let i = 0; i < data.length; i++){
 
-      stats.StartAndNow[i] = {
-        "StartPercentage": 0, 
-        "CurrentPercentage": 0, 
-        "Diff": 0
-      }
+      if(data[i].WorkoutRecords.length > 0){
 
-      let entries = data[i].WorkoutRecords.length;
-      let firstRecord = data[i].WorkoutRecords[0];
-      let lastRecord = data[i].WorkoutRecords[entries - 1];
-
-      let analyseRecords = [firstRecord, lastRecord];
-      let labels = ["StartPercentage", "CurrentPercentage"];
-
-
-      // Start and now
-
-      for(let e = 0; e < analyseRecords.length; e++){
-
-        let record = analyseRecords[e];
-        let sum = 0;
-        for(let v = 0; v < record.Values.length; v++){
-          sum += this.generalService.calculatePercentage(record.Values[v], data[i].Params[v].Goal);
+        stats.StartAndNow[i] = {
+          "StartPercentage": 0, 
+          "CurrentPercentage": 0, 
+          "Diff": 0
         }
-        
-        stats.StartAndNow[i][labels[e]] += sum / record.Values.length;
+
+        let entries = data[i].WorkoutRecords.length;
+        let firstRecord = data[i].WorkoutRecords[0];
+        let lastRecord = data[i].WorkoutRecords[entries - 1];
+
+        let analyseRecords = [firstRecord, lastRecord];
+        let labels = ["StartPercentage", "CurrentPercentage"];
+
+
+        // Start and now
+
+        for(let e = 0; e < analyseRecords.length; e++){
+
+          let record = analyseRecords[e];
+          let sum = 0;
+          for(let v = 0; v < record.Values.length; v++){
+            sum += this.generalService.calculatePercentage(record.Values[v], data[i].Params[v].Goal);
+          }
+          
+          stats.StartAndNow[i][labels[e]] += sum / record.Values.length;
+
+        }
+
+        stats.StartAndNow[i].Diff = stats.StartAndNow[i].CurrentPercentage - stats.StartAndNow[i].StartPercentage;
 
       }
 
-      stats.StartAndNow[i].Diff = stats.StartAndNow[i].CurrentPercentage - stats.StartAndNow[i].StartPercentage;
+      console.log(stats);
 
     }
-
-    console.log(stats);
 
     return stats;
 

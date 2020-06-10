@@ -51,7 +51,7 @@
               {{ sheet.WorkoutRecords.length }} {{ 'records' | translate }}
             </ion-item>
 
-            <ion-item>
+            <ion-item *ngIf="sheet.WorkoutRecords.length > 0">
               <ion-icon 
                 name="time" 
                 style="padding-right: 0.5rem"></ion-icon>
@@ -60,7 +60,7 @@
       
             </ion-item>
 
-            <ion-item>
+            <ion-item *ngIf="sheet.WorkoutRecords.length > 0">
               <ion-icon 
                 name="arrow-{{ stats.StartAndNow[i].Diff >= 0 ? 'up': 'down'}}" 
                 color="{{ stats.StartAndNow[i].Diff >= 0 ? 'success': 'danger'}}"
