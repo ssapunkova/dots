@@ -173,7 +173,7 @@ router.post("/handleFbUser", async(req, res) => {
     console.log("new user ", user)
   }
   else{
-    console.log("loggin in via fb")
+    console.log("loggin in via fb", userData)
     res.send({ userData: { 
       _id: user._id,
       Username: user.Username, 
