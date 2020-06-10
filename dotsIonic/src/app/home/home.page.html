@@ -123,6 +123,7 @@
               <ion-card style="height: 100%;">
 
                 <ion-card-header 
+                  style="text-align: center"
                   [class]="vitalsStats.Tips.Data[param].Class">
                   {{ vitalsStats.Tips.Data[param].Title | translate }}
                 </ion-card-header>
@@ -141,7 +142,7 @@
 
                   <b>
                     {{ (vitalsStats.Tips.Data[param].Positive ? 'Add' : 'Reduce') | translate }}
-                    {{ vitalsStats.Tips.Data[param].Positive ? vitalsStats.Tips.Data[param].Difference : vitalsStats.Tips.Data[param].Difference * -1}} 
+                    {{ (vitalsStats.Tips.Data[param].Positive ? vitalsStats.Tips.Data[param].Difference : vitalsStats.Tips.Data[param].Difference * -1) | number: '1.0-1'}} 
                   </b>
                   {{ 'toAchieveGoal' | translate }}
 
