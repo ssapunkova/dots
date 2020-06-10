@@ -101,6 +101,7 @@ export class AppComponent {
       this.statusBar.styleDefault();
     });
 
+    this.storageService.set("DotsUserData", null);
     
   };
 
