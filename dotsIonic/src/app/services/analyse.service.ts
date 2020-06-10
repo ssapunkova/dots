@@ -174,11 +174,6 @@ export class AnalyseService{
           }
         }
 
-        // chartData.push({
-        //   name: monday.toString(),
-        //   series
-        // });
-        
       }
 
       
@@ -187,8 +182,7 @@ export class AnalyseService{
 
     console.log(stats);
 
-    
-
+  
     return stats;
 
   }
