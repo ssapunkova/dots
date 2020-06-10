@@ -12,6 +12,7 @@ import { AnalyseService } from '../services/analyse.service';
 import { WorkoutService } from '../services/workout.service';
 import { VitalsService } from '../services/vitals.service';
 
+let monthNames;
 
 @Component({
   selector: 'app-home',
@@ -28,6 +29,8 @@ export class HomePage implements OnInit {
   public vitalsStats;
 
   public showingMonths;
+  
+  public colorScheme = { domain: [] }
 
   public sliderOpts = {
     initialSlide: 1
@@ -53,6 +56,16 @@ export class HomePage implements OnInit {
 
     this.userData = this.route.snapshot.data.userData;
     console.log("USERDATA", this.userData)
+
+    monthNames = [];
+
+    for(let i = 0; i < 12; i++){
+      monthNames.push(this.translate.instant('Month.' + i));
+    }
+
+    this.generateColorScheme();
+
+    console.log(monthNames);
 
 
     Promise.all([this.getWorkoutStats(), this.getVitalsStats()])
@@ -118,22 +131,35 @@ export class HomePage implements OnInit {
 
     });
 
-  });
-
-  getOverallAnalysis = () => new Promise((resolve) => {
-      
-      
-    this.vitalsService.getVitalsData(this.userData._id).subscribe( async (data: [any]) => {
-
-      if(data["Records"].length > 0){
-        this.vitalsStats = await this.analyseService.getVitalsStats(data);
-      }
-
-      resolve(true);
-
-    });
+    console.log(this.translate.instant('a'));
 
   });
+
+
+  async generateColorScheme(){
+    let hue = 0;
+    this.colorScheme.domain[0] = "#dddddd";
+    for(let i = 1; i < 20; i++){
+      this.colorScheme.domain.push("hsl(" + hue + ", 100%, 50%)");
+      hue += 5;
+    }
+
+    console.log(this.colorScheme);
+  }
+
+  calendarAxisTickFormatting(mondayString) {
+    let monday = new Date(mondayString);
+    let month = monday.getMonth();
+    let day = monday.getDate();
+    return day > 12 && day < 20 ?  monthNames[month] : '';
+  }
+
+  calendarTooltipText(c) {
+    return `
+      <span class="tooltip-label">${c.cell.date.toLocaleDateString()}</span>
+      <span class="tooltip-val">${c.data} </span>
+    `;
+  }
 
 
 }

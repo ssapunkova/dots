@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule  } from '../components/components.module';
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 import { HomePage } from './home.page';
 
 @NgModule({
@@ -16,6 +18,7 @@ import { HomePage } from './home.page';
     IonicModule,
     TranslateModule,
     ComponentsModule,
+    NgxChartsModule,
     RouterModule.forChild([
       {
         path: '',

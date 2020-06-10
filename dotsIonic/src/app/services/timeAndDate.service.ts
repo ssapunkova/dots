@@ -33,17 +33,19 @@ export class TimeAndDateService{
   // Get date in YY/mm/dd format
   async getDate(date){
     let dateString = "";
-    if(date == "today"){
-      let dateObj = new Date();
-      dateString = dateObj.getFullYear() + "-";
-      let month = dateObj.getMonth() + 1;
-      if(month < 10) dateString += "0";
-      dateString += month + "-";
-      let day = dateObj.getDate();
-      if(day < 10) dateString += "0";
-      dateString += day;
+    let dateObj = new Date();
+    if(date != "today"){
+      dateObj = date;
     }
-
+    
+    dateString = dateObj.getFullYear() + "-";
+    let month = dateObj.getMonth() + 1;
+    if(month < 10) dateString += "0";
+    dateString += month + "-";
+    let day = dateObj.getDate();
+    if(day < 10) dateString += "0";
+    dateString += day;
+    
     return dateString;
   }
 
@@ -52,6 +54,7 @@ export class TimeAndDateService{
     let splitDate = date.split("-");
     return splitDate[2] + "." + splitDate[1];
   }
+
 
   // Sorts array of json objects by date
   // direction can be asc and desc

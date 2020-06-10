@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { GeneralService } from './general.service';
 import { VitalsService } from './vitals.service';
 import { ParamsService } from './params.service';
+import { TimeAndDateService } from './timeAndDate.service';
 
 
 
@@ -15,7 +16,8 @@ export class AnalyseService{
   constructor(
     private generalService: GeneralService,
     private vitalsService: VitalsService,
-    private paramsService: ParamsService
+    private paramsService: ParamsService,
+    public timeAndDateService: TimeAndDateService
   ) {}
 
 
@@ -33,12 +35,15 @@ export class AnalyseService{
       "PeaksAndDowns": {
         "PeakPeriod": {},
         "DownPeriod": {}
-      }
+      },
+      "ChartData": []
     };
 
 
     for(let i = 0; i < data.length; i++){
       console.log("Sheet", data[i]);
+
+      let allPercentageSums = {};
 
       stats.Sheets[i] = {
         Title: data[i].Title,
@@ -84,8 +89,9 @@ export class AnalyseService{
           percentageSum += this.generalService.calculatePercentage(record.Values[v], data[i].Params[v].Goal);
         }
         if(monthlyPercentageSum[splitDate] == null) monthlyPercentageSum[splitDate] = 0;
-        monthlyPercentageSum[splitDate] += percentageSum /  data[i].Params.length;
-        
+        let monthSumPercentage = Math.floor(percentageSum /  data[i].Params.length);
+        monthlyPercentageSum[splitDate] += monthSumPercentage;
+        allPercentageSums[record.Date] = monthSumPercentage;
       }
 
       for(let m = 0; m < months.length; m++){
@@ -107,13 +113,70 @@ export class AnalyseService{
       stats.MonthlyStats.Months = months;
       stats.MonthlyStats.Data = monthlyData;
 
+
+      let chartData = [];
+
+      // Newest  record  
+      let start = new Date(lastRecord.Date);
+      let startDay = start.getDate();
+      let startDate = new Date(start.getFullYear(), start.getMonth(), startDay);
+
+      let weekdayName = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+      console.log(start, startDay, startDate);
+
+      // Monday
+      let thisMonday = new Date(startDate.getFullYear(), startDate.getMonth(), startDay - startDate.getDay() + 1);
+      let thisMondayDay = thisMonday.getDate();
+      let thisMondayYear = thisMonday.getFullYear();
+      let thisMondayMonth = thisMonday.getMonth();
+
+      // 26 weeks (half a year) before monday
+      let getDateObj = d => new Date(thisMondayYear, thisMondayMonth, d);
+      
+      for (let week = 0; week >= -26; week--) {
+
+
+        let mondayDay = thisMondayDay + week * 7;
+        let monday = getDateObj(mondayDay);
+        console.log(monday);
+
+        // one week
+        let series = [];
+        for (let dayOfWeek = 7; dayOfWeek > 0; dayOfWeek--) {
+          let date = getDateObj(mondayDay - 1 + dayOfWeek);
+          let dateString = await this.timeAndDateService.getDate(date);
+
+          // console.log(allPercentageSums, dateString)
+          let value = allPercentageSums[dateString];
+          if(value == null) value = 0;
+          
+          series.push({
+            date,
+            name: weekdayName[dayOfWeek - 1],
+            value
+          });
+        }
+
+        chartData.push({
+          name: monday.toString(),
+          series
+        });
+        
+      }
+
+      
+      stats.ChartData = chartData;
     }
 
     console.log(stats);
 
+    
+
     return stats;
 
   }
+
 
   async getVitalsStats(data){
   
@@ -158,7 +221,6 @@ export class AnalyseService{
         let currentParam = record.Params[v];
         let currentValue = record.Values[v];
         let paramData = this.vitalsService.Params.filter((p) => p.Index == currentParam)[0];
-        console.log(currentParam, currentValue, record)
         let goal = currentParam.Goal;
         if(currentValue != null){
           if(goal == null){
@@ -245,7 +307,6 @@ export class AnalyseService{
         }
       }
       if(monthlyPercentageSum[splitDate] == null) monthlyPercentageSum[splitDate] = 0;
-      console.log("r", r, ":", percentageSum, number);
       monthlyPercentageSum[splitDate] += percentageSum / number;
       
     }
@@ -276,7 +337,6 @@ export class AnalyseService{
   // WorkoutPage: analyse each sheet
   async analyseWorkoutSheets(data){
 
-    console.log(data);
 
     let stats = {
       "StartAndNow": []
@@ -479,7 +539,6 @@ export class AnalyseService{
     
     for(let i = 0; i < goalsData.length; i++){
 
-      console.log(goalsData[i])
       let averagePercentage = Math.floor(goalsData[i].PercentageSum / goalsData[i].Number);
       goalsData[i].AveragePercentage = averagePercentage;
 
