@@ -6,9 +6,11 @@
   </h1>
 
   <ion-button 
+    size="large"
     class="button-{{color}}"
     (click)="buttonFunction()">
-    <ion-icon name="add"></ion-icon>
+    <ion-icon name="add" *ngIf="buttonLabel != 'ViewGuide'"></ion-icon>
+    <ion-icon name="book" *ngIf="buttonLabel == 'ViewGuide'"></ion-icon>
     {{ buttonLabel | translate }}
   </ion-button>
 

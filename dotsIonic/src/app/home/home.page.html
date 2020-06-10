@@ -11,6 +11,13 @@
 
 <ion-content *ngIf="!loadingService.isPageLoading">
 
+  <no-items-message 
+    headerMessage="NoDataForAnalysing"
+    buttonLabel="ViewGuide"
+    (buttonClicked)="router.navigateByUrl('/guide')"
+    color="tertiary"
+    *ngIf="!showingMonths">
+  </no-items-message>
 
   <ion-grid *ngIf="showingMonths">
 

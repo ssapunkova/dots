@@ -2,6 +2,7 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 // Services
 import { LoadingService } from '../services/loading.service';
@@ -10,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AnalyseService } from '../services/analyse.service';
 import { WorkoutService } from '../services/workout.service';
 import { VitalsService } from '../services/vitals.service';
+
 
 @Component({
   selector: 'app-home',
@@ -36,6 +38,7 @@ export class HomePage implements OnInit {
     private translate: TranslateService,
     private menuController: MenuController,
     private route: ActivatedRoute,
+    public router: Router,
     private analyseService: AnalyseService,
     private workoutService: WorkoutService,
     private vitalsService: VitalsService
