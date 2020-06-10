@@ -46,132 +46,136 @@ export class AnalyseService{
     for(let i = 0; i < data.length; i++){
       console.log("Sheet", data[i]);
 
-      let allPercentageSums = {};
+      if(data[i].WorkoutRecords.length > 0){
 
-      stats.Sheets[i] = {
-        Title: data[i].Title,
-        Color: data[i].Color
-      }
-      
-      let entries = data[i].WorkoutRecords.length;
-      let firstRecord = data[i].WorkoutRecords[0];
-      let lastRecord = data[i].WorkoutRecords[entries - 1];
-      let weeks = this.generalService.countWeeks(firstRecord.Date, lastRecord.Date);
+        let allPercentageSums = {};
 
-      console.log(weeks);
-
-      // Frequency
-      stats.Frequency[i] = entries / weeks;
-      stats.OverallFrequency += stats.Frequency[i];
-
-      // Monthly stats
-
-      let months = [...this.generalService.getMonths(data[i].WorkoutRecords)];
-
-      let monthlyData = {};
-  
-      let monthlyPercentageSum = [];
-      let m = 0;
-
-      // Monthly Percentage sum
-      for(let r = 0; r < data[i].WorkoutRecords.length; r++){
-        let record = data[i].WorkoutRecords[r];
-        let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
-        if(monthlyData[splitDate] == null){
-          monthlyData[splitDate] = {
-            "Percentage": 0,
-            "Records": 0,
-            "Arrows": ["up", "up"]
-          };
-          
+        stats.Sheets[i] = {
+          Title: data[i].Title,
+          Color: data[i].Color
         }
         
-        monthlyData[splitDate].Records++;
-        let percentageSum = 0;
-        for(let v = 0; v < record.Values.length; v++){
-          percentageSum += this.generalService.calculatePercentage(record.Values[v], data[i].Params[v].Goal);
-        }
-        if(monthlyPercentageSum[splitDate] == null) monthlyPercentageSum[splitDate] = 0;
-        let monthSumPercentage = Math.floor(percentageSum /  data[i].Params.length);
-        monthlyPercentageSum[splitDate] += monthSumPercentage;
-        allPercentageSums[record.Date] = monthSumPercentage;
-      }
+        let entries = data[i].WorkoutRecords.length;
+        let firstRecord = data[i].WorkoutRecords[0];
+        let lastRecord = data[i].WorkoutRecords[entries - 1];
+        let weeks = this.generalService.countWeeks(firstRecord.Date, lastRecord.Date);
 
-      for(let m = 0; m < months.length; m++){
-        let month = months[m];
-        monthlyData[month].Percentage = monthlyPercentageSum[month] / monthlyData[month].Records;
-        
-        // If there is a previous month, compare percentage and record number
-        if(m > 1){
-          if(monthlyData[months[m - 1]].Percentage > monthlyData[month].Percentage){
-            monthlyData[month].Arrows[0] = "down";
+        console.log(weeks);
+
+        // Frequency
+        stats.Frequency[i] = entries / weeks;
+        stats.OverallFrequency += stats.Frequency[i];
+
+        // Monthly stats
+
+        let months = [...this.generalService.getMonths(data[i].WorkoutRecords)];
+
+        let monthlyData = {};
+    
+        let monthlyPercentageSum = [];
+        let m = 0;
+
+        // Monthly Percentage sum
+        for(let r = 0; r < data[i].WorkoutRecords.length; r++){
+          let record = data[i].WorkoutRecords[r];
+          let splitDate = record.Date.split("-")[1] + "." + record.Date.split("-")[0];
+          if(monthlyData[splitDate] == null){
+            monthlyData[splitDate] = {
+              "Percentage": 0,
+              "Records": 0,
+              "Arrows": ["up", "up"]
+            };
+            
           }
-          if(monthlyData[months[m - 1]].Records > monthlyData[month].Records){
-            monthlyData[month].Arrows[1] = "down";
-          }
-        }
-
-      }
-
-      stats.MonthlyStats.Months = months;
-      stats.MonthlyStats.Data = monthlyData;
-
-
-      // Newest  record  
-      let start = new Date(lastRecord.Date);
-      let startDay = start.getDate();
-      let startDate = new Date(start.getFullYear(), start.getMonth(), startDay);
-
-      let weekdayName = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
-      console.log(start, startDay, startDate);
-
-      // Monday
-      let thisMonday = new Date(startDate.getFullYear(), startDate.getMonth(), startDay - startDate.getDay() + 1);
-      let thisMondayDay = thisMonday.getDate();
-      let thisMondayYear = thisMonday.getFullYear();
-      let thisMondayMonth = thisMonday.getMonth();
-
-      // 26 weeks (half a year) before monday
-      let getDateObj = d => new Date(thisMondayYear, thisMondayMonth, d);
-      
-      for (let week = 0; week >= -52; week--) {
-
-        let mondayDay = thisMondayDay + week * 7;
-        let monday = getDateObj(mondayDay);
-        console.log(monday);
-
-        // one week
-        let series = [];
-        for (let dayOfWeek = 7; dayOfWeek > 0; dayOfWeek--) {
-          let date = getDateObj(mondayDay - 1 + dayOfWeek);
-          let dateString = await this.timeAndDateService.getDate(date);
-
-          // console.log(allPercentageSums, dateString)
-          let value = allPercentageSums[dateString];
-          if(value == null) value = 0;
           
-          if(chartData[Math.abs(week)] == null){
-            chartData[Math.abs(week)] = {
-              name: monday.toString(),
-              series: []
+          monthlyData[splitDate].Records++;
+          let percentageSum = 0;
+          for(let v = 0; v < record.Values.length; v++){
+            percentageSum += this.generalService.calculatePercentage(record.Values[v], data[i].Params[v].Goal);
+          }
+          if(monthlyPercentageSum[splitDate] == null) monthlyPercentageSum[splitDate] = 0;
+          let monthSumPercentage = Math.floor(percentageSum /  data[i].Params.length);
+          monthlyPercentageSum[splitDate] += monthSumPercentage;
+          allPercentageSums[record.Date] = monthSumPercentage;
+        }
+
+        for(let m = 0; m < months.length; m++){
+          let month = months[m];
+          monthlyData[month].Percentage = monthlyPercentageSum[month] / monthlyData[month].Records;
+          
+          // If there is a previous month, compare percentage and record number
+          if(m > 1){
+            if(monthlyData[months[m - 1]].Percentage > monthlyData[month].Percentage){
+              monthlyData[month].Arrows[0] = "down";
+            }
+            if(monthlyData[months[m - 1]].Records > monthlyData[month].Records){
+              monthlyData[month].Arrows[1] = "down";
             }
           }
 
-          if(chartData[Math.abs(week)].series[7 - dayOfWeek] == null){
-            addRecordToChart();
-          }
-          else if(chartData[Math.abs(week)].series[7 - dayOfWeek].value == 0){
-            addRecordToChart();
+        }
+
+        stats.MonthlyStats.Months = months;
+        stats.MonthlyStats.Data = monthlyData;
+
+
+        // Newest  record  
+        let start = new Date(lastRecord.Date);
+        let startDay = start.getDate();
+        let startDate = new Date(start.getFullYear(), start.getMonth(), startDay);
+
+        let weekdayName = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+        console.log(start, startDay, startDate);
+
+        // Monday
+        let thisMonday = new Date(startDate.getFullYear(), startDate.getMonth(), startDay - startDate.getDay() + 1);
+        let thisMondayDay = thisMonday.getDate();
+        let thisMondayYear = thisMonday.getFullYear();
+        let thisMondayMonth = thisMonday.getMonth();
+
+        // 26 weeks (half a year) before monday
+        let getDateObj = d => new Date(thisMondayYear, thisMondayMonth, d);
+        
+        for (let week = 0; week >= -52; week--) {
+
+          let mondayDay = thisMondayDay + week * 7;
+          let monday = getDateObj(mondayDay);
+          console.log(monday);
+
+          // one week
+          let series = [];
+          for (let dayOfWeek = 7; dayOfWeek > 0; dayOfWeek--) {
+            let date = getDateObj(mondayDay - 1 + dayOfWeek);
+            let dateString = await this.timeAndDateService.getDate(date);
+
+            // console.log(allPercentageSums, dateString)
+            let value = allPercentageSums[dateString];
+            if(value == null) value = 0;
+            
+            if(chartData[Math.abs(week)] == null){
+              chartData[Math.abs(week)] = {
+                name: monday.toString(),
+                series: []
+              }
+            }
+
+            if(chartData[Math.abs(week)].series[7 - dayOfWeek] == null){
+              addRecordToChart();
+            }
+            else if(chartData[Math.abs(week)].series[7 - dayOfWeek].value == 0){
+              addRecordToChart();
+            }
+
+            function addRecordToChart(){
+              chartData[Math.abs(week)].series[7 - dayOfWeek] = {
+                date: date,
+                name: weekdayName[dayOfWeek - 1],
+                value: value
+              };
+            }
           }
 
-          function addRecordToChart(){
-            chartData[Math.abs(week)].series[7 - dayOfWeek] = {
-              date: date,
-              name: weekdayName[dayOfWeek - 1],
-              value: value
-            };
-          }
         }
 
       }

@@ -16,14 +16,14 @@
     buttonLabel="ViewGuide"
     (buttonClicked)="router.navigateByUrl('/guide')"
     color="tertiary"
-    *ngIf="!showingMonths">
+    *ngIf="showingMonths.length == 0">
   </no-items-message>
 
-  <ion-grid *ngIf="showingMonths">
+  <ion-grid *ngIf="showingMonths.length > 0">
 
     <ion-row>
 
-      <ion-col>
+      <ion-col *ngIf="showingMonths.length > 0">
 
         <h1>
           {{ 'MonthlyStats' | translate }}
@@ -104,7 +104,7 @@
 
     </ion-row>
 
-    <ion-row>
+    <ion-row *ngIf="vitalsStats != null">
 
       <ion-col>
 
@@ -159,7 +159,7 @@
 
     </ion-row>
 
-    <ion-row>
+    <ion-row *ngIf="workoutStats.ChartData.length > 0">
 
       <ion-col>
 
