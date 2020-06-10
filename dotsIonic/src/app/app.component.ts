@@ -68,7 +68,7 @@ export class AppComponent {
     
     this.storageService.get("DotsUserData").then((data) => {
       console.log("Storage service app.component ", data);
-      if(data == "null"){  
+      if(data == null){  
         console.log("data is null")
         // If not logged, navigate to login
         this.router.navigate(['/login']);
@@ -100,6 +100,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
     });
+
     
   };
 
@@ -108,7 +109,7 @@ export class AppComponent {
     
     this.userData = null;
     
-    this.storageService.set("DotsUserData", "null").then(() => {
+    this.storageService.set("DotsUserData", null).then(() => {
       console.log("Storage app.component -> logout ", this.storageService.get("DotsUserData"));
 
       this.router.navigate(['/login']);
