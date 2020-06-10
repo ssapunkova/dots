@@ -12,8 +12,6 @@ import { AnalyseService } from '../services/analyse.service';
 import { WorkoutService } from '../services/workout.service';
 import { VitalsService } from '../services/vitals.service';
 
-let monthNames;
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -57,16 +55,7 @@ export class HomePage implements OnInit {
     this.userData = this.route.snapshot.data.userData;
     console.log("USERDATA", this.userData)
 
-    monthNames = [];
-
-    for(let i = 0; i < 12; i++){
-      monthNames.push(this.translate.instant("Month." + i));
-    }
-
     this.generateColorScheme();
-
-    console.log(monthNames);
-
 
     Promise.all([this.getWorkoutStats(), this.getVitalsStats()])
     .then(() => {
@@ -150,8 +139,11 @@ export class HomePage implements OnInit {
   calendarAxisTickFormatting(mondayString) {
     let monday = new Date(mondayString);
     let month = monday.getMonth();
-    let day = monday.getDate();
-    return day > 12 && day < 20 ? monthNames[month] : '';
+    let monthStr = "" + month;
+    if(month < 10) monthStr = "0" + month;
+    let day = monday.getDate(); 
+    let year = ("" + monday.getFullYear()).slice(2, 4);
+    return day > 12 && day < 20 ? monthStr + '.' + year : '';
   }
 
   calendarTooltipText(c) {

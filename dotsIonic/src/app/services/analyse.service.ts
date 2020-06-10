@@ -135,7 +135,7 @@ export class AnalyseService{
       // 26 weeks (half a year) before monday
       let getDateObj = d => new Date(thisMondayYear, thisMondayMonth, d);
       
-      for (let week = 0; week >= -26; week--) {
+      for (let week = 0; week >= -52; week--) {
 
         let mondayDay = thisMondayDay + week * 7;
         let monday = getDateObj(mondayDay);
