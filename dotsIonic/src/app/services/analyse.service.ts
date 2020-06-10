@@ -4,6 +4,7 @@ import { GeneralService } from './general.service';
 import { VitalsService } from './vitals.service';
 import { ParamsService } from './params.service';
 import { TimeAndDateService } from './timeAndDate.service';
+import { setIonicClasses } from '@ionic/angular/dist/directives/control-value-accessors/value-accessor';
 
 
 
@@ -39,6 +40,8 @@ export class AnalyseService{
       "ChartData": []
     };
 
+
+    let chartData = [];
 
     for(let i = 0; i < data.length; i++){
       console.log("Sheet", data[i]);
@@ -114,8 +117,6 @@ export class AnalyseService{
       stats.MonthlyStats.Data = monthlyData;
 
 
-      let chartData = [];
-
       // Newest  record  
       let start = new Date(lastRecord.Date);
       let startDay = start.getDate();
@@ -136,7 +137,6 @@ export class AnalyseService{
       
       for (let week = 0; week >= -26; week--) {
 
-
         let mondayDay = thisMondayDay + week * 7;
         let monday = getDateObj(mondayDay);
         console.log(monday);
@@ -151,17 +151,33 @@ export class AnalyseService{
           let value = allPercentageSums[dateString];
           if(value == null) value = 0;
           
-          series.push({
-            date,
-            name: weekdayName[dayOfWeek - 1],
-            value
-          });
+          if(chartData[Math.abs(week)] == null){
+            chartData[Math.abs(week)] = {
+              name: monday.toString(),
+              series: []
+            }
+          }
+
+          if(chartData[Math.abs(week)].series[7 - dayOfWeek] == null){
+            addRecordToChart();
+          }
+          else if(chartData[Math.abs(week)].series[7 - dayOfWeek].value == 0){
+            addRecordToChart();
+          }
+
+          function addRecordToChart(){
+            chartData[Math.abs(week)].series[7 - dayOfWeek] = {
+              date: date,
+              name: weekdayName[dayOfWeek - 1],
+              value: value
+            };
+          }
         }
 
-        chartData.push({
-          name: monday.toString(),
-          series
-        });
+        // chartData.push({
+        //   name: monday.toString(),
+        //   series
+        // });
         
       }
 

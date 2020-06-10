@@ -109,7 +109,7 @@
       <ion-col>
 
         <h1>
-          {{ 'Goals' | translate }}
+          {{ 'Vitals' | translate }}
         </h1>
 
         <ion-grid>
@@ -163,39 +163,39 @@
 
       <ion-col>
 
-        <ion-card>
+        <h1>
+          {{ 'Workouts' | translate }}
+        </h1>
 
-          <div style="overflow-x: auto;">
+        <div style="overflow-x: auto;">
 
-            <div class="chart-container">
+          <div class="chart-container">
 
-              <ngx-charts-heat-map
-                min="0"
-                max="100"
-                [view]="[700, 300]"
-                [scheme]="colorScheme"
-                [results]="workoutStats.ChartData"
-                animations="true"
-                showLegend="false"
-                gradient=""
-                xAxis="true"
-                yAxis="true"
-                showXAxisLabel="false"
-                showYAxisLabel="false"
-                [xAxisTickFormatting]="calendarAxisTickFormatting"
-                [tooltipText]="calendarTooltipText"
-                innerPadding="10%"
-                trimXAxisTicks="true"
-                trimYAxisTicks="true"
-                rotateXAxisTicks="false"
-              >
-              </ngx-charts-heat-map>
+            <ngx-charts-heat-map
+              min="0"
+              max="100"
+              [view]="[1000, 300]"
+              [scheme]="colorScheme"
+              [results]="workoutStats.ChartData"
+              animations="true"
+              showLegend="false"
+              gradient=""
+              xAxis="true"
+              yAxis="true"
+              showXAxisLabel="false"
+              showYAxisLabel="false"
+              [xAxisTickFormatting]="calendarAxisTickFormatting"
+              [tooltipText]="calendarTooltipText"
+              innerPadding="10%"
+              trimXAxisTicks="true"
+              trimYAxisTicks="true"
+              rotateXAxisTicks="false"
+            >
+            </ngx-charts-heat-map>
 
-            </div>
-            
           </div>
-
-        </ion-card>
+          
+        </div>
 
       </ion-col>
 

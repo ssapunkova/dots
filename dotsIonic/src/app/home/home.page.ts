@@ -60,7 +60,7 @@ export class HomePage implements OnInit {
     monthNames = [];
 
     for(let i = 0; i < 12; i++){
-      monthNames.push(this.translate.instant('Month.' + i));
+      monthNames.push(this.translate.instant("Month." + i));
     }
 
     this.generateColorScheme();
@@ -151,13 +151,13 @@ export class HomePage implements OnInit {
     let monday = new Date(mondayString);
     let month = monday.getMonth();
     let day = monday.getDate();
-    return day > 12 && day < 20 ?  monthNames[month] : '';
+    return day > 12 && day < 20 ? monthNames[month] : '';
   }
 
   calendarTooltipText(c) {
     return `
       <span class="tooltip-label">${c.cell.date.toLocaleDateString()}</span>
-      <span class="tooltip-val">${c.data} </span>
+      <span class="tooltip-val">${c.data} %</span>
     `;
   }
 
