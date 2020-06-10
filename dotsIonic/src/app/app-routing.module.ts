@@ -11,7 +11,7 @@ import { CalculatorsPage } from './calculators/calculators.page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full',
     resolve: { userData: UserService }
   },

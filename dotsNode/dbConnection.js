@@ -3,8 +3,8 @@
 const mongoose = require('mongoose');
 
 // Depends on const online
-// const online = false;
-const online = true;
+const online = false;
+// const online = true;
 
 let baseUrl = "mongodb://localhost:27017/dots";
 if(online == true){
