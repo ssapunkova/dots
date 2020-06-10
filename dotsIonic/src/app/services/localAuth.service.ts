@@ -20,6 +20,7 @@ export class LocalAuthService{
   ) { }
 
   public checkEmail(email){
+    console.log(this.connectToServerService.serverUrl);
     return this.http.post(this.connectToServerService.serverUrl + '/checkEmail',
       { email: email } 
     )

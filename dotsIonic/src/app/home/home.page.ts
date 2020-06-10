@@ -54,20 +54,30 @@ export class HomePage implements OnInit {
 
     Promise.all([this.getWorkoutStats(), this.getVitalsStats()])
     .then(() => {
-
-      let a = this.workoutStats.MonthlyStats.Months;
-      let b = this.vitalsStats.MonthlyStats.Months;
-      if(a.length > b.length){
-        this.showingMonths = b;
-        this.showingMonths = [...a];
+      let w = [];
+      let v = [];
+      if(this.workoutStats != null){
+        w = this.workoutStats.MonthlyStats.Months;
+        this.showingMonths = w;
       }
-      else{
-        this.showingMonths = a;
-        this.showingMonths = [...b];
+      if(this.vitalsStats != null){
+        v = this.vitalsStats.MonthlyStats.Months;
+        this.showingMonths = v;
       }
-
-      // Show months in desc
-      this.showingMonths.reverse();
+      
+      if(this.workoutStats != null && this.vitalsStats != null){
+        if(w.length > v.length){
+          this.showingMonths = v;
+          this.showingMonths = [...w];
+        }
+        else{
+          this.showingMonths = w;
+          this.showingMonths = [...v];
+        }
+  
+        // Show months in desc
+        this.showingMonths.reverse();
+      }
       
 
       this.loadingService.hidePageLoading();

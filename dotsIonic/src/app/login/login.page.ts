@@ -48,6 +48,8 @@ export class LoginPage implements OnInit {
 
     this.loadingService.showPageLoading();
 
+    this.translate.use('en');
+
     this.storageService.get("DotsUserData").then((userData) =>{
 
       console.log(userData);
