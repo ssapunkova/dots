@@ -149,14 +149,14 @@ export class CalculatorPage implements OnInit {
         if(values.Gender == "F") that.userValues.BodyFatPercentage = Math.floor(constants.A + constants.B - constants.C);
         else that.userValues.BodyFatPercentage = Math.floor(constants.A);
 
-        // Calculate LeanBodyMass Weight in Lb, to use for DaylyProteinIntake
+        // Calculate LeanBodyMass Weight in Lb, to use for DailyProteinIntake
         let leanBodyMassInLb = that.convertToLb(values.WeightInKg - (values.WeightInKg * that.userValues.BodyFatPercentage / 100));
 
-        // Dayly Protein Intake in grams
-        that.userValues.DaylyProteinIntake = Math.floor(leanBodyMassInLb * values.PhysicalActivity);
+        // Daily Protein Intake in grams
+        that.userValues.DailyProteinIntake = Math.floor(leanBodyMassInLb * values.PhysicalActivity);
 
         // Convert gr to protein Blocks
-        that.userValues.Blocks = Math.floor(that.userValues.DaylyProteinIntake / 7);
+        that.userValues.Blocks = Math.floor(that.userValues.DailyProteinIntake / 7);
 
         if(values.Gender == "F" && that.userValues.Blocks <= 11) that.userValues.Blocks = 11;
         else if(values.Gender == "M" && that.userValues.Blocks <= 14) that.userValues.Blocks = 14;
@@ -199,20 +199,20 @@ export class CalculatorPage implements OnInit {
 
       // Calculate base calorie intake
       if(values.Gender == "M"){
-        this.userValues.DaylyKcalIntake = 66 + (13.7 * values.Weight) + (5 * values.Height) - (6.8 * values.Age);
+        this.userValues.DailyKcalIntake = 66 + (13.7 * values.Weight) + (5 * values.Height) - (6.8 * values.Age);
       }
       else{
-        this.userValues.DaylyKcalIntake = 655 + (9.6 * values.Weight) + (1.8 * values.Height) - (4.7 * values.Age);
+        this.userValues.DailyKcalIntake = 655 + (9.6 * values.Weight) + (1.8 * values.Height) - (4.7 * values.Age);
       }
       
       // Multiply by physical activity factor
-      this.userValues.DaylyKcalIntake *= values.PhysicalActivity;
+      this.userValues.DailyKcalIntake *= values.PhysicalActivity;
       
-      console.log(this.userValues.DaylyKcalIntake);
+      console.log(this.userValues.DailyKcalIntake);
 
-      this.userValues.DaylyKcalIntake = Math.floor(this.userValues.DaylyKcalIntake);
+      this.userValues.DailyKcalIntake = Math.floor(this.userValues.DailyKcalIntake);
 
-      console.log(this.userValues.DaylyKcalIntake);
+      console.log(this.userValues.DailyKcalIntake);
 
       this.finishCalculations();
     }
@@ -220,15 +220,15 @@ export class CalculatorPage implements OnInit {
 
   public sugarIntake = {
     required: [
-      this.paramsService.allParams[9],      // 9 - DaylyKcalIntake
+      this.paramsService.allParams[9],      // 9 - DailyKcalIntake
     ],
     formula: async () => {
 
       let values = {
-        DaylyKcalIntake: this.userValues.DaylyKcalIntake,
+        DailyKcalIntake: this.userValues.DailyKcalIntake,
       };
       
-      this.userValues.DaylySugarIntake = Math.floor(values.DaylyKcalIntake / 40);
+      this.userValues.DailySugarIntake = Math.floor(values.DailyKcalIntake / 40);
 
       this.finishCalculations();
     }
@@ -303,19 +303,19 @@ export class CalculatorPage implements OnInit {
         Weight: this.userValues.Weight
       };
       
-      this.userValues.DaylyWaterIntake = Math.round(values.Weight * 2.04 / 2.2);
+      this.userValues.DailyWaterIntake = Math.round(values.Weight * 2.04 / 2.2);
 
       if(values.Age < 30){
-        this.userValues.DaylyWaterIntake *= 40;
+        this.userValues.DailyWaterIntake *= 40;
       }
       else if(values.Age < 55){
-        this.userValues.DaylyWaterIntake *= 35;
+        this.userValues.DailyWaterIntake *= 35;
       }
       else {
-        this.userValues.DaylyWaterIntake *= 30;
+        this.userValues.DailyWaterIntake *= 30;
       }
 
-      this.userValues.DaylyWaterIntake = Math.round(this.userValues.DaylyWaterIntake / 28.3 / 33.8 * 100) / 100;
+      this.userValues.DailyWaterIntake = Math.round(this.userValues.DailyWaterIntake / 28.3 / 33.8 * 100) / 100;
 
       this.finishCalculations();
     }
@@ -325,13 +325,13 @@ export class CalculatorPage implements OnInit {
   public calculators = {
     "Blocks": this.blocks,
     "BodyFatPercentage": this.blocks,
-    "DaylyProteinIntake": this.blocks,
-    "DaylyKcalIntake": this.kcalIntake,
-    "DaylySugarIntake": this.sugarIntake,
+    "DailyProteinIntake": this.blocks,
+    "DailyKcalIntake": this.kcalIntake,
+    "DailySugarIntake": this.sugarIntake,
     "SystolicBloodPressure": this.sysBloodPressure,
     "BMI": this.bmi,
     "IdealWeightDevine": this.idealWeightDevine,
-    "DaylyWaterIntake": this.waterIntake
+    "DailyWaterIntake": this.waterIntake
   }
 
   

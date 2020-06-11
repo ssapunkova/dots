@@ -76,15 +76,15 @@ export class ParamsService {
       Title: "ActivityFactorKcal",
       Options: [
         { "Title": "low", "Value": 1.2 },
-        { "Title": "average", "Value": 1.3 },              // 8 - activity factor for DaylyKcalIntake calculations
+        { "Title": "average", "Value": 1.3 },              // 8 - activity factor for DailyKcalIntake calculations
         { "Title": "heavy", "Value": 1.4 },   
       ],
       Type: "select",
     },
     {
       Index: 9,
-      Title: "DaylyKcalIntake",
-      Unit: "kcal",                                        // 9 - DaylyKcalIntake intake
+      Title: "DailyKcalIntake",
+      Unit: "kcal",                                        // 9 - DailyKcalIntake intake
       Goal: 2000,
       Type: "number",
       Icon: "nutrition"
@@ -99,8 +99,8 @@ export class ParamsService {
     },
     {
       Index: 11,
-      Title: "DaylyProteinIntake",
-      Goal: 85,                                            // 11 - dayly protein intake in gr
+      Title: "DailyProteinIntake",
+      Goal: 85,                                            // 11 - daily protein intake in gr
       Unit: "g",
       Type: "number",
       Icon: "nutrition"
@@ -115,8 +115,8 @@ export class ParamsService {
     },
     {
       Index: 13,
-      Title: "DaylySugarIntake",
-      Goal: 40,                                            // 13 - dayly sugar intake in gr
+      Title: "DailySugarIntake",
+      Goal: 40,                                            // 13 - daily sugar intake in gr
       Unit: "gr",
       Type: "number",
       Icon: "nutrition"
@@ -170,7 +170,7 @@ export class ParamsService {
     },
     {
       Index: 20,
-      Title: "DaylyWaterIntake",                               // 20 - Water intake
+      Title: "DailyWaterIntake",                               // 20 - Water intake
       Goal: 1.5,
       Unit: "L",
       Type: "number",
