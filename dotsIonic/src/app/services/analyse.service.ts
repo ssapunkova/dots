@@ -126,8 +126,6 @@ export class AnalyseService{
 
         let weekdayName = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-        console.log(start, startDay, startDate);
-
         // Monday
         let thisMonday = new Date(startDate.getFullYear(), startDate.getMonth(), startDay - startDate.getDay() + 1);
         let thisMondayDay = thisMonday.getDate();
@@ -141,7 +139,6 @@ export class AnalyseService{
 
           let mondayDay = thisMondayDay + week * 7;
           let monday = getDateObj(mondayDay);
-          console.log(monday);
 
           // one week
           let series = [];
@@ -235,19 +232,22 @@ export class AnalyseService{
         let currentParam = record.Params[v];
         let currentValue = record.Values[v];
         let paramData = this.vitalsService.Params.filter((p) => p.Index == currentParam)[0];
-        let goal = currentParam.Goal;
+        let goal = data.Goals[v];
+        console.log(currentParam, paramData);
         if(currentValue != null){
           if(goal == null){
-            goal = paramData.Goal;
-
+            if(paramData != null){
+              goal = paramData.Goal;
+            }
           }
+          
           sum += this.generalService.calculatePercentage(currentValue, goal);
           records++;
 
           if(stats.Tips[currentParam] == null){
             stats.Tips.Params.push(currentParam);
             stats.Tips.Data[currentParam] = {
-              "Title": paramData.Title,
+              "Title": paramData != null ? paramData.Title : data.Params[v],
               "UserValue": currentValue,
               "Goal": goal,
               "Difference": goal - currentValue,

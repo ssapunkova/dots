@@ -35,6 +35,12 @@ export class EditVitalsCalculatorsPage implements OnInit {
     this.goals = data.Goals;
     this.userValues = data.UserValues;
     this.deletedParams = [];
+
+    for(let i = 0; i < this.params.length; i++){
+      if(this.vitalsService.Params[this.params[i].Index] == null){
+        this.params[i].Type = "custom";
+      }
+    }
   }
 
 
