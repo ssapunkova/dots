@@ -146,7 +146,7 @@ export class WorkoutManagerPage implements OnInit {
     // IsNotCancelled means the user hasn't clicked Terminate Workout button
     this.controls.IsNotCancelled = true;
     let that = this;
-    let secondsLeft = 0;
+    let secondsLeft = 5;
 
     // Show alert about starting workout
     let alert = await this.alertController.create({
@@ -234,7 +234,7 @@ export class WorkoutManagerPage implements OnInit {
     if(!this.controls.IsFinished){
       // Make a break
       this.controls.IsABreak = true;
-      this.current.BreakSecondsLeft = 1;
+      this.current.BreakSecondsLeft = 10;
 
       let messagePt1 = this.sheetData.Params[this.current.ExerciseIndex + 1].Title 
       + "<br>"  + this.translate.instant("in") + "<br>"

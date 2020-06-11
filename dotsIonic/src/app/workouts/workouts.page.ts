@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController, ModalController, ActionSheetController } from '@ionic/angular';
+import { AlertController, ModalController, ActionSheetController, MenuController } from '@ionic/angular';
 
 // Services
 
@@ -44,8 +44,14 @@ export class WorkoutsPage implements OnInit {
     public alertController: AlertController,
     public modalController: ModalController,
     public actionSheetController: ActionSheetController,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public menuController: MenuController
   ) { };
+
+  
+  ionViewWillEnter() {
+    this.menuController.enable(true);
+  }
 
   ngOnInit() {
     this.loadingService.showPageLoading();
